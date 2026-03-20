@@ -187,7 +187,7 @@ export default function TokBuildingPage() {
           {step === 2 && (
             <div className="space-y-5">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-1">Personality &amp; Tone</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-1">Personality & Tone</h2>
                 <p className="text-gray-500 text-sm">Shape how your agent communicates</p>
               </div>
               <div>
@@ -215,7 +215,7 @@ export default function TokBuildingPage() {
           {step === 3 && (
             <div className="space-y-5">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-1">Expertise &amp; Domain</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-1">Expertise & Domain</h2>
                 <p className="text-gray-500 text-sm">Define what your agent knows</p>
               </div>
               <div>
@@ -254,7 +254,7 @@ export default function TokBuildingPage() {
           {step === 5 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-1">Review &amp; Export</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-1">Review & Export</h2>
                 <p className="text-gray-500 text-sm">Your agent spec is ready</p>
               </div>
 

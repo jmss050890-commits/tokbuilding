@@ -25,7 +25,7 @@ export default function TokThruKPAPage() {
               <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: ACCENT }}>🛡️</div>
               <div>
                 <h1 className="font-bold text-gray-900 text-lg leading-tight">TokThru / KPA</h1>
-                <p className="text-xs text-orange-600">Personal Safety &amp; Crisis Support</p>
+                <p className="text-xs text-orange-600">Personal Safety & Crisis Support</p>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function TokThruKPAPage() {
           <div className="bg-orange-600 rounded-xl p-4 text-white">
             <h4 className="font-semibold text-sm mb-2">📞 Crisis Lines</h4>
             <div className="space-y-1 text-xs text-orange-100">
-              <p>988 Suicide &amp; Crisis Lifeline</p>
+              <p>988 Suicide & Crisis Lifeline</p>
               <p>Crisis Text: Text HOME to 741741</p>
               <p>National DV Hotline: 1-800-799-7233</p>
             </div>
