@@ -1,6 +1,8 @@
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 
-const client = new Anthropic();
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 const SYSTEM_PROMPTS = {
   "scholar-gpt": `You are Scholar GPT, an academic research and study assistant integrated into TokSmart.
@@ -87,19 +89,16 @@ export async function POST(req) {
     // Select system prompt based on AI model
     const systemPrompt = SYSTEM_PROMPTS[aiModel] || SYSTEM_PROMPTS["claude"];
 
-    const completion = await client.messages.create({
-      model: "claude-3-5-sonnet-20241022",
+    const completion = await client.chat.completions.create({
+      model: "gpt-4-turbo",
       max_tokens: 1024,
-      system: systemPrompt,
       messages: [
+        { role: "system", content: systemPrompt },
         { role: "user", content: message },
       ],
     });
 
-    const response =
-      completion.content?.[0]?.type === "text"
-        ? completion.content[0].text
-        : "No response generated.";
+    const response = completion.choices?.[0]?.message?.content || "No response generated.";
 
     return Response.json({ response, aiModel });
   } catch (error) {
