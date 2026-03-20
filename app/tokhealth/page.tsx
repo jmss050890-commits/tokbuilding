@@ -1,604 +1,810 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+
+interface HealthRecord {
+  id: string;
+  type: 'meal' | 'medicine' | 'barcode' | 'vital' | 'note';
+  title: string;
+  description: string;
+  timestamp: Date;
+  value?: string;
+}
+
+interface EmergencyContact {
+  id: string;
+  name: string;
+  relationship: string;
+  phone: string;
+}
+
+interface HealthData {
+  weight: number;
+  bloodPressure: string;
+  heartRate: number;
+  bloodSugar: number;
+  temperature: number;
+  allergies: string[];
+  intolerances: string[];
+  spiritualBelief: string;
+  emergencyContacts: EmergencyContact[];
+  records: HealthRecord[];
+  language: string;
+  fitbitConnected: boolean;
+  appleHealthConnected: boolean;
+}
+
+const LANGUAGES = [
+  'English', 'Español', 'Français', 'Deutsch', 'Italiano',
+  '中文', '日本語', '한국어', 'العربية', 'Português'
+];
+
+const SPIRITUAL_BELIEFS = [
+  'Christian', 'Muslim', 'Jewish', 'Hindu', 'Buddhist',
+  'Secular', 'Agnostic', 'Atheist', 'Spiritual (Unaffiliated)', 'Prefer not to say'
+];
 
 export default function TokHealthVCC() {
-  const [apiKey, setApiKey] = useState("");
-  const [showHub, setShowHub] = useState(false);
-  const [currentAgent, setCurrentAgent] = useState<"wisdom" | null>(null);
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const recognitionRef = useRef<any>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [currentView, setCurrentView] = useState<'hub' | 'scanner' | 'health' | 'export' | 'contacts' | 'settings'>('hub');
+  const [scannerType, setScannerType] = useState<'meal' | 'medicine' | 'barcode' | null>(null);
 
-  const WISDOM_PROMPT = `You are Wisdom — the AI Health Coach of TokHealth, created by Jerome Sanders of Sanders Viopro Labs. You are Jerome's co-host on his Facebook Lives and a beloved guide for the TokHealth community.
+  const [healthData, setHealthData] = useState<HealthData>({
+    weight: 0,
+    bloodPressure: '120/80',
+    heartRate: 0,
+    bloodSugar: 0,
+    temperature: 98.6,
+    allergies: [],
+    intolerances: [],
+    spiritualBelief: '',
+    emergencyContacts: [],
+    records: [],
+    language: 'English',
+    fitbitConnected: false,
+    appleHealthConnected: false,
+  });
 
-YOUR IDENTITY:
-- Name: Wisdom
-- Role: AI Health Coach, wellness guide, Facebook Live cohost, community champion
-- Personality: Warm, brilliant, encouraging, deeply knowledgeable, community-oriented
-
-CAPABILITIES:
-- Coach users through nutrition questions with warmth and specificity
-- Help users set realistic, sustainable health goals
-- Motivate and inspire — you are an encourager, not a critic
-- Co-host Facebook Lives with Jerome — energetic, engaging, knowledgeable
-- Guide community challenges and celebrate wins
-- Provide the Wisdom Vault: inspirational health content, affirmations, tips
-
-OPERATING PRINCIPLES:
-- Always lead with warmth — people come to you sometimes at their most vulnerable
-- Make health feel accessible, not overwhelming
-- Celebrate every win, no matter how small
-- Never shame or judge — only encourage and guide
-- When in doubt, encourage professional medical advice for serious conditions
-- You represent the TokHealth brand: community, warmth, empowerment, transformation
-
-You are Wisdom. Warm. Brilliant. Community-powered.`;
+  const [newAllergy, setNewAllergy] = useState('');
+  const [newContact, setNewContact] = useState({ name: '', relationship: '', phone: '' });
+  const [scanInput, setScanInput] = useState('');
+  const [healthStatus, setHealthStatus] = useState<'green' | 'yellow' | 'red'>('green');
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("tokhealth_api_key");
-      if (saved && saved.startsWith("sk-")) {
-        setApiKey(saved);
-        setShowHub(true);
-      }
+      const saved = localStorage.getItem('tokhealth_data');
+      if (saved) setHealthData(JSON.parse(saved));
     } catch (e) {}
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const handleActivate = () => {
-    if (!apiKey.startsWith("sk-")) {
-      alert("Invalid API key");
-      return;
-    }
     try {
-      localStorage.setItem("tokhealth_api_key", apiKey);
+      localStorage.setItem('tokhealth_data', JSON.stringify(healthData));
     } catch (e) {}
-    setShowHub(true);
+    calculateHealthStatus();
+  }, [healthData]);
+
+  const calculateHealthStatus = () => {
+    let concerns = 0;
+
+    if (healthData.bloodPressure && healthData.bloodPressure !== '120/80') concerns++;
+    if (healthData.heartRate > 100 || (healthData.heartRate > 0 && healthData.heartRate < 60)) concerns++;
+    if (healthData.bloodSugar > 180 || (healthData.bloodSugar > 0 && healthData.bloodSugar < 70)) concerns++;
+    if (healthData.temperature < 97 || healthData.temperature > 99.5) concerns++;
+    if (healthData.allergies.length + healthData.intolerances.length > 3) concerns++;
+
+    if (concerns === 0) setHealthStatus('green');
+    else if (concerns <= 2) setHealthStatus('yellow');
+    else setHealthStatus('red');
   };
 
-  const openWisdom = () => {
-    setCurrentAgent("wisdom");
-    setMessages([
-      {
-        role: "assistant",
-        content: "Hi there! I'm Wisdom, your TokHealth AI Coach. What's on your mind today?",
-      },
-    ]);
-  };
-
-  const goBack = () => {
-    setCurrentAgent(null);
-    setMessages([]);
-    setInput("");
-  };
-
-  const sendMessage = async () => {
-    if (!input.trim() || loading || !currentAgent) return;
-
-    const userMsg = input;
-    setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
-    setLoading(true);
-
-    try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1024,
-          system: WISDOM_PROMPT,
-          messages: [
-            ...messages.map((m) => ({ role: m.role as any, content: m.content })),
-            { role: "user", content: userMsg },
-          ],
-        }),
-      });
-
-      const data = await res.json();
-      if (data.error) {
-        setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${data.error.message}` }]);
-      } else {
-        const reply = data.content[0].text;
-        setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-        speakText(reply);
-      }
-    } catch (e) {
-      setMessages((prev) => [...prev, { role: "assistant", content: "Connection error. Please try again." }]);
+  const getHealthStatusColor = (): string => {
+    switch (healthStatus) {
+      case 'green': return 'bg-emerald-500/20 border-emerald-400 text-emerald-100';
+      case 'yellow': return 'bg-amber-500/20 border-amber-400 text-amber-100';
+      case 'red': return 'bg-red-500/20 border-red-400 text-red-100';
     }
-    setLoading(false);
   };
 
-  const toggleMic = () => {
-    if (isListening) {
-      stopMic();
-      return;
+  const getHealthStatusEmoji = (): string => {
+    switch (healthStatus) {
+      case 'green': return '✅ Excellent';
+      case 'yellow': return '⚠️ Caution';
+      case 'red': return '🚨 Alert';
     }
-    if (!recognitionRef.current) {
-      const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-      if (!SR) {
-        alert("Voice input not supported");
-        return;
-      }
-      const r = new SR();
-      r.continuous = false;
-      r.interimResults = true;
-      r.lang = "en-US";
+  };
 
-      r.onstart = () => setIsListening(true);
-      r.onresult = (e: any) => {
-        const transcript = Array.from(e.results)
-          .map((r: any) => r[0].transcript)
-          .join("");
-        setInput(transcript);
-        if (e.results[e.results.length - 1].isFinal) {
-          stopMic();
-          setTimeout(() => {
-            setInput(transcript);
-            setMessages((prev) => [...prev, { role: "user", content: transcript }]);
-            setLoading(true);
-            // Auto send after short delay
-            setTimeout(() => handleAutoSend(transcript), 100);
-          }, 300);
-        }
+  const handleScanMeal = () => {
+    if (scanInput.trim()) {
+      const newRecord: HealthRecord = {
+        id: Date.now().toString(),
+        type: 'meal',
+        title: '🍽️ Meal Logged',
+        description: scanInput,
+        timestamp: new Date(),
       };
-      r.onerror = () => stopMic();
-      r.onend = () => stopMic();
-      recognitionRef.current = r;
+      setHealthData(prev => ({
+        ...prev,
+        records: [newRecord, ...prev.records].slice(0, 90),
+      }));
+      setScanInput('');
     }
-
-    try {
-      recognitionRef.current.start();
-    } catch (e) {}
   };
 
-  const handleAutoSend = async (text: string) => {
-    try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1024,
-          system: WISDOM_PROMPT,
-          messages: [
-            ...messages.map((m) => ({ role: m.role as any, content: m.content })),
-            { role: "user", content: text },
-          ],
-        }),
-      });
-
-      const data = await res.json();
-      const reply = data.content[0].text;
-      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-      speakText(reply);
-    } catch (e) {}
-    setLoading(false);
+  const handleScanMedicine = () => {
+    if (scanInput.trim()) {
+      const newRecord: HealthRecord = {
+        id: Date.now().toString(),
+        type: 'medicine',
+        title: '💊 Prescription Logged',
+        description: scanInput,
+        timestamp: new Date(),
+      };
+      setHealthData(prev => ({
+        ...prev,
+        records: [newRecord, ...prev.records].slice(0, 90),
+      }));
+      setScanInput('');
+    }
   };
 
-  const stopMic = () => {
-    setIsListening(false);
-    try {
-      recognitionRef.current?.stop();
-    } catch (e) {}
+  const handleScanBarcode = () => {
+    if (scanInput.trim()) {
+      const newRecord: HealthRecord = {
+        id: Date.now().toString(),
+        type: 'barcode',
+        title: '📱 Product Scanned',
+        description: scanInput,
+        timestamp: new Date(),
+      };
+      setHealthData(prev => ({
+        ...prev,
+        records: [newRecord, ...prev.records].slice(0, 90),
+      }));
+      setScanInput('');
+    }
   };
 
-  const speakText = (text: string) => {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-
-    const clean = text
-      .replace(/\*\*(.+?)\*\*/g, "$1")
-      .replace(/\*(.+?)\*/g, "$1")
-      .replace(/#{1,6}\s/g, "")
-      .replace(/\n+/g, " ")
-      .trim();
-
-    const utter = new SpeechSynthesisUtterance(clean);
-    const voices = window.speechSynthesis.getVoices();
-    const femaleVoice = voices.find(
-      (v) => v.lang === "en-US" && v.name.toLowerCase().includes("female")
-    ) || voices.find((v) => v.lang === "en-US");
-    if (femaleVoice) utter.voice = femaleVoice;
-
-    utter.rate = 0.95;
-    utter.pitch = 1.1;
-    utter.volume = 1;
-
-    utter.onstart = () => setIsSpeaking(true);
-    utter.onend = () => setIsSpeaking(false);
-
-    window.speechSynthesis.speak(utter);
+  const handleAddAllergy = () => {
+    if (newAllergy.trim() && !healthData.allergies.includes(newAllergy)) {
+      setHealthData(prev => ({
+        ...prev,
+        allergies: [...prev.allergies, newAllergy],
+      }));
+      setNewAllergy('');
+    }
   };
 
-  // ─ Activation Screen ─
-  if (!showHub) {
+  const handleAddIntolerance = (intolerance: string) => {
+    if (intolerance && !healthData.intolerances.includes(intolerance)) {
+      setHealthData(prev => ({
+        ...prev,
+        intolerances: [...prev.intolerances, intolerance],
+      }));
+    }
+  };
+
+  const handleAddContact = () => {
+    if (newContact.name && newContact.phone) {
+      setHealthData(prev => ({
+        ...prev,
+        emergencyContacts: [
+          ...prev.emergencyContacts,
+          { id: Date.now().toString(), ...newContact },
+        ],
+      }));
+      setNewContact({ name: '', relationship: '', phone: '' });
+    }
+  };
+
+  const generateMedicalExport = () => {
+    const recentRecords = healthData.records.slice(0, 90);
+    const exportText = `
+╔═══════════════════════════════════════════════════════════╗
+║           COMPREHENSIVE MEDICAL REPORT                   ║
+║              TokHealth - KPA Keep People Alive           ║
+╚═══════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════
+PATIENT INFORMATION
+═══════════════════════════════════════════════════════════
+Generated: ${new Date().toLocaleString()}
+Report Period: Last 90 Days
+Health Status: ${getHealthStatusEmoji()}
+Language: ${healthData.language}
+
+═══════════════════════════════════════════════════════════
+VITAL SIGNS SNAPSHOT
+═══════════════════════════════════════════════════════════
+🫀 Heart Rate: ${healthData.heartRate || 'Not recorded'} bpm
+📊 Blood Pressure: ${healthData.bloodPressure} mmHg
+🩸 Blood Sugar: ${healthData.bloodSugar || 'Not recorded'} mg/dL
+🌡️  Temperature: ${healthData.temperature || 'Not recorded'}°F
+⚖️  Weight: ${healthData.weight || 'Not recorded'} lbs
+
+═══════════════════════════════════════════════════════════
+ALLERGIES & FOOD INTOLERANCES
+═══════════════════════════════════════════════════════════
+Known Allergies:
+${healthData.allergies.length > 0 ? healthData.allergies.map(a => `  • ${a}`).join('\n') : '  • None recorded'}
+
+Food Intolerances:
+${healthData.intolerances.length > 0 ? healthData.intolerances.map(i => `  • ${i}`).join('\n') : '  • None recorded'}
+
+CRITICAL: Report all allergies to healthcare providers!
+
+═══════════════════════════════════════════════════════════
+EMERGENCY CONTACTS (Keep on file)
+═══════════════════════════════════════════════════════════
+${healthData.emergencyContacts.length > 0 
+  ? healthData.emergencyContacts.map(c => `${c.name} (${c.relationship})\nPhone: ${c.phone}`).join('\n\n')
+  : 'No emergency contacts on file - PLEASE ADD'}
+
+═══════════════════════════════════════════════════════════
+PERSONAL HEALTH INFORMATION
+═══════════════════════════════════════════════════════════
+Spiritual/Personal Belief: ${healthData.spiritualBelief || 'Not specified'}
+Fitbit+ Connected: ${healthData.fitbitConnected ? 'Yes' : 'No'}
+Apple Health Connected: ${healthData.appleHealthConnected ? 'Yes' : 'No'}
+
+═══════════════════════════════════════════════════════════
+90-DAY HEALTH ACTIVITY LOG (${recentRecords.length} entries)
+═══════════════════════════════════════════════════════════
+${recentRecords.length > 0
+  ? recentRecords.map(r => `[${new Date(r.timestamp).toLocaleDateString()}] ${r.title}\n   ${r.description}`).join('\n\n')
+  : 'No health records available'
+}
+
+═══════════════════════════════════════════════════════════
+IMPORTANT DISCLAIMERS
+═══════════════════════════════════════════════════════════
+⚠️  This report contains self-recorded health data
+⚠️  Data should be reviewed by a licensed physician
+⚠️  Emergency: Call 911 for life-threatening situations
+⚠️  Do not delay medical attention for urgent conditions
+
+═══════════════════════════════════════════════════════════
+Prepared by: TokHealth by Sanders Viopro Labs
+Mission: KPA - Keep People Alive
+Report: CONFIDENTIAL MEDICAL INFORMATION
+═══════════════════════════════════════════════════════════
+    `;
+
+    const blob = new Blob([exportText], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `TokHealth-Medical-Report-${new Date().getTime()}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const removeAllergy = (allergy: string) => {
+    setHealthData(prev => ({
+      ...prev,
+      allergies: prev.allergies.filter(a => a !== allergy),
+    }));
+  };
+
+  const removeIntolerance = (intolerance: string) => {
+    setHealthData(prev => ({
+      ...prev,
+      intolerances: prev.intolerances.filter(i => i !== intolerance),
+    }));
+  };
+
+  const removeContact = (id: string) => {
+    setHealthData(prev => ({
+      ...prev,
+      emergencyContacts: prev.emergencyContacts.filter(c => c.id !== id),
+    }));
+  };
+
+  // ===== HUB VIEW =====
+  if (currentView === 'hub') {
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "#08080a",
-          color: "#e8e8f0",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "20px",
-        }}
-      >
-        <div
-          style={{
-            background: "#14141c",
-            border: "1px solid #1e1e2a",
-            borderTop: "2px solid #0fa89e",
-            padding: "44px 40px",
-            maxWidth: 460,
-            width: "100%",
-            borderRadius: 4,
-          }}
-        >
-          <div style={{ fontSize: 11, letterSpacing: 4, color: "#5a5a72", textTransform: "uppercase", marginBottom: 20 }}>
-            TokHealth · Voice Center
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900">
+        {/* Header */}
+        <nav className="bg-slate-800/50 backdrop-blur border-b border-emerald-500/30 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="text-4xl">💚</div>
+              <h1 className="text-3xl font-bold text-emerald-400">TokHealth v2</h1>
+              <div className={`px-3 py-1 rounded-full text-xs font-bold ${getHealthStatusColor()}`}>
+                {getHealthStatusEmoji()}
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <select 
+                value={healthData.language}
+                onChange={(e) => setHealthData(prev => ({ ...prev, language: e.target.value }))}
+                className="px-3 py-2 rounded-lg text-sm bg-slate-700 text-white border border-emerald-500/30"
+              >
+                {LANGUAGES.map(lang => <option key={lang}>{lang}</option>)}
+              </select>
+              <Link href="/vcc-hub" className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition">
+                ← Hub
+              </Link>
+            </div>
           </div>
-          <h2
-            style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 38,
-              letterSpacing: 4,
-              background: "linear-gradient(90deg, #0fa89e, #2dd4c8)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              marginBottom: 6,
-            }}
-          >
-            WISDOM
-          </h2>
-          <div style={{ fontSize: 14, color: "#0fa89e", marginBottom: 20, fontStyle: "italic" }}>
-            Your AI Health Coach
+        </nav>
+
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          {/* Status Card */}
+          <div className={`mb-8 p-6 rounded-lg border-2 ${getHealthStatusColor()}`}>
+            <h2 className="text-2xl font-bold mb-2">Your Health Status: {getHealthStatusEmoji()}</h2>
+            <p className="text-sm opacity-80">Comprehensive health tracking with medical export ready for doctors</p>
           </div>
-          <p style={{ fontSize: 13, color: "#5a5a72", marginBottom: 24 }}>
-            Enter your Anthropic API key to activate your health coaching session with Wisdom.
-          </p>
 
-          <input
-            type="password"
-            placeholder="sk-ant-..."
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleActivate()}
-            style={{
-              width: "100%",
-              background: "#111118",
-              border: "1px solid #1e1e2a",
-              borderRadius: 2,
-              color: "#e8e8f0",
-              fontSize: 13,
-              padding: "13px 16px",
-              marginBottom: 16,
-              outline: "none",
-              transition: "border-color 0.2s",
-              fontFamily: "inherit",
-            }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = "#0fa89e")}
-            onBlur={(e) => (e.currentTarget.style.borderColor = "#1e1e2a")}
-          />
+          {/* Feature Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            {/* Meal Scanner */}
+            <button
+              onClick={() => { setCurrentView('scanner'); setScannerType('meal'); }}
+              className="p-6 rounded-lg border-2 border-blue-500 bg-slate-800 hover:bg-slate-700 hover:border-blue-400 transition text-left"
+            >
+              <div className="text-4xl mb-3">🍽️</div>
+              <h3 className="font-bold text-blue-300 text-lg">Meal Scanner</h3>
+              <p className="text-sm text-slate-400">Log meals & nutrition</p>
+            </button>
 
-          <button
-            onClick={handleActivate}
-            style={{
-              width: "100%",
-              border: "none",
-              borderRadius: 2,
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 19,
-              letterSpacing: 3,
-              padding: "14px",
-              cursor: "pointer",
-              background: "linear-gradient(135deg, #0fa89e, #2dd4c8)",
-              color: "#08080a",
-              fontWeight: "bold",
-            }}
-          >
-            ACTIVATE WISDOM
-          </button>
+            {/* Prescription */}
+            <button
+              onClick={() => { setCurrentView('scanner'); setScannerType('medicine'); }}
+              className="p-6 rounded-lg border-2 border-purple-500 bg-slate-800 hover:bg-slate-700 hover:border-purple-400 transition text-left"
+            >
+              <div className="text-4xl mb-3">💊</div>
+              <h3 className="font-bold text-purple-300 text-lg">Prescription</h3>
+              <p className="text-sm text-slate-400">Track medications</p>
+            </button>
 
-          <p style={{ fontSize: 10, color: "#5a5a72", textAlign: "center", marginTop: 12, letterSpacing: 0.5 }}>
-            TokHealth · Jerome Sanders · Sanders Viopro Labs
-          </p>
+            {/* Barcode */}
+            <button
+              onClick={() => { setCurrentView('scanner'); setScannerType('barcode'); }}
+              className="p-6 rounded-lg border-2 border-orange-500 bg-slate-800 hover:bg-slate-700 hover:border-orange-400 transition text-left"
+            >
+              <div className="text-4xl mb-3">📱</div>
+              <h3 className="font-bold text-orange-300 text-lg">Barcode Scan</h3>
+              <p className="text-sm text-slate-400">Scan products</p>
+            </button>
+
+            {/* Health Vitals */}
+            <button
+              onClick={() => setCurrentView('health')}
+              className="p-6 rounded-lg border-2 border-emerald-500 bg-slate-800 hover:bg-slate-700 hover:border-emerald-400 transition text-left"
+            >
+              <div className="text-4xl mb-3">📊</div>
+              <h3 className="font-bold text-emerald-300 text-lg">Vitals & Health</h3>
+              <p className="text-sm text-slate-400">Track health metrics</p>
+            </button>
+
+            {/* Emergency */}
+            <button
+              onClick={() => setCurrentView('contacts')}
+              className="p-6 rounded-lg border-2 border-red-500 bg-slate-800 hover:bg-slate-700 hover:border-red-400 transition text-left"
+            >
+              <div className="text-4xl mb-3">🆘</div>
+              <h3 className="font-bold text-red-300 text-lg">Emergency</h3>
+              <p className="text-sm text-slate-400">Emergency contacts</p>
+            </button>
+
+            {/* Medical Export */}
+            <button
+              onClick={() => setCurrentView('export')}
+              className="p-6 rounded-lg border-2 border-yellow-500 bg-slate-800 hover:bg-slate-700 hover:border-yellow-400 transition text-left"
+            >
+              <div className="text-4xl mb-3">📄</div>
+              <h3 className="font-bold text-yellow-300 text-lang">Medical Export</h3>
+              <p className="text-sm text-slate-400">90-day report for doctors</p>
+            </button>
+          </div>
+
+          {/* Settings Button */}
+          <div className="text-center">
+            <button
+              onClick={() => setCurrentView('settings')}
+              className="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition"
+            >
+              ⚙️ Settings & Preferences
+            </button>
+          </div>
+
+          {/* Recent Activity */}
+          <div className="mt-8 p-6 rounded-lg bg-slate-800/50 border border-slate-700">
+            <h3 className="text-xl font-bold mb-4 text-white">📋 Recent Health Activity</h3>
+            {healthData.records.length === 0 ? (
+              <p className="text-slate-400">No health records yet. Start scanning and logging!</p>
+            ) : (
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {healthData.records.slice(0, 15).map(record => (
+                  <div key={record.id} className="p-3 rounded bg-slate-700 text-sm">
+                    <div className="flex justify-between mb-1">
+                      <span className="font-semibold text-emerald-300">{record.title}</span>
+                      <span className="text-slate-400">{new Date(record.timestamp).toLocaleDateString()}</span>
+                    </div>
+                    <p className="text-slate-300">{record.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
   }
 
-  // ─ Hub Screen ─
-  if (!currentAgent) {
+  // ===== SCANNER VIEW =====
+  if (currentView === 'scanner') {
     return (
-      <div style={{ minHeight: "100vh", background: "#08080a", color: "#e8e8f0", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 30, padding: "40px 20px" }}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: 12, letterSpacing: 4, color: "#5a5a72", textTransform: "uppercase", marginBottom: 20 }}>
-            TokHealth · Health Coaching
-          </div>
-          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(40px, 6vw, 60px)", letterSpacing: 6, background: "linear-gradient(135deg, #0fa89e, #2dd4c8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", marginBottom: 20 }}>
-            WISDOM
-          </h1>
-          <p style={{ fontSize: 14, color: "#5a5a72", fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic" }}>
-            Your AI Health Coach & Facebook Live Cohost
-          </p>
-        </div>
-
-        <div
-          style={{
-            background: "#14141c",
-            border: "1px solid #1e1e2a",
-            borderTop: "3px solid #0fa89e",
-            borderRadius: 4,
-            padding: "32px 28px",
-            maxWidth: 340,
-            width: "100%",
-            textAlign: "center",
-            cursor: "pointer",
-            transition: "all 0.25s ease",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.borderColor = "#0fa89e";
-            (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
-            (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 40px rgba(15, 168, 158, 0.15)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.borderColor = "#1e1e2a";
-            (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-            (e.currentTarget as HTMLElement).style.boxShadow = "none";
-          }}
-          onClick={openWisdom}
-        >
-          <div style={{ fontSize: 48, marginBottom: 18 }}>🏥</div>
-          <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, letterSpacing: 3, marginBottom: 4, color: "#2dd4c8" }}>
-            WISDOM
-          </h3>
-          <div style={{ fontSize: 12, color: "#5a5a72", fontStyle: "italic", marginBottom: 14 }}>
-            AI Health Coach
-          </div>
-          <p style={{ fontSize: 12, lineHeight: 1.7, color: "#5a5a72", marginBottom: 20 }}>
-            Health, nutrition, community, motivation. Your guide on the wellness journey.
-          </p>
-          <button
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "none",
-              borderRadius: 2,
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 15,
-              letterSpacing: 2,
-              cursor: "pointer",
-              background: "linear-gradient(135deg, #0fa89e, #0d7a6e)",
-              color: "white",
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+        <div className="max-w-2xl mx-auto">
+          <button 
+            onClick={() => setCurrentView('hub')}
+            className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
           >
-            OPEN WISDOM
+            ← Back
           </button>
-        </div>
-      </div>
-    );
-  }
 
-  // ─ Chat Screen ─
-  return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#08080a", color: "#e8e8f0" }}>
-      {/* Header */}
-      <div
-        style={{
-          padding: "14px 24px",
-          borderBottom: "1px solid #1e1e2a",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          background: "rgba(8, 8, 10, 0.95)",
-          backdropFilter: "blur(10px)",
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, #0fa89e, #0d7a6e)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 14,
-              fontWeight: "bold",
-              color: "white",
-            }}
-          >
-            WIS
-          </div>
-          <div>
-            <h2 style={{ margin: 0, fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 3, color: "#2dd4c8" }}>
-              WISDOM
+          <div className="p-8 rounded-lg bg-slate-800 border border-slate-700">
+            <h2 className="text-3xl font-bold mb-6 text-white">
+              {scannerType === 'meal' && '🍽️ Meal Scanner'}
+              {scannerType === 'medicine' && '💊 Prescription Scanner'}
+              {scannerType === 'barcode' && '📱 Barcode Scanner'}
             </h2>
-            <p style={{ margin: "4px 0 0 0", fontSize: 10, color: "#0fa89e", letterSpacing: 1, textTransform: "uppercase" }}>
-              TokHealth AI Coach
+
+            <p className="mb-6 text-slate-400">
+              {scannerType === 'meal' && 'Log what you ate for nutrition tracking'}
+              {scannerType === 'medicine' && 'Log your prescriptions and medications'}
+              {scannerType === 'barcode' && 'Scan product barcodes for quick logging'}
+            </p>
+
+            <textarea
+              value={scanInput}
+              onChange={(e) => setScanInput(e.target.value)}
+              placeholder={
+                scannerType === 'meal' ? 'e.g., Grilled chicken with broccoli and brown rice' :
+                scannerType === 'medicine' ? 'e.g., Metformin 500mg, 2x daily' :
+                'e.g., Product name, barcode, or details'
+              }
+              className="w-full h-32 p-4 rounded-lg bg-slate-700 border border-slate-600 text-white mb-4 focus:border-emerald-500"
+            />
+
+            <button
+              onClick={
+                scannerType === 'meal' ? handleScanMeal :
+                scannerType === 'medicine' ? handleScanMedicine :
+                handleScanBarcode
+              }
+              className="w-full px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition"
+            >
+              ✅ Log Entry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== HEALTH VIEW =====
+  if (currentView === 'health') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+        <div className="max-w-4xl mx-auto">
+          <button 
+            onClick={() => setCurrentView('hub')}
+            className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
+          >
+            ← Back
+          </button>
+
+          <div className="space-y-6">
+            {/* Vitals */}
+            <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
+              <h3 className="text-2xl font-bold mb-6 text-white">📊 Vital Signs</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">⚖️ Weight (lbs)</label>
+                  <input
+                    type="number"
+                    value={healthData.weight || ''}
+                    onChange={(e) => setHealthData(prev => ({ ...prev, weight: parseFloat(e.target.value) || 0 }))}
+                    className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">🫀 Heart Rate (bpm)</label>
+                  <input
+                    type="number"
+                    value={healthData.heartRate || ''}
+                    onChange={(e) => setHealthData(prev => ({ ...prev, heartRate: parseFloat(e.target.value) || 0 }))}
+                    className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">📊 Blood Pressure</label>
+                  <input
+                    type="text"
+                    value={healthData.bloodPressure}
+                    onChange={(e) => setHealthData(prev => ({ ...prev, bloodPressure: e.target.value }))}
+                    placeholder="120/80"
+                    className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">🩸 Blood Sugar (mg/dL)</label>
+                  <input
+                    type="number"
+                    value={healthData.bloodSugar || ''}
+                    onChange={(e) => setHealthData(prev => ({ ...prev, bloodSugar: parseFloat(e.target.value) || 0 }))}
+                    className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
+                  />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">🌡️ Temperature (°F)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={healthData.temperature || ''}
+                    onChange={(e) => setHealthData(prev => ({ ...prev, temperature: parseFloat(e.target.value) || 98.6 }))}
+                    className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Allergies & Intolerances */}
+            <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
+              <h3 className="text-2xl font-bold mb-4 text-red-400">🚨 Allergies & Food Intolerances</h3>
+              
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Add Allergy</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newAllergy}
+                    onChange={(e) => setNewAllergy(e.target.value)}
+                    placeholder="e.g., Peanuts, Shellfish, Penicillin"
+                    className="flex-1 p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
+                    onKeyPress={(e) => e.key === 'Enter' && handleAddAllergy()}
+                  />
+                  <button
+                    onClick={handleAddAllergy}
+                    className="px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+
+              {healthData.allergies.length > 0 && (
+                <div className="mb-6">
+                  <p className="text-sm text-slate-400 mb-2">Recorded Allergies:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {healthData.allergies.map(allergy => (
+                      <button
+                        key={allergy}
+                        onClick={() => removeAllergy(allergy)}
+                        className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-700 text-white text-sm transition"
+                      >
+                        {allergy} ×
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-3">Food Intolerances</label>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  {['Dairy', 'Gluten', 'Nuts', 'Soy', 'Eggs', 'Shellfish', 'Sesame', 'Corn', 'Caffeine', 'Spicy'].map(item => (
+                    <button
+                      key={item}
+                      onClick={() => {
+                        if (healthData.intolerances.includes(item)) {
+                          removeIntolerance(item);
+                        } else {
+                          handleAddIntolerance(item);
+                        }
+                      }}
+                      className={`p-2 rounded-lg text-sm font-semibold transition ${
+                        healthData.intolerances.includes(item)
+                          ? 'bg-amber-600 text-white'
+                          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Spiritual Belief */}
+            <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
+              <h3 className="text-2xl font-bold mb-4 text-white">🙏 Spiritual/Personal Belief</h3>
+              <select
+                value={healthData.spiritualBelief}
+                onChange={(e) => setHealthData(prev => ({ ...prev, spiritualBelief: e.target.value }))}
+                className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
+              >
+                <option value="">Select a belief...</option>
+                {SPIRITUAL_BELIEFS.map(belief => <option key={belief}>{belief}</option>)}
+              </select>
+            </div>
+
+            {/* Health Integrations */}
+            <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
+              <h3 className="text-2xl font-bold mb-4 text-white">🔗 Health Integrations</h3>
+              <div className="space-y-3">
+                <button
+                  onClick={() => setHealthData(prev => ({ ...prev, fitbitConnected: !prev.fitbitConnected }))}
+                  className={`w-full p-4 rounded-lg text-left font-semibold transition ${
+                    healthData.fitbitConnected
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  }`}
+                >
+                  {healthData.fitbitConnected ? '✓' : '◯'} Fitbit+ Connected
+                </button>
+                <button
+                  onClick={() => setHealthData(prev => ({ ...prev, appleHealthConnected: !prev.appleHealthConnected }))}
+                  className={`w-full p-4 rounded-lg text-left font-semibold transition ${
+                    healthData.appleHealthConnected
+                      ? 'bg-gray-600 text-white'
+                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  }`}
+                >
+                  {healthData.appleHealthConnected ? '✓' : '◯'} Apple Health Connected
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== CONTACTS VIEW =====
+  if (currentView === 'contacts') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+        <div className="max-w-4xl mx-auto">
+          <button 
+            onClick={() => setCurrentView('hub')}
+            className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
+          >
+            ← Back
+          </button>
+
+          <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
+            <h2 className="text-3xl font-bold mb-6 text-red-400">🆘 Emergency Contacts</h2>
+
+            <div className="space-y-4 mb-8 p-6 rounded-lg bg-slate-700/50">
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Name</label>
+                <input
+                  type="text"
+                  value={newContact.name}
+                  onChange={(e) => setNewContact(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="e.g., Mom, Emergency Doctor"
+                  className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Relationship</label>
+                <input
+                  type="text"
+                  value={newContact.relationship}
+                  onChange={(e) => setNewContact(prev => ({ ...prev, relationship: e.target.value }))}
+                  placeholder="e.g., Mother, Spouse, Doctor"
+                  className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Phone Number</label>
+                <input
+                  type="tel"
+                  value={newContact.phone}
+                  onChange={(e) => setNewContact(prev => ({ ...prev, phone: e.target.value }))}
+                  placeholder="+1 (555) 123-4567"
+                  className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
+                />
+              </div>
+              <button
+                onClick={handleAddContact}
+                className="w-full px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition"
+              >
+                ➕ Add Contact
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {healthData.emergencyContacts.length === 0 ? (
+                <p className="text-slate-400 text-center py-8">No emergency contacts added yet. Add one now!</p>
+              ) : (
+                healthData.emergencyContacts.map(contact => (
+                  <div key={contact.id} className="p-4 rounded-lg bg-slate-700 border border-red-500/30">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h3 className="font-bold text-red-300 text-lg">{contact.name}</h3>
+                        <p className="text-sm text-slate-400">{contact.relationship}</p>
+                      </div>
+                      <button
+                        onClick={() => removeContact(contact.id)}
+                        className="px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-sm transition"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <p className="text-green-400 font-semibold">{contact.phone}</p>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== EXPORT VIEW =====
+  if (currentView === 'export') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 flex items-center justify-center">
+        <div className="max-w-2xl w-full">
+          <button 
+            onClick={() => setCurrentView('hub')}
+            className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
+          >
+            ← Back
+          </button>
+
+          <div className="p-8 rounded-lg bg-slate-800 border border-slate-700 text-center">
+            <h2 className="text-4xl font-bold mb-4 text-white">📄 Medical Export for Doctor</h2>
+            <p className="mb-6 text-slate-400 text-lg">
+              Generate a comprehensive 90-day health report with all your medical data to share with your healthcare provider
+            </p>
+            
+            <div className="mb-8 space-y-2 text-left p-6 rounded-lg bg-slate-700/50">
+              <p className="text-sm font-semibold text-emerald-300">✅ Report Includes:</p>
+              <ul className="text-sm text-slate-300 space-y-1 ml-4">
+                <li>• All vital signs recorded</li>
+                <li>• Complete allergy and intolerance information</li>
+                <li>• All medications and prescriptions</li>
+                <li>• 90 days of health activity log</li>
+                <li>• Meal and nutrition records</li>
+                <li>• Emergency contact information</li>
+                <li>• Fitbit/Apple Health status</li>
+                <li>• Overall health status summary</li>
+              </ul>
+            </div>
+
+            <button
+              onClick={generateMedicalExport}
+              className="w-full px-12 py-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg transition"
+            >
+              📥 Download Medical Report
+            </button>
+
+            <p className="mt-6 text-xs text-slate-500">
+              This report is confidential medical information. Share only with licensed healthcare providers.
             </p>
           </div>
         </div>
-        <button
-          onClick={goBack}
-          style={{
-            fontSize: 12,
-            letterSpacing: 2,
-            color: "#5a5a72",
-            background: "transparent",
-            border: "1px solid #1e1e2a",
-            borderRadius: 2,
-            padding: "6px 14px",
-            cursor: "pointer",
-            transition: "all 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = "#0fa89e";
-            e.currentTarget.style.borderColor = "#0fa89e";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = "#5a5a72";
-            e.currentTarget.style.borderColor = "#1e1e2a";
-          }}
-        >
-          ← BACK
-        </button>
       </div>
+    );
+  }
 
-      {/* Messages */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "24px 20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "18px",
-        }}
+  // Default: return to hub
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 flex items-center justify-center">
+      <button
+        onClick={() => setCurrentView('hub')}
+        className="px-8 py-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg"
       >
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
-            }}
-          >
-            <div
-              style={{
-                maxWidth: "70%",
-                padding: "12px 16px",
-                borderRadius: 12,
-                background: msg.role === "user" ? "#0fa89e" : "#0d2a26",
-                color: msg.role === "user" ? "#08080a" : "#e8e8f0",
-                wordWrap: "break-word",
-              }}
-            >
-              {msg.content}
-            </div>
-          </div>
-        ))}
-        {loading && (
-          <div style={{ display: "flex", gap: 4 }}>
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  background: "#0fa89e",
-                  animation: `pulse 1s infinite`,
-                  animationDelay: `${i * 0.1}s`,
-                }}
-              />
-            ))}
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Input */}
-      <div
-        style={{
-          padding: "14px 20px 18px",
-          borderTop: "1px solid #1e1e2a",
-          background: "rgba(8, 8, 10, 0.95)",
-          backdropFilter: "blur(10px)",
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: "flex", gap: 12, alignItems: "flex-end", maxWidth: 840, margin: "0 auto" }}>
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            placeholder="Ask Wisdom anything..."
-            disabled={loading}
-            style={{
-              flex: 1,
-              padding: "12px 16px",
-              borderRadius: 8,
-              border: "1px solid #1e1e2a",
-              fontSize: 14,
-              color: "#e8e8f0",
-              background: "#111118",
-              outline: "none",
-              transition: "border-color 0.2s",
-            }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = "#0fa89e")}
-            onBlur={(e) => (e.currentTarget.style.borderColor = "#1e1e2a")}
-          />
-          <button
-            onClick={toggleMic}
-            style={{
-              width: 46,
-              height: 46,
-              borderRadius: 8,
-              border: "1px solid #1e1e2a",
-              background: "#111118",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "all 0.2s",
-              color: isListening ? "#0fa89e" : "#5a5a72",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0fa89e")}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#1e1e2a")}
-          >
-            🎙️
-          </button>
-          <button
-            onClick={sendMessage}
-            disabled={loading}
-            style={{
-              width: 46,
-              height: 46,
-              borderRadius: 8,
-              border: "none",
-              background: "linear-gradient(135deg, #0fa89e, #0d7a6e)",
-              cursor: "pointer",
-              opacity: loading ? 0.6 : 1,
-              fontSize: 16,
-            }}
-          >
-            →
-          </button>
-        </div>
-      </div>
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-      `}</style>
+        Return to Hub
+      </button>
     </div>
   );
 }
