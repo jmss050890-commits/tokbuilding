@@ -20,6 +20,8 @@ export default function TokSmartChat() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [isVoiceAvailable, setIsVoiceAvailable] = useState(false);
+  const [showRouting, setShowRouting] = useState(false);
+  const [routingMessage, setRoutingMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
 
@@ -95,6 +97,24 @@ export default function TokSmartChat() {
     window.speechSynthesis.speak(utterance);
   };
 
+  const reasonsForSelection = {
+    'scholar-gpt': 'Scholar GPT selected because academic topics need structured learning guidance',
+    'claude': 'Claude selected because this question requires deep reasoning and analysis',
+    'chatgpt': 'ChatGPT selected because this needs creative, conversational thinking',
+    'gemini': 'Gemini selected because this question needs comprehensive research & wide knowledge',
+  };
+
+  const getReasonForSelection = (model: string): string => {
+    return reasonsForSelection[model as keyof typeof reasonsForSelection] || 'AI selected based on question type';
+  };
+
+  const otherAIs = {
+    'scholar-gpt': ['claude', 'gemini'],
+    'claude': ['scholar-gpt', 'chatgpt', 'gemini'],
+    'chatgpt': ['claude', 'gemini'],
+    'gemini': ['claude', 'scholar-gpt'],
+  };
+
   const detectAIModel = (question: string): string => {
     const lowerQuestion = question.toLowerCase();
 
@@ -158,10 +178,11 @@ export default function TokSmartChat() {
 
     if (!inputValue.trim()) return;
 
+    const userQuestion = inputValue;
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: inputValue,
+      content: userQuestion,
       timestamp: new Date(),
     };
 
@@ -170,15 +191,24 @@ export default function TokSmartChat() {
     setLoading(true);
 
     // Detect AI model based on question
-    const detectedAI = detectAIModel(inputValue);
+    const detectedAI = detectAIModel(userQuestion);
     setSelectedAI(detectedAI);
+
+    // Show routing message with animation
+    const reason = getReasonForSelection(detectedAI);
+    setShowRouting(true);
+    setRoutingMessage(`Analyzing your question… Routing to ${getAIDisplayName(detectedAI)}`);
+
+    // Wait 1 second to show the routing
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setShowRouting(false);
 
     try {
       const response = await fetch('/api/toksmart', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: inputValue,
+          message: userQuestion,
           aiModel: detectedAI,
         }),
       });
@@ -210,6 +240,56 @@ export default function TokSmartChat() {
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleTryAlternative = async (alternativeAI: string) => {
+    if (!messages.length) return;
+
+    // Get the last user message
+    const lastUserMessage = [...messages].reverse().find(m => m.role === 'user');
+    if (!lastUserMessage) return;
+
+    setSelectedAI(alternativeAI);
+    setLoading(true);
+
+    // Show routing message
+    setShowRouting(true);
+    setRoutingMessage(`Getting another perspective from ${getAIDisplayName(alternativeAI)}`);
+
+    await new Promise(resolve => setTimeout(resolve, 800));
+    setShowRouting(false);
+
+    try {
+      const response = await fetch('/api/toksmart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: lastUserMessage.content,
+          aiModel: alternativeAI,
+        }),
+      });
+
+      const data = await response.json();
+      const responseText = data.response || 'Sorry, I could not process that question.';
+
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: responseText,
+        aiModel: alternativeAI,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+
+      if (voiceEnabled) {
+        speakMessage(responseText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
     } finally {
       setLoading(false);
     }
@@ -283,26 +363,69 @@ export default function TokSmartChat() {
           </div>
         )}
 
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-xl rounded-lg p-4 ${
-                message.role === 'user'
-                  ? 'bg-white text-purple-900'
-                  : `${getAIColor(message.aiModel)} border text-white`
-              }`}
-            >
-              {message.role === 'assistant' && (
-                <p className="text-xs font-semibold mb-2 opacity-75">{getAIDisplayName(message.aiModel)}</p>
+        {messages.map((message, index) => {
+          const isLastMessage = index === messages.length - 1;
+          const isAssistantMessage = message.role === 'assistant';
+          const alternatives = isAssistantMessage && message.aiModel 
+            ? otherAIs[message.aiModel as keyof typeof otherAIs] || []
+            : [];
+
+          return (
+            <div key={message.id}>
+              <div
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-xl rounded-lg p-4 ${
+                    message.role === 'user'
+                      ? 'bg-white text-purple-900'
+                      : `${getAIColor(message.aiModel)} border text-white`
+                  }`}
+                >
+                  {message.role === 'assistant' && (
+                    <p className="text-xs font-semibold mb-2 opacity-75">{getAIDisplayName(message.aiModel)}</p>
+                  )}
+                  <p>{message.content}</p>
+                  <p className="text-xs opacity-50 mt-2">{message.timestamp.toLocaleTimeString()}</p>
+                </div>
+              </div>
+
+              {/* Show reason for selection after assistant message */}
+              {isAssistantMessage && message.aiModel && (
+                <div className="flex justify-start mt-2">
+                  <p className="text-xs text-white/70 italic px-4">
+                    ✨ {getReasonForSelection(message.aiModel)}
+                  </p>
+                </div>
               )}
-              <p>{message.content}</p>
-              <p className="text-xs opacity-50 mt-2">{message.timestamp.toLocaleTimeString()}</p>
+
+              {/* Show alternative perspective buttons after last assistant message */}
+              {isLastMessage && isAssistantMessage && alternatives.length > 0 && (
+                <div className="flex justify-start mt-3 gap-2 flex-wrap">
+                  <p className="text-xs text-white/60 w-full">🚀 Want another perspective?</p>
+                  {alternatives.map((alt) => (
+                    <button
+                      key={alt}
+                      onClick={() => handleTryAlternative(alt)}
+                      disabled={loading}
+                      className="text-xs px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-white transition disabled:opacity-50"
+                    >
+                      Try {getAIDisplayName(alt)}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {showRouting && (
+          <div className="flex justify-start">
+            <div className="bg-pink-500/30 border border-pink-400 backdrop-blur rounded-lg p-4 text-white animate-pulse">
+              <p className="text-sm font-semibold">{routingMessage}</p>
             </div>
           </div>
-        ))}
+        )}
 
         {loading && (
           <div className="flex justify-start">
