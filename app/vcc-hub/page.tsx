@@ -45,6 +45,19 @@ export default function VCCHub() {
       url: "/tokbuilding",
       mission: "Democratize AI. Build agents, scale impact.",
       features: ["Agent Designer", "Specs Generator", "Review Dashboard", "Production Ready"]
+    },
+    {
+      id: "toksmart",
+      name: "TokSmart",
+      icon: "✨",
+      role: "AI-Powered Study & Success Assistant",
+      description: "Dedicated to McKenzie. Intelligently routes questions to Scholar GPT, Gemini, ChatGPT, and Claude. For high school, college, and working students seeking academic excellence and career growth.",
+      color: "#a855f7",
+      textColor: "#d8b4fe",
+      bgGradient: "rgba(168, 85, 247, 0.1)",
+      url: "/toksmart",
+      mission: "McKenzie, you've been my world. Now TokSmart is all of ours.",
+      features: ["Smart Question Routing", "Multi-AI Comparison", "Academic Support", "Career Guidance"]
     }
   ];
 
