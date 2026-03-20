@@ -16,7 +16,12 @@ export default function TokSmartChat() {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedAI, setSelectedAI] = useState<string | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [isVoiceAvailable, setIsVoiceAvailable] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -25,6 +30,70 @@ export default function TokSmartChat() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Initialize Speech Recognition
+  useEffect(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => setIsListening(true);
+      recognition.onend = () => setIsListening(false);
+      recognition.onresult = (event: any) => {
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            setInputValue((prev) => prev + transcript);
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      setIsVoiceAvailable(true);
+    }
+  }, []);
+
+  const startListening = () => {
+    if (recognitionRef.current && !isListening) {
+      setInputValue('');
+      recognitionRef.current.start();
+    }
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current && isListening) {
+      recognitionRef.current.stop();
+    }
+  };
+
+  const speakMessage = (text: string) => {
+    if (!voiceEnabled || !('speechSynthesis' in window)) return;
+
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
+    utterance.volume = 1;
+
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
 
   const detectAIModel = (question: string): string => {
     const lowerQuestion = question.toLowerCase();
@@ -115,16 +184,22 @@ export default function TokSmartChat() {
       });
 
       const data = await response.json();
+      const responseText = data.response || 'Sorry, I could not process that question.';
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.response || 'Sorry, I could not process that question.',
+        content: responseText,
         aiModel: detectedAI,
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+
+      // Speak the response
+      if (voiceEnabled) {
+        speakMessage(responseText);
+      }
     } catch (error) {
       console.error('Error:', error);
       const errorMessage: Message = {
@@ -168,7 +243,20 @@ export default function TokSmartChat() {
           <h1 className="text-3xl font-bold text-white">TokSmart Chat</h1>
           {selectedAI && <p className="text-purple-200 text-sm">Current AI: {getAIDisplayName(selectedAI)}</p>}
         </div>
-        <div className="space-x-4">
+        <div className="flex items-center space-x-4">
+          {isSpeaking && <span className="text-pink-300 text-sm animate-pulse">🔊 Speaking...</span>}
+          {isVoiceAvailable && (
+            <button
+              onClick={() => setVoiceEnabled(!voiceEnabled)}
+              className={`px-4 py-2 rounded-lg font-semibold transition ${
+                voiceEnabled
+                  ? 'bg-pink-500 text-white hover:bg-pink-600'
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              {voiceEnabled ? '🔊 Voice ON' : '🔇 Voice OFF'}
+            </button>
+          )}
           <Link href="/toksmart" className="text-white hover:text-purple-200 transition">
             Back to Hub
           </Link>
@@ -234,6 +322,21 @@ export default function TokSmartChat() {
       {/* Input Form */}
       <div className="bg-black/20 backdrop-blur-sm border-t border-white/10 p-6">
         <form onSubmit={handleSendMessage} className="flex gap-4">
+          {isVoiceAvailable && (
+            <button
+              type="button"
+              onClick={isListening ? stopListening : startListening}
+              disabled={loading}
+              className={`px-4 py-3 rounded-lg font-bold transition ${
+                isListening
+                  ? 'bg-red-500 text-white hover:bg-red-600 animate-pulse'
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              } disabled:opacity-50`}
+              title={isListening ? 'Stop listening' : 'Start listening'}
+            >
+              {isListening ? '🎤 Listening...' : '🎤'}
+            </button>
+          )}
           <input
             type="text"
             value={inputValue}
