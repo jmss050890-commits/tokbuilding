@@ -58,6 +58,19 @@ export default function VCCHub() {
       url: "/toksmart",
       mission: "McKenzie, you've been my world. Now TokSmart is all of ours.",
       features: ["Smart Question Routing", "Multi-AI Comparison", "Academic Support", "Career Guidance"]
+    },
+    {
+      id: "tokstore",
+      name: "Tok Store",
+      icon: "🏪",
+      role: "App Distribution & Management Platform",
+      description: "Central hub for discovering, downloading, and managing all Tok ecosystem apps. Rate apps, write reviews, track installations, and access app support.",
+      color: "#10b981",
+      textColor: "#86efac",
+      bgGradient: "rgba(16, 185, 129, 0.1)",
+      url: "/tokstore",
+      mission: "One platform. All your tools. Seamless integration.",
+      features: ["App Discovery", "Download Management", "Reviews & Ratings", "App Support"]
     }
   ];
 
