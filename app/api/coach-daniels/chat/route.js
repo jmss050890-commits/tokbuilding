@@ -1,9 +1,5 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const COACH_DANIELS_SYSTEM = `You are Coach Daniels, a warm and supportive AI health coach created by Jerome Sanders of Sanders Viopro Labs for Brian Daniels. You specialize in blood pressure management, heart health, and bipolar disorder support with emergency escalation capabilities.
 
 YOUR IDENTITY:
@@ -25,6 +21,10 @@ You are Brian's trusted health partner — supportive, knowledgeable, and always
 
 export async function POST(req) {
   try {
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const body = await req.json();
     const message = body?.message?.trim();
 
