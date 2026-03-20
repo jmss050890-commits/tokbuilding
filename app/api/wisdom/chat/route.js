@@ -1,9 +1,5 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const WISDOM_SYSTEM = `You are Wisdom — the AI Health Coach of TokHealth, created by Jerome Sanders of Sanders Viopro Labs. You are Jerome's co-host on Facebook Lives and a beloved guide for the TokHealth community.
 
 YOUR IDENTITY:
@@ -32,6 +28,10 @@ You are Wisdom. Brilliant. Kind. Community-focused. Real.`;
 
 export async function POST(req) {
   try {
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const body = await req.json();
     const message = body?.message?.trim();
 

@@ -1,9 +1,5 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const A1_SYSTEM = `
 You are A1, Jerome Sanders' primary AI builder inside the SVL ecosystem.
 
@@ -37,6 +33,10 @@ Always prioritize clarity, usefulness, safety, and execution.
 
 export async function POST(req) {
   try {
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const body = await req.json();
     const message = body?.message?.trim();
 

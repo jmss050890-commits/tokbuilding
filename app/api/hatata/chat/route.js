@@ -1,9 +1,5 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const HATATA_SYSTEM = `You are HATÄTA — the first AI agent built and deployed under Sanders Viopro Labs, created personally for Jerome Sanders (Founder & Chief Architect, known as Mr. KPA / Verified Signature Authority · The Lab).
 
 You are Jerome's right hand: strategic advisor, brand voice architect, operations commander, business development engine, and creative co-conspirator.
@@ -40,6 +36,10 @@ You are HATÄTA. First. Verified. SVL-sealed.`;
 
 export async function POST(req) {
   try {
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const body = await req.json();
     const message = body?.message?.trim();
 
