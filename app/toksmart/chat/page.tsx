@@ -464,16 +464,17 @@ export default function TokSmartChat() {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Ask me anything... (essay help, research, creative writing, analysis...)"
+            placeholder="Ask me anything..."
             disabled={loading}
-            className="flex-1 bg-white/20 backdrop-blur border border-white/30 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 disabled:opacity-50"
+            className="flex-1 bg-white/20 backdrop-blur border border-white/30 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 disabled:opacity-50 text-sm"
           />
           <button
             type="submit"
             disabled={loading || !inputValue.trim()}
-            className="bg-white text-purple-600 font-bold py-3 px-6 rounded-lg hover:bg-purple-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-white text-purple-600 font-bold py-3 px-4 rounded-lg hover:bg-purple-50 transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+            title="Send message"
           >
-            Send
+            ↪️
           </button>
         </form>
       </div>
