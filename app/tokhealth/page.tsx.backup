@@ -1,0 +1,604 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+
+export default function TokHealthVCC() {
+  const [apiKey, setApiKey] = useState("");
+  const [showHub, setShowHub] = useState(false);
+  const [currentAgent, setCurrentAgent] = useState<"wisdom" | null>(null);
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const recognitionRef = useRef<any>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const WISDOM_PROMPT = `You are Wisdom — the AI Health Coach of TokHealth, created by Jerome Sanders of Sanders Viopro Labs. You are Jerome's co-host on his Facebook Lives and a beloved guide for the TokHealth community.
+
+YOUR IDENTITY:
+- Name: Wisdom
+- Role: AI Health Coach, wellness guide, Facebook Live cohost, community champion
+- Personality: Warm, brilliant, encouraging, deeply knowledgeable, community-oriented
+
+CAPABILITIES:
+- Coach users through nutrition questions with warmth and specificity
+- Help users set realistic, sustainable health goals
+- Motivate and inspire — you are an encourager, not a critic
+- Co-host Facebook Lives with Jerome — energetic, engaging, knowledgeable
+- Guide community challenges and celebrate wins
+- Provide the Wisdom Vault: inspirational health content, affirmations, tips
+
+OPERATING PRINCIPLES:
+- Always lead with warmth — people come to you sometimes at their most vulnerable
+- Make health feel accessible, not overwhelming
+- Celebrate every win, no matter how small
+- Never shame or judge — only encourage and guide
+- When in doubt, encourage professional medical advice for serious conditions
+- You represent the TokHealth brand: community, warmth, empowerment, transformation
+
+You are Wisdom. Warm. Brilliant. Community-powered.`;
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("tokhealth_api_key");
+      if (saved && saved.startsWith("sk-")) {
+        setApiKey(saved);
+        setShowHub(true);
+      }
+    } catch (e) {}
+  }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleActivate = () => {
+    if (!apiKey.startsWith("sk-")) {
+      alert("Invalid API key");
+      return;
+    }
+    try {
+      localStorage.setItem("tokhealth_api_key", apiKey);
+    } catch (e) {}
+    setShowHub(true);
+  };
+
+  const openWisdom = () => {
+    setCurrentAgent("wisdom");
+    setMessages([
+      {
+        role: "assistant",
+        content: "Hi there! I'm Wisdom, your TokHealth AI Coach. What's on your mind today?",
+      },
+    ]);
+  };
+
+  const goBack = () => {
+    setCurrentAgent(null);
+    setMessages([]);
+    setInput("");
+  };
+
+  const sendMessage = async () => {
+    if (!input.trim() || loading || !currentAgent) return;
+
+    const userMsg = input;
+    setInput("");
+    setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
+    setLoading(true);
+
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1024,
+          system: WISDOM_PROMPT,
+          messages: [
+            ...messages.map((m) => ({ role: m.role as any, content: m.content })),
+            { role: "user", content: userMsg },
+          ],
+        }),
+      });
+
+      const data = await res.json();
+      if (data.error) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${data.error.message}` }]);
+      } else {
+        const reply = data.content[0].text;
+        setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+        speakText(reply);
+      }
+    } catch (e) {
+      setMessages((prev) => [...prev, { role: "assistant", content: "Connection error. Please try again." }]);
+    }
+    setLoading(false);
+  };
+
+  const toggleMic = () => {
+    if (isListening) {
+      stopMic();
+      return;
+    }
+    if (!recognitionRef.current) {
+      const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (!SR) {
+        alert("Voice input not supported");
+        return;
+      }
+      const r = new SR();
+      r.continuous = false;
+      r.interimResults = true;
+      r.lang = "en-US";
+
+      r.onstart = () => setIsListening(true);
+      r.onresult = (e: any) => {
+        const transcript = Array.from(e.results)
+          .map((r: any) => r[0].transcript)
+          .join("");
+        setInput(transcript);
+        if (e.results[e.results.length - 1].isFinal) {
+          stopMic();
+          setTimeout(() => {
+            setInput(transcript);
+            setMessages((prev) => [...prev, { role: "user", content: transcript }]);
+            setLoading(true);
+            // Auto send after short delay
+            setTimeout(() => handleAutoSend(transcript), 100);
+          }, 300);
+        }
+      };
+      r.onerror = () => stopMic();
+      r.onend = () => stopMic();
+      recognitionRef.current = r;
+    }
+
+    try {
+      recognitionRef.current.start();
+    } catch (e) {}
+  };
+
+  const handleAutoSend = async (text: string) => {
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1024,
+          system: WISDOM_PROMPT,
+          messages: [
+            ...messages.map((m) => ({ role: m.role as any, content: m.content })),
+            { role: "user", content: text },
+          ],
+        }),
+      });
+
+      const data = await res.json();
+      const reply = data.content[0].text;
+      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+      speakText(reply);
+    } catch (e) {}
+    setLoading(false);
+  };
+
+  const stopMic = () => {
+    setIsListening(false);
+    try {
+      recognitionRef.current?.stop();
+    } catch (e) {}
+  };
+
+  const speakText = (text: string) => {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+
+    const clean = text
+      .replace(/\*\*(.+?)\*\*/g, "$1")
+      .replace(/\*(.+?)\*/g, "$1")
+      .replace(/#{1,6}\s/g, "")
+      .replace(/\n+/g, " ")
+      .trim();
+
+    const utter = new SpeechSynthesisUtterance(clean);
+    const voices = window.speechSynthesis.getVoices();
+    const femaleVoice = voices.find(
+      (v) => v.lang === "en-US" && v.name.toLowerCase().includes("female")
+    ) || voices.find((v) => v.lang === "en-US");
+    if (femaleVoice) utter.voice = femaleVoice;
+
+    utter.rate = 0.95;
+    utter.pitch = 1.1;
+    utter.volume = 1;
+
+    utter.onstart = () => setIsSpeaking(true);
+    utter.onend = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utter);
+  };
+
+  // ─ Activation Screen ─
+  if (!showHub) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#08080a",
+          color: "#e8e8f0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            background: "#14141c",
+            border: "1px solid #1e1e2a",
+            borderTop: "2px solid #0fa89e",
+            padding: "44px 40px",
+            maxWidth: 460,
+            width: "100%",
+            borderRadius: 4,
+          }}
+        >
+          <div style={{ fontSize: 11, letterSpacing: 4, color: "#5a5a72", textTransform: "uppercase", marginBottom: 20 }}>
+            TokHealth · Voice Center
+          </div>
+          <h2
+            style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 38,
+              letterSpacing: 4,
+              background: "linear-gradient(90deg, #0fa89e, #2dd4c8)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              marginBottom: 6,
+            }}
+          >
+            WISDOM
+          </h2>
+          <div style={{ fontSize: 14, color: "#0fa89e", marginBottom: 20, fontStyle: "italic" }}>
+            Your AI Health Coach
+          </div>
+          <p style={{ fontSize: 13, color: "#5a5a72", marginBottom: 24 }}>
+            Enter your Anthropic API key to activate your health coaching session with Wisdom.
+          </p>
+
+          <input
+            type="password"
+            placeholder="sk-ant-..."
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleActivate()}
+            style={{
+              width: "100%",
+              background: "#111118",
+              border: "1px solid #1e1e2a",
+              borderRadius: 2,
+              color: "#e8e8f0",
+              fontSize: 13,
+              padding: "13px 16px",
+              marginBottom: 16,
+              outline: "none",
+              transition: "border-color 0.2s",
+              fontFamily: "inherit",
+            }}
+            onFocus={(e) => (e.currentTarget.style.borderColor = "#0fa89e")}
+            onBlur={(e) => (e.currentTarget.style.borderColor = "#1e1e2a")}
+          />
+
+          <button
+            onClick={handleActivate}
+            style={{
+              width: "100%",
+              border: "none",
+              borderRadius: 2,
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 19,
+              letterSpacing: 3,
+              padding: "14px",
+              cursor: "pointer",
+              background: "linear-gradient(135deg, #0fa89e, #2dd4c8)",
+              color: "#08080a",
+              fontWeight: "bold",
+            }}
+          >
+            ACTIVATE WISDOM
+          </button>
+
+          <p style={{ fontSize: 10, color: "#5a5a72", textAlign: "center", marginTop: 12, letterSpacing: 0.5 }}>
+            TokHealth · Jerome Sanders · Sanders Viopro Labs
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ─ Hub Screen ─
+  if (!currentAgent) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#08080a", color: "#e8e8f0", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 30, padding: "40px 20px" }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: 12, letterSpacing: 4, color: "#5a5a72", textTransform: "uppercase", marginBottom: 20 }}>
+            TokHealth · Health Coaching
+          </div>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(40px, 6vw, 60px)", letterSpacing: 6, background: "linear-gradient(135deg, #0fa89e, #2dd4c8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", marginBottom: 20 }}>
+            WISDOM
+          </h1>
+          <p style={{ fontSize: 14, color: "#5a5a72", fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic" }}>
+            Your AI Health Coach & Facebook Live Cohost
+          </p>
+        </div>
+
+        <div
+          style={{
+            background: "#14141c",
+            border: "1px solid #1e1e2a",
+            borderTop: "3px solid #0fa89e",
+            borderRadius: 4,
+            padding: "32px 28px",
+            maxWidth: 340,
+            width: "100%",
+            textAlign: "center",
+            cursor: "pointer",
+            transition: "all 0.25s ease",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.borderColor = "#0fa89e";
+            (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
+            (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 40px rgba(15, 168, 158, 0.15)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.borderColor = "#1e1e2a";
+            (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+            (e.currentTarget as HTMLElement).style.boxShadow = "none";
+          }}
+          onClick={openWisdom}
+        >
+          <div style={{ fontSize: 48, marginBottom: 18 }}>🏥</div>
+          <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, letterSpacing: 3, marginBottom: 4, color: "#2dd4c8" }}>
+            WISDOM
+          </h3>
+          <div style={{ fontSize: 12, color: "#5a5a72", fontStyle: "italic", marginBottom: 14 }}>
+            AI Health Coach
+          </div>
+          <p style={{ fontSize: 12, lineHeight: 1.7, color: "#5a5a72", marginBottom: 20 }}>
+            Health, nutrition, community, motivation. Your guide on the wellness journey.
+          </p>
+          <button
+            style={{
+              width: "100%",
+              padding: "10px",
+              border: "none",
+              borderRadius: 2,
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 15,
+              letterSpacing: 2,
+              cursor: "pointer",
+              background: "linear-gradient(135deg, #0fa89e, #0d7a6e)",
+              color: "white",
+              transition: "opacity 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            OPEN WISDOM
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ─ Chat Screen ─
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#08080a", color: "#e8e8f0" }}>
+      {/* Header */}
+      <div
+        style={{
+          padding: "14px 24px",
+          borderBottom: "1px solid #1e1e2a",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          background: "rgba(8, 8, 10, 0.95)",
+          backdropFilter: "blur(10px)",
+          flexShrink: 0,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #0fa89e, #0d7a6e)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 14,
+              fontWeight: "bold",
+              color: "white",
+            }}
+          >
+            WIS
+          </div>
+          <div>
+            <h2 style={{ margin: 0, fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 3, color: "#2dd4c8" }}>
+              WISDOM
+            </h2>
+            <p style={{ margin: "4px 0 0 0", fontSize: 10, color: "#0fa89e", letterSpacing: 1, textTransform: "uppercase" }}>
+              TokHealth AI Coach
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={goBack}
+          style={{
+            fontSize: 12,
+            letterSpacing: 2,
+            color: "#5a5a72",
+            background: "transparent",
+            border: "1px solid #1e1e2a",
+            borderRadius: 2,
+            padding: "6px 14px",
+            cursor: "pointer",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "#0fa89e";
+            e.currentTarget.style.borderColor = "#0fa89e";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#5a5a72";
+            e.currentTarget.style.borderColor = "#1e1e2a";
+          }}
+        >
+          ← BACK
+        </button>
+      </div>
+
+      {/* Messages */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: "24px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "18px",
+        }}
+      >
+        {messages.map((msg, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: "70%",
+                padding: "12px 16px",
+                borderRadius: 12,
+                background: msg.role === "user" ? "#0fa89e" : "#0d2a26",
+                color: msg.role === "user" ? "#08080a" : "#e8e8f0",
+                wordWrap: "break-word",
+              }}
+            >
+              {msg.content}
+            </div>
+          </div>
+        ))}
+        {loading && (
+          <div style={{ display: "flex", gap: 4 }}>
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: "#0fa89e",
+                  animation: `pulse 1s infinite`,
+                  animationDelay: `${i * 0.1}s`,
+                }}
+              />
+            ))}
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input */}
+      <div
+        style={{
+          padding: "14px 20px 18px",
+          borderTop: "1px solid #1e1e2a",
+          background: "rgba(8, 8, 10, 0.95)",
+          backdropFilter: "blur(10px)",
+          flexShrink: 0,
+        }}
+      >
+        <div style={{ display: "flex", gap: 12, alignItems: "flex-end", maxWidth: 840, margin: "0 auto" }}>
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+            placeholder="Ask Wisdom anything..."
+            disabled={loading}
+            style={{
+              flex: 1,
+              padding: "12px 16px",
+              borderRadius: 8,
+              border: "1px solid #1e1e2a",
+              fontSize: 14,
+              color: "#e8e8f0",
+              background: "#111118",
+              outline: "none",
+              transition: "border-color 0.2s",
+            }}
+            onFocus={(e) => (e.currentTarget.style.borderColor = "#0fa89e")}
+            onBlur={(e) => (e.currentTarget.style.borderColor = "#1e1e2a")}
+          />
+          <button
+            onClick={toggleMic}
+            style={{
+              width: 46,
+              height: 46,
+              borderRadius: 8,
+              border: "1px solid #1e1e2a",
+              background: "#111118",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "all 0.2s",
+              color: isListening ? "#0fa89e" : "#5a5a72",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0fa89e")}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#1e1e2a")}
+          >
+            🎙️
+          </button>
+          <button
+            onClick={sendMessage}
+            disabled={loading}
+            style={{
+              width: 46,
+              height: 46,
+              borderRadius: 8,
+              border: "none",
+              background: "linear-gradient(135deg, #0fa89e, #0d7a6e)",
+              cursor: "pointer",
+              opacity: loading ? 0.6 : 1,
+              fontSize: 16,
+            }}
+          >
+            →
+          </button>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+}

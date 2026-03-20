@@ -10,6 +10,7 @@ interface HealthRecord {
   description: string;
   timestamp: Date;
   value?: string;
+  photo?: string;
 }
 
 interface EmergencyContact {
@@ -46,8 +47,115 @@ const SPIRITUAL_BELIEFS = [
 ];
 
 export default function TokHealthVCC() {
-  const [currentView, setCurrentView] = useState<'hub' | 'scanner' | 'health' | 'export' | 'contacts' | 'settings'>('hub');
+  const [currentView, setCurrentView] = useState<'hub' | 'scanner' | 'health' | 'export' | 'contacts' | 'settings' | 'wisdom'>('hub');
   const [scannerType, setScannerType] = useState<'meal' | 'medicine' | 'barcode' | null>(null);
+
+  // Voice functionality
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  // Camera functionality
+  const [showCamera, setShowCamera] = useState(false);
+  const [cameraActive, setCameraActive] = useState(false);
+  const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+      if (SpeechRecognition) {
+        recognitionRef.current = new SpeechRecognition();
+        recognitionRef.current.continuous = false;
+        recognitionRef.current.interimResults = false;
+        recognitionRef.current.lang = 'en-US';
+        
+        recognitionRef.current.onresult = (event: any) => {
+          const transcript = event.results[0][0].transcript;
+          setScanInput(prev => (prev ? prev + ' ' + transcript : transcript));
+          speakMessage(`Recorded: ${transcript}`);
+        };
+        
+        recognitionRef.current.onend = () => setIsListening(false);
+      }
+    }
+  }, [voiceEnabled]);
+
+  const startListening = () => {
+    if (recognitionRef.current) {
+      setIsListening(true);
+      recognitionRef.current.start();
+    }
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
+  };
+
+  const speakMessage = (text: string) => {
+    if (voiceEnabled && typeof window !== 'undefined') {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Camera functions
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }, // Use rear camera
+        audio: false,
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setCameraActive(true);
+      speakMessage('Camera activated. Frame your item and tap Capture Photo.');
+    } catch (error) {
+      console.error('Camera error:', error);
+      alert('Unable to access camera. Please check permissions.');
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    setCameraActive(false);
+    setShowCamera(false);
+  };
+
+  const capturePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const context = canvasRef.current.getContext('2d');
+      if (context) {
+        canvasRef.current.width = videoRef.current.videoWidth;
+        canvasRef.current.height = videoRef.current.videoHeight;
+        context.drawImage(videoRef.current, 0, 0);
+        const photoData = canvasRef.current.toDataURL('image/jpeg', 0.8);
+        setCapturedPhoto(photoData);
+        stopCamera();
+        speakMessage('Photo captured. Add description and log entry.');
+      }
+    }
+  };
+
+  const clearPhoto = () => {
+    setCapturedPhoto(null);
+    setScanInput('');
+  };
 
   const [healthData, setHealthData] = useState<HealthData>({
     weight: 0,
@@ -115,53 +223,62 @@ export default function TokHealthVCC() {
   };
 
   const handleScanMeal = () => {
-    if (scanInput.trim()) {
+    if (scanInput.trim() || capturedPhoto) {
       const newRecord: HealthRecord = {
         id: Date.now().toString(),
         type: 'meal',
         title: '🍽️ Meal Logged',
         description: scanInput,
         timestamp: new Date(),
+        photo: capturedPhoto || undefined,
       };
       setHealthData(prev => ({
         ...prev,
         records: [newRecord, ...prev.records].slice(0, 90),
       }));
+      speakMessage(`Meal logged: ${scanInput}`);
       setScanInput('');
+      setCapturedPhoto(null);
     }
   };
 
   const handleScanMedicine = () => {
-    if (scanInput.trim()) {
+    if (scanInput.trim() || capturedPhoto) {
       const newRecord: HealthRecord = {
         id: Date.now().toString(),
         type: 'medicine',
         title: '💊 Prescription Logged',
         description: scanInput,
         timestamp: new Date(),
+        photo: capturedPhoto || undefined,
       };
       setHealthData(prev => ({
         ...prev,
         records: [newRecord, ...prev.records].slice(0, 90),
       }));
+      speakMessage(`Medication logged: ${scanInput}`);
       setScanInput('');
+      setCapturedPhoto(null);
     }
   };
 
   const handleScanBarcode = () => {
-    if (scanInput.trim()) {
+    if (scanInput.trim() || capturedPhoto) {
       const newRecord: HealthRecord = {
         id: Date.now().toString(),
         type: 'barcode',
         title: '📱 Product Scanned',
         description: scanInput,
         timestamp: new Date(),
+        photo: capturedPhoto || undefined,
       };
       setHealthData(prev => ({
         ...prev,
         records: [newRecord, ...prev.records].slice(0, 90),
       }));
+      speakMessage(`Product scanned: ${scanInput}`);
       setScanInput('');
+      setCapturedPhoto(null);
     }
   };
 
@@ -316,6 +433,20 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setVoiceEnabled(!voiceEnabled)}
+                className={`px-3 py-2 rounded-lg text-sm font-bold transition ${
+                  voiceEnabled ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-300'
+                }`}
+                title="Toggle text-to-speech"
+              >
+                {voiceEnabled ? '🔊' : '🔇'}
+              </button>
+              {isSpeaking && (
+                <span className="text-xs text-emerald-300 font-semibold animate-pulse">
+                  🔊 Speaking...
+                </span>
+              )}
               <select 
                 value={healthData.language}
                 onChange={(e) => setHealthData(prev => ({ ...prev, language: e.target.value }))}
@@ -395,8 +526,18 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-yellow-500 bg-slate-800 hover:bg-slate-700 hover:border-yellow-400 transition text-left"
             >
               <div className="text-4xl mb-3">📄</div>
-              <h3 className="font-bold text-yellow-300 text-lang">Medical Export</h3>
+              <h3 className="font-bold text-yellow-300 text-lg">Medical Export</h3>
               <p className="text-sm text-slate-400">90-day report for doctors</p>
+            </button>
+
+            {/* AI Coach - Wisdom */}
+            <button
+              onClick={() => setCurrentView('wisdom')}
+              className="p-6 rounded-lg border-2 border-teal-500 bg-slate-800 hover:bg-slate-700 hover:border-teal-400 transition text-left"
+            >
+              <div className="text-4xl mb-3">✨</div>
+              <h3 className="font-bold text-teal-300 text-lg">Wisdom AI Coach</h3>
+              <p className="text-sm text-slate-400">Health guidance & support</p>
             </button>
           </div>
 
@@ -438,27 +579,73 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
   if (currentView === 'scanner') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <button 
-            onClick={() => setCurrentView('hub')}
+            onClick={() => {
+              setCurrentView('hub');
+              stopCamera();
+            }}
             className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
           >
             ← Back
           </button>
 
           <div className="p-8 rounded-lg bg-slate-800 border border-slate-700">
-            <h2 className="text-3xl font-bold mb-6 text-white">
+            <h2 className="text-3xl font-bold mb-2 text-white">
               {scannerType === 'meal' && '🍽️ Meal Scanner'}
               {scannerType === 'medicine' && '💊 Prescription Scanner'}
               {scannerType === 'barcode' && '📱 Barcode Scanner'}
             </h2>
 
-            <p className="mb-6 text-slate-400">
-              {scannerType === 'meal' && 'Log what you ate for nutrition tracking'}
-              {scannerType === 'medicine' && 'Log your prescriptions and medications'}
-              {scannerType === 'barcode' && 'Scan product barcodes for quick logging'}
+            <p className="mb-6 text-slate-400 text-sm">
+              {scannerType === 'meal' && 'Take a photo of your meal or type description'}
+              {scannerType === 'medicine' && 'Take a photo of your prescription label or type details'}
+              {scannerType === 'barcode' && 'Take a photo of the barcode or type product info'}
             </p>
 
+            {/* Camera Active View */}
+            {cameraActive && showCamera ? (
+              <div className="mb-6 space-y-4">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  className="w-full rounded-lg border-2 border-emerald-500"
+                />
+                <div className="flex gap-3">
+                  <button
+                    onClick={capturePhoto}
+                    className="flex-1 px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition"
+                  >
+                    📸 Capture Photo
+                  </button>
+                  <button
+                    onClick={stopCamera}
+                    className="px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition"
+                  >
+                    ✕ Cancel
+                  </button>
+                </div>
+              </div>
+            ) : null}
+
+            {/* Photo Preview */}
+            {capturedPhoto && (
+              <div className="mb-6">
+                <div className="relative rounded-lg overflow-hidden border-2 border-emerald-500">
+                  <img src={capturedPhoto} alt="Captured" className="w-full h-64 object-cover" />
+                  <button
+                    onClick={clearPhoto}
+                    className="absolute top-2 right-2 px-3 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-bold"
+                  >
+                    ✕ Clear
+                  </button>
+                </div>
+                <p className="text-sm text-emerald-300 mt-2">Photo captured - add description below</p>
+              </div>
+            )}
+
+            {/* Text Input */}
             <textarea
               value={scanInput}
               onChange={(e) => setScanInput(e.target.value)}
@@ -470,18 +657,56 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="w-full h-32 p-4 rounded-lg bg-slate-700 border border-slate-600 text-white mb-4 focus:border-emerald-500"
             />
 
-            <button
-              onClick={
-                scannerType === 'meal' ? handleScanMeal :
-                scannerType === 'medicine' ? handleScanMedicine :
-                handleScanBarcode
-              }
-              className="w-full px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition"
-            >
-              ✅ Log Entry
-            </button>
+            {/* Action Buttons */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 mb-4">
+              <button
+                onClick={() => {
+                  setShowCamera(true);
+                  if (!cameraActive) {
+                    startCamera();
+                  }
+                }}
+                disabled={cameraActive}
+                className="px-2 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold transition disabled:opacity-50 text-xs sm:text-sm whitespace-nowrap"
+              >
+                📷 Photo
+              </button>
+              <button
+                onClick={
+                  scannerType === 'meal' ? handleScanMeal :
+                  scannerType === 'medicine' ? handleScanMedicine :
+                  handleScanBarcode
+                }
+                disabled={!scanInput.trim() && !capturedPhoto}
+                className="px-2 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition disabled:opacity-50 text-xs sm:text-sm whitespace-nowrap"
+              >
+                ✅ Log
+              </button>
+              <button
+                onClick={startListening}
+                disabled={isListening || cameraActive}
+                className={`px-2 py-3 rounded-lg font-bold transition text-xs sm:text-sm whitespace-nowrap ${
+                  isListening
+                    ? 'bg-red-600 text-white animate-pulse'
+                    : cameraActive
+                    ? 'bg-slate-600 text-slate-400'
+                    : 'bg-slate-700 hover:bg-slate-600 text-white'
+                }`}
+              >
+                {isListening ? '🎤...' : '🎤 Voice'}
+              </button>
+            </div>
+
+            {isListening && (
+              <div className="text-center text-emerald-300 text-sm font-semibold">
+                Listening for your input...
+              </div>
+            )}
           </div>
         </div>
+
+        {/* Hidden canvas for photo capture */}
+        <canvas ref={canvasRef} style={{ display: 'none' }} />
       </div>
     );
   }
@@ -790,6 +1015,42 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             <p className="mt-6 text-xs text-slate-500">
               This report is confidential medical information. Share only with licensed healthcare providers.
             </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== WISDOM AI COACH VIEW =====
+  if (currentView === 'wisdom') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+        <div className="max-w-3xl mx-auto">
+          <button 
+            onClick={() => setCurrentView('hub')}
+            className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
+          >
+            ← Back to Hub
+          </button>
+
+          <div className="p-8 rounded-lg bg-slate-800 border border-teal-700">
+            <h1 className="text-4xl font-bold mb-2 text-white flex items-center gap-3">
+              ✨ Wisdom - Your AI Health Coach
+            </h1>
+            <p className="text-slate-400 mb-6">Created by Jerome Sanders - Co-host on Facebook Live</p>
+            
+            <div className="bg-teal-900 bg-opacity-30 border border-teal-700 rounded-lg p-6 mb-6 text-center">
+              <p className="text-teal-200 text-lg font-semibold">
+                Ready to chat with Wisdom? Click below to start a conversation about your health journey.
+              </p>
+            </div>
+
+            <Link 
+              href="/agent/wisdom"
+              className="w-full block px-6 py-4 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold text-center transition text-lg"
+            >
+              💬 Open Wisdom Chat
+            </Link>
           </div>
         </div>
       </div>
