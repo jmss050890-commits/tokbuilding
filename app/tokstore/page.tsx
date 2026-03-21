@@ -184,16 +184,16 @@ const products: Product[] = [
     plans: [
       {
         name: 'Starter',
-        price: 4.99,
+        price: 24.99,
         type: 'one-time',
-        description: 'Build a basic AI agent',
+        description: 'Perfect for new users learning to build AI agents',
         features: ['Single agent creation', 'Basic customization', 'Standard deployment', 'Email support', 'Agent dashboard']
       },
       {
         name: 'Pro',
-        price: 9.99,
+        price: 59.99,
         type: 'one-time',
-        description: 'Unlimited agent creation',
+        description: 'For power users creating agents for their business fast',
         features: ['Unlimited agents', 'Advanced customization', 'Priority deployment', 'Phone & email support', 'Analytics dashboard', 'Integration tools']
       }
     ],
