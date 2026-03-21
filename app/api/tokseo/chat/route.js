@@ -119,11 +119,14 @@ Use this data to provide specific, data-backed recommendations to the user.`;
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    const response = await client.messages.create({
-      model: "claude-3-5-sonnet-20241022",
+    const response = await client.chat.completions.create({
+      model: "gpt-4o-mini",
       max_tokens: 1024,
-      system: TOKSEO_SYSTEM + contextData,
       messages: [
+        {
+          role: "system",
+          content: TOKSEO_SYSTEM + contextData
+        },
         { 
           role: "user", 
           content: userMessage 
@@ -131,7 +134,7 @@ Use this data to provide specific, data-backed recommendations to the user.`;
       ],
     });
 
-    const responseText = response.content[0].text || "I'm here to help with SEO strategy.";
+    const responseText = response.choices[0]?.message?.content || "I'm here to help with SEO strategy.";
 
     console.log(`[TokSEO Chat] Response generated (${responseText.length} chars)`);
 
