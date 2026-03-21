@@ -263,7 +263,7 @@ export default function TokStore() {
     ? products.find(p => p.id === selectedProduct)
     : null;
 
-  const bundlePrice = 28.99;
+  const bundlePrice = 20.99;
   // Bundle includes only the 3 safety apps (tokaway, tokhealth, tokthru)
   // Mr. KPA Mentorship is premium founder access sold separately
   const safetyProducts = products.filter(p => p.id !== 'mr-kpa');
