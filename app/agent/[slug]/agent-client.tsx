@@ -241,15 +241,14 @@ export default function AgentClient({
 
     const userMessage = input;
     setInput("");
-    const updatedMessages = [...messages, { role: "user", content: userMessage }];
-    setMessages(updatedMessages);
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setLoading(true);
 
     try {
       const response = await fetch(`/api/${slug}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: updatedMessages }),
+        body: JSON.stringify({ message: userMessage }),
       });
 
       if (!response.ok) {
