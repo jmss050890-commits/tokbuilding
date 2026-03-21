@@ -203,6 +203,49 @@ const products: Product[] = [
       author: 'Marcus D.',
       role: 'Safety Professional'
     }
+  },
+  {
+    id: 'mr-kpa',
+    name: 'Mr. KPA Mentorship',
+    tagline: 'Wisdom from the Founder',
+    description: 'Direct access to Jerome Sanders\' founder insights, strategy guidance, and lived wisdom for navigating life and business.',
+    icon: '✨',
+    color: 'amber',
+    grid: 'col-span-1',
+    borderColor: 'border-amber-500/30 hover:border-amber-500/60',
+    gradient: 'from-amber-600 to-yellow-500',
+    features: [
+      'Direct founder access',
+      'Strategy mentorship',
+      'Real-world wisdom',
+      'Business guidance',
+      'Life navigation',
+      'KPA mission alignment',
+      'Verified authority',
+      'Priority response'
+    ],
+    plans: [
+      {
+        name: 'Single Session',
+        price: 29.99,
+        type: 'one-time',
+        description: '1-on-1 founder mentorship session',
+        features: ['60-minute session', 'Strategy discussion', 'Real guidance', 'Recorded access', 'Follow-up notes']
+      },
+      {
+        name: 'Mentorship Bundle',
+        price: 99.99,
+        type: 'one-time',
+        description: 'Monthly founder wisdom access',
+        features: ['4 sessions/month', 'Priority booking', 'Strategy guidance', 'Business & life mentoring', 'Private community access', 'Lifetime recordings']
+      }
+    ],
+    landingUrl: '/agent/mr-kpa',
+    testimonial: {
+      quote: 'Jerome\'s guidance cut through the noise and showed me what I was actually capable of. His wisdom comes from surviving, not just studying.',
+      author: 'Diamond K.',
+      role: 'SVL Community Member'
+    }
   }
 ];
 
@@ -264,7 +307,10 @@ export default function TokStore() {
     : null;
 
   const bundlePrice = 28.99;
-  const individualTotal = products.reduce((sum, p) => sum + p.plans[1].price, 0);
+  // Bundle includes only the 4 safety apps (tokaway, tokhealth, tokthru, toksmart)
+  // Mr. KPA Mentorship is premium founder access sold separately
+  const safetyProducts = products.filter(p => p.id !== 'mr-kpa');
+  const individualTotal = safetyProducts.reduce((sum, p) => sum + p.plans[1].price, 0);
   const bundleSavings = (individualTotal - bundlePrice).toFixed(2);
 
   return (

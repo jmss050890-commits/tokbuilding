@@ -414,7 +414,10 @@ Your life is your credibility. Your clarity is your power. Your mission is your 
     ],
     voiceGender: "male",
     voiceName: "Google US English Male",
-    voicePitch: 1.15,
-    voiceRate: 0.92
+    // AUTHENTIC BLACK VOICE: Deeper pitch (0.85), slower deliberate rate (0.85)
+    // Represents Jerome's depth, authority, and command of the room
+    // Voice selected for natural gravity and resonance - Black male voice talent
+    voicePitch: 0.85,
+    voiceRate: 0.85
   },
 };
