@@ -9,14 +9,14 @@ export default function OurStoryPage() {
   const journeySteps = [
     {
       platform: 'Emergent',
-      year: '2025',
+      year: '1-31-2026',
       icon: '🌱',
       title: 'TokHealth & TokThru Born',
       description: 'The first safety tools emerged. Real solutions for real crises.'
     },
     {
       platform: 'Shopify',
-      year: '2025',
+      year: '1-31-2026',
       icon: '🏪',
       title: 'Sanders Viopro Labs Created',
       description: 'The name. The vision. The store. A debt owed, an honor to repay.'
