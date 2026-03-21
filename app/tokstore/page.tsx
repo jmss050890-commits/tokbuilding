@@ -140,18 +140,18 @@ const products: Product[] = [
     ],
     plans: [
       {
-        name: 'Basic',
-        price: 2.99,
+        name: 'Starter',
+        price: 7.99,
         type: 'one-time',
-        description: 'Essential tracking',
-        features: ['Live GPS tracking', 'Auto check-ins', 'One trusted contact', 'SOS button']
+        description: 'Essential safety features',
+        features: ['Automatic check-ins', 'Emergency contacts', 'SOS button', 'Basic location sharing', 'Crisis hotlines']
       },
       {
         name: 'Pro',
-        price: 7.99,
+        price: 16.99,
         type: 'one-time',
-        description: 'Full safety suite',
-        features: ['Advanced GPS tracking', 'Driver verification', 'Multi-contact sharing', 'Route intelligence', 'Safety reports']
+        description: 'Complete safety suite',
+        features: ['Advanced GPS tracking', 'De-escalation scripts', 'Driver verification', 'Multi-contact sharing', 'Safety reports', 'Route intelligence']
       }
     ],
     landingUrl: '/tokthru-landing',
