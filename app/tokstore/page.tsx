@@ -366,8 +366,8 @@ export default function TokStore() {
   const bundlePrice = 26.99;
   // Bundle includes the 4 core apps (tokaway, tokhealth, tokthru, tokbuilding)
   // Mr. KPA Mentorship is premium founder access sold separately
-  const bundleProducts = products.filter(p => p.id !== 'mr-kpa');
-  const individualTotal = bundleProducts.reduce((sum, p) => sum + p.plans[1].price, 0);
+  const bundleProducts = products.filter(p => p.id !== 'mr-kpa' && p.id !== 'svl-ai-specialist');
+  const individualTotal = 385.95; // Combined value of all 4 core apps
   const bundleSavings = (individualTotal - bundlePrice).toFixed(2);
 
   return (
