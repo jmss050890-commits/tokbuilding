@@ -7,9 +7,10 @@ import { getLicenseKeysCollection, getOrdersCollection } from '@/lib/db';
 
 export async function GET(
   req: Request,
-  { params }: { params: { appId: string } }
+  { params }: { params: Promise<{ appId: string }> }
 ) {
   try {
+    const { appId } = await params;
     const { searchParams } = new URL(req.url);
     const licenseKey = searchParams.get('key');
     const deviceId = searchParams.get('device') || 'web';
@@ -26,7 +27,7 @@ export async function GET(
     // Find and validate license key
     const license = await licenseKeysCollection.findOne({
       key: licenseKey,
-      appId: params.appId,
+      appId: appId,
       revoked: false,
     });
 
@@ -88,11 +89,11 @@ export async function GET(
     const order = await ordersCollection.findOne({ licenseKey });
 
     // Return download info
-    const appDownloadUrl = `/apps/${params.appId}-latest.apk`;
+    const appDownloadUrl = `/apps/${appId}-latest.apk`;
 
     return Response.json({
       success: true,
-      app: params.appId,
+      app: appId,
       licenseKey,
       downloadUrl: appDownloadUrl,
       validity: {

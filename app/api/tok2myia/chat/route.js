@@ -2,12 +2,13 @@ import { AGENTS } from "@/lib/lib/lib/agents";
 
 export async function POST(req) {
   try {
-    const { messages, userId } = await req.json();
+    const body = await req.json();
+    const userMessage = body?.message?.trim();
 
-    if (!messages || messages.length === 0) {
+    if (!userMessage) {
       return new Response(
         JSON.stringify({
-          error: "No messages provided",
+          error: "Message is required",
         }),
         { status: 400 }
       );
@@ -52,7 +53,10 @@ export async function POST(req) {
             role: "system",
             content: tok2myia.systemPrompt,
           },
-          ...messages,
+          {
+            role: "user",
+            content: userMessage,
+          },
         ],
         temperature: 0.7,
         max_tokens: 1024,
