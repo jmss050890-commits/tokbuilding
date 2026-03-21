@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import SVLGuardian from './SVLGuardian';
 
 interface PricingPlan {
   name: string;
@@ -399,16 +400,8 @@ export default function TokStore() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Hero Section */}
-        <div className="mb-16 text-center">
-          <p className="text-purple-400 mb-2 font-semibold">SANDERS VIOPRO LABS</p>
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Complete Safety & Wellness Suite
-          </h1>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-2">
-            Trusted by thousands. Aligned with our mission: Keep People Alive (KPA).
-          </p>
-          <p className="text-sm text-emerald-400 font-semibold">#KPA-Keeppeoplealive | #Sandersvioprolabs</p>
+        <div className="mb-16">
+          <SVLGuardian />
         </div>
 
         {/* Product Grid */}
