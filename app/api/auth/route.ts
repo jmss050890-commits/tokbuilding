@@ -43,7 +43,18 @@ export async function POST(req: Request) {
       }
 
       // Create new user
-      const user = {
+      type UserDocument = {
+        email: string;
+        passwordHash: string;
+        name: string;
+        signupDate: Date;
+        preferences: {
+          emailNotifications: boolean;
+          receiveUpdates: boolean;
+        };
+      };
+
+      const user: UserDocument = {
         email,
         passwordHash: hashPassword(password),
         name,
@@ -54,7 +65,7 @@ export async function POST(req: Request) {
         },
       };
 
-      const result = await usersCollection.insertOne(user as any);
+      const result = await usersCollection.insertOne(user);
 
       // Generate session token (in production, use proper JWT)
       const token = crypto.randomBytes(32).toString('hex');

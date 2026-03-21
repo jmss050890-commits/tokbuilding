@@ -221,14 +221,18 @@ export default function AgentPage() {
 
     try {
       recognitionRef.current.start();
-    } catch (_) {}
+    } catch {
+      // Speech recognition not supported or already started
+    }
   };
 
   const stopMic = () => {
     setIsListening(false);
     try {
       recognitionRef.current?.stop();
-    } catch (_) {}
+    } catch {
+      // Speech recognition already stopped
+    }
   };
 
   const handleAutoSend = async (transcript: string) => {
