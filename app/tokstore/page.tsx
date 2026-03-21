@@ -184,24 +184,31 @@ const products: Product[] = [
     plans: [
       {
         name: 'Starter',
-        price: 39.99,
+        price: 99,
         type: 'subscription',
-        description: 'Perfect for building your first AI agents',
-        features: ['1 agent', '50,000 API calls/month', 'Email support', 'Agent dashboard', 'Lifetime updates']
+        description: 'Build your first AI agent with chat',
+        features: ['1 agent', 'Chat interface', 'Email notifications', 'Basic analytics', 'Agent dashboard', '8 template frameworks']
       },
       {
         name: 'Pro',
-        price: 149.99,
+        price: 199,
         type: 'subscription',
-        description: 'For growing teams creating multiple agents',
-        features: ['5 agents', '250,000 API calls/month', 'Priority support', 'Analytics dashboard', 'Integration tools', 'Lifetime updates']
+        description: 'One agent with full capabilities for your business',
+        features: ['1 agent', 'Voice + Chat', 'SMS notifications', 'Customer memory', 'Order history', 'Advanced analytics', 'Business branding']
+      },
+      {
+        name: 'Business',
+        price: 299,
+        type: 'subscription',
+        description: 'Multiple agents for growing operations',
+        features: ['3 agents', 'Voice + Chat per agent', 'SMS + Email notifications', 'Customer memory & history', 'Priority support', 'Advanced analytics', 'Custom branding']
       },
       {
         name: 'Enterprise',
-        price: 299.99,
+        price: 0,
         type: 'subscription',
-        description: 'Unlimited agents for large-scale operations',
-        features: ['Unlimited agents', '1,000,000 API calls/month', 'Dedicated support', 'Advanced analytics', 'Custom integrations', 'Lifetime updates']
+        description: 'Unlimited agents for large-scale deployment',
+        features: ['Unlimited agents', 'White label solution', 'API access', 'Dedicated support', 'Custom integrations', 'SLA guarantee']
       }
     ],
     landingUrl: '/tokbuilding',
@@ -364,10 +371,13 @@ export default function TokStore() {
     : null;
 
   const bundlePrice = 26.99;
-  // Bundle includes the 4 core apps (tokaway, tokhealth, tokthru, tokbuilding)
-  // Mr. KPA Mentorship is premium founder access sold separately
-  const bundleProducts = products.filter(p => p.id !== 'mr-kpa' && p.id !== 'svl-ai-specialist');
-  const individualTotal = 385.95; // Combined value of all 4 core apps
+  // Bundle includes the 3 core safety/health apps (tokaway, tokhealth, tokthru Pro plans)
+  // Subscription services (TokBuilding, SVL AI Specialist) and Mr. KPA sold separately
+  const bundleProducts = products.filter(p => 
+    p.id === 'tokaway' || p.id === 'tokhealth' || p.id === 'tokthru'
+  );
+  // TokAway Pro ($9.99) + TokHealth Pro ($8.99) + TokThru Pro ($16.99) = $35.97
+  const individualTotal = 35.97;
   const bundleSavings = (individualTotal - bundlePrice).toFixed(2);
 
   return (
