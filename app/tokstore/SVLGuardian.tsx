@@ -383,7 +383,7 @@ export default function SVLGuardian() {
             <div className="svl-creator-box">
               <div className="svl-photo-frame">
                 <img 
-                  src="/jerome-founder.jpg" 
+                  src="/jerome-founder.png" 
                   alt="Jerome Sanders, founder of Sanders Viopro Labs"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
