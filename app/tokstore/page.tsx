@@ -162,6 +162,49 @@ const products: Product[] = [
     }
   },
   {
+    id: 'tokbuilding',
+    name: 'TokBuilding',
+    tagline: 'Create Your Own AI Agent',
+    description: 'Build custom AI agents with your own personality, expertise, and voice. No coding required. Perfect for businesses, coaches, and creators.',
+    icon: '🤖',
+    color: 'indigo',
+    grid: 'col-span-1',
+    borderColor: 'border-indigo-500/30 hover:border-indigo-500/60',
+    gradient: 'from-indigo-600 to-blue-600',
+    features: [
+      'Create custom AI agents',
+      'Define personality & tone',
+      'Set expertise & knowledge',
+      'No coding required',
+      'Instant deployment',
+      'Brand your agent voice',
+      'Integrate anywhere',
+      'Lifetime updates'
+    ],
+    plans: [
+      {
+        name: 'Starter',
+        price: 4.99,
+        type: 'one-time',
+        description: 'Build a basic AI agent',
+        features: ['Single agent creation', 'Basic customization', 'Standard deployment', 'Email support', 'Agent dashboard']
+      },
+      {
+        name: 'Pro',
+        price: 9.99,
+        type: 'one-time',
+        description: 'Unlimited agent creation',
+        features: ['Unlimited agents', 'Advanced customization', 'Priority deployment', 'Phone & email support', 'Analytics dashboard', 'Integration tools']
+      }
+    ],
+    landingUrl: '/tokbuilding',
+    testimonial: {
+      quote: 'TokBuilding let me create an AI agent that speaks with my voice and knows my business inside-out. No developers needed.',
+      author: 'Marcus L.',
+      role: 'Business Owner'
+    }
+  },
+  {
     id: 'mr-kpa',
     name: 'Mr. KPA Mentorship Access',
     tagline: 'Founder Wisdom & Strategy',
@@ -263,11 +306,11 @@ export default function TokStore() {
     ? products.find(p => p.id === selectedProduct)
     : null;
 
-  const bundlePrice = 20.99;
-  // Bundle includes only the 3 safety apps (tokaway, tokhealth, tokthru)
+  const bundlePrice = 26.99;
+  // Bundle includes the 4 core apps (tokaway, tokhealth, tokthru, tokbuilding)
   // Mr. KPA Mentorship is premium founder access sold separately
-  const safetyProducts = products.filter(p => p.id !== 'mr-kpa');
-  const individualTotal = safetyProducts.reduce((sum, p) => sum + p.plans[1].price, 0);
+  const bundleProducts = products.filter(p => p.id !== 'mr-kpa');
+  const individualTotal = bundleProducts.reduce((sum, p) => sum + p.plans[1].price, 0);
   const bundleSavings = (individualTotal - bundlePrice).toFixed(2);
 
   return (
@@ -339,7 +382,7 @@ export default function TokStore() {
               <div className="grid md:grid-cols-3 gap-8 items-center">
                 <div>
                   <p className="text-slate-400 mb-2">SPECIAL OFFER</p>
-                  <h2 className="text-3xl font-bold mb-2">Complete Safety Suite</h2>
+                  <h2 className="text-3xl font-bold mb-2">Complete Creator Suite</h2>
                   <p className="text-slate-400">Get all 4 apps for one incredible price</p>
                 </div>
                 <div className="text-center">
@@ -420,14 +463,14 @@ export default function TokStore() {
             </button>
 
             <div className="mb-8">
-              <h1 className="text-3xl font-bold mb-2">Complete Safety Suite Bundle</h1>
-              <p className="text-slate-400">All 4 apps for maximum protection</p>
+              <h1 className="text-3xl font-bold mb-2">Complete Creator Suite Bundle</h1>
+              <p className="text-slate-400">All 4 apps + tools for maximum impact</p>
             </div>
 
             <div className="bg-slate-700/50 rounded-lg p-6 mb-8 border border-slate-600">
               <h2 className="font-bold mb-4">Your Bundle Includes:</h2>
               <div className="grid md:grid-cols-4 gap-4">
-                {products.map(product => (
+                {bundleProducts.map(product => (
                   <div key={product.id} className="text-center">
                     <div className="text-3xl mb-2">{product.icon}</div>
                     <p className="font-bold text-sm">{product.name}</p>
