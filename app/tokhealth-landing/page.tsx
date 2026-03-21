@@ -9,29 +9,30 @@ export default function TokHealthLanding() {
 
   const plans = [
     {
-      name: 'TokHealth Starter',
-      price: 3.99,
+      name: 'TokHealth Basic',
+      price: 2.99,
       type: 'one-time',
       features: [
-        'Health profile setup',
-        'Emergency contact registration',
-        'Medical history quick access',
-        'Voice-activated SOS',
-        'Location sharing with responders',
+        'Medical profile creation',
+        'Vital tracking (weight, BP, heart rate)',
+        'Allergies & intolerances log',
+        'Medical history entry',
+        'Emergency contacts',
+        'Access in 2 languages',
       ],
     },
     {
       name: 'TokHealth Pro',
-      price: 8.99,
+      price: 7.99,
       type: 'lifetime',
       features: [
-        'Everything in Starter',
-        'Prescription tracker',
-        'Medication reminder alerts',
-        'AI health insights',
-        'Family portal access',
-        'Hospital integration',
-        'Chronic condition monitoring',
+        'Everything in Basic',
+        'Voice recording capability',
+        'Full 10-language support',
+        'Family account sharing',
+        'Spiritual belief tracking',
+        'Fitbit/Apple Health integration',
+        'Medication tracking',
         'Lifetime free updates',
       ],
     },
@@ -40,23 +41,23 @@ export default function TokHealthLanding() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-green-950 to-slate-950 text-white">
       {/* Navigation */}
-      <nav className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur border-b border-green-800/30">
+      <nav className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur border-b border-teal-800/30">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">💚</span>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="text-2xl">❤️</span>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text text-transparent">
               TokHealth
             </h1>
           </div>
           <div className="flex gap-6">
-            <a href="#features" className="hover:text-green-400 transition">
+            <a href="#features" className="hover:text-teal-400 transition">
               Features
             </a>
-            <a href="#pricing" className="hover:text-green-400 transition">
-              Pricing
+            <a href="#languages" className="hover:text-teal-400 transition">
+              Languages
             </a>
-            <a href="#contact" className="hover:text-green-400 transition">
-              Support
+            <a href="#pricing" className="hover:text-teal-400 transition">
+              Pricing
             </a>
           </div>
         </div>
