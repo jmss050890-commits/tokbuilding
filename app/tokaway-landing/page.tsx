@@ -652,7 +652,7 @@ export default function TokAwayLanding() {
         </div>
       </section>
 
-      {/* Mission Section */
+      {/* Mission Section */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-blue-700/40 rounded-3xl p-12 text-center">
           <h2 className="text-3xl font-bold mb-4">Part of the KPA Mission</h2>
