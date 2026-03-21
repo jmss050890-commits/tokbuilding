@@ -10,14 +10,14 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Grace",
-  description: "Grace is a voice-first personal coach for health, heart, mindset, and spirit. Named after a survivor who dedicated her life to caring for others. Keep People Alive.",
-  applicationName: "Grace",
+  title: "Sanders Viopro Labs - Keep People Alive (KPA)",
+  description: "SVL: Sanders Viopro Labs. Keep People Alive (KPA) mission-driven AI agents, safety tools, and wellness solutions. TokAway, TokHealth, TokSmart, TokThru, and more.",
+  applicationName: "Sanders Viopro Labs",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Grace",
+    title: "Sanders Viopro Labs",
   },
   icons: {
     icon: "/icon",
