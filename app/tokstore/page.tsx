@@ -184,17 +184,24 @@ const products: Product[] = [
     plans: [
       {
         name: 'Starter',
-        price: 24.99,
-        type: 'one-time',
-        description: 'Perfect for new users learning to build AI agents',
-        features: ['Single agent creation', 'Basic customization', 'Standard deployment', 'Email support', 'Agent dashboard']
+        price: 39.99,
+        type: 'subscription',
+        description: 'Perfect for building your first AI agents',
+        features: ['1 agent', '50,000 API calls/month', 'Email support', 'Agent dashboard', 'Lifetime updates']
       },
       {
         name: 'Pro',
-        price: 59.99,
-        type: 'one-time',
-        description: 'For power users creating agents for their business fast',
-        features: ['Unlimited agents', 'Advanced customization', 'Priority deployment', 'Phone & email support', 'Analytics dashboard', 'Integration tools']
+        price: 149.99,
+        type: 'subscription',
+        description: 'For growing teams creating multiple agents',
+        features: ['5 agents', '250,000 API calls/month', 'Priority support', 'Analytics dashboard', 'Integration tools', 'Lifetime updates']
+      },
+      {
+        name: 'Enterprise',
+        price: 299.99,
+        type: 'subscription',
+        description: 'Unlimited agents for large-scale operations',
+        features: ['Unlimited agents', '1,000,000 API calls/month', 'Dedicated support', 'Advanced analytics', 'Custom integrations', 'Lifetime updates']
       }
     ],
     landingUrl: '/tokbuilding',
