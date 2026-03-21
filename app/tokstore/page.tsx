@@ -210,7 +210,54 @@ export default function TokStore() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  const handleCheckout = async () => {
+    if (!userEmail) {
+      setError('Please enter your email address');
+      return;
+    }
+
+    if (!selectedProduct) {
+      setError('Please select a product');
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const productId = selectedProduct === 'bundle' ? 'bundle' : selectedProduct;
+      const planIndex = selectedProduct === 'bundle' ? 0 : selectedPlanIndex;
+
+      const response = await fetch('/api/store/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId,
+          planIndex,
+          userEmail,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Checkout failed');
+      }
+
+      // Redirect to Stripe checkout
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      }
+    } catch (err) {
+      setError((err as Error).message || 'Failed to initiate checkout');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const currentProduct = selectedProduct
     ? products.find(p => p.id === selectedProduct)
@@ -400,6 +447,25 @@ export default function TokStore() {
               </div>
             </div>
 
+            {!userEmail && (
+              <div className="mb-8">
+                <label className="block text-sm font-bold mb-2">Email Address</label>
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 focus:border-emerald-500 focus:outline-none text-white placeholder-slate-400"
+                />
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-8 p-4 rounded-lg bg-red-900/30 border border-red-700 text-red-200">
+                ⚠️ {error}
+              </div>
+            )}
+
             {showCheckout && (
               <div className="mb-8 p-4 rounded-lg bg-blue-900/30 border border-blue-700 text-blue-200">
                 ℹ️ Click &quot;Continue to Stripe&quot; to complete your purchase securely
@@ -408,11 +474,16 @@ export default function TokStore() {
 
             <button
               onClick={() => {
-                setShowCheckout(!showCheckout);
+                if (!showCheckout) {
+                  setShowCheckout(true);
+                } else {
+                  handleCheckout();
+                }
               }}
-              className="w-full py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:to-emerald-800 rounded-lg font-bold text-lg transition"
+              disabled={isLoading}
+              className="w-full py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:to-emerald-800 rounded-lg font-bold text-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Continue to Stripe →
+              {isLoading ? 'Processing...' : (showCheckout ? 'Continue to Stripe →' : 'Proceed to Checkout')}
             </button>
 
             <p className="text-xs text-slate-400 text-center mt-4">🔒 Secure checkout powered by Stripe</p>
@@ -504,28 +575,46 @@ export default function TokStore() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
                   <button
                     onClick={() => window.location.href = currentProduct.landingUrl}
                     className="py-4 bg-slate-700 hover:bg-slate-600 rounded-lg font-bold transition"
                   >
                     Learn More →
                   </button>
-                  {showCheckout ? (
-                    <button
-                      className="py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:to-emerald-800 rounded-lg font-bold transition"
-                    >
-                      Continue to Stripe →
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => setShowCheckout(true)}
-                      className="py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:to-emerald-800 rounded-lg font-bold transition"
-                    >
-                      ${currentProduct.plans[selectedPlanIndex].price.toFixed(2)} - Buy Now
-                    </button>
-                  )}
+                  <button
+                    onClick={() => {
+                      if (!showCheckout) {
+                        setShowCheckout(true);
+                      } else {
+                        handleCheckout();
+                      }
+                    }}
+                    disabled={isLoading}
+                    className="py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:to-emerald-800 rounded-lg font-bold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isLoading ? 'Processing...' : (showCheckout ? 'Continue to Stripe →' : `${currentProduct.plans[selectedPlanIndex].price.toFixed(2)} - Buy Now`)}
+                  </button>
                 </div>
+
+                {!userEmail && showCheckout && (
+                  <div className="mb-6">
+                    <label className="block text-sm font-bold mb-2">Email Address</label>
+                    <input
+                      type="email"
+                      placeholder="your@email.com"
+                      value={userEmail}
+                      onChange={(e) => setUserEmail(e.target.value)}
+                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 focus:border-emerald-500 focus:outline-none text-white placeholder-slate-400"
+                    />
+                  </div>
+                )}
+
+                {error && (
+                  <div className="mb-6 p-4 rounded-lg bg-red-900/30 border border-red-700 text-red-200">
+                    ⚠️ {error}
+                  </div>
+                )}
 
                 {showCheckout && (
                   <div className="mt-8 p-4 rounded-lg bg-yellow-900/30 border border-yellow-700 text-yellow-200">
