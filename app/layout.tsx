@@ -70,6 +70,23 @@ export default function RootLayout({
         </header>
 
         <main>{children}</main>
+
+        <footer
+          style={{
+            borderTop: "1px solid #333",
+            padding: "2rem 1rem",
+            marginTop: "3rem",
+            backgroundColor: "#0d0d0f",
+            color: "#999",
+            fontSize: "0.85rem",
+            lineHeight: "1.6",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ margin: "0.5rem 0", maxWidth: "800px", marginLeft: "auto", marginRight: "auto" }}>
+            SVL - Mr. KPA. Approved est. 1-31-2026 from Spoken Thought to Reality; SVL products are medical guidance to assist in contacting the correct team of people, we are not medical advisors or substitutions for medical services.
+          </p>
+        </footer>
       </body>
     </html>
   );
