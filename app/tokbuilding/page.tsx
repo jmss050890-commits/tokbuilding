@@ -33,19 +33,19 @@ const INITIAL_FORM: FormData = {
 
 export default function TokBuilding() {
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState<FormData>(INITIAL_FORM);
+  const [form, setForm] = useState<FormData>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('tokbuilding_draft');
+        if (saved) return JSON.parse(saved);
+      } catch (_e) {
+        // ignore
+      }
+    }
+    return INITIAL_FORM;
+  });
   const [copied, setCopied] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-
-  // Load draft from localStorage on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('tokbuilding_draft');
-      if (saved) {
-        setForm(JSON.parse(saved));
-      }
-    } catch (e) {}
-  }, []);
 
   // Save draft to localStorage on change
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function TokBuilding() {
     } catch (e) {}
   }, [form]);
 
-  const updateForm = (key: keyof FormData, value: any) => {
+  const updateForm = <K extends keyof FormData>(key: K, value: FormData[K]) => {
     setForm(prev => ({ ...prev, [key]: value }));
   };
 
@@ -381,10 +381,11 @@ You are ${agentName}. Ready to assist.`;
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
+                    <label htmlFor="tone" style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
                       Primary Tone
                     </label>
                     <select
+                      id="tone"
                       value={form.tone}
                       onChange={e => updateForm('tone', e.target.value)}
                       style={{
@@ -411,10 +412,11 @@ You are ${agentName}. Ready to assist.`;
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
+                    <label htmlFor="communicationStyle" style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
                       Communication Style
                     </label>
                     <select
+                      id="communicationStyle"
                       value={form.communicationStyle}
                       onChange={e => updateForm('communicationStyle', e.target.value)}
                       style={{

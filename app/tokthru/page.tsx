@@ -24,6 +24,11 @@ interface SafeSpot {
   address: string;
 }
 
+interface FakeContact {
+  name: string;
+  addedDate: number;
+}
+
 const NATIONAL_DV_HOTLINE = '1-800-799-7233';
 const SUICIDE_CRISIS_HOTLINE = '988';
 
@@ -128,7 +133,7 @@ const SAFE_SPOTS_EXAMPLES: SafeSpot[] = [
 ];
 
 export default function TokThru() {
-  const [currentView, setCurrentView] = useState<'hub' | 'chat' | 'sos' | 'timer' | 'safespots' | 'scripts' | 'guides' | 'contacts' | 'settings' | 'hatata'>('hub');
+  const [currentView, setCurrentView] = useState<'hub' | 'chat' | 'sos' | 'timer' | 'safespots' | 'scripts' | 'guides' | 'contacts' | 'settings' | 'hatata' | 'fakecall' | 'hotline-call'>('hub');
   const [testMode, setTestMode] = useState(false);
   const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContact[]>([]);
   const [newContact, setNewContact] = useState({ name: '', phone: '', relationship: '' });
@@ -138,16 +143,37 @@ export default function TokThru() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [selectedScript, setSelectedScript] = useState<typeof DE_ESCALATION_SCRIPTS[0] | null>(null);
   const [selectedGuide, setSelectedGuide] = useState<typeof EMERGENCY_GUIDES[0] | null>(null);
+  const [fakeContacts, setFakeContacts] = useState<FakeContact[]>([]);
+  const [selectedFakeContact, setSelectedFakeContact] = useState<string | null>(null);
+  const [newFakeContactName, setNewFakeContactName] = useState('');
+  const [incomingCallActive, setIncomingCallActive] = useState(false);
+  const [callTimer, setCallTimer] = useState(0);
+  const [selectedHotline, setSelectedHotline] = useState<{ name: string; number: string; description: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const callTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Load fake contacts on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('tokthru_fake_contacts');
+    if (saved) {
+      try {
+        setFakeContacts(JSON.parse(saved));
+      } catch {
+        console.error('Failed to load fake contacts');
+      }
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -155,19 +181,22 @@ export default function TokThru() {
 
   // Initialize Speech Recognition
   useEffect(() => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (SpeechRecognition) {
-      const recognition = new SpeechRecognition();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const SpeechRecognitionAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognitionAPI) {
+      const recognition = new SpeechRecognitionAPI();
       recognition.continuous = false;
       recognition.interimResults = true;
       recognition.lang = 'en-US';
 
       recognition.onstart = () => setIsListening(true);
       recognition.onend = () => setIsListening(false);
-      recognition.onresult = (event: any) => {
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
+      recognition.onresult = (event: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const speechEvent = event as any;
+        for (let i = speechEvent.resultIndex; i < speechEvent.results.length; i++) {
+          const transcript = speechEvent.results[i][0].transcript;
+          if (speechEvent.results[i].isFinal) {
             setInput(prev => prev + transcript);
             const lowerTranscript = transcript.toLowerCase();
             if (lowerTranscript.includes('emergency') || lowerTranscript.includes('danger') || lowerTranscript.includes('help')) {
@@ -179,6 +208,7 @@ export default function TokThru() {
 
       recognitionRef.current = recognition;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Check-in timer countdown
@@ -202,6 +232,7 @@ export default function TokThru() {
     return () => {
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkInTimer.active, checkInTimer.remaining]);
 
   const triggerSilentAlert = () => {
@@ -216,11 +247,65 @@ export default function TokThru() {
   };
 
   const triggerFakeCall = () => {
-    if (testMode) {
-      alert('📞 TEST MODE: Fake call escape would trigger.\nIn real mode, simulated incoming call would create exit opportunity.');
+    if (!selectedFakeContact) {
+      alert('Please select a fake contact first');
       return;
     }
-    speakAlert('Incoming call simulation activated. Use this to safely excuse yourself.');
+    if (testMode) {
+      alert('📞 TEST MODE: Fake call from ' + selectedFakeContact + ' would trigger.\nIn real mode, simulated incoming call would create exit opportunity.');
+      return;
+    }
+    setCallTimer(0);
+    setIncomingCallActive(true);
+    speakAlert('Incoming call from ' + selectedFakeContact + '. Take your time. You are safe now.');
+    
+    callTimerRef.current = setInterval(() => {
+      setCallTimer(prev => prev + 1);
+    }, 1000);
+  };
+
+  const addFakeContact = () => {
+    if (!newFakeContactName.trim()) {
+      alert('Please enter a contact name');
+      return;
+    }
+    if (fakeContacts.some(c => c.name === newFakeContactName.trim())) {
+      alert('This contact already exists');
+      return;
+    }
+    const updated = [...fakeContacts, { name: newFakeContactName.trim(), addedDate: Date.now() }];
+    setFakeContacts(updated);
+    localStorage.setItem('tokthru_fake_contacts', JSON.stringify(updated));
+    setNewFakeContactName('');
+  };
+
+  const removeFakeContact = (name: string) => {
+    const updated = fakeContacts.filter(c => c.name !== name);
+    setFakeContacts(updated);
+    localStorage.setItem('tokthru_fake_contacts', JSON.stringify(updated));
+    if (selectedFakeContact === name) {
+      setSelectedFakeContact(null);
+    }
+  };
+
+  const answerFakeCall = () => {
+    if (callTimerRef.current) clearInterval(callTimerRef.current);
+    setIncomingCallActive(false);
+    speakAlert('Call answered. You are safe. Take care of yourself.');
+    setCurrentView('hub');
+  };
+
+  const declineFakeCall = () => {
+    if (callTimerRef.current) clearInterval(callTimerRef.current);
+    setIncomingCallActive(false);
+    speakAlert('Call declined. Stay safe. If you need help, reach out to trusted contacts or call 911.');
+    setCurrentView('hub');
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
   const startCheckInTimer = () => {
@@ -375,7 +460,7 @@ export default function TokThru() {
 
               {/* Fake Call */}
               <button
-                onClick={triggerFakeCall}
+                onClick={() => setCurrentView('fakecall')}
                 className="p-6 rounded-lg border-2 border-orange-500 bg-orange-500/20 hover:bg-orange-600/30 text-white text-left transition transform hover:scale-105"
               >
                 <div className="text-4xl mb-2">📞</div>
@@ -438,7 +523,17 @@ export default function TokThru() {
           {/* Crisis Hotlines */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* National DV Hotline */}
-            <div className="p-6 rounded-lg bg-slate-800 border-2 border-purple-500">
+            <button
+              onClick={() => {
+                setSelectedHotline({
+                  name: 'National Domestic Violence Hotline',
+                  number: NATIONAL_DV_HOTLINE,
+                  description: '24/7 confidential support for domestic violence, abuse, and unsafe relationships. Trained advocates provide safety planning, shelter referrals, and legal guidance.'
+                });
+                setCurrentView('hotline-call');
+              }}
+              className="p-6 rounded-lg bg-slate-800 border-2 border-purple-500 hover:border-purple-400 hover:bg-slate-700 transition text-left group"
+            >
               <h3 className="text-xl font-bold text-purple-300 mb-3">📞 National DV Hotline</h3>
               <p className="text-4xl font-bold text-purple-300 mb-3">{NATIONAL_DV_HOTLINE}</p>
               <p className="text-sm text-slate-300 mb-3">24/7 confidential support for domestic violence, abuse, and unsafe relationships</p>
@@ -446,10 +541,21 @@ export default function TokThru() {
               <p className="text-xs text-slate-400">• Safety planning</p>
               <p className="text-xs text-slate-400">• Shelter referrals</p>
               <p className="text-xs text-slate-400">• Legal guidance</p>
-            </div>
+              <p className="text-xs text-purple-400 mt-4 font-semibold group-hover:text-purple-300 transition">Click to verify and call →</p>
+            </button>
 
             {/* Suicide & Crisis Hotline */}
-            <div className="p-6 rounded-lg bg-slate-800 border-2 border-cyan-500">
+            <button
+              onClick={() => {
+                setSelectedHotline({
+                  name: 'Suicide & Crisis Lifeline',
+                  number: SUICIDE_CRISIS_HOTLINE,
+                  description: '24/7 crisis counseling for mental health emergencies and suicidal thoughts. Crisis counselors provide suicide prevention, mental health support, and confidential listening.'
+                });
+                setCurrentView('hotline-call');
+              }}
+              className="p-6 rounded-lg bg-slate-800 border-2 border-cyan-500 hover:border-cyan-400 hover:bg-slate-700 transition text-left group"
+            >
               <h3 className="text-xl font-bold text-cyan-300 mb-3">📞 Suicide & Crisis Hotline</h3>
               <p className="text-4xl font-bold text-cyan-300 mb-3">{SUICIDE_CRISIS_HOTLINE}</p>
               <p className="text-sm text-slate-300 mb-3">24/7 crisis counseling for mental health emergencies and suicidal thoughts</p>
@@ -457,7 +563,8 @@ export default function TokThru() {
               <p className="text-xs text-slate-400">• Suicide prevention</p>
               <p className="text-xs text-slate-400">• Mental health support</p>
               <p className="text-xs text-slate-400">• 24/7 confidential</p>
-            </div>
+              <p className="text-xs text-cyan-400 mt-4 font-semibold group-hover:text-cyan-300 transition">Click to verify and call →</p>
+            </button>
           </div>
 
           {/* Emergency Guides */}
@@ -501,12 +608,12 @@ export default function TokThru() {
             <h2 className="text-3xl font-bold mb-6 text-amber-300">⏰ Check-in Timer with Auto-Location Share</h2>
             
             <div className="mb-8 p-6 rounded-lg bg-amber-500/20">
-              <p className="text-lg mb-4">If you don't cancel the timer, your location will automatically be sent to your emergency contacts.</p>
+              <p className="text-lg mb-4">If you don&apos;t cancel the timer, your location will automatically be sent to your emergency contacts.</p>
               <p className="text-sm text-amber-200 mb-4">This is useful when:</p>
               <ul className="text-sm text-amber-100 space-y-2 ml-4">
-                <li>• You're going on a date with someone new</li>
-                <li>• You're meeting someone in an unfamiliar place</li>
-                <li>• You're traveling alone</li>
+                <li>• You&apos;re going on a date with someone new</li>
+                <li>• You&apos;re meeting someone in an unfamiliar place</li>
+                <li>• You&apos;re traveling alone</li>
                 <li>• You feel uneasy about a situation</li>
               </ul>
             </div>
@@ -919,6 +1026,230 @@ export default function TokThru() {
             >
               💬 Open HATÄTA Chat
             </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== HOTLINE CALL VERIFICATION VIEW =====
+  if (currentView === 'hotline-call' && selectedHotline) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-900 via-red-800 to-black p-6 flex items-center justify-center">
+        <div className="max-w-2xl w-full">
+          <div className="bg-slate-800 border-2 border-red-500 rounded-lg p-8 text-white">
+            {/* Header */}
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold mb-2 text-red-300">📞 {selectedHotline.name}</h2>
+              <p className="text-sm text-slate-400">Safety Verification Before Calling</p>
+            </div>
+
+            {/* Description */}
+            <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-6 mb-8">
+              <p className="text-slate-300 mb-4">{selectedHotline.description}</p>
+              <p className="text-xl font-bold text-red-300 mb-2">Call: {selectedHotline.number}</p>
+              <p className="text-sm text-slate-400">Available 24/7 • Completely confidential • Free</p>
+            </div>
+
+            {/* Verification Questions */}
+            <div className="bg-slate-800 border border-red-500/30 rounded-lg p-6 mb-8">
+              <h3 className="text-lg font-bold text-red-300 mb-4">Before you call:</h3>
+              <ul className="space-y-4 text-slate-300">
+                <li className="flex gap-3">
+                  <span className="text-red-400 font-bold text-lg">✓</span>
+                  <span>You feel safe right now to make this call</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-red-400 font-bold text-lg">✓</span>
+                  <span>You have some privacy to talk freely</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-red-400 font-bold text-lg">✓</span>
+                  <span>You&apos;re ready to speak with a trained counselor</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Important Note */}
+            <div className="bg-red-600/20 border border-red-500 rounded-lg p-4 mb-8">
+              <p className="text-sm text-red-200">
+                <strong>⚠️ Important:</strong> If you are in immediate danger, call 911 first. These hotlines are for support and guidance, not emergency response.
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-4">
+              <button
+                onClick={() => {
+                  setCurrentView('hub');
+                  setSelectedHotline(null);
+                }}
+                className="flex-1 px-6 py-4 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-bold transition"
+              >
+                ← Not Right Now
+              </button>
+              <a
+                href={`tel:${selectedHotline.number.replace(/[^0-9]/g, '')}`}
+                onClick={() => {
+                  speakAlert(`Calling ${selectedHotline.name}. You are not alone. Help is on the way.`);
+                  setTimeout(() => {
+                    setCurrentView('hub');
+                    setSelectedHotline(null);
+                  }, 3000);
+                }}
+                className="flex-1 px-6 py-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition text-center text-lg"
+              >
+                📞 Call Now
+              </a>
+            </div>
+
+            <p className="text-xs text-slate-500 text-center mt-6">Your call is confidential and free. You can hang up anytime.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== INCOMING FAKE CALL SCREEN =====
+  if (incomingCallActive && selectedFakeContact) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-900 via-red-800 to-black flex items-center justify-center p-6">
+        <div className="text-center">
+          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 mx-auto mb-8 flex items-center justify-center shadow-2xl animate-pulse">
+            <span className="text-6xl">{selectedFakeContact.charAt(0).toUpperCase()}</span>
+          </div>
+          
+          <h2 className="text-5xl font-bold mb-2 tracking-wider text-white">{selectedFakeContact}</h2>
+          <p className="text-2xl text-red-200 mb-8 tracking-wide">INCOMING CALL</p>
+          
+          <div className="text-4xl font-mono mb-12 text-red-100">{formatTime(callTimer)}</div>
+
+          <div className="flex gap-8 justify-center">
+            <button
+              onClick={answerFakeCall}
+              className="w-24 h-24 rounded-full bg-green-500 hover:bg-green-600 transition flex items-center justify-center shadow-xl transform hover:scale-110"
+              title="Answer Call"
+            >
+              <span className="text-4xl">✓</span>
+            </button>
+            <button
+              onClick={declineFakeCall}
+              className="w-24 h-24 rounded-full bg-red-600 hover:bg-red-700 transition flex items-center justify-center shadow-xl transform hover:scale-110"
+              title="Decline Call"
+            >
+              <span className="text-4xl">✕</span>
+            </button>
+          </div>
+
+          <p className="text-sm text-red-300 mt-12">Take your time. Stay safe. You can do this.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== FAKE CALL SETUP VIEW =====
+  if (currentView === 'fakecall') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-900 via-red-800 to-black p-6">
+        <div className="max-w-2xl mx-auto">
+          <button 
+            onClick={() => setCurrentView('hub')}
+            className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
+          >
+            ← Back
+          </button>
+
+          <div className="p-8 rounded-lg bg-slate-800 border-2 border-orange-500 text-white">
+            <h2 className="text-3xl font-bold mb-6 text-orange-300">☎️ Fake Call Escape Setup</h2>
+
+            {/* Contact List */}
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold mb-4 text-orange-300 tracking-wide uppercase">Your Fake Contacts</h3>
+              {fakeContacts.length === 0 ? (
+                <p className="text-gray-400 text-center py-6">No contacts yet. Add your first one below.</p>
+              ) : (
+                <div className="grid gap-3 mb-6">
+                  {fakeContacts.map(contact => (
+                    <div
+                      key={contact.name}
+                      onClick={() => setSelectedFakeContact(contact.name)}
+                      className={`p-4 rounded-lg cursor-pointer transition border ${
+                        selectedFakeContact === contact.name
+                          ? 'bg-orange-500 bg-opacity-20 border-orange-500'
+                          : 'bg-slate-700 border-slate-600 hover:border-orange-500'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg">👤 {contact.name}</span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeFakeContact(contact.name);
+                          }}
+                          className="text-red-400 hover:text-red-300 text-xl transition"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Add New Contact */}
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold mb-4 text-orange-300 tracking-wide uppercase">Add New Contact</h3>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  value={newFakeContactName}
+                  onChange={(e) => setNewFakeContactName(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && addFakeContact()}
+                  placeholder="e.g., Mom, Boss, Friend..."
+                  className="flex-1 px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 focus:border-orange-500 focus:outline-none text-white placeholder-gray-400"
+                />
+                <button
+                  onClick={addFakeContact}
+                  className="px-6 py-3 rounded-lg bg-orange-600 hover:bg-orange-700 transition font-semibold tracking-wide"
+                >
+                  + ADD
+                </button>
+              </div>
+            </div>
+
+            {/* Info Box */}
+            <div className="bg-orange-900 bg-opacity-30 border border-orange-700 rounded-lg p-6 mb-8">
+              <h4 className="font-bold text-orange-300 mb-3 text-lg tracking-wide">HOW IT WORKS</h4>
+              <ul className="space-y-2 text-sm text-gray-200 list-disc list-inside">
+                <li>Create fake contact names (people who will &quot;call&quot; you)</li>
+                <li>Select a contact and trigger a fake call</li>
+                <li>A realistic incoming call screen appears</li>
+                <li>Use it as an excuse to leave uncomfortable situations</li>
+                <li>Answer or decline to simulate a real call</li>
+                <li>Part of your safety toolkit - keep people alive</li>
+              </ul>
+            </div>
+
+            <div className="flex gap-4">
+              <button
+                onClick={() => setCurrentView('hub')}
+                className="flex-1 px-4 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 transition font-semibold"
+              >
+                Close Setup
+              </button>
+              <button
+                onClick={triggerFakeCall}
+                disabled={!selectedFakeContact}
+                className={`flex-1 px-4 py-3 rounded-lg font-semibold tracking-wide transition ${
+                  selectedFakeContact
+                    ? 'bg-orange-600 hover:bg-orange-700 cursor-pointer'
+                    : 'bg-gray-700 text-gray-500 cursor-not-allowed opacity-50'
+                }`}
+              >
+                TRIGGER CALL
+              </button>
+            </div>
           </div>
         </div>
       </div>
