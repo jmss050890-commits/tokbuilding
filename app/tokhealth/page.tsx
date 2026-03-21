@@ -1,7 +1,46 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
+
+// Type definition for Web Speech API
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionResultList {
+  [index: number]: SpeechRecognitionResult;
+  length: number;
+}
+
+interface SpeechRecognitionResult {
+  [index: number]: SpeechRecognitionAlternative;
+  isFinal: boolean;
+  length: number;
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string;
+  confidence: number;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+}
+
+// Extend Window interface for non-standard browser APIs
+declare global {
+  interface Window {
+    webkitSpeechRecognition?: new () => SpeechRecognition;
+    SpeechRecognition?: new () => SpeechRecognition;
+  }
+}
 
 interface HealthRecord {
   id: string;
@@ -47,58 +86,52 @@ const SPIRITUAL_BELIEFS = [
 ];
 
 export default function TokHealthVCC() {
+  // State declarations (all at top)
   const [currentView, setCurrentView] = useState<'hub' | 'scanner' | 'health' | 'export' | 'contacts' | 'settings' | 'wisdom'>('hub');
   const [scannerType, setScannerType] = useState<'meal' | 'medicine' | 'barcode' | null>(null);
-
-  // Voice functionality
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const recognitionRef = useRef<any>(null);
-
-  // Camera functionality
   const [showCamera, setShowCamera] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
+  const [scanInput, setScanInput] = useState('');
+  const [newAllergy, setNewAllergy] = useState('');
+  const [newContact, setNewContact] = useState({ name: '', relationship: '', phone: '' });
+  const [healthData, setHealthData] = useState<HealthData>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('tokhealth_data');
+        if (saved) return JSON.parse(saved);
+      } catch {
+        // ignore
+      }
+    }
+    return {
+      weight: 0,
+      bloodPressure: '120/80',
+      heartRate: 0,
+      bloodSugar: 0,
+      temperature: 98.6,
+      allergies: [],
+      intolerances: [],
+      spiritualBelief: '',
+      emergencyContacts: [],
+      records: [],
+      language: 'English',
+      fitbitConnected: false,
+      appleHealthConnected: false,
+    };
+  });
+
+  // Refs
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
-      if (SpeechRecognition) {
-        recognitionRef.current = new SpeechRecognition();
-        recognitionRef.current.continuous = false;
-        recognitionRef.current.interimResults = false;
-        recognitionRef.current.lang = 'en-US';
-        
-        recognitionRef.current.onresult = (event: any) => {
-          const transcript = event.results[0][0].transcript;
-          setScanInput(prev => (prev ? prev + ' ' + transcript : transcript));
-          speakMessage(`Recorded: ${transcript}`);
-        };
-        
-        recognitionRef.current.onend = () => setIsListening(false);
-      }
-    }
-  }, [voiceEnabled]);
-
-  const startListening = () => {
-    if (recognitionRef.current) {
-      setIsListening(true);
-      recognitionRef.current.start();
-    }
-  };
-
-  const stopListening = () => {
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-      setIsListening(false);
-    }
-  };
-
-  const speakMessage = (text: string) => {
+  // Function declarations (before useEffect)
+  const speakMessage = useCallback((text: string) => {
     if (voiceEnabled && typeof window !== 'undefined') {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 0.95;
@@ -107,13 +140,67 @@ export default function TokHealthVCC() {
       utterance.onend = () => setIsSpeaking(false);
       window.speechSynthesis.speak(utterance);
     }
+  }, [voiceEnabled]);
+
+  // Derive health status from health data (no setState needed)
+  const healthStatus = useMemo(() => {
+    let concerns = 0;
+    if (healthData.bloodPressure && healthData.bloodPressure !== '120/80') concerns++;
+    if (healthData.heartRate > 100 || (healthData.heartRate > 0 && healthData.heartRate < 60)) concerns++;
+    if (healthData.bloodSugar > 180 || (healthData.bloodSugar > 0 && healthData.bloodSugar < 70)) concerns++;
+    if (healthData.temperature < 97 || healthData.temperature > 99.5) concerns++;
+    if (healthData.allergies.length + healthData.intolerances.length > 3) concerns++;
+
+    if (concerns === 0) return 'green';
+    else if (concerns <= 2) return 'yellow';
+    else return 'red';
+  }, [healthData]);
+
+  // Effects
+  useEffect(() => {
+    try {
+      localStorage.setItem('tokhealth_data', JSON.stringify(healthData));
+    } catch {
+      // ignore
+    }
+  }, [healthData]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognitionConstructor = (
+        window.webkitSpeechRecognition || 
+        window.SpeechRecognition
+      ) as (new () => SpeechRecognition) | undefined;
+      if (SpeechRecognitionConstructor) {
+        recognitionRef.current = new SpeechRecognitionConstructor();
+        recognitionRef.current.continuous = false;
+        recognitionRef.current.interimResults = false;
+        recognitionRef.current.lang = 'en-US';
+        
+        recognitionRef.current.onresult = (event: Event) => {
+          const speechEvent = event as unknown as { results: Array<{ [key: number]: { transcript: string } }> };
+          const transcript = speechEvent.results[0][0].transcript;
+          setScanInput(prev => (prev ? prev + ' ' + transcript : transcript));
+          speakMessage(`Recorded: ${transcript}`);
+        };
+        
+        recognitionRef.current.onend = () => setIsListening(false);
+      }
+    }
+  }, [voiceEnabled, speakMessage]);
+
+  const startListening = () => {
+    if (recognitionRef.current) {
+      setIsListening(true);
+      recognitionRef.current.start();
+    }
   };
 
   // Camera functions
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' }, // Use rear camera
+        video: { facingMode: 'environment' },
         audio: false,
       });
       streamRef.current = stream;
@@ -157,57 +244,8 @@ export default function TokHealthVCC() {
     setScanInput('');
   };
 
-  const [healthData, setHealthData] = useState<HealthData>({
-    weight: 0,
-    bloodPressure: '120/80',
-    heartRate: 0,
-    bloodSugar: 0,
-    temperature: 98.6,
-    allergies: [],
-    intolerances: [],
-    spiritualBelief: '',
-    emergencyContacts: [],
-    records: [],
-    language: 'English',
-    fitbitConnected: false,
-    appleHealthConnected: false,
-  });
-
-  const [newAllergy, setNewAllergy] = useState('');
-  const [newContact, setNewContact] = useState({ name: '', relationship: '', phone: '' });
-  const [scanInput, setScanInput] = useState('');
-  const [healthStatus, setHealthStatus] = useState<'green' | 'yellow' | 'red'>('green');
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('tokhealth_data');
-      if (saved) setHealthData(JSON.parse(saved));
-    } catch (e) {}
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('tokhealth_data', JSON.stringify(healthData));
-    } catch (e) {}
-    calculateHealthStatus();
-  }, [healthData]);
-
-  const calculateHealthStatus = () => {
-    let concerns = 0;
-
-    if (healthData.bloodPressure && healthData.bloodPressure !== '120/80') concerns++;
-    if (healthData.heartRate > 100 || (healthData.heartRate > 0 && healthData.heartRate < 60)) concerns++;
-    if (healthData.bloodSugar > 180 || (healthData.bloodSugar > 0 && healthData.bloodSugar < 70)) concerns++;
-    if (healthData.temperature < 97 || healthData.temperature > 99.5) concerns++;
-    if (healthData.allergies.length + healthData.intolerances.length > 3) concerns++;
-
-    if (concerns === 0) setHealthStatus('green');
-    else if (concerns <= 2) setHealthStatus('yellow');
-    else setHealthStatus('red');
-  };
-
   const getHealthStatusColor = (): string => {
-    switch (healthStatus) {
+    switch (healthStatus as 'green' | 'yellow' | 'red') {
       case 'green': return 'bg-emerald-500/20 border-emerald-400 text-emerald-100';
       case 'yellow': return 'bg-amber-500/20 border-amber-400 text-amber-100';
       case 'red': return 'bg-red-500/20 border-red-400 text-red-100';
@@ -215,7 +253,7 @@ export default function TokHealthVCC() {
   };
 
   const getHealthStatusEmoji = (): string => {
-    switch (healthStatus) {
+    switch (healthStatus as 'green' | 'yellow' | 'red') {
       case 'green': return '✅ Excellent';
       case 'yellow': return '⚠️ Caution';
       case 'red': return '🚨 Alert';
@@ -448,6 +486,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                 </span>
               )}
               <select 
+                aria-label="Select language"
                 value={healthData.language}
                 onChange={(e) => setHealthData(prev => ({ ...prev, language: e.target.value }))}
                 className="px-3 py-2 rounded-lg text-sm bg-slate-700 text-white border border-emerald-500/30"
@@ -633,6 +672,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             {capturedPhoto && (
               <div className="mb-6">
                 <div className="relative rounded-lg overflow-hidden border-2 border-emerald-500">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={capturedPhoto} alt="Captured" className="w-full h-64 object-cover" />
                   <button
                     onClick={clearPhoto}
@@ -729,8 +769,9 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               <h3 className="text-2xl font-bold mb-6 text-white">📊 Vital Signs</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">⚖️ Weight (lbs)</label>
+                  <label htmlFor="weight-input" className="block text-sm font-semibold text-slate-300 mb-2">⚖️ Weight (lbs)</label>
                   <input
+                    id="weight-input"
                     type="number"
                     value={healthData.weight || ''}
                     onChange={(e) => setHealthData(prev => ({ ...prev, weight: parseFloat(e.target.value) || 0 }))}
@@ -738,8 +779,9 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">🫀 Heart Rate (bpm)</label>
+                  <label htmlFor="heart-rate-input" className="block text-sm font-semibold text-slate-300 mb-2">🫀 Heart Rate (bpm)</label>
                   <input
+                    id="heart-rate-input"
                     type="number"
                     value={healthData.heartRate || ''}
                     onChange={(e) => setHealthData(prev => ({ ...prev, heartRate: parseFloat(e.target.value) || 0 }))}
@@ -747,8 +789,9 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">📊 Blood Pressure</label>
+                  <label htmlFor="blood-pressure-input" className="block text-sm font-semibold text-slate-300 mb-2">📊 Blood Pressure</label>
                   <input
+                    id="blood-pressure-input"
                     type="text"
                     value={healthData.bloodPressure}
                     onChange={(e) => setHealthData(prev => ({ ...prev, bloodPressure: e.target.value }))}
@@ -757,8 +800,9 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">🩸 Blood Sugar (mg/dL)</label>
+                  <label htmlFor="blood-sugar-input" className="block text-sm font-semibold text-slate-300 mb-2">🩸 Blood Sugar (mg/dL)</label>
                   <input
+                    id="blood-sugar-input"
                     type="number"
                     value={healthData.bloodSugar || ''}
                     onChange={(e) => setHealthData(prev => ({ ...prev, bloodSugar: parseFloat(e.target.value) || 0 }))}
@@ -766,8 +810,9 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">🌡️ Temperature (°F)</label>
+                  <label htmlFor="temperature-input" className="block text-sm font-semibold text-slate-300 mb-2">🌡️ Temperature (°F)</label>
                   <input
+                    id="temperature-input"
                     type="number"
                     step="0.1"
                     value={healthData.temperature || ''}
@@ -849,6 +894,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
               <h3 className="text-2xl font-bold mb-4 text-white">🙏 Spiritual/Personal Belief</h3>
               <select
+                aria-label="Select spiritual or personal belief"
                 value={healthData.spiritualBelief}
                 onChange={(e) => setHealthData(prev => ({ ...prev, spiritualBelief: e.target.value }))}
                 className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
