@@ -275,12 +275,12 @@ export default function TokStore() {
           <div className="flex items-center gap-3">
             <span className="text-3xl">🏪</span>
             <div>
-              <h1 className="text-2xl font-bold">TokStore</h1>
-              <p className="text-xs text-slate-400">Your Complete Safety Suite</p>
+              <h1 className="text-2xl font-bold">Sanders Viopro Labs Store</h1>
+              <p className="text-xs text-slate-400">Official SVL Products & Solutions</p>
             </div>
           </div>
-          <Link href="/vcc-hub" className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition text-sm">
-            ← Back to Hub
+          <Link href="/sanders-viopro-labs" className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition text-sm">
+            ← SVL Home
           </Link>
         </div>
       </div>
@@ -288,12 +288,14 @@ export default function TokStore() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Hero Section */}
         <div className="mb-16 text-center">
+          <p className="text-purple-400 mb-2 font-semibold">SANDERS VIOPRO LABS</p>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Your Complete Safety Suite
+            Complete Safety & Wellness Suite
           </h1>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-            Four powerful apps designed to keep you safe in any situation. Get all four apps at an unbeatable price.
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-2">
+            Trusted by thousands. Aligned with our mission: Keep People Alive (KPA).
           </p>
+          <p className="text-sm text-emerald-400 font-semibold">#KPA-Keeppeoplealive | #Sandersvioprolabs</p>
         </div>
 
         {/* Product Grid */}
