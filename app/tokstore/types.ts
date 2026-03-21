@@ -282,7 +282,7 @@ export const FEATURED_APPS: TokApp[] = [
     category: 'safety',
     emoji: '🚨',
     description: 'Discreet fake call feature to help you leave uncomfortable situations',
-    longDescription: 'TokAway creates realistic fake incoming calls with customizable contacts. When you\'re in an uncomfortable or unsafe situation, trigger a call to create a polite exit. Full-screen call interface with timer, answer/decline buttons. Private—all data saved locally on your device. Part of the KPA mission: Keep People Alive.',
+    longDescription: 'TokAway creates realistic fake incoming calls to help you safely exit uncomfortable situations. Start with a discreet call, then activate the safety timer. If you reach safety within 10 minutes, disable the timer. If you don\'t, TokAway automatically finds your location and sends a "TokAway Safety" alert text to your emergency contact with your GPS coordinates. Emergency escalation is automatic—no action required if you\'re in danger. Full-screen call interface, GPS tracking, emergency contact alerts. All data stays private on your device. Part of the KPA mission: Keep People Alive.',
     developer: 'Tok Development Team',
     icon: '☎️',
     screenshots: [],
@@ -324,14 +324,14 @@ export const FEATURED_APPS: TokApp[] = [
         price: 4.99,
         currency: 'USD',
         description: 'TokAway Basic',
-        features: ['Fake call generator', 'Custom contacts', 'Call timer', 'Call history']
+        features: ['Fake call generator', 'Custom decoy contacts', '10-min safety timer', 'GPS location capture', 'Emergency SMS alert', 'Call history']
       },
       {
         type: 'one-time',
         price: 9.99,
         currency: 'USD',
         description: 'TokAway Pro (Lifetime)',
-        features: ['Everything in Basic', '+ SMS spoofing', '+ Scheduled calls', '+ Call scripts', '+ Lifetime updates']
+        features: ['Everything in Basic', 'Up to 3 emergency contacts', 'Scheduled auto-check-in calls', 'Safe word voice detection', 'Call scripts & responses', 'Location history & maps', 'Advanced SMS customization', 'Lifetime free updates']
       }
     ]
   },
