@@ -311,10 +311,10 @@ export const FEATURED_APPS: TokApp[] = [
     ],
     requirements: ['Quick access to contacts', 'Full-screen phone control'],
     permissions: ['Device display', 'Storage for contact data'],
-    privacy: 'https://tokaway.app/privacy',
+    privacy: '/tokaway-landing#privacy',
     support: {
       email: 'support@tokaway.app',
-      website: 'https://tokaway.app',
+      website: '/tokaway-landing',
     },
     status: 'available',
     releaseDate: new Date('2026-03-15'),
