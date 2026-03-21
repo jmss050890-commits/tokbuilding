@@ -205,6 +205,56 @@ const products: Product[] = [
     }
   },
   {
+    id: 'svl-ai-specialist',
+    name: 'SVL AI Specialist Coaching',
+    tagline: 'Expert 1-on-1 Hybrid AI Training',
+    description: 'Live coaching from SVL AI specialists + pre-recorded courses + API access. Get personalized guidance on implementing AI solutions and building specialized agents for your business.',
+    icon: '💼',
+    color: 'rose',
+    grid: 'col-span-1',
+    borderColor: 'border-rose-500/30 hover:border-rose-500/60',
+    gradient: 'from-rose-600 to-pink-600',
+    features: [
+      'Live 1-on-1 coaching sessions',
+      'Pre-recorded training library',
+      'SVL AI API access',
+      'Custom agent strategy',
+      'Implementation guidance',
+      'Dedicated specialist support',
+      'Project consultation',
+      'KPA mission alignment'
+    ],
+    plans: [
+      {
+        name: 'Quick Session',
+        price: 79.99,
+        type: 'one-time',
+        description: 'Single 1-hour coaching session',
+        features: ['1 live session (1 hour)', 'Strategy consultation', 'Implementation tips', 'Email follow-up', 'Resource package']
+      },
+      {
+        name: 'Growth Package',
+        price: 199.99,
+        type: 'one-time',
+        description: '3 sessions + resources (save $40)',
+        features: ['3 live sessions (1 hour each)', 'Customized AI strategy', 'Agent building support', 'API access (3 months)', 'Priority email support', 'Monthly check-ins']
+      },
+      {
+        name: 'Pro Mastery',
+        price: 299.99,
+        type: 'subscription',
+        description: 'Unlimited monthly coaching',
+        features: ['Unlimited monthly sessions', 'Full API access', 'Pre-recorded course library', 'Weekly group workshops', '24/7 chat support', 'Custom agent projects', 'Business integration planning']
+      }
+    ],
+    landingUrl: '/svl-ai-specialist',
+    testimonial: {
+      quote: 'The SVL AI coaching transformed how I think about AI. Live feedback + pre-recorded training = unstoppable growth. Worth every penny.',
+      author: 'Keisha P.',
+      role: 'Tech Entrepreneur'
+    }
+  },
+  {
     id: 'mr-kpa',
     name: 'Mr. KPA Mentorship Access',
     tagline: 'Founder Wisdom & Strategy',
