@@ -10,29 +10,29 @@ export default function TokThruLanding() {
   const plans = [
     {
       name: 'TokThru Basic',
-      price: 2.99,
+      price: 4.99,
       type: 'one-time',
       features: [
-        'Real-time trip tracking',
-        'Share location with trusted contacts',
-        '10-minute check-in alerts',
-        'Route history logging',
-        'Emergency SOS button',
-        'Driver profile ratings',
+        'De-escalation script library (5 guides)',
+        'Check-in timer reminders',
+        'Emergency hotline numbers',
+        'Safe de-escalation techniques',
+        'Self-calming methods',
+        'Safety resources library',
       ],
     },
     {
       name: 'TokThru Pro',
-      price: 7.99,
+      price: 9.99,
       type: 'lifetime',
       features: [
         'Everything in Basic',
-        'Real-time driver screening',
-        'Scheduled trip verification',
-        'Safe word detection',
-        'AI route safety analysis',
-        'Ride-sharing network integration',
-        'Group trip coordination',
+        'Emergency contact integration',
+        'Real-time check-in alerts',
+        'Silent SOS activation',
+        'De-escalation coaching mode',
+        'Crisis response guides (5 detailed scenarios)',
+        'Multi-person coordination',
         'Lifetime free updates',
       ],
     },
@@ -44,7 +44,7 @@ export default function TokThruLanding() {
       <nav className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur border-b border-purple-800/30">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🚗</span>
+            <span className="text-2xl">🧭</span>
             <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               TokThru
             </h1>
@@ -68,20 +68,20 @@ export default function TokThruLanding() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-block mb-4 px-4 py-2 rounded-full bg-purple-900/40 border border-purple-700/60">
-              <span className="text-sm text-purple-300">Ride Safe, Get Home Safe</span>
+              <span className="text-sm text-purple-300">De-Escalation + Safety Check-Ins</span>
             </div>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Every Ride Tracked, <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Every Trip Safe</span>
+              Navigate <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Crisis Safely</span>
             </h2>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-              Whether it's a rideshare, taxi, or transit, TokThru keeps your loved ones informed every step of your journey. Real-time tracking, automatic check-ins, and immediate emergency response.
+              Real-time de-escalation scripts, emergency guides, and check-in systems. TokThru teaches you how to stay calm, de-escalate threats, and access crisis support instantly. Keep People Alive through knowledge and connection.
             </p>
             <div className="flex gap-4 mb-8">
               <button
                 onClick={() => setShowModal(true)}
                 className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 font-bold transition transform hover:scale-105"
               >
-                Download Now
+                Get TokThru
               </button>
               <a
                 href="#features"
@@ -91,26 +91,26 @@ export default function TokThruLanding() {
               </a>
             </div>
             <div className="flex gap-6 text-sm text-slate-400">
-              <div>⭐ 4.7 Rating</div>
-              <div>📥 18K+ Downloads</div>
-              <div>🗺️ Works Everywhere</div>
+              <div>🧠 5 De-escalation Scripts</div>
+              <div>🆘 Emergency Guides</div>
+              <div>✓ Safety Tools</div>
             </div>
           </div>
 
           <div className="hidden md:flex items-center justify-center">
             <div className="relative w-full h-96 bg-gradient-to-b from-purple-900/30 to-transparent rounded-3xl border border-purple-700/40 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-6xl mb-4">🗺️</div>
-                <p className="text-slate-300">Your Journey</p>
+                <div className="text-6xl mb-4">🧭</div>
+                <p className="text-slate-300">Navigate Difficult Situations</p>
                 <div className="mt-6 space-y-3">
                   <div className="bg-slate-800/60 rounded px-4 py-2 text-xs text-slate-400">
-                    📍 Currently in transit
+                    📚 De-escalation coaching
                   </div>
                   <div className="bg-slate-800/60 rounded px-4 py-2 text-xs text-slate-400">
-                    👍 Contact notified
+                    🧭 Crisis response guides
                   </div>
                   <div className="bg-slate-800/60 rounded px-4 py-2 text-xs text-slate-400">
-                    ⏱️ ETA: 12 minutes
+                    ✓ Safety check-ins
                   </div>
                 </div>
               </div>
@@ -122,51 +122,81 @@ export default function TokThruLanding() {
       {/* Features Section */}
       <section id="features" className="bg-purple-900/20 border-y border-purple-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">Your Safety Network</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center">Master De-Escalation & Safety</h2>
           <p className="text-center text-slate-300 mb-16 max-w-2xl mx-auto">
-            Real-time tracking and automatic alerts keep your loved ones informed throughout your journey.
+            Real-world crisis response training in your pocket. Learn proven techniques from de-escalation experts.
           </p>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <div className="bg-slate-900/60 border border-purple-700/30 rounded-2xl p-8 hover:border-purple-600/60 transition">
-              <div className="text-4xl mb-4">🗺️</div>
-              <h3 className="text-xl font-bold mb-3">Live Trip Tracking</h3>
-              <p className="text-slate-300">Your emergency contacts see your real-time location and ETA. They know exactly where you are and when you'll arrive.</p>
-            </div>
-
-            <div className="bg-slate-900/60 border border-purple-700/30 rounded-2xl p-8 hover:border-purple-600/60 transition">
-              <div className="text-4xl mb-4">✓</div>
-              <h3 className="text-xl font-bold mb-3">Auto Check-Ins</h3>
-              <p className="text-slate-300">Get automatic check-in alerts every 10 minutes. Tap to confirm you're okay, or the system escalates to emergency contacts.</p>
+              <div className="text-4xl mb-4">📚</div>
+              <h3 className="text-xl font-bold mb-3">5 De-Escalation Scripts</h3>
+              <p className="text-slate-300">Learn proven techniques: verbal de-escalation, self-calming, dangerous escapes, suicidal crisis response, and intimate partner violence protocols.</p>
             </div>
 
             <div className="bg-slate-900/60 border border-purple-700/30 rounded-2xl p-8 hover:border-purple-600/60 transition">
               <div className="text-4xl mb-4">🆘</div>
-              <h3 className="text-xl font-bold mb-3">One-Tap Emergency</h3>
-              <p className="text-slate-300">Feeling unsafe? Tap the SOS button. Your location, driver info, and status instantly go to emergency contacts and authorities.</p>
+              <h3 className="text-xl font-bold mb-3">Emergency Guides</h3>
+              <p className="text-slate-300">Detailed crisis response for medical emergencies, active threats, mental health crises, domestic violence, and child safety scenarios.</p>
+            </div>
+
+            <div className="bg-slate-900/60 border border-purple-700/30 rounded-2xl p-8 hover:border-purple-600/60 transition">
+              <div className="text-4xl mb-4">✓</div>
+              <h3 className="text-xl font-bold mb-3">Check-In System</h3>
+              <p className="text-slate-300">Real-time check-ins during dangerous or uncomfortable situations. Silent alerts, emergency contacts, and location sharing when needed.</p>
+            </div>
+          </div>
+
+          <div className="bg-slate-900/80 border-2 border-purple-700/40 rounded-3xl p-8 mb-12">
+            <h3 className="text-2xl font-bold mb-6">De-Escalation Scenarios Covered</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
+                <p className="font-bold text-purple-400 mb-2">Verbal De-escalation - Angry Person</p>
+                <p className="text-slate-300 text-sm mb-2">8-step process: calm your body, lower voice, acknowledge feelings, validate, use boundaries, offer solutions.</p>
+              </div>
+              <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
+                <p className="font-bold text-purple-400 mb-2">Self-Calming Techniques</p>
+                <p className="text-slate-300 text-sm mb-2">Box breathing, 5-4-3-2-1 grounding, progressive muscle relaxation, cold water method, positive self-talk.</p>
+              </div>
+              <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
+                <p className="font-bold text-purple-400 mb-2">Escape from Unsafe Situation</p>
+                <p className="text-slate-300 text-sm mb-2">Trust your gut, plan exits, keep devices charged, safe word protocols, drive to safety, call 911.</p>
+              </div>
+              <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
+                <p className="font-bold text-purple-400 mb-2">De-escalating Suicidal Crisis</p>
+                <p className="text-slate-300 text-sm mb-2">Never leave alone, listen without judgment, validate pain, understand plan, connect to 988, create safety plan.</p>
+              </div>
+              <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
+                <p className="font-bold text-purple-400 mb-2">Intimate Partner Violence Response</p>
+                <p className="text-slate-300 text-sm mb-2">Safety first, document abuse, make escape plan, call DV hotline (1-800-799-7233), use code words.</p>
+              </div>
+              <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
+                <p className="font-bold text-purple-400 mb-2">Emergency Crisis Hotlines</p>
+                <p className="text-slate-300 text-sm mb-2">Suicide & Crisis: 988 | National DV Hotline: 1-800-799-7233 | Available 24/7</p>
+              </div>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-slate-900/60 border border-purple-700/30 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4">🛡️ Driver & Vehicle Verification</h3>
+              <h3 className="text-2xl font-bold mb-4">💡 Smart Features</h3>
               <ul className="space-y-3 text-slate-300">
-                <li>✓ Real-time driver screening before pickup</li>
-                <li>✓ License plate verification</li>
-                <li>✓ Driver rating history</li>
-                <li>✓ Vehicle photo confirmation</li>
-                <li>✓ Ride cancellation if unsafe</li>
+                <li>✓ Step-by-step de-escalation coaching</li>
+                <li>✓ Crisis response for 5 major scenarios</li>
+                <li>✓ real-time check-in reminders</li>
+                <li>✓ Emergency hotline numbers (always accessible)</li>
+                <li>✓ Silent SOS activation</li>
               </ul>
             </div>
 
             <div className="bg-slate-900/60 border border-purple-700/30 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4">🌍 Journey Safety</h3>
+              <h3 className="text-2xl font-bold mb-4">🎯 KPA Mission Alignment</h3>
               <ul className="space-y-3 text-slate-300">
-                <li>✓ Route history logging</li>
-                <li>✓ AI-powered route safety analysis</li>
-                <li>✓ Transit alerts for high-risk areas</li>
-                <li>✓ Automatic contact notification at destination</li>
-                <li>✓ Trip receipts & evidence logs</li>
+                <li>✓ Keep People Alive through knowledge</li>
+                <li>✓ Teach crisis response skills</li>
+                <li>✓ Connect to emergency support instantly</li>
+                <li>✓ De-escalate violence before it happens</li>
+                <li>✓ Save lives through preparation</li>
               </ul>
             </div>
           </div>
@@ -175,51 +205,45 @@ export default function TokThruLanding() {
 
       {/* How It Works */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold mb-12 text-center">How It Works</h2>
-        <div className="grid md:grid-cols-4 gap-6 mb-12">
+        <h2 className="text-4xl font-bold mb-12 text-center">How TokThru Works</h2>
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-purple-600/30 border-2 border-purple-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">1</div>
-            <h3 className="text-lg font-bold mb-3">Request Ride</h3>
-            <p className="text-slate-300 text-sm">Order your rideshare or enter transit details in TokThru.</p>
+            <h3 className="text-lg font-bold mb-3">Learn De-Escalation</h3>
+            <p className="text-slate-300 text-sm">Study proven techniques for calming tense situations before they escalate.</p>
           </div>
 
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-purple-600/30 border-2 border-purple-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">2</div>
-            <h3 className="text-lg font-bold mb-3">Share Your Trip</h3>
-            <p className="text-slate-300 text-sm">One tap sends your live location to trusted contacts.</p>
+            <h3 className="text-lg font-bold mb-3">Get Check-In Reminders</h3>
+            <p className="text-slate-300 text-sm">Automatic alerts during dangerous situations keep you accountable and connected.</p>
           </div>
 
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-purple-600/30 border-2 border-purple-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">3</div>
-            <h3 className="text-lg font-bold mb-3">Automatic Check-Ins</h3>
-            <p className="text-slate-300 text-sm">Every 10 minutes, tap to confirm you're safe.</p>
-          </div>
-
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-purple-600/30 border-2 border-purple-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">4</div>
-            <h3 className="text-lg font-bold mb-3">Arrival Confirmation</h3>
-            <p className="text-slate-300 text-sm">Contacts notified when you reach your destination.</p>
+            <h3 className="text-lg font-bold mb-3">Access Emergency Support</h3>
+            <p className="text-slate-300 text-sm">Find hotlines, crisis guides, and safety resources with one tap when you need help.</p>
           </div>
         </div>
 
         <div className="bg-purple-900/30 border border-purple-700/40 rounded-3xl p-8">
-          <h3 className="text-2xl font-bold mb-6">Who Uses TokThru</h3>
+          <h3 className="text-2xl font-bold mb-6">Use Cases</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
-              <p className="font-bold text-purple-400 mb-2">Late Night Commuters</p>
-              <p className="text-slate-300 text-sm">Rideshare users keeping family informed during late-night trips.</p>
+              <p className="font-bold text-purple-400 mb-2">Domestic Safety</p>
+              <p className="text-slate-300 text-sm">Know how to respond to intimate partner violence with proven escape and support strategies.</p>
             </div>
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
-              <p className="font-bold text-purple-400 mb-2">Solo Travelers</p>
-              <p className="text-slate-300 text-sm">Backpackers and travelers sharing their route with friends back home.</p>
+              <p className="font-bold text-purple-400 mb-2">Mental Health Crisis</p>
+              <p className="text-slate-300 text-sm">Recognize suicide risk and de-escalate with compassion. Connect to 988 instantly.</p>
             </div>
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
-              <p className="font-bold text-purple-400 mb-2">Business Travel</p>
-              <p className="text-slate-300 text-sm">Corporate employees staying connected during airport transfers and meetings.</p>
+              <p className="font-bold text-purple-400 mb-2">Workplace Conflict</p>
+              <p className="text-slate-300 text-sm">Handle aggression and threats with de-escalation techniques designed for work environments.</p>
             </div>
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-purple-600">
-              <p className="font-bold text-purple-400 mb-2">Parents &amp; Guardians</p>
-              <p className="text-slate-300 text-sm">Monitor their teens' transit safely without being intrusive.</p>
+              <p className="font-bold text-purple-400 mb-2">Emergency Preparedness</p>
+              <p className="text-slate-300 text-sm">Learn immediate response for active threats, medical emergencies, and child safety.</p>
             </div>
           </div>
         </div>
@@ -229,7 +253,7 @@ export default function TokThruLanding() {
       <section id="pricing" className="bg-purple-900/20 border-y border-purple-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-4 text-center">Simple Pricing</h2>
-          <p className="text-center text-slate-300 mb-16">Choose your plan</p>
+          <p className="text-center text-slate-300 mb-16">Access all de-escalation scripts and emergency guides. Choose your plan.</p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
             {plans.map((plan, idx) => (
@@ -263,14 +287,14 @@ export default function TokThruLanding() {
                       : 'bg-slate-700 hover:bg-slate-600'
                   }`}
                 >
-                  Choose Plan
+                  Get Started
                 </button>
               </div>
             ))}
           </div>
 
           <p className="text-center text-slate-400 text-sm">
-            All plans include lifetime trip history and emergency logs.
+            All plans include access to emergency hotlines (24/7), de-escalation scripts, and crisis guides.
           </p>
         </div>
       </section>
@@ -297,15 +321,15 @@ export default function TokThruLanding() {
       {/* CTA Section */}
       <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border-t border-purple-800/30 py-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Ride Safer?</h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to Get TokThru?</h2>
           <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-            Your next ride is already safer. Download TokThru today and keep your loved ones informed every step of the way.
+            Visit the TokStore to purchase and download TokThru on your device. De-escalation training starts immediately.
           </p>
           <button
             onClick={() => setShowModal(true)}
             className="px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 font-bold text-lg transition transform hover:scale-105"
           >
-            Download TokThru
+            Get TokThru
           </button>
         </div>
       </section>
@@ -316,7 +340,7 @@ export default function TokThruLanding() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="font-bold mb-4 text-purple-400">TokThru</h3>
-              <p className="text-slate-400 text-sm">Every ride. Every journey. Every step of the way.</p>
+              <p className="text-slate-400 text-sm">De-escalation, crisis response, and safety check-ins. Keep People Alive.</p>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Product</h4>
