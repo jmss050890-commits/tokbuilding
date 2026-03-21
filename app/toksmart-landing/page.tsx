@@ -13,12 +13,12 @@ export default function TokSmartLanding() {
       price: 4.99,
       type: 'one-time',
       features: [
-        'AI decision advisor',
-        'Real-time safety analysis',
-        'Situational guidance',
-        'Emergency escalation',
+        'Smart question routing',
+        'Multi-AI comparison',
         'Chat history (7 days)',
-        'Basic situation assessment',
+        '4 AI model access (Scholar, Gemini, ChatGPT, Claude)',
+        'Basic question analysis',
+        'Study assist',
       ],
     },
     {
@@ -29,11 +29,11 @@ export default function TokSmartLanding() {
         'Everything in Lite',
         'Unlimited chat history',
         'Advanced AI patterns',
-        'Personalized threat analysis',
-        'Safe exit strategies',
+        'Personalized learning insights',
+        'Research acceleration',
         'Integration with other Tok apps',
-        'Multi-person coordination',
-        'Real-time coaching in situations',
+        'Vision & document analysis',
+        'Real-time AI collaboration',
         'Lifetime free updates',
       ],
     },
@@ -69,20 +69,20 @@ export default function TokSmartLanding() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-block mb-4 px-4 py-2 rounded-full bg-orange-900/40 border border-orange-700/60">
-              <span className="text-sm text-orange-300">AI-Powered Safety Coaching</span>
+              <span className="text-sm text-orange-300">Smart Question Routing</span>
             </div>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Your Personal <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">Safety Coach</span>
+              Your <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">AI Study Partner</span>
             </h2>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-              Real-time AI guidance for uncomfortable situations. Get instant advice on how to de-escalate, exit safely, or respond intelligently. Like having a trusted coach in your pocket.
+              Ask anything—TokSmart intelligently routes your question to the best AI for the job. Scholar GPT for academics, Gemini for research, ChatGPT for creativity, Claude for deep analysis. Get the right answer faster.
             </p>
             <div className="flex gap-4 mb-8">
               <button
                 onClick={() => setShowModal(true)}
                 className="px-8 py-3 rounded-lg bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 font-bold transition transform hover:scale-105"
               >
-                Download Now
+                Start Learning
               </button>
               <a
                 href="#features"
@@ -92,23 +92,23 @@ export default function TokSmartLanding() {
               </a>
             </div>
             <div className="flex gap-6 text-sm text-slate-400">
-              <div>⭐ 4.8 Rating</div>
-              <div>📥 22K+ Downloads</div>
-              <div>🤖 AI-Powered</div>
+              <div>⭐ 4 AI Models</div>
+              <div>📚 For Students & Workers</div>
+              <div>🚀 Learn Faster</div>
             </div>
           </div>
 
           <div className="hidden md:flex items-center justify-center">
             <div className="relative w-full h-96 bg-gradient-to-b from-orange-900/30 to-transparent rounded-3xl border border-orange-700/40 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-6xl mb-4">💬</div>
-                <p className="text-slate-300">Get Smart Guidance</p>
+                <div className="text-6xl mb-4">🧠</div>
+                <p className="text-slate-300">Ask & Get Smart Answers</p>
                 <div className="mt-6 space-y-3">
                   <div className="bg-slate-800/60 rounded px-4 py-2 text-xs text-slate-400">
-                    🚨 &quot;Feeling unsafe—what do I do?&quot;
+                    📚 "How does photosynthesis work?"
                   </div>
                   <div className="bg-orange-900/40 rounded px-4 py-2 text-xs text-orange-300 border border-orange-700/40">
-                    → Use calm voice, create distance...
+                    → Scholar GPT: [Academic deep dive]
                   </div>
                 </div>
               </div>
@@ -120,57 +120,53 @@ export default function TokSmartLanding() {
       {/* Features Section */}
       <section id="features" className="bg-orange-900/20 border-y border-orange-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">Real-Time Safety Intelligence</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center">Smart AI Question Routing</h2>
           <p className="text-center text-slate-300 mb-16 max-w-2xl mx-auto">
-            In the moment when you need help, TokSmart provides instant, intelligent guidance.
+            Different questions need different AI minds. TokSmart knows which one to choose.
           </p>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <div className="bg-slate-900/60 border border-orange-700/30 rounded-2xl p-8 hover:border-orange-600/60 transition">
-              <div className="text-4xl mb-4">🧠</div>
-              <h3 className="text-xl font-bold mb-3">AI Decision Advisor</h3>
-              <p className="text-slate-300">Describe your situation in plain language. TokSmart analyzes it and provides safe, intelligent responses tailored to your context.</p>
+              <div className="text-4xl mb-4">🔀</div>
+              <h3 className="text-xl font-bold mb-3">Smart Routing</h3>
+              <p className="text-slate-300">Ask your question once. TokSmart automatically sends it to the best AI model for the job—no switching between apps needed.</p>
             </div>
 
             <div className="bg-slate-900/60 border border-orange-700/30 rounded-2xl p-8 hover:border-orange-600/60 transition">
-              <div className="text-4xl mb-4">⚡</div>
-              <h3 className="text-xl font-bold mb-3">Instant Guidance</h3>
-              <p className="text-slate-300">De-escalation tactics, escape routes, communication strategies—all delivered in real-time while you're in the situation.</p>
+              <div className="text-4xl mb-4">⚙️</div>
+              <h3 className="text-xl font-bold mb-3">Multi-AI Comparison</h3>
+              <p className="text-slate-300">See how different AI perspectives approach the same question. Compare answers side-by-side and pick the best one.</p>
             </div>
 
             <div className="bg-slate-900/60 border border-orange-700/30 rounded-2xl p-8 hover:border-orange-600/60 transition">
-              <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold mb-3">Threat Assessment</h3>
-              <p className="text-slate-300">Continuous situation analysis. TokSmart helps you evaluate how safe you are and when to escalate to emergency response.</p>
+              <div className="text-4xl mb-4">🎯</div>
+              <h3 className="text-xl font-bold mb-3">Learning Insights</h3>
+              <p className="text-slate-300">TokSmart tracks your learning patterns and suggests which AI is best for your questions over time.</p>
             </div>
           </div>
 
           <div className="bg-slate-900/80 border-2 border-orange-700/40 rounded-3xl p-8 mb-12">
-            <h3 className="text-2xl font-bold mb-6">Chat Examples</h3>
-            <div className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-                  <p className="font-bold text-orange-400 mb-2">Uncomfortable Date</p>
-                  <p className="text-slate-300 text-sm mb-4">&quot;He's being pushy and won't take no. What do I do?&quot;</p>
-                  <p className="text-slate-400 text-xs italic">→ TokSmart: Set firm boundaries, use your pre-agreed safety code, trigger fake call...</p>
-                </div>
-                <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-                  <p className="font-bold text-orange-400 mb-2">Aggressive Situation</p>
-                  <p className="text-slate-300 text-sm mb-4">&quot;Things are escalating fast. I'm scared.&quot;</p>
-                  <p className="text-slate-400 text-xs italic">→ TokSmart: Prioritize de-escalation, maintain calm voice, create distance...</p>
-                </div>
+            <h3 className="text-2xl font-bold mb-6">Your AI Team</h3>
+            <div className="grid md:grid-cols-4 gap-4">
+              <div className="bg-blue-500/30 backdrop-blur rounded-lg p-6 text-center border border-blue-400">
+                <div className="text-4xl mb-2">📖</div>
+                <h4 className="font-bold mb-2">Scholar GPT</h4>
+                <p className="text-sm">Academic research & deep study</p>
               </div>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-                  <p className="font-bold text-orange-400 mb-2">Post-Incident</p>
-                  <p className="text-slate-300 text-sm mb-4">&quot;It's over but I don't feel safe yet. What next?&quot;</p>
-                  <p className="text-slate-400 text-xs italic">→ TokSmart: Get to a safe location, contact authority, document events...</p>
-                </div>
-                <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-                  <p className="font-bold text-orange-400 mb-2">Coworker Conflict</p>
-                  <p className="text-slate-300 text-sm mb-4">&quot;Manager is being inappropriate. How do I handle it?&quot;</p>
-                  <p className="text-slate-400 text-xs italic">→ TokSmart: Document behavior, know your rights, escalate to HR...</p>
-                </div>
+              <div className="bg-green-500/30 backdrop-blur rounded-lg p-6 text-center border border-green-400">
+                <div className="text-4xl mb-2">🔍</div>
+                <h4 className="font-bold mb-2">Gemini</h4>
+                <p className="text-sm">Comprehensive research & insights</p>
+              </div>
+              <div className="bg-orange-500/30 backdrop-blur rounded-lg p-6 text-center border border-orange-400">
+                <div className="text-4xl mb-2">💬</div>
+                <h4 className="font-bold mb-2">ChatGPT</h4>
+                <p className="text-sm">Conversation & creative writing</p>
+              </div>
+              <div className="bg-purple-500/30 backdrop-blur rounded-lg p-6 text-center border border-purple-400">
+                <div className="text-4xl mb-2">🧠</div>
+                <h4 className="font-bold mb-2">Claude</h4>
+                <p className="text-sm">Deep analysis & complex reasoning</p>
               </div>
             </div>
           </div>
@@ -179,22 +175,22 @@ export default function TokSmartLanding() {
             <div className="bg-slate-900/60 border border-orange-700/30 rounded-2xl p-8">
               <h3 className="text-2xl font-bold mb-4">💡 Smart Features</h3>
               <ul className="space-y-3 text-slate-300">
-                <li>✓ Natural language understanding</li>
-                <li>✓ Context-aware responses</li>
-                <li>✓ Personalized threat analysis</li>
-                <li>✓ Safe exit strategy planning</li>
-                <li>✓ De-escalation coaching</li>
+                <li>✓ Intelligent question classification</li>
+                <li>✓ Auto-routing to best AI model</li>
+                <li>✓ Side-by-side answer comparison</li>
+                <li>✓ Learning pattern insights</li>
+                <li>✓ Unlimited questions & chat</li>
               </ul>
             </div>
 
             <div className="bg-slate-900/60 border border-orange-700/30 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4">🔐 Privacy Built-In</h3>
+              <h3 className="text-2xl font-bold mb-4">🎓 For Students & Workers</h3>
               <ul className="space-y-3 text-slate-300">
-                <li>✓ All conversations private and encrypted</li>
-                <li>✓ No data sold to third parties</li>
-                <li>✓ Offline mode available</li>
-                <li>✓ Delete history anytime</li>
-                <li>✓ AI trained on safety, not engagement</li>
+                <li>✓ Homework help from the right AI</li>
+                <li>✓ Research acceleration</li>
+                <li>✓ Work problem solving</li>
+                <li>✓ Project brainstorming</li>
+                <li>✓ Personalized by your learning style</li>
               </ul>
             </div>
           </div>
@@ -207,20 +203,20 @@ export default function TokSmartLanding() {
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-orange-600/30 border-2 border-orange-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">1</div>
-            <h3 className="text-lg font-bold mb-3">Describe Your Situation</h3>
-            <p className="text-slate-300 text-sm">Type or speak what's happening. Be as specific as you can.</p>
+            <h3 className="text-lg font-bold mb-3">Ask Your Question</h3>
+            <p className="text-slate-300 text-sm">Type or describe what you want to know. TokSmart analyzes the question type instantly.</p>
           </div>
 
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-orange-600/30 border-2 border-orange-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">2</div>
-            <h3 className="text-lg font-bold mb-3">Get Instant Guidance</h3>
-            <p className="text-slate-300 text-sm">AI analyzes and provides intelligent, tailored advice.</p>
+            <h3 className="text-lg font-bold mb-3">Smart Routing</h3>
+            <p className="text-slate-300 text-sm">It routes to Scholar GPT for academics, Gemini for research, ChatGPT for creativity, or Claude for analysis.</p>
           </div>
 
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-orange-600/30 border-2 border-orange-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">3</div>
-            <h3 className="text-lg font-bold mb-3">Act Safely</h3>
-            <p className="text-slate-300 text-sm">Follow the guidance, escalate if needed, or trigger other Tok apps.</p>
+            <h3 className="text-lg font-bold mb-3">Get Your Answer</h3>
+            <p className="text-slate-300 text-sm">Get the best answer fast. Compare with other AIs if you want to see different perspectives.</p>
           </div>
         </div>
 
@@ -228,20 +224,20 @@ export default function TokSmartLanding() {
           <h3 className="text-2xl font-bold mb-6">Use Cases</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-              <p className="font-bold text-orange-400 mb-2">Dating & Relationships</p>
-              <p className="text-slate-300 text-sm">Get real-time advice during uncomfortable dates or relationship conflicts.</p>
+              <p className="font-bold text-orange-400 mb-2">Homework Help</p>
+              <p className="text-slate-300 text-sm">Get help with any subject. Scholar GPT tackles the academic deep dive.</p>
             </div>
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-              <p className="font-bold text-orange-400 mb-2">Workplace Safety</p>
-              <p className="text-slate-300 text-sm">Handle harassment, aggression, or other workplace incidents intelligently.</p>
+              <p className="font-bold text-orange-400 mb-2">Research Projects</p>
+              <p className="text-slate-300 text-sm">Need to research a topic? Gemini finds comprehensive sources and insights.</p>
             </div>
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-              <p className="font-bold text-orange-400 mb-2">Personal Safety</p>
-              <p className="text-slate-300 text-sm">De-escalation tactics, escape routes, and threat assessment in real-time.</p>
+              <p className="font-bold text-orange-400 mb-2">Creative Writing</p>
+              <p className="text-slate-300 text-sm">ChatGPT is perfect for stories, essays, and creative ideas.</p>
             </div>
             <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-orange-600">
-              <p className="font-bold text-orange-400 mb-2">Post-Incident Support</p>
-              <p className="text-slate-300 text-sm">Get guidance on next steps after something bad happens.</p>
+              <p className="font-bold text-orange-400 mb-2">Complex Analysis</p>
+              <p className="text-slate-300 text-sm">Claude breaks down complex problems with deep reasoning.</p>
             </div>
           </div>
         </div>
@@ -251,7 +247,7 @@ export default function TokSmartLanding() {
       <section id="pricing" className="bg-orange-900/20 border-y border-orange-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-4 text-center">Simple Pricing</h2>
-          <p className="text-center text-slate-300 mb-16">Choose your plan</p>
+          <p className="text-center text-slate-300 mb-16">Access all 4 AI models. Choose your plan.</p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
             {plans.map((plan, idx) => (
