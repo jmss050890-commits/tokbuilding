@@ -348,8 +348,8 @@ export default function TokStore() {
                   <p className="text-slate-400">We use Stripe for payment processing—the same secure system trusted by millions of businesses worldwide.</p>
                 </div>
                 <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
-                  <h3 className="font-bold mb-3 text-lg">↩️ What's your refund policy?</h3>
-                  <p className="text-slate-400">30-day money-back guarantee if you're not satisfied. No questions asked. Your satisfaction is our priority.</p>
+                  <h3 className="font-bold mb-3 text-lg">↩️ What&rsquo;s your refund policy?</h3>
+                  <p className="text-slate-400">30-day money-back guarantee if you&rsquo;re not satisfied. No questions asked. Your satisfaction is our priority.</p>
                 </div>
               </div>
             </div>
@@ -402,7 +402,7 @@ export default function TokStore() {
 
             {showCheckout && (
               <div className="mb-8 p-4 rounded-lg bg-blue-900/30 border border-blue-700 text-blue-200">
-                ℹ️ Click "Continue to Stripe" to complete your purchase securely
+                ℹ️ Click &quot;Continue to Stripe&quot; to complete your purchase securely
               </div>
             )}
 
@@ -497,7 +497,7 @@ export default function TokStore() {
                 {/* Testimonial */}
                 <div className="mb-8 pb-8 border-b border-slate-600">
                   <div className="bg-slate-700/50 rounded-lg p-6 border border-slate-600">
-                    <p className="text-lg mb-4 italic text-slate-200">"{currentProduct.testimonial.quote}"</p>
+                    <p className="text-lg mb-4 italic text-slate-200">&quot;{currentProduct.testimonial.quote}&quot;</p>
                     <p className="font-bold">{currentProduct.testimonial.author}</p>
                     <p className="text-sm text-slate-400">{currentProduct.testimonial.role}</p>
                   </div>
@@ -558,7 +558,7 @@ export default function TokStore() {
             ))}
             <div>
               <h3 className="font-bold mb-3">KPA</h3>
-              <p className="text-sm text-slate-400">Building the world's most comprehensive personal safety platform.</p>
+              <p className="text-sm text-slate-400">Building the world&rsquo;s most comprehensive personal safety platform.</p>
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">

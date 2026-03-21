@@ -100,7 +100,8 @@ export async function getCheckoutSession(sessionId: string) {
 export function generateLicenseKey(appId: string, userId: string): string {
   const timestamp = Date.now().toString(36).toUpperCase();
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();
-  return `TOK-${appId.toUpperCase()}-${timestamp}-${random}`;
+  const userHash = userId.substring(0, 6).toUpperCase();
+  return `TOK-${appId.toUpperCase()}-${userHash}-${timestamp}-${random}`;
 }
 
 /**
