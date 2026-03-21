@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Grace",
     short_name: "Grace",
     description:
-      "Grace is a voice-first personal coach for health, heart, mindset, and spirit.",
+      "Grace is a voice-first personal coach for health, heart, mindset, and spirit. Named after a survivor who dedicated her life to caring for others. Meet people where they are. Speak life. Keep People Alive.",
     start_url: "/agent/grace",
     scope: "/",
     display: "standalone",

@@ -57,23 +57,82 @@ export default function AgentPage() {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     
-    // Set voice based on agent gender preference
-    if (agent?.voiceGender) {
-      const voices = window.speechSynthesis.getVoices();
-      const genderKeywords = agent.voiceGender === "male" ? 
-        ["google us english male", "male", "man", "father"] : 
-        ["google us english female", "female", "woman", "mother"];
+    // Get all available voices
+    const voices = window.speechSynthesis.getVoices();
+    
+    let selectedVoice: SpeechSynthesisVoice | undefined;
+
+    // PRIORITY 1: Try explicit voice name from agent config
+    if (agent?.voiceName) {
+      selectedVoice = voices.find(voice => 
+        voice.name.toLowerCase() === agent.voiceName?.toLowerCase()
+      );
       
-      const selectedVoice = voices.find(voice => 
-        genderKeywords.some(keyword => 
-          voice.name.toLowerCase().includes(keyword) ||
-          voice.lang.toLowerCase().includes("en-us")
-        )
-      ) || voices.find(v => v.lang === "en-US");
-      
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
+      // Partial match if no exact
+      if (!selectedVoice) {
+        selectedVoice = voices.find(voice => 
+          voice.name.toLowerCase().includes(agent.voiceName?.toLowerCase() || '')
+        );
       }
+    }
+
+    // PRIORITY 2: SVL-Preferred natural voices (never robotic)
+    if (!selectedVoice && agent?.voiceGender) {
+      if (agent.voiceGender === "female") {
+        // Natural female voice names in preference order
+        const preferredFemaleVoices = [
+          "zira",
+          "samantha", 
+          "victoria",
+          "moira",
+          "karen",
+          "fiona",
+          "anna",
+          "emma",
+          "bella",
+          "susan",
+        ];
+        
+        selectedVoice = voices.find(voice =>
+          preferredFemaleVoices.some(pattern =>
+            voice.name.toLowerCase().includes(pattern)
+          )
+        );
+      } else {
+        // Natural male voice names in preference order
+        const preferredMaleVoices = [
+          "aaron",
+          "daniel",
+          "david",
+          "alex",
+          "tom",
+        ];
+        
+        selectedVoice = voices.find(voice =>
+          preferredMaleVoices.some(pattern =>
+            voice.name.toLowerCase().includes(pattern)
+          )
+        );
+      }
+    }
+
+    // PRIORITY 3: Any en-US voice (better than default system robotic)
+    if (!selectedVoice) {
+      selectedVoice = voices.find(v => v.lang?.includes("en-US") || v.lang?.includes("en-us"));
+    }
+
+    // PRIORITY 4: Last resort - but NOT the default robotic voice
+    if (!selectedVoice && voices.length > 0) {
+      // Skip obviously robotic names
+      selectedVoice = voices.find(v => 
+        !v.name.toLowerCase().includes("robot") && 
+        !v.name.toLowerCase().includes("default") &&
+        v.lang === "en-US"
+      ) || voices[0];
+    }
+
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
     }
     
     utterance.rate = agent?.voiceRate || 1;
@@ -224,6 +283,7 @@ export default function AgentPage() {
       hatata: "#e05c1a",
       wisdom: "#0fa89e",
       "coach-daniels": "#2ecc71",
+      tokseo: "#f59e0b",
     };
     return colors[slug] || "#888";
   };
@@ -233,6 +293,7 @@ export default function AgentPage() {
   if (!mounted || !agent) {
     return (
       <div
+        suppressHydrationWarning
         style={{
           display: "flex",
           flexDirection: "column",
@@ -250,6 +311,7 @@ export default function AgentPage() {
 
   return (
     <div
+      suppressHydrationWarning
       style={{
         display: "flex",
         flexDirection: "column",
