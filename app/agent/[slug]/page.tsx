@@ -116,18 +116,37 @@ export default function AgentPage() {
       }
     }
 
-    // PRIORITY 3: Any en-US voice (better than default system robotic)
+    // PRIORITY 3: Respect gender - find any voice matching agent's gender
+    if (!selectedVoice && agent?.voiceGender) {
+      if (agent.voiceGender === "female") {
+        // Try to find ANY female voice that's not male-coded voices
+        const maleVoicePatterns = ["daniel", "david", "alex", "tom", "aaron"];
+        selectedVoice = voices.find(v => {
+          const isEnUS = v.lang?.includes("en-US") || v.lang?.includes("en-us");
+          const isNotMale = !maleVoicePatterns.some(pattern => v.name.toLowerCase().includes(pattern));
+          return isEnUS && isNotMale;
+        });
+      } else {
+        // Try to find ANY male voice that's not female-coded voices
+        const femaleVoicePatterns = ["zira", "samantha", "victoria", "moira", "karen", "fiona", "anna", "emma", "bella", "susan"];
+        selectedVoice = voices.find(v => {
+          const isEnUS = v.lang?.includes("en-US") || v.lang?.includes("en-us");
+          const isNotFemale = !femaleVoicePatterns.some(pattern => v.name.toLowerCase().includes(pattern));
+          return isEnUS && isNotFemale;
+        });
+      }
+    }
+
+    // PRIORITY 4: Last resort - any en-US voice (better than default system robotic)
     if (!selectedVoice) {
       selectedVoice = voices.find(v => v.lang?.includes("en-US") || v.lang?.includes("en-us"));
     }
 
-    // PRIORITY 4: Last resort - but NOT the default robotic voice
+    // PRIORITY 5: Absolute last resort - but NOT robotic names
     if (!selectedVoice && voices.length > 0) {
-      // Skip obviously robotic names
       selectedVoice = voices.find(v => 
         !v.name.toLowerCase().includes("robot") && 
-        !v.name.toLowerCase().includes("default") &&
-        v.lang === "en-US"
+        !v.name.toLowerCase().includes("default")
       ) || voices[0];
     }
 
