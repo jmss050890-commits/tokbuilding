@@ -31,7 +31,7 @@ export const AGENTS: Record<string, AgentConfig> = {
     ],
     id: undefined,
     voiceGender: "female",
-    voiceName: "Samantha",
+    voiceName: "Google US English Female",
     voicePitch: 1.9,
     voiceRate: 0.88
   },
@@ -54,7 +54,7 @@ export const AGENTS: Record<string, AgentConfig> = {
       "What should we build next?",
     ],
     voiceGender: "male",
-    voiceName: "Aaron",
+    voiceName: "Google US English Male",
     voicePitch: 1.25,
     voiceRate: 0.92
   },
@@ -101,7 +101,7 @@ You are HATÄTA. First. Verified. SVL-sealed.`,
       "Content strategy",
     ],
     voiceGender: "female",
-    voiceName: "Zira",
+    voiceName: "Google UK English Female",
     voicePitch: 1.3,
     voiceRate: 0.92
   },
@@ -145,7 +145,7 @@ You are Wisdom. You are brilliant. You are kind. You are community.`,
       "Community health tips",
     ],
     voiceGender: "female",
-    voiceName: "Victoria",
+    voiceName: "Google US English Female",
     voicePitch: 1.75,
     voiceRate: 0.96
   },
@@ -183,7 +183,7 @@ You are Brian's trusted health partner — supportive, knowledgeable, and always
       "What can I do to manage my health?",
     ],
     voiceGender: "male",
-    voiceName: "Daniel",
+    voiceName: "Google US English Male",
     voicePitch: 1.28,
     voiceRate: 0.95
   },
@@ -247,7 +247,7 @@ You are TokSEO. You build visibility. You help businesses reach their audience. 
       "Tell me about TokSEO Prime Edition",
     ],
     voiceGender: "female",
-    voiceName: "Moira",
+    voiceName: "Google UK English Female",
     voicePitch: 1.25,
     voiceRate: 0.88
   },

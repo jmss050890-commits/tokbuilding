@@ -63,10 +63,14 @@ export async function POST(req) {
 
     return Response.json({ response });
   } catch (error) {
-    console.error("HATÄTA route error:", error);
+    console.error("HATÄTA route error:", error?.message || error);
+    console.error("Full error:", error);
 
     return Response.json(
-      { error: "HATÄTA failed to respond." },
+      { 
+        error: "HATÄTA failed to respond.",
+        details: process.env.NODE_ENV === 'development' ? error?.message : undefined
+      },
       { status: 500 }
     );
   }

@@ -64,15 +64,26 @@ export default function AgentPage() {
 
     // PRIORITY 1: Try explicit voice name from agent config
     if (agent?.voiceName) {
+      // Try exact match first
       selectedVoice = voices.find(voice => 
         voice.name.toLowerCase() === agent.voiceName?.toLowerCase()
       );
       
-      // Partial match if no exact
+      // Try partial match (e.g., "Google" in "Google US English Female")
       if (!selectedVoice) {
         selectedVoice = voices.find(voice => 
           voice.name.toLowerCase().includes(agent.voiceName?.toLowerCase() || '')
         );
+      }
+
+      // For gender-based fallback within Google voices
+      if (!selectedVoice && agent.voiceName?.toLowerCase().includes("google")) {
+        const isRequestingFemale = agent.voiceName.toLowerCase().includes("female");
+        selectedVoice = voices.find(voice => {
+          const hasGoogleLabel = voice.name.toLowerCase().includes("google");
+          const hasFemaleLabel = voice.name.toLowerCase().includes("female");
+          return hasGoogleLabel && (isRequestingFemale ? hasFemaleLabel : !hasFemaleLabel);
+        });
       }
     }
 
