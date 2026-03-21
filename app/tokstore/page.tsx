@@ -36,21 +36,21 @@ const products: Product[] = [
     id: 'tokaway',
     name: 'TokAway',
     tagline: 'Your Secret Escape Button',
-    description: 'Create a fake incoming call or message to exit uncomfortable situations discreetly.',
+    description: 'Create a fake incoming call to exit uncomfortable situations discreetly. Built to Keep People Alive.',
     icon: '🚨',
     color: 'blue',
     grid: 'col-span-1',
     borderColor: 'border-cyan-500/30 hover:border-cyan-500/60',
     gradient: 'from-blue-600 to-cyan-600',
     features: [
-      'Fake call or text message',
-      'Physical trigger buttons',
-      'Pre-recorded voice messages',
-      'Silent activation',
+      'Fake incoming call feature',
       'Customizable contact names',
-      'Works offline',
+      'Timer for call duration',
+      'Silent activation',
+      'Local contact storage',
+      'Easy to use interface',
       'No suspicious notifications',
-      'Discreet escape option'
+      'Safety exit option'
     ],
     plans: [
       {
@@ -78,8 +78,8 @@ const products: Product[] = [
   {
     id: 'tokhealth',
     name: 'TokHealth',
-    tagline: 'Your Medical Profile Guardian',
-    description: 'Emergency responders can access your health history and medications instantly.',
+    tagline: 'Your Health Profile Hub',
+    description: 'Create and manage your complete health profile with medications, allergies, and emergency contacts in one place.',
     icon: '💚',
     color: 'green',
     grid: 'col-span-1',
@@ -88,12 +88,12 @@ const products: Product[] = [
     features: [
       'Medical profile creation',
       'Medication tracking',
-      'Allergy warnings',
-      'Hospital integration',
-      'Family portal access',
-      'HIPAA compliant',
-      'Emergency QR code',
-      '24/7 availability'
+      'Allergy & intolerance recording',
+      'Emergency contact management',
+      'Family account access',
+      'Voice note recording',
+      'Multi-language support',
+      'Always accessible when needed'
     ],
     plans: [
       {
@@ -121,22 +121,22 @@ const products: Product[] = [
   {
     id: 'tokthru',
     name: 'TokThru',
-    tagline: 'Real-Time Safety Tracking',
-    description: 'Share your location and trip details with trusted contacts automatically.',
+    tagline: 'Smart Safety Check-Ins',
+    description: 'Set automatic check-in reminders during trips and share safety status with trusted contacts.',
     icon: '🚗',
     color: 'purple',
     grid: 'col-span-1',
     borderColor: 'border-purple-500/30 hover:border-purple-500/60',
     gradient: 'from-purple-600 to-pink-600',
     features: [
-      'Live GPS tracking',
-      'Driver verification',
-      'Auto check-ins',
-      'Emergency SOS button',
-      'Route safety analysis',
-      'Vehicle photo confirmation',
-      'Smart notifications',
-      'Trip history'
+      'Automatic check-in timers',
+      'Reminder notifications',
+      'Emergency contact system',
+      'SOS button access',
+      'De-escalation scripts',
+      'Safety resource library',
+      'Crisis hotline numbers',
+      'Trip documentation'
     ],
     plans: [
       {
@@ -162,82 +162,39 @@ const products: Product[] = [
     }
   },
   {
-    id: 'toksmart',
-    name: 'TokSmart',
-    tagline: 'Your AI Safety Advisor',
-    description: 'Chat with an AI that helps you navigate uncomfortable and threatening situations.',
-    icon: '🧠',
-    color: 'orange',
-    grid: 'col-span-1',
-    borderColor: 'border-orange-500/30 hover:border-orange-500/60',
-    gradient: 'from-orange-600 to-amber-600',
-    features: [
-      'AI safety advisor',
-      'Threat assessment',
-      'De-escalation tactics',
-      'Real-time guidance',
-      'Chat history',
-      'Personalized responses',
-      'Multi-person coordination',
-      'Evidence documentation'
-    ],
-    plans: [
-      {
-        name: 'Lite',
-        price: 4.99,
-        type: 'one-time',
-        description: 'Basic AI coaching',
-        features: ['AI safety advisor', 'Threat assessment', '7-day chat history', 'De-escalation tips']
-      },
-      {
-        name: 'Pro',
-        price: 9.99,
-        type: 'one-time',
-        description: 'Advanced guidance',
-        features: ['Advanced AI advisor', 'Unlimited history', 'Priority responses', 'Group coordination', 'Evidence tools']
-      }
-    ],
-    landingUrl: '/toksmart-landing',
-    testimonial: {
-      quote: 'When I didn\'t know how to handle a sketch situation, TokSmart was like having a trained crisis advisor in my pocket.',
-      author: 'Marcus D.',
-      role: 'Safety Professional'
-    }
-  },
-  {
     id: 'mr-kpa',
-    name: 'Mr. KPA Mentorship',
-    tagline: 'Wisdom from the Founder',
-    description: 'Direct access to Jerome Sanders\' founder insights, strategy guidance, and lived wisdom for navigating life and business.',
+    name: 'Mr. KPA Mentorship Access',
+    tagline: 'Founder Wisdom & Strategy',
+    description: 'Chat with Mr. KPA directly. Jerome Sanders shares founder insights, life strategy, and KPA mission wisdom. Built on lived experience.',
     icon: '✨',
     color: 'amber',
     grid: 'col-span-1',
     borderColor: 'border-amber-500/30 hover:border-amber-500/60',
     gradient: 'from-amber-600 to-yellow-500',
     features: [
-      'Direct founder access',
-      'Strategy mentorship',
-      'Real-world wisdom',
-      'Business guidance',
-      'Life navigation',
-      'KPA mission alignment',
-      'Verified authority',
-      'Priority response'
+      'Direct access to Mr. KPA',
+      'Founder strategy insight',
+      'Lived wisdom not theory',
+      'Mission alignment guidance',
+      'Verified SVL authority',
+      'Real conversations',
+      'KPA community connection',
+      'Keep People Alive focus'
     ],
     plans: [
       {
-        name: 'Single Session',
-        price: 29.99,
+        name: 'Chat Access',
+        price: 19.99,
         type: 'one-time',
-        description: '1-on-1 founder mentorship session',
-        features: ['60-minute session', 'Strategy discussion', 'Real guidance', 'Recorded access', 'Follow-up notes']
+        description: 'Unlock Mr. KPA chat access',
+        features: ['Unlimited chat with Mr. KPA', 'Founder insights anytime', 'Strategy guidance', 'Life navigation questions', 'KPA mission clarity', 'Community belonging']
       },
       {
-        name: 'Mentorship Bundle',
-        price: 99.99,
+        name: 'Premium Access',
+        price: 49.99,
         type: 'one-time',
-        description: 'Monthly founder wisdom access',
-        features: ['4 sessions/month', 'Priority booking', 'Strategy guidance', 'Business & life mentoring', 'Private community access', 'Lifetime recordings']
+        description: 'Premium founder access',
+        features: ['Priority response from Mr. KPA', 'Deeper strategy sessions', 'Business & life mentoring', 'Exclusive community', 'Direct messaging', 'Lifetime access']
       }
     ],
     landingUrl: '/agent/mr-kpa',
@@ -307,7 +264,7 @@ export default function TokStore() {
     : null;
 
   const bundlePrice = 28.99;
-  // Bundle includes only the 4 safety apps (tokaway, tokhealth, tokthru, toksmart)
+  // Bundle includes only the 3 safety apps (tokaway, tokhealth, tokthru)
   // Mr. KPA Mentorship is premium founder access sold separately
   const safetyProducts = products.filter(p => p.id !== 'mr-kpa');
   const individualTotal = safetyProducts.reduce((sum, p) => sum + p.plans[1].price, 0);
