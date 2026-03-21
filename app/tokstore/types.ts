@@ -16,6 +16,15 @@ export interface AppVersion {
   minOsVersion?: string;
 }
 
+export interface PricingTier {
+  type: 'free' | 'one-time' | 'subscription';
+  price: number;
+  currency: string;
+  interval?: 'monthly' | 'yearly'; // for subscription
+  description: string;
+  features: string[];
+}
+
 export interface TokApp {
   id: string;
   name: string;
@@ -43,6 +52,9 @@ export interface TokApp {
   };
   status: 'available' | 'beta' | 'coming-soon' | 'retired';
   releaseDate: Date;
+  pricing: PricingTier[];
+  stripeProductId?: string;
+  stripePriceIds?: Record<string, string>; // Maps pricing tier to Stripe price ID
 }
 
 export interface AppDownloadRecord {
@@ -119,6 +131,31 @@ export const FEATURED_APPS: TokApp[] = [
     },
     status: 'available',
     releaseDate: new Date('2025-06-15'),
+    pricing: [
+      {
+        type: 'free',
+        price: 0,
+        currency: 'USD',
+        description: 'Basic health tracking',
+        features: ['Daily meal logging', 'Vital signs tracking', 'Basic reports']
+      },
+      {
+        type: 'subscription',
+        price: 9.99,
+        currency: 'USD',
+        interval: 'monthly',
+        description: 'Premium Health Companion',
+        features: ['Unlimited logging', 'Advanced AI insights', 'Doctor export', 'Prescription reminders', 'Family sharing']
+      },
+      {
+        type: 'subscription',
+        price: 99.99,
+        currency: 'USD',
+        interval: 'yearly',
+        description: 'Premium yearly (save 17%)',
+        features: ['All monthly features', '+3 family members', 'Priority support', 'Data backup to cloud']
+      }
+    ]
   },
   {
     id: 'tokthru',
@@ -153,6 +190,23 @@ export const FEATURED_APPS: TokApp[] = [
     },
     status: 'available',
     releaseDate: new Date('2025-08-20'),
+    pricing: [
+      {
+        type: 'free',
+        price: 0,
+        currency: 'USD',
+        description: 'Basic Safety',
+        features: ['Emergency SOS', 'Location sharing', 'Basic contacts (3)']
+      },
+      {
+        type: 'subscription',
+        price: 14.99,
+        currency: 'USD',
+        interval: 'monthly',
+        description: 'Safety Pro',
+        features: ['24/7 emergency dispatch', 'Unlimited trusted contacts', 'Real-time tracking', 'Incident reports', '24-hour support']
+      }
+    ]
   },
   {
     id: 'toksmart',
@@ -196,6 +250,31 @@ export const FEATURED_APPS: TokApp[] = [
     },
     status: 'available',
     releaseDate: new Date('2026-02-15'),
+    pricing: [
+      {
+        type: 'free',
+        price: 0,
+        currency: 'USD',
+        description: 'Starter',
+        features: ['10 questions/day', 'Basic AI routing', 'Limited to ChatGPT']
+      },
+      {
+        type: 'subscription',
+        price: 7.99,
+        currency: 'USD',
+        interval: 'monthly',
+        description: 'Scholar Pro',
+        features: ['Unlimited questions', 'All 4 AI models', 'Comparison view', 'History & favorites', 'Priority support']
+      },
+      {
+        type: 'subscription',
+        price: 79.99,
+        currency: 'USD',
+        interval: 'yearly',
+        description: 'Yearly Unlimited (save 17%)',
+        features: ['Unlimited everything', 'Priority routing', 'Export studies', 'API access for teams']
+      }
+    ]
   },
   {
     id: 'tokaway',
@@ -239,5 +318,21 @@ export const FEATURED_APPS: TokApp[] = [
     },
     status: 'available',
     releaseDate: new Date('2026-03-15'),
+    pricing: [
+      {
+        type: 'one-time',
+        price: 4.99,
+        currency: 'USD',
+        description: 'TokAway Basic',
+        features: ['Fake call generator', 'Custom contacts', 'Call timer', 'Call history']
+      },
+      {
+        type: 'one-time',
+        price: 9.99,
+        currency: 'USD',
+        description: 'TokAway Pro (Lifetime)',
+        features: ['Everything in Basic', '+ SMS spoofing', '+ Scheduled calls', '+ Call scripts', '+ Lifetime updates']
+      }
+    ]
   },
 ];
