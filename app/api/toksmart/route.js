@@ -1,9 +1,5 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const SYSTEM_PROMPTS = {
   "scholar-gpt": `You are Scholar GPT, an academic research and study assistant integrated into TokSmart.
 
@@ -75,6 +71,10 @@ Be comprehensive, accurate, and enlightening.`,
 
 export async function POST(req) {
   try {
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const body = await req.json();
     const message = body?.message?.trim();
     const aiModel = body?.aiModel || "claude";
