@@ -12,9 +12,14 @@ export default function SandersVioProLabs() {
             <span className="text-3xl">🥼</span>
             <h1 className="text-2xl font-bold">Sanders Viopro Labs</h1>
           </div>
-          <Link href="/" className="px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition">
-            ← Back Home
-          </Link>
+          <div className="flex gap-4 items-center">
+            <Link href="/our-story" className="px-4 py-2 rounded-lg text-purple-300 hover:text-white transition">
+              Our Story
+            </Link>
+            <Link href="/" className="px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition">
+              ← Back Home
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -66,6 +71,22 @@ export default function SandersVioProLabs() {
               Pushing boundaries with forward-thinking approaches to personal safety and emergency response.
             </p>
           </div>
+        </div>
+
+        {/* Founder Story Section */}
+        <div className="mb-16">
+          <Link href="/our-story" className="block bg-gradient-to-br from-purple-900/50 via-pink-900/30 to-slate-900/50 rounded-xl border-2 border-purple-600/50 hover:border-purple-400/80 p-12 transition transform hover:scale-105 cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">📖</div>
+              <h2 className="text-4xl font-bold text-white mb-4">How SVL Was Built</h2>
+              <p className="text-xl text-purple-200 mb-6 max-w-2xl mx-auto">
+                Not in a boardroom. From spoken thought. How Jerome unified every platform and AI under one mission: Keep People Alive.
+              </p>
+              <span className="inline-block px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-lg transition">
+                Read Our Story →
+              </span>
+            </div>
+          </Link>
         </div>
 
         {/* Our Products */}
