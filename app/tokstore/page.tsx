@@ -168,7 +168,10 @@ export default function TokStore() {
               // App Details View
               <div className="bg-slate-800 rounded-lg p-8 border border-slate-700">
                 <button
-                  onClick={() => setSelectedApp(null)}
+                  onClick={() => {
+                    setSelectedApp(null);
+                    setCheckoutError(null);
+                  }}
                   className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
                 >
                   ← Back to Store
@@ -263,19 +266,6 @@ export default function TokStore() {
                   <h2 className="text-xl font-bold mb-3">About</h2>
                   <p className="text-slate-300 whitespace-pre-wrap">{selectedApp.longDescription}</p>
                 </div>
-
-                {/* Update back button */}
-                {selectedApp && (
-                  <button
-                    onClick={() => {
-                      setSelectedApp(null);
-                      setCheckoutError(null);
-                    }}
-                    className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition absolute top-4 left-4"
-                  >
-                    ← Back
-                  </button>
-                )}
 
                 {/* Screenshots */}
                 {selectedApp.screenshots.length > 0 && (
