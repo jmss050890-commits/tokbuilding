@@ -14,8 +14,10 @@ export default function TokAwayLanding() {
       type: 'one-time',
       features: [
         'Fake call generator',
-        'Custom contacts',
-        'Call timer',
+        'Custom decoy contacts',
+        '10-minute safety timer',
+        'GPS location capture',
+        'Emergency SMS to 1 contact',
         'Call history',
       ],
     },
@@ -25,10 +27,13 @@ export default function TokAwayLanding() {
       type: 'lifetime',
       features: [
         'Everything in Basic',
-        'SMS spoofing',
-        'Scheduled calls',
-        'Call scripts',
-        'Lifetime updates',
+        'Up to 3 emergency contacts',
+        'Scheduled auto-check-in calls',
+        'Safe word detection (voice)',
+        'Call scripts & responses',
+        'Location history & maps',
+        'Advanced SMS customization',
+        'Lifetime free updates',
       ],
     },
   ];
@@ -112,36 +117,142 @@ export default function TokAwayLanding() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Safety Flow Section */}
       <section id="features" className="bg-blue-900/20 border-y border-blue-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">How It Works</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center">Your Safety Network</h2>
           <p className="text-center text-slate-300 mb-16 max-w-2xl mx-auto">
-            TokAway is designed with your safety in mind. Quick, discreet, and completely under your control.
+            TokAway escalates intelligently. Start with a discreet fake call. If you're not safe, it automatically alerts your emergency contacts.
           </p>
 
+          {/* Main Safety Flow */}
+          <div className="bg-slate-900/80 border-2 border-blue-700/40 rounded-3xl p-8 mb-12">
+            <div className="space-y-4">
+              {/* Step 1 */}
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center font-bold text-lg">
+                  1
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2">Trigger Fake Call</h3>
+                  <p className="text-slate-300">
+                    Tap the home screen widget or app to activate a realistic incoming call from a contact you've set up. Created a discreet exit without suspicion.
+                  </p>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="flex justify-center py-2">
+                <div className="text-3xl text-blue-400">↓</div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center font-bold text-lg">
+                  2
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2">Check-In Timer Starts</h3>
+                  <p className="text-slate-300">
+                    After exiting the situation, a 10-minute check-in timer begins. This gives you time to get to safety. Label shows: "Check in when safe" with countdown.
+                  </p>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="flex justify-center py-2">
+                <div className="text-3xl text-blue-400">↓</div>
+              </div>
+
+              {/* Step 3 - Branching */}
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Safe Path */}
+                <div className="bg-green-900/30 border border-green-700/40 rounded-2xl p-6">
+                  <h3 className="text-lg font-bold text-green-400 mb-3">✓ You're Safe</h3>
+                  <p className="text-slate-300 mb-4">
+                    Tap "I'm Safe" to disable the timer. That's it—you're good. App forgets about it.
+                  </p>
+                  <div className="text-2xl">😌</div>
+                </div>
+
+                {/* Unsafe Path */}
+                <div className="bg-red-900/30 border border-red-700/40 rounded-2xl p-6">
+                  <h3 className="text-lg font-bold text-red-400 mb-3">⚠️ Timer Expires (Unsafe)</h3>
+                  <p className="text-slate-300 mb-4">
+                    If you don't disable the timer before it runs out, TokAway assumes you're not safe and auto-activates.
+                  </p>
+                  <div className="text-2xl">😟</div>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="flex justify-center py-2">
+                <div className="text-3xl text-red-400">↓</div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-600 flex items-center justify-center font-bold text-lg">
+                  4
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-red-300 mb-2">Find Safe Location</h3>
+                  <p className="text-slate-300">
+                    App requests your location and begins acquiring GPS coordinates. You see: "Finding safe location..." with live map.
+                  </p>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="flex justify-center py-2">
+                <div className="text-3xl text-red-400">↓</div>
+              </div>
+
+              {/* Step 5 */}
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-600 flex items-center justify-center font-bold text-lg">
+                  5
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-red-300 mb-2">Send Location to Emergency Contact</h3>
+                  <p className="text-slate-300 mb-4">
+                    TokAway displays: "Send your location to emergency contact?" with your current location shown. You confirm or deny.
+                  </p>
+                  <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 mt-4 font-mono text-sm text-emerald-400">
+                    📱 <strong>Emergency Contact SMS:</strong><br/>
+                    "🚨 TokAway Safety Alert<br/>
+                    I need help. Current location: [map link]<br/>
+                    Latitude: 40.7128°N<br/>
+                    Longitude: 74.0060°W"
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature Highlights */}
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-slate-900/60 border border-blue-700/30 rounded-2xl p-8 hover:border-blue-600/60 transition">
-              <div className="text-4xl mb-4">1️⃣</div>
-              <h3 className="text-xl font-bold mb-3">Set Up Contacts</h3>
+              <div className="text-4xl mb-4">🎭</div>
+              <h3 className="text-xl font-bold mb-3">Discreet Entry</h3>
               <p className="text-slate-300">
-                Add fake contact names (Mom, Boss, Friend) to your call list. Uses your real phone calendar data.
+                Fake call looks 100% real. Caller ID spoofing with custom contact names keeps your exit looking natural.
               </p>
             </div>
 
             <div className="bg-slate-900/60 border border-blue-700/30 rounded-2xl p-8 hover:border-blue-600/60 transition">
-              <div className="text-4xl mb-4">2️⃣</div>
-              <h3 className="text-xl font-bold mb-3">Trigger When Needed</h3>
+              <div className="text-4xl mb-4">⏱️</div>
+              <h3 className="text-xl font-bold mb-3">Smart Timer</h3>
               <p className="text-slate-300">
-                One tap from your home screen activates a realistic incoming call. No one will suspect it's fake.
+                10-minute window to reach safety. If you don't check in, the system assumes worst-case and escalates automatically.
               </p>
             </div>
 
             <div className="bg-slate-900/60 border border-blue-700/30 rounded-2xl p-8 hover:border-blue-600/60 transition">
-              <div className="text-4xl mb-4">3️⃣</div>
-              <h3 className="text-xl font-bold mb-3">Exit Gracefully</h3>
+              <div className="text-4xl mb-4">🆘</div>
+              <h3 className="text-xl font-bold mb-3">Automatic Alert</h3>
               <p className="text-slate-300">
-                Answer or decline the call. Answer to say "I have to take this," then politely excuse yourself.
+                Location is captured and sent to your emergency contact with a clear "TokAway Safety" SMS. They know to help immediately.
               </p>
             </div>
           </div>
@@ -152,36 +263,98 @@ export default function TokAwayLanding() {
               <ul className="space-y-3 text-slate-300">
                 <li>✓ All data saved locally on your device</li>
                 <li>✓ No cloud sync or tracking</li>
-                <li>✓ Never shares your contacts</li>
-                <li>✓ Works offline</li>
+                <li>✓ SMS sent directly to your emergency contact</li>
+                <li>✓ Works offline (GPS requires signal)</li>
               </ul>
             </div>
 
             <div className="bg-slate-900/60 border border-blue-700/30 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4">⚡ Smart Features</h3>
+              <h3 className="text-2xl font-bold mb-4">⚡ Smart Escalation</h3>
               <ul className="space-y-3 text-slate-300">
-                <li>✓ Fully customizable call scripts (Pro)</li>
-                <li>✓ Schedule calls in advance (Pro)</li>
-                <li>✓ Call history and notes</li>
-                <li>✓ SMS spoofing support (Pro)</li>
+                <li>✓ 10-minute safety check-in timer</li>
+                <li>✓ Automatic GPS location capture</li>
+                <li>✓ Emergency contact SMS with location</li>
+                <li>✓ One-tap disable if you reach safety</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Setup Section */}
+      <section className="max-w-6xl mx-auto px-6 py-20">
+        <h2 className="text-4xl font-bold mb-12 text-center">Getting Started</h2>
+        
+        <div className="bg-slate-900/60 border border-blue-700/30 rounded-2xl p-8 mb-8">
+          <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
+            <span className="text-3xl">📋</span> Set Up Your Emergency Contacts
+          </h3>
+          <p className="text-slate-300 mb-6">
+            Before you need TokAway, configure who gets alerted if you don't check in:
+          </p>
+          <div className="space-y-4">
+            <div className="bg-slate-800 rounded-lg p-4 border-l-4 border-green-600">
+              <p className="font-bold mb-2">Step 1: Open Settings</p>
+              <p className="text-slate-400">Navigate to Settings → Emergency Contacts</p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4 border-l-4 border-green-600">
+              <p className="font-bold mb-2">Step 2: Add Contact</p>
+              <p className="text-slate-400">Enter phone number and choose someone you trust. They'll get the alert if the timer expires.</p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4 border-l-4 border-green-600">
+              <p className="font-bold mb-2">Step 3: Add Decoy Contacts</p>
+              <p className="text-slate-400">Create fake caller names (Mom, Boss, etc.) for the discreet fake calls</p>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4 border-l-4 border-green-600">
+              <p className="font-bold mb-2">Step 4: Ready to Go</p>
+              <p className="text-slate-400">You're set up. TokAway is now your invisible safety net.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="bg-blue-900/30 border border-blue-700/40 rounded-2xl p-8">
+            <h3 className="text-xl font-bold mb-4">When to Use TokAway</h3>
+            <ul className="space-y-3 text-slate-300">
+              <li>✓ Uncomfortable date or blind date situation</li>
+              <li>✓ Dealing with aggressive person</li>
+              <li>✓ Lost or in unfamiliar area feeling unsafe</li>
+              <li>✓ Workplace or social situation turning hostile</li>
+              <li>✓ Any moment you need a quick, discreet exit</li>
+            </ul>
+          </div>
+
+          <div className="bg-green-900/30 border border-green-700/40 rounded-2xl p-8">
+            <h3 className="text-xl font-bold mb-4">Why It Works</h3>
+            <ul className="space-y-3 text-slate-300">
+              <li>✓ Looks 100% real—no one suspects the call is fake</li>
+              <li>✓ Automatic escalation if you don't check in</li>
+              <li>✓ Emergency contact knows exactly where you are</li>
+              <li>✓ Zero interaction required if you're in actual danger</li>
+              <li>✓ Designed for real safety, not just convenience</li>
+            </ul>
+          </div>
+        </div>
+
       {/* Mission Section */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-blue-700/40 rounded-3xl p-12 text-center">
           <h2 className="text-3xl font-bold mb-4">Part of the KPA Mission</h2>
-          <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+          <p className="text-lg text-slate-300 max-w-3xl mx-auto mb-6">
             <span className="text-blue-400 font-bold">K</span>eep
             <span className="text-blue-400 font-bold">P</span>eople
             <span className="text-blue-400 font-bold">A</span>live
           </p>
           <p className="text-slate-400 mt-4 max-w-2xl mx-auto">
-            TokAway is more than a convenience tool—it's a safety feature designed to help people escape genuinely uncomfortable or unsafe situations. Your wellbeing is our priority.
+            TokAway is more than a convenience tool—it's a real safety feature designed to help people escape genuinely uncomfortable or unsafe situations. The automatic escalation ensures that even if you're too scared to act, your emergency contact knows exactly where you are within 10 minutes. Your wellbeing is our priority.
           </p>
+
+          <div className="mt-8 bg-slate-900/60 border border-green-700/40 rounded-xl p-6 inline-block">
+            <p className="text-sm text-slate-300">
+              <span className="text-2xl mr-2">🆘</span>
+              <strong>When it matters most:</strong> Professional help (police, friend, family) gets your exact location automatically if you can't respond.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -209,6 +382,11 @@ export default function TokAwayLanding() {
                   <span className="text-4xl font-bold">${plan.price.toFixed(2)}</span>
                   <span className="text-slate-400 ml-2">{plan.type}</span>
                 </div>
+                <p className="text-sm text-slate-400 mb-4">
+                  {plan.name.includes('Pro') 
+                    ? 'Best for comprehensive safety' 
+                    : 'Perfect for essential protection'}
+                </p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, fidx) => (
                     <li key={fidx} className="flex items-center gap-3 text-slate-300">
