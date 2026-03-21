@@ -2,16 +2,16 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { TokApp, APP_CATEGORIES, FEATURED_APPS, AppReview } from './types';
+import { TokApp, APP_CATEGORIES, FEATURED_APPS } from './types';
 
 export default function TokStore() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'rating' | 'downloads' | 'newest'>('rating');
   const [selectedApp, setSelectedApp] = useState<TokApp | null>(null);
-  const [userReviews, setUserReviews] = useState<Record<string, AppReview[]>>({});
-  const [newReview, setNewReview] = useState({ rating: 5, title: '', comment: '' });
-  const [installedApps, setInstalledApps] = useState<Set<string>>(new Set());
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   // Filter and sort apps
   const filteredApps = useMemo(() => {
@@ -46,34 +46,40 @@ export default function TokStore() {
     return apps;
   }, [selectedCategory, searchQuery, sortBy]);
 
-  const handleInstallApp = (appId: string) => {
-    setInstalledApps(prev => new Set([...prev, appId]));
-    // Simulate installation notification
-    alert(`${selectedApp?.name || 'App'} will be downloaded and installed.`);
-  };
+  const handleCheckout = async (tierIndex: number) => {
+    if (!selectedApp) return;
 
-  const handleSubmitReview = (appId: string) => {
-    if (!newReview.title.trim()) return;
-    
-    const review: AppReview = {
-      id: Date.now().toString(),
-      appId,
-      userId: 'user-' + Date.now(),
-      userName: 'You',
-      rating: newReview.rating,
-      title: newReview.title,
-      comment: newReview.comment,
-      timestamp: new Date(),
-      helpful: 0,
-    };
+    setCheckoutError(null);
+    setIsCheckingOut(true);
 
-    setUserReviews(prev => ({
-      ...prev,
-      [appId]: [...(prev[appId] || []), review],
-    }));
+    try {
+      const response = await fetch('/api/store/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          appId: selectedApp.id,
+          pricingTierIndex: tierIndex,
+          userEmail: userEmail || undefined,
+        }),
+      });
 
-    setNewReview({ rating: 5, title: '', comment: '' });
-    alert('Review submitted! Thank you for your feedback.');
+      const data = await response.json();
+
+      if (!response.ok) {
+        setCheckoutError(data.error || 'Checkout failed');
+        return;
+      }
+
+      // Redirect to Stripe checkout
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      }
+    } catch (error) {
+      setCheckoutError('Failed to initiate checkout');
+      console.error('Checkout error:', error);
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   return (
@@ -182,17 +188,73 @@ export default function TokStore() {
                       <div className="text-slate-400">📥 {(selectedApp.downloads / 1000).toFixed(1)}K downloads</div>
                     </div>
                     <p className="text-emerald-300 font-bold mb-4">v{selectedApp.version}</p>
-                    <button
-                      onClick={() => handleInstallApp(selectedApp.id)}
-                      disabled={installedApps.has(selectedApp.id)}
-                      className={`px-6 py-3 rounded-lg font-bold transition ${
-                        installedApps.has(selectedApp.id)
-                          ? 'bg-slate-600 text-slate-300'
-                          : 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                      }`}
-                    >
-                      {installedApps.has(selectedApp.id) ? '✓ Installed' : '⬇️ Download'}
-                    </button>
+                  </div>
+                </div>
+
+                {/* Pricing Section */}
+                <div className="mb-8 pb-8 border-b border-slate-700">
+                  <h2 className="text-xl font-bold mb-4">Pricing Options</h2>
+                  
+                  {!userEmail && (
+                    <div className="mb-6">
+                      <input
+                        type="email"
+                        placeholder="Enter your email (optional)"
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                        className="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 focus:border-emerald-500 focus:outline-none text-white placeholder-slate-400"
+                      />
+                    </div>
+                  )}
+
+                  {checkoutError && (
+                    <div className="mb-6 p-4 rounded-lg bg-red-900/30 border border-red-700 text-red-200">
+                      {checkoutError}
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {selectedApp.pricing.map((tier, idx) => (
+                      <div
+                        key={idx}
+                        className="rounded-lg p-6 border-2 border-slate-700 bg-slate-800 hover:border-emerald-500 transition"
+                      >
+                        <h3 className="text-lg font-bold mb-2">{tier.description}</h3>
+                        <div className="mb-4">
+                          <span className="text-3xl font-bold">
+                            ${tier.price.toFixed(2)}
+                          </span>
+                          {tier.type === 'subscription' && (
+                            <span className="text-slate-400 ml-2">
+                              /{tier.interval === 'yearly' ? 'year' : 'month'}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Features */}
+                        <ul className="space-y-2 mb-6">
+                          {tier.features.map((feature, fidx) => (
+                            <li key={fidx} className="text-sm text-slate-300">
+                              ✓ {feature}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <button
+                          onClick={() => handleCheckout(idx)}
+                          disabled={isCheckingOut || tier.type === 'free'}
+                          className={`w-full py-2 rounded-lg font-bold transition ${
+                            tier.type === 'free'
+                              ? 'bg-slate-600 text-slate-300 cursor-not-allowed'
+                              : isCheckingOut
+                              ? 'bg-slate-600 text-slate-300'
+                              : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                          }`}
+                        >
+                          {tier.type === 'free' ? 'Free' : isCheckingOut ? 'Processing...' : 'Get Now'}
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -201,6 +263,19 @@ export default function TokStore() {
                   <h2 className="text-xl font-bold mb-3">About</h2>
                   <p className="text-slate-300 whitespace-pre-wrap">{selectedApp.longDescription}</p>
                 </div>
+
+                {/* Update back button */}
+                {selectedApp && (
+                  <button
+                    onClick={() => {
+                      setSelectedApp(null);
+                      setCheckoutError(null);
+                    }}
+                    className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition absolute top-4 left-4"
+                  >
+                    ← Back
+                  </button>
+                )}
 
                 {/* Screenshots */}
                 {selectedApp.screenshots.length > 0 && (
@@ -252,74 +327,6 @@ export default function TokStore() {
                           <span className="text-xs text-slate-400">{new Date(version.releaseDate).toLocaleDateString()}</span>
                         </div>
                         <p className="text-slate-300 text-sm">{version.changelog}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Reviews Section */}
-                <div className="mb-8 pb-8 border-b border-slate-700">
-                  <h2 className="text-xl font-bold mb-6">Reviews ({userReviews[selectedApp.id]?.length || 0})</h2>
-
-                  {/* Write Review */}
-                  <div className="bg-slate-700 rounded-lg p-6 mb-6">
-                    <h3 className="font-bold mb-4">Write a Review</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm text-slate-300 mb-2">Rating</label>
-                        <div className="flex gap-2">
-                          {[1, 2, 3, 4, 5].map(star => (
-                            <button
-                              key={star}
-                              onClick={() => setNewReview(prev => ({ ...prev, rating: star }))}
-                              className={`text-2xl transition ${newReview.rating >= star ? 'text-yellow-400' : 'text-slate-500'}`}
-                            >
-                              ⭐
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Review title..."
-                        value={newReview.title}
-                        onChange={(e) => setNewReview(prev => ({ ...prev, title: e.target.value }))}
-                        className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-emerald-500"
-                      />
-                      <textarea
-                        placeholder="Your detailed review..."
-                        value={newReview.comment}
-                        onChange={(e) => setNewReview(prev => ({ ...prev, comment: e.target.value }))}
-                        className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-emerald-500 h-24"
-                      />
-                      <button
-                        onClick={() => handleSubmitReview(selectedApp.id)}
-                        className="w-full px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 font-bold transition"
-                      >
-                        Submit Review
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Display Reviews */}
-                  <div className="space-y-3">
-                    {userReviews[selectedApp.id]?.map(review => (
-                      <div key={review.id} className="bg-slate-700 rounded-lg p-4">
-                        <div className="flex justify-between items-start mb-2">
-                          <div>
-                            <div className="flex gap-2 items-center mb-1">
-                              <span className="font-bold">{review.userName}</span>
-                              <div className="flex">
-                                {[...Array(5)].map((_, i) => (
-                                  <span key={i} className={i < review.rating ? 'text-yellow-400' : 'text-slate-500'}>⭐</span>
-                                ))}
-                              </div>
-                            </div>
-                            <h4 className="font-semibold text-emerald-300">{review.title}</h4>
-                          </div>
-                          <span className="text-xs text-slate-400">{review.timestamp.toLocaleDateString()}</span>
-                        </div>
-                        <p className="text-slate-300 text-sm">{review.comment}</p>
                       </div>
                     ))}
                   </div>
