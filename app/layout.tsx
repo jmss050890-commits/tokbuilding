@@ -84,7 +84,7 @@ export default function RootLayout({
           }}
         >
           <p style={{ margin: "0.5rem 0", maxWidth: "800px", marginLeft: "auto", marginRight: "auto" }}>
-            SVL - Mr. KPA. Approved est. 1-31-2026 from Spoken Thought to Reality; SVL products are medical guidance to assist in contacting the correct team of people, we are not medical advisors or substitutions for medical services.
+            SVL - Mr. KPA. Approved est. 1-31-2026 from Spoken Thought to Reality. SVL products provide medical guidance to facilitate coordination with qualified healthcare professionals and are not medical advisors or substitutes for professional medical services. All SVL AI agents are engineered with KPA (Keep People Alive) guardrails to ensure responsible, ethical, and human-centered operation.
           </p>
         </footer>
       </body>
