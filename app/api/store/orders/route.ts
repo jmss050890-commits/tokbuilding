@@ -1,5 +1,6 @@
 import { getOrdersCollection, getLicenseKeysCollection } from '@/lib/db';
-import { generateLicenseKey, getCheckoutSession } from '@/lib/stripe';
+import { sendLicenseEmail, sendOrderConfirmationEmail } from '@/lib/email';
+import { getCheckoutSession, generateLicenseKey } from '@/lib/stripe';
 import { MongoServerError } from 'mongodb';
 
 /**
@@ -81,6 +82,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const customerEmail = stripeSession.customer_email;
+    if (!customerEmail) {
+      return Response.json(
+        { error: 'No customer email in session' },
+        { status: 400 }
+      );
+    }
+
     // Generate license key
     const licenseKey = generateLicenseKey(appId, userId || 'guest');
 
@@ -117,6 +126,41 @@ export async function POST(req: Request) {
       revoked: false,
       devices: [],
     } as any);
+
+    // Send license email
+    const customerName = stripeSession.customer_details?.name || 'Valued Customer';
+    try {
+      await sendLicenseEmail({
+        brand: stripeSession.metadata?.brand || 'svl',
+        email: customerEmail,
+        licenseKey,
+        productName: order.appName,
+        planName: stripeSession.metadata?.planName || 'One-Time Purchase',
+        downloadLink: `/api/store/download/${appId}?key=${licenseKey}`,
+        recipientName: customerName,
+      });
+    } catch (emailError) {
+      console.error('[Orders] Error sending license email:', emailError);
+      // Don't fail the order because of email failure
+    }
+
+    // Send order confirmation email
+    try {
+      await sendOrderConfirmationEmail({
+        brand: stripeSession.metadata?.brand || 'svl',
+        email: customerEmail,
+        recipientName: customerName,
+        orderId: result.insertedId.toString(),
+        productName: order.appName,
+        planName: stripeSession.metadata?.planName || 'One-Time Purchase',
+        amount: order.amount,
+        date: new Date().toLocaleDateString(),
+        downloadLink: `/api/store/download/${appId}?key=${licenseKey}`,
+      });
+    } catch (emailError) {
+      console.error('[Orders] Error sending order confirmation email:', emailError);
+      // Don't fail the order because of email failure
+    }
 
     return Response.json({
       success: true,
