@@ -9,8 +9,6 @@ export default function TokAwayLanding() {
   const [showDemoCallScreen, setShowDemoCallScreen] = useState(false);
   const [demoMode, setDemoMode] = useState('test'); // 'test' | 'boring' | 'uncomfortable' | 'high-alert'
   const [showSuccessState, setShowSuccessState] = useState(false);
-  const [timerRunning, setTimerRunning] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(600); // 10 minutes in seconds
 
   const plans = [
     {
@@ -72,12 +70,6 @@ export default function TokAwayLanding() {
       gps: true,
     },
   ];
-
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 text-white">
