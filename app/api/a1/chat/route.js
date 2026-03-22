@@ -43,8 +43,16 @@ export async function POST(req) {
       );
     }
 
-    const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY || "test-key",
+// Demo mode if API key is missing
+  if (!process.env.OPENAI_API_KEY) {
+    return new Response(
+      JSON.stringify({ response: "I'm A1, SVL's strategic intelligence agent. I'm currently in demo mode, but in production I'll help you design systems, solve technical problems, and build AI agents aligned with the SVL mission." }),
+      { status: 200 }
+    );
+  }
+
+  const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
     });
 
     const completion = await client.chat.completions.create({

@@ -46,8 +46,16 @@ export async function POST(req) {
       );
     }
 
+    // Demo mode if API key is missing
+    if (!process.env.OPENAI_API_KEY) {
+      return new Response(
+        JSON.stringify({ response: "I'm HATÄTA, Jerome's strategic right hand. I operate across SVL strategy, product positioning, sales, and brand voice. Right now I'm in demo mode, but in production I'll bring full strategic guidance aligned with the SVL mission." }),
+        { status: 200 }
+      );
+    }
+
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY || "test-key",
+      apiKey: process.env.OPENAI_API_KEY,
     });
 
     const completion = await client.chat.completions.create({

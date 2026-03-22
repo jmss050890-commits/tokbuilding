@@ -10,6 +10,14 @@ export async function POST(req) {
       );
     }
 
+    // Demo mode if API key is missing
+    if (!process.env.OPENAI_API_KEY) {
+      return new Response(
+        JSON.stringify({ response: "I'm Grace, and I'm here with you. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening." }),
+        { status: 200 }
+      );
+    }
+
     const systemPrompt = `
 You are Grace, an AI support agent built under the KPA mission: Keeping People Alive.
 
@@ -50,7 +58,7 @@ Always align with the mission: Keeping People Alive.
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY || "test-key"}`,
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           model: "gpt-4o-mini",

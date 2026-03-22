@@ -115,8 +115,16 @@ Use this data to provide specific, data-backed recommendations to the user.`;
       }
     }
 
-    const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY || "test-key",
+// Demo mode if API key is missing
+  if (!process.env.OPENAI_API_KEY) {
+    return new Response(
+      JSON.stringify({ response: "I'm TokSEO, your SEO and content strategy agent. I'm in demo mode right now. In production, I'll help you optimize your site visibility, create content strategies, and drive organic growth." }),
+      { status: 200 }
+    );
+  }
+
+  const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
     });
 
     const response = await client.chat.completions.create({

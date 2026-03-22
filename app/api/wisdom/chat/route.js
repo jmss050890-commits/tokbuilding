@@ -38,8 +38,16 @@ export async function POST(req) {
       );
     }
 
+    // Demo mode if API key is missing
+    if (!process.env.OPENAI_API_KEY) {
+      return new Response(
+        JSON.stringify({ response: "Hey there! I'm Wisdom, your health and wellness coach. I'm in demo mode right now, but when we're fully connected, I'll guide you through nutrition, wellness, fitness, and community health support. You're not alone in this journey." }),
+        { status: 200 }
+      );
+    }
+
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY || "test-key",
+      apiKey: process.env.OPENAI_API_KEY,
     });
 
     const completion = await client.chat.completions.create({
