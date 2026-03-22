@@ -65,8 +65,8 @@ export async function POST(req) {
     const userMessage = body?.message?.trim();
 
     if (!userMessage) {
-      return Response.json(
-        { error: "Message is required." },
+      return new Response(
+        JSON.stringify({ error: "Message is required." }),
         { status: 400 }
       );
     }
@@ -116,7 +116,7 @@ Use this data to provide specific, data-backed recommendations to the user.`;
     }
 
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: process.env.OPENAI_API_KEY || "test-key",
     });
 
     const response = await client.chat.completions.create({
@@ -138,18 +138,18 @@ Use this data to provide specific, data-backed recommendations to the user.`;
 
     console.log(`[TokSEO Chat] Response generated (${responseText.length} chars)`);
 
-    return Response.json({
-      response: responseText,
-      timestamp: new Date().toISOString(),
-      dataUsed: contextData ? true : false
-    });
+    return new Response(
+      JSON.stringify({
+        response: responseText,
+        timestamp: new Date().toISOString(),
+        dataUsed: contextData ? true : false
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
     console.error("[TokSEO Chat] Error:", error);
-    return Response.json(
-      { 
-        error: "Failed to process request",
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
-      },
+    return new Response(
+      JSON.stringify({ error: "TokSEO failed to respond." }),
       { status: 500 }
     );
   }

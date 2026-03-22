@@ -21,19 +21,19 @@ You are Brian's trusted health partner — supportive, knowledgeable, and always
 
 export async function POST(req) {
   try {
-    const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
     const body = await req.json();
     const message = body?.message?.trim();
 
     if (!message) {
-      return Response.json(
-        { error: "Message is required." },
+      return new Response(
+        JSON.stringify({ error: "Message is required." }),
         { status: 400 }
       );
     }
+
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY || "test-key",
+    });
 
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
@@ -46,12 +46,15 @@ export async function POST(req) {
     const response =
       completion.choices?.[0]?.message?.content?.trim() || "I'm here for you, Brian.";
 
-    return Response.json({ response });
+    return new Response(
+      JSON.stringify({ response }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
     console.error("Coach Daniels route error:", error);
 
-    return Response.json(
-      { error: "Coach Daniels failed to respond." },
+    return new Response(
+      JSON.stringify({ error: "Coach Daniels failed to respond." }),
       { status: 500 }
     );
   }
