@@ -4,8 +4,8 @@ export async function POST(req) {
     const userMessage = body?.message?.trim();
 
     if (!userMessage) {
-      return Response.json(
-        { error: "Message is required." },
+      return new Response(
+        JSON.stringify({ error: "Message is required." }),
         { status: 400 }
       );
     }
@@ -50,7 +50,7 @@ Always align with the mission: Keeping People Alive.
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY || "test-key"}`,
         },
         body: JSON.stringify({
           model: "gpt-4o-mini",
@@ -66,9 +66,9 @@ Always align with the mission: Keeping People Alive.
 
     if (!openaiResponse.ok) {
       console.error("OpenAI error:", data);
-      return Response.json(
-        { error: data?.error?.message || "Grace failed to respond." },
-        { status: openaiResponse.status }
+      return new Response(
+        JSON.stringify({ error: "Grace failed to respond." }),
+        { status: 500 }
       );
     }
 
@@ -76,11 +76,14 @@ Always align with the mission: Keeping People Alive.
       data?.choices?.[0]?.message?.content?.trim() ||
       "I'm here with you. Tell me that again.";
 
-    return Response.json({ response });
+    return new Response(
+      JSON.stringify({ response }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
-    console.error("Grace chat route error:", error);
-    return Response.json(
-      { error: "Grace failed." },
+    console.error("Grace route error:", error);
+    return new Response(
+      JSON.stringify({ error: "Grace failed to respond." }),
       { status: 500 }
     );
   }
