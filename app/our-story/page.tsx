@@ -305,6 +305,153 @@ export default function OurStoryPage() {
         </div>
       </section>
 
+      {/* Tech Origins Section */}
+      <section className="py-20 px-6 bg-slate-900/50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">The Tech Origins</h2>
+          <p className="text-center text-purple-300 mb-12">How it started: Python, Kivy, and a voice-first philosophy on February 21, 2026.</p>
+
+          {/* Original Stack */}
+          <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-green-700/30 rounded-xl p-8 mb-8">
+            <h3 className="text-2xl font-bold text-green-300 mb-6">Original TokHealth Stack (Feb 21, 2026)</h3>
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
+                <p className="text-green-400 font-bold mb-2">Language</p>
+                <p className="text-slate-300">Python 3.8+ with Kivy framework</p>
+              </div>
+              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
+                <p className="text-green-400 font-bold mb-2">Mobile UI</p>
+                <p className="text-slate-300">KivyMD for responsive design</p>
+              </div>
+              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
+                <p className="text-green-400 font-bold mb-2">Voice Recognition</p>
+                <p className="text-slate-300">SpeechRecognition + Google Cloud</p>
+              </div>
+              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
+                <p className="text-green-400 font-bold mb-2">AI Integration</p>
+                <p className="text-slate-300">OpenAI GPT-3.5-turbo</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Founding Features */}
+          <div className="bg-gradient-to-br from-purple-900/20 to-slate-900 border border-purple-700/30 rounded-xl p-8 mb-8">
+            <h3 className="text-2xl font-bold text-purple-300 mb-6">What Shipped on Day 1</h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="text-green-400 font-bold">✓</span>
+                <div>
+                  <p className="text-white font-semibold">Voice-First Architecture</p>
+                  <p className="text-slate-400 text-sm">Every interaction designed for audio input — accessibility + authenticity from inception</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-400 font-bold">✓</span>
+                <div>
+                  <p className="text-white font-semibold">Health Profiling</p>
+                  <p className="text-slate-400 text-sm">Baseline biometrics (age, weight, height, sex) with data persistence</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-400 font-bold">✓</span>
+                <div>
+                  <p className="text-white font-semibold">3-Phase Meal Tracking</p>
+                  <p className="text-slate-400 text-sm">Breakfast/Lunch/Dinner logging with OpenAI nutritional parsing</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-400 font-bold">✓</span>
+                <div>
+                  <p className="text-white font-semibold">Emergency Contacts (KPA)</p>
+                  <p className="text-slate-400 text-sm">Red button literally labeled "EMERGENCY CONTACTS (KPA)" — mission explicit from day 1</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-400 font-bold">✓</span>
+                <div>
+                  <p className="text-white font-semibold">9-Pillar Health Matrix</p>
+                  <p className="text-slate-400 text-sm">Comprehensive wellness tracking across multiple dimensions</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-400 font-bold">✓</span>
+                <div>
+                  <p className="text-white font-semibold">Voice Wisdom Vault</p>
+                  <p className="text-slate-400 text-sm">Legacy voice recording feature — personal wisdom preservation</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-400 font-bold">✓</span>
+                <div>
+                  <p className="text-white font-semibold">Clinical Disclaimer</p>
+                  <p className="text-slate-400 text-sm">Legal grounding from inception — no false medical claims from day 1</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Code Artifact */}
+          <div className="bg-gradient-to-br from-slate-950 to-slate-900 border border-cyan-700/30 rounded-xl p-8 mb-8">
+            <h3 className="text-2xl font-bold text-cyan-300 mb-6">Code Artifact: The KPA Mission Built In</h3>
+            <p className="text-slate-300 mb-4 text-sm">This is how the mission was encoded from day 1 — not added later as marketing:</p>
+            <div className="bg-slate-900 rounded p-4 border border-cyan-700/20 overflow-x-auto">
+              <pre className="text-cyan-300 text-xs font-mono">
+{`MDRaisedButton:
+    text: "EMERGENCY CONTACTS (KPA)"
+    size_hint_x: 1
+    md_bg_color: 1, 0, 0, 1  # Red - life-critical
+    on_release: app.root.current = "contacts"
+
+# Not just a feature. The mission made visible.`}
+              </pre>
+            </div>
+            <p className="text-slate-400 text-xs mt-4">KivyMD KV language — showing how the KPA mission was architecturally embedded, not post-hoc branded.</p>
+          </div>
+
+          {/* Evolution Timeline */}
+          <div className="bg-gradient-to-br from-amber-900/20 to-slate-900 border border-amber-700/30 rounded-xl p-8">
+            <h3 className="text-2xl font-bold text-amber-300 mb-6">Evolution Path: Python → Web → Production</h3>
+            <div className="space-y-4">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">Feb 21, 6:24 PM</div>
+                <div>
+                  <p className="text-white font-semibold">Emergent Python App</p>
+                  <p className="text-slate-400 text-sm">First transaction. TokHealth mobile app live with voice-first feature set.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">Feb 21, 9:37 AM+</div>
+                <div>
+                  <p className="text-white font-semibold">Multiple Top-Ups</p>
+                  <p className="text-slate-400 text-sm">Rapid iteration cycle. Refinement based on real usage patterns.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">~Feb 28</div>
+                <div>
+                  <p className="text-white font-semibold">Shopify Integration</p>
+                  <p className="text-slate-400 text-sm">Sanders Viopro Labs brand created. E-commerce foundation built.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">~Mar 1-20</div>
+                <div>
+                  <p className="text-white font-semibold">Next.js Migration</p>
+                  <p className="text-slate-400 text-sm">Web lab unified everything. PytonKivy app evolved into full-stack ecosystem.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">Mar 21</div>
+                <div>
+                  <p className="text-white font-semibold">Production Deployment</p>
+                  <p className="text-slate-400 text-sm">sandersvioprolabs.com live. All 6 products public. KPA mission at scale.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Exit Moment */}
       <section className="py-20 px-6 bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 border-t border-purple-800/30">
         <div className="max-w-3xl mx-auto text-center">
@@ -324,7 +471,7 @@ export default function OurStoryPage() {
             You don't have to walk alone. That's why this exists.
           </p>
           <p className="text-purple-300 text-lg font-bold">
-            — Jerome Sanders · Mr. KPA · est. 1-31-2026
+            — Jerome Sanders · Mr. KPA · est. 2-21-2026
           </p>
         </div>
       </section>
