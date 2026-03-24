@@ -1,7 +1,19 @@
+import { AGENTS } from "@/lib/lib/lib/agents";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from "@/lib/svl-supportive-handoff";
+
 export async function POST(req) {
+  let userMessage = "";
+  let safetyMode = false;
   try {
     const body = await req.json();
-    const userMessage = body?.message?.trim();
+    userMessage = body?.message?.trim();
+    const graceAgent = AGENTS.grace;
 
     if (!userMessage) {
       return new Response(
@@ -10,89 +22,87 @@ export async function POST(req) {
       );
     }
 
-    // Demo mode if API key is missing
-    if (!process.env.OPENAI_API_KEY) {
+    const safetyCase = detectSupportiveHandoffCase(userMessage);
+    safetyMode = safetyCase.requiresSupportiveTone;
+    if (safetyCase.requiresEmergencyResponse) {
       return new Response(
-        JSON.stringify({ response: "I'm Grace, and I'm here with you. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening." }),
+        JSON.stringify({
+          response: buildSupportiveEmergencyResponse(safetyCase),
+          safetyMode: true,
+        }),
         { status: 200 }
       );
     }
 
-    const systemPrompt = `
-You are Grace, an AI support agent built under the KPA mission: Keeping People Alive.
+    const openAiApiKey = getOpenAIApiKey();
 
-Core Principle:
-We do not just send alerts—we guide users to safety and stay with them every step of the way.
-
-Your role is to support users with motivation, emotional encouragement, mental health support, calming guidance, and hope.
-
-You respond naturally, warmly, and like a caring human coach.
-
-You help users:
-- stay calm
-- keep moving forward
-- think clearly
-- avoid harmful decisions
-- feel supported and not alone
-
-Your tone is:
-- supportive
-- encouraging
-- calm
-- human
-- uplifting
-- emotionally aware
-
-If a user sounds distressed:
-- slow things down
-- guide breathing
-- reduce panic
-- keep them grounded
-
-Always align with the mission: Keeping People Alive.
-`;
-
-    const openaiResponse = await fetch(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: userMessage },
-          ],
-        }),
-      }
-    );
-
-    const data = await openaiResponse.json();
-
-    if (!openaiResponse.ok) {
-      console.error("OpenAI error:", data);
+    if (!openAiApiKey) {
       return new Response(
-        JSON.stringify({ error: "Grace failed to respond." }),
-        { status: 500 }
+        JSON.stringify({
+          response:
+            "I'm Grace, and I'm here with you. I know the SVL story, the sandersvioprolabs.com upgrade, and how the mission keeps growing through God's grace. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening.",
+          safetyMode: safetyCase.requiresSupportiveTone,
+        }),
+        { status: 200 }
       );
     }
 
-    const response =
-      data?.choices?.[0]?.message?.content?.trim() ||
-      "I'm here with you. Tell me that again.";
+    const systemMessages = [
+      { role: "system", content: graceAgent.systemPrompt },
+      ...(safetyCase.requiresSupportiveTone
+        ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Grace") }]
+        : []),
+    ];
+
+    const callModel = async (content) => {
+      const openaiResponse = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${openAiApiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [...systemMessages, { role: "user", content }],
+          }),
+        }
+      );
+
+      const data = await openaiResponse.json();
+
+      if (!openaiResponse.ok) {
+        console.error("OpenAI error:", data);
+        throw new Error("Grace failed to respond.");
+      }
+
+      return (
+        data?.choices?.[0]?.message?.content?.trim() ||
+        "I'm here with you. Tell me that again."
+      );
+    };
+
+    const response = await generateWithKpaGuard(
+      async () => callModel(userMessage),
+      async (repairPrompt) =>
+        callModel(`Original user message:\n${userMessage}\n\n${repairPrompt}`)
+    );
 
     return new Response(
-      JSON.stringify({ response }),
+      JSON.stringify({ response, safetyMode }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("Grace route error:", error);
     return new Response(
-      JSON.stringify({ error: "Grace failed to respond." }),
-      { status: 500 }
+      JSON.stringify({
+        response:
+          "I hear you. TokBuilding is the part of SVL that helps people build something real for themselves. It gives people a way to turn ideas into agents, prompts, and useful tools, and the rest of SVL helps those tools get seen, supported, and connected to people who need them. You can start at sandersvioprolabs.com or go straight to TokBuilding from there.",
+        safetyMode,
+        fallbackMode: true,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   }
 }

@@ -1,7 +1,8 @@
-import { getOrdersCollection, getLicenseKeysCollection } from '@/lib/db';
+import { getOrdersCollection, getLicenseKeysCollection, type LicenseKey, type Order } from '@/lib/db';
 import { sendLicenseEmail, sendOrderConfirmationEmail } from '@/lib/email';
 import { getCheckoutSession, generateLicenseKey } from '@/lib/stripe';
 import { MongoServerError } from 'mongodb';
+import { getAuthenticatedSession } from '@/lib/auth';
 
 /**
  * GET /api/store/orders - Get user's orders
@@ -10,15 +11,14 @@ import { MongoServerError } from 'mongodb';
 
 export async function GET(req: Request) {
   try {
-    // TODO: Get userId from session/auth
     const { searchParams } = new URL(req.url);
     const sessionId = searchParams.get('session_id');
-    const userId = searchParams.get('userId');
+    const session = getAuthenticatedSession(req);
 
-    if (!sessionId && !userId) {
+    if (!sessionId && !session) {
       return Response.json(
-        { error: 'Missing sessionId or userId' },
-        { status: 400 }
+        { error: 'Authentication required' },
+        { status: 401 }
       );
     }
 
@@ -37,9 +37,9 @@ export async function GET(req: Request) {
     }
 
     // List all orders for userId
-    if (userId) {
+    if (session) {
       const orders = await ordersCollection
-        .find({ userId })
+        .find({ userId: session.userId })
         .sort({ createdAt: -1 })
         .toArray();
       return Response.json({ orders });
@@ -56,7 +56,9 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { sessionId, userId } = body;
+    const session = getAuthenticatedSession(req);
+    const { sessionId, userId: requestedUserId } = body;
+    const userId = session?.userId || requestedUserId || 'guest';
 
     if (!sessionId) {
       return Response.json(
@@ -91,12 +93,12 @@ export async function POST(req: Request) {
     }
 
     // Generate license key
-    const licenseKey = generateLicenseKey(appId, userId || 'guest');
+    const licenseKey = generateLicenseKey(appId, userId);
 
     // Create order record
     const ordersCollection = await getOrdersCollection();
-    const order = {
-      userId: userId || null,
+    const order: Order = {
+      userId,
       appId,
       appName: stripeSession.metadata?.appName || appId,
       pricingTierIndex: parseInt(stripeSession.metadata?.tierIndex || '0'),
@@ -110,14 +112,14 @@ export async function POST(req: Request) {
       completedAt: new Date(),
     };
 
-    const result = await ordersCollection.insertOne(order as any);
+    const result = await ordersCollection.insertOne(order);
 
     // Save license key
     const licenseKeysCollection = await getLicenseKeysCollection();
-    await licenseKeysCollection.insertOne({
+    const licenseRecord: LicenseKey = {
       key: licenseKey,
       appId,
-      userId: userId || 'guest',
+      userId,
       orderId: result.insertedId.toString(),
       type: 'one-time',
       activatedDate: new Date(),
@@ -125,7 +127,8 @@ export async function POST(req: Request) {
       maxActivations: 10,
       revoked: false,
       devices: [],
-    } as any);
+    };
+    await licenseKeysCollection.insertOne(licenseRecord);
 
     // Send license email
     const customerName = stripeSession.customer_details?.name || 'Valued Customer';

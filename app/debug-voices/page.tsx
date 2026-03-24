@@ -10,7 +10,6 @@ interface Voice {
 export default function DebugVoices() {
   const [voices, setVoices] = useState<Voice[]>([]);
   const [testText, setTestText] = useState('Hello, I am Grace. This is my natural voice.');
-  const [selectedVoiceIndex, setSelectedVoiceIndex] = useState(0);
 
   useEffect(() => {
     const loadVoices = () => {

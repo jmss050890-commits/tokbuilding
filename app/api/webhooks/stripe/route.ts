@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { getOrdersCollection, getLicenseKeysCollection } from '@/lib/db';
+import { getOrdersCollection, getLicenseKeysCollection, type LicenseKey, type Order } from '@/lib/db';
 import { sendLicenseEmail, sendOrderConfirmationEmail } from '@/lib/email';
 import crypto from 'crypto';
 
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     let event: Stripe.Event;
     try {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-    } catch (err) {
+    } catch {
       console.error('[Stripe Webhook] Invalid signature');
       return NextResponse.json(
         { error: 'Invalid signature' },
@@ -51,15 +51,15 @@ export async function POST(req: NextRequest) {
 
         // Create order in MongoDB
         const ordersCollection = await getOrdersCollection();
-        const order = {
-          userId: null,
+        const order: Order = {
+          userId: 'guest',
           appId,
           appName: appName || appId,
           pricingTierIndex: parseInt(tierIndex || '0'),
           amount: session.amount_total || 0,
           currency: session.currency?.toUpperCase() || 'USD',
           stripeSessionId: session.id,
-          stripePaymentIntentId: typeof session.payment_intent === 'string' ? session.payment_intent : null,
+          stripePaymentIntentId: typeof session.payment_intent === 'string' ? session.payment_intent : undefined,
           licenseKey,
           status: 'completed' as const,
           createdAt: new Date(),
@@ -67,12 +67,12 @@ export async function POST(req: NextRequest) {
           downloadUrl: `/api/store/download/${appId}?key=${licenseKey}`,
         };
 
-        const result = await ordersCollection.insertOne(order as any);
+        const result = await ordersCollection.insertOne(order);
         console.log('[Stripe Webhook] Order created:', result.insertedId);
 
         // Save license key
         const licenseKeysCollection = await getLicenseKeysCollection();
-        await licenseKeysCollection.insertOne({
+        const licenseRecord: LicenseKey = {
           key: licenseKey,
           appId,
           userId: 'guest',
@@ -83,7 +83,8 @@ export async function POST(req: NextRequest) {
           maxActivations: 10,
           revoked: false,
           devices: [],
-        } as any);
+        };
+        await licenseKeysCollection.insertOne(licenseRecord);
         console.log('[Stripe Webhook] License key saved');
 
         // Send license email

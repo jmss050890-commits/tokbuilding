@@ -1,5 +1,6 @@
 import { getUsersCollection } from '@/lib/db';
 import * as crypto from 'crypto';
+import { createAuthCookie, createAuthToken, getAuthenticatedSession } from '@/lib/auth';
 
 /**
  * User Authentication API
@@ -67,8 +68,11 @@ export async function POST(req: Request) {
 
       const result = await usersCollection.insertOne(user);
 
-      // Generate session token (in production, use proper JWT)
-      const token = crypto.randomBytes(32).toString('hex');
+      const token = createAuthToken({
+        userId: result.insertedId.toString(),
+        email,
+        name,
+      });
 
       return Response.json(
         {
@@ -82,7 +86,7 @@ export async function POST(req: Request) {
         },
         {
           headers: {
-            'Set-Cookie': `auth_token=${token}; Path=/; HttpOnly; Secure; SameSite=Strict`,
+            'Set-Cookie': createAuthCookie(token),
           },
         }
       );
@@ -119,8 +123,11 @@ export async function POST(req: Request) {
         { $set: { lastLogin: new Date() } }
       );
 
-      // Generate session token (in production, use proper JWT)
-      const token = crypto.randomBytes(32).toString('hex');
+      const token = createAuthToken({
+        userId: user._id?.toString() || '',
+        email: user.email,
+        name: user.name,
+      });
 
       return Response.json(
         {
@@ -134,7 +141,7 @@ export async function POST(req: Request) {
         },
         {
           headers: {
-            'Set-Cookie': `auth_token=${token}; Path=/; HttpOnly; Secure; SameSite=Strict`,
+            'Set-Cookie': createAuthCookie(token),
           },
         }
       );
@@ -143,6 +150,43 @@ export async function POST(req: Request) {
     console.error('[Auth] Error:', error);
     return Response.json(
       { error: 'Authentication failed' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    const session = getAuthenticatedSession(req);
+    if (!session) {
+      return Response.json(
+        { authenticated: false, error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const usersCollection = await getUsersCollection();
+    const user = await usersCollection.findOne({ email: session.email });
+
+    if (!user) {
+      return Response.json(
+        { authenticated: false, error: 'User not found' },
+        { status: 404 }
+      );
+    }
+
+    return Response.json({
+      authenticated: true,
+      user: {
+        _id: user._id?.toString(),
+        email: user.email,
+        name: user.name,
+      },
+    });
+  } catch (error) {
+    console.error('[Auth] GET Error:', error);
+    return Response.json(
+      { authenticated: false, error: 'Authentication failed' },
       { status: 500 }
     );
   }

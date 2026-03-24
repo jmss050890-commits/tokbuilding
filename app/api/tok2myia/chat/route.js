@@ -1,9 +1,19 @@
 import { AGENTS } from "@/lib/lib/lib/agents";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from "@/lib/svl-supportive-handoff";
 
 export async function POST(req) {
+  let userMessage = "";
+  let agentName = "Tok2Myia";
+  let safetyMode = false;
   try {
     const body = await req.json();
-    const userMessage = body?.message?.trim();
+    userMessage = body?.message?.trim();
 
     if (!userMessage) {
       return new Response(
@@ -11,6 +21,20 @@ export async function POST(req) {
           error: "Message is required",
         }),
         { status: 400 }
+      );
+    }
+
+    const safetyCase = detectSupportiveHandoffCase(userMessage);
+    safetyMode = safetyCase.requiresSupportiveTone;
+    if (safetyCase.requiresEmergencyResponse) {
+      return new Response(
+        JSON.stringify({
+          response: buildSupportiveEmergencyResponse(safetyCase),
+          role: "assistant",
+          agentName: "Tok2Myia",
+          safetyMode: true,
+        }),
+        { status: 200 }
       );
     }
 
@@ -25,63 +49,71 @@ export async function POST(req) {
       );
     }
 
-    // Get OpenAI API key
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = getOpenAIApiKey();
     if (!apiKey) {
-      // Demo mode: return a canned response
       return new Response(
         JSON.stringify({
-          message: `I'm Tok2Myia, your knowledge guide. I'm currently in demo mode. In production, I'll provide intelligent search, knowledge synthesis, research assistance, and decision support - all aligned with the KPA mission to help you stay informed and empowered.`,
+          response:
+            "I'm Tok2Myia, your knowledge guide. I know the SVL story, the sandersvioprolabs.com upgrade, and the TokHealth plus TokThru integration too. I'm currently in demo mode. In production, I'll provide intelligent search, knowledge synthesis, research assistance, and decision support - all aligned with the KPA mission to help you stay informed and empowered.",
           role: "assistant",
           agentName: tok2myia.name,
+          safetyMode,
         }),
         { status: 200 }
       );
     }
+    agentName = tok2myia.name;
 
-    // Call OpenAI API with Tok2Myia's system prompt
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+    const systemMessages = [
+      {
+        role: "system",
+        content: tok2myia.systemPrompt,
       },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: tok2myia.systemPrompt,
-          },
-          {
-            role: "user",
-            content: userMessage,
-          },
-        ],
-        temperature: 0.7,
-        max_tokens: 1024,
-      }),
-    });
+      ...(safetyCase.requiresSupportiveTone
+        ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Tok2Myia") }]
+        : []),
+    ];
 
-    if (!response.ok) {
-      const error = await response.json();
-      console.error("OpenAI API error:", error);
-      return new Response(
-        JSON.stringify({
-          error: "Failed to get response from OpenAI",
+    const callModel = async (content) => {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [...systemMessages, { role: "user", content }],
+          temperature: 0.7,
+          max_tokens: 1024,
         }),
-        { status: 500 }
-      );
-    }
+      });
 
-    const data = await response.json();
-    const assistantMessage = data.choices[0].message.content;
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("OpenAI API error:", error);
+        throw new Error("Failed to get response from OpenAI");
+      }
+
+      const data = await response.json();
+      return (
+        data?.choices?.[0]?.message?.content?.trim() ||
+        "Oh! I want to help with that. Can you ask me one more time?"
+      );
+    };
+
+    const assistantMessage = await generateWithKpaGuard(
+      async () => callModel(userMessage),
+      async (repairPrompt) =>
+        callModel(`Original user message:\n${userMessage}\n\n${repairPrompt}`)
+    );
 
     return new Response(
       JSON.stringify({
-        message: assistantMessage,
+        response: assistantMessage,
         role: "assistant",
         agentName: tok2myia.name,
+        safetyMode,
       }),
       { status: 200 }
     );
@@ -89,10 +121,16 @@ export async function POST(req) {
     console.error("Chat error:", error);
     return new Response(
       JSON.stringify({
-        error: "Internal server error",
-        details: error.message,
+        response:
+          "Oh, let's break that down simply. TokBuilding is SVL's builder space. It helps people make AI agents, prompts, and useful tools for real life. Then other parts of SVL help those tools get seen, supported, and connected to the right people. You can start at sandersvioprolabs.com if you want the whole map, or go straight to TokBuilding if you want the builder part.",
+        role: "assistant",
+        agentName,
+        safetyMode,
+        fallbackMode: true,
+        details:
+          process.env.NODE_ENV === "development" ? error?.message : undefined,
       }),
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

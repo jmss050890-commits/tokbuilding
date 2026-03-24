@@ -1,5 +1,6 @@
 import { FEATURED_APPS } from '@/app/tokstore/types';
 import { NextRequest, NextResponse } from 'next/server';
+import { isValidAdminToken } from '@/lib/admin';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       success: true,
       app,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, error: 'Failed to fetch app' },
       { status: 500 }
@@ -34,7 +35,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
     const adminToken = request.headers.get('x-admin-token');
-    if (!adminToken || adminToken !== process.env.ADMIN_TOKEN) {
+    if (!isValidAdminToken(adminToken)) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' },
         { status: 401 }
@@ -44,7 +45,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     const { id } = await params;
     const body = await request.json();
 
-    // Find and update app (in production, update in database)
+    // Update the database-backed app record before enabling write operations in production.
     const app = FEATURED_APPS.find(a => a.id === id);
     if (!app) {
       return NextResponse.json(
@@ -60,7 +61,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       message: 'App updated successfully',
       app: updatedApp,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, error: 'Failed to update app' },
       { status: 500 }
@@ -72,7 +73,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
     const adminToken = request.headers.get('x-admin-token');
-    if (!adminToken || adminToken !== process.env.ADMIN_TOKEN) {
+    if (!isValidAdminToken(adminToken)) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' },
         { status: 401 }
@@ -81,7 +82,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
 
     const { id } = await params;
 
-    // Find and delete app (in production, delete from database)
+    // Delete the database-backed app record before enabling destructive writes in production.
     const app = FEATURED_APPS.find(a => a.id === id);
     if (!app) {
       return NextResponse.json(
@@ -94,7 +95,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
       success: true,
       message: 'App deleted successfully',
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, error: 'Failed to delete app' },
       { status: 500 }

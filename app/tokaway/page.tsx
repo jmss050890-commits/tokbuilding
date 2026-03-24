@@ -16,27 +16,37 @@ interface CallState {
 }
 
 export default function TokAway() {
-  const [callState, setCallState] = useState<CallState>({
-    selectedContact: null,
-    isCallActive: false,
-    callDuration: 0,
-    fakeContacts: []
+  const [callState, setCallState] = useState<CallState>(() => {
+    if (typeof window === 'undefined') {
+      return {
+        selectedContact: null,
+        isCallActive: false,
+        callDuration: 0,
+        fakeContacts: []
+      };
+    }
+
+    try {
+      const saved = window.localStorage.getItem('tokaway_contacts');
+      return {
+        selectedContact: null,
+        isCallActive: false,
+        callDuration: 0,
+        fakeContacts: saved ? JSON.parse(saved) as FakeContact[] : []
+      };
+    } catch {
+      console.error('Failed to load contacts');
+      return {
+        selectedContact: null,
+        isCallActive: false,
+        callDuration: 0,
+        fakeContacts: []
+      };
+    }
   });
   const [newContactName, setNewContactName] = useState('');
   const [showSetup, setShowSetup] = useState(false);
   const [timer, setTimer] = useState(0);
-
-  // Load contacts from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('tokaway_contacts');
-    if (saved) {
-      try {
-        setCallState(prev => ({ ...prev, fakeContacts: JSON.parse(saved) }));
-      } catch (e) {
-        console.error('Failed to load contacts');
-      }
-    }
-  }, []);
 
   // Check-in timer for call screen
   useEffect(() => {

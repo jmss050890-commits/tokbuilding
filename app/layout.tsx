@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import type { ReactNode } from "react";
 import PwaRegistration from "./PwaRegistration";
@@ -11,7 +10,7 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Sanders Viopro Labs - Keep People Alive (KPA)",
-  description: "SVL: Sanders Viopro Labs. Keep People Alive (KPA) mission-driven AI agents, safety tools, and wellness solutions. TokAway, TokHealth, TokSmart, TokThru, and more.",
+  description: "SVL: Sanders Viopro Labs, built by Jerome Sanders. A shared Next.js project for Jerome, you, and the Keep People Alive mission. TokAway, TokHealth, TokSmart, TokThru, and more.",
   applicationName: "Sanders Viopro Labs",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
@@ -39,18 +38,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <Script
-          nonce=""
-          id="sa-dynamic-optimization"
-          data-uuid="d01dcf5c-f1ce-4524-8a37-89af478d0bb5"
-          src="data:text/javascript;base64,dmFyIHNjcmlwdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoInNjcmlwdCIpO3NjcmlwdC5zZXRBdHRyaWJ1dGUoIm5vd3Byb2NrZXQiLCAiIik7c2NyaXB0LnNldEF0dHJpYnV0ZSgibml0cm8tZXhjbHVkZSIsICIiKTtzY3JpcHQuc3JjID0gImh0dHBzOi8vZGFzaGJvYXJkLnNlYXJjaGF0bGFzLmNvbS9zY3JpcHRzL2R5bmFtaWNfb3B0aW1pemF0aW9uLmpzIjtzY3JpcHQuZGF0YXNldC51dWlkID0gImQwMWRjZjVjLWYxY2UtNDUyNC04YTM3LTg5YWY0NzhkMGJiNSI7c2NyaXB0LmlkID0gInNhLWR5bmFtaWMtb3B0aW1pemF0aW9uLWxvYWRlciI7ZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzY3JpcHQpOw=="
-          strategy="afterInteractive"
-        />
-      </head>
+      <head />
       <body
         style={{
           margin: 0,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
           backgroundColor: "#111",
           color: "#fff",
           fontFamily: "Arial, sans-serif",
@@ -69,13 +63,34 @@ export default function RootLayout({
           <h1 style={{ margin: 0 }}>Sanders Viopro Labs</h1>
         </header>
 
-        <main>{children}</main>
+        <div
+          style={{
+            padding: "0.65rem 1rem",
+            borderBottom: "1px solid #26262b",
+            backgroundColor: "#131318",
+            color: "#cfcfcf",
+            fontSize: "0.8rem",
+            textAlign: "center",
+            letterSpacing: "0.02em",
+          }}
+        >
+          A shared Next.js project for Jerome Sanders, you, and the KPA mission.
+        </div>
+
+        <main
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {children}
+        </main>
 
         <footer
           style={{
             borderTop: "1px solid #333",
             padding: "2rem 1rem",
-            marginTop: "3rem",
             backgroundColor: "#0d0d0f",
             color: "#999",
             fontSize: "0.85rem",
@@ -83,9 +98,29 @@ export default function RootLayout({
             textAlign: "center",
           }}
         >
-          <p style={{ margin: "0.5rem 0", maxWidth: "800px", marginLeft: "auto", marginRight: "auto" }}>
-            SVL - Mr. KPA. Approved est. 1-31-2026 from Spoken Thought to Reality. SVL products provide medical guidance to facilitate coordination with qualified healthcare professionals and are not medical advisors or substitutes for professional medical services. All SVL AI agents are engineered with KPA (Keep People Alive) guardrails to ensure responsible, ethical, and human-centered operation.
-          </p>
+          <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+            <p style={{ margin: "0.5rem 0", color: "#d7d7d7", fontWeight: 700, letterSpacing: "0.04em" }}>
+              THE MISSION — WHY KPA
+            </p>
+            <p style={{ margin: "0.5rem 0" }}>
+              Keep People Alive is not a slogan. It is the standard every SVL product is held to.
+            </p>
+            <p style={{ margin: "0.5rem 0" }}>
+              Safety through TokThru. Health through TokHealth. Prosperity through TokBuilding. The only override any KPA product can perform on its user is to Keep People Alive.
+            </p>
+            <p style={{ margin: "0.5rem 0", color: "#d7d7d7", fontWeight: 700 }}>
+              KPA Protocol Enabled
+            </p>
+            <p style={{ margin: "0.5rem 0" }}>
+              Every SVL product is engineered with non-negotiable KPA safety guardrails.
+            </p>
+            <p style={{ margin: "1rem 0 0.5rem 0", color: "#d7d7d7", fontWeight: 700, letterSpacing: "0.03em" }}>
+              A shared Next.js project for Jerome Sanders, you, and the KPA mission.
+            </p>
+            <p style={{ margin: "1rem 0 0.5rem 0" }}>
+              SVL - Mr. KPA. Approved est. 1-31-2026 from Spoken Thought to Reality. SVL products provide medical guidance to facilitate coordination with qualified healthcare professionals and are not medical advisors or substitutes for professional medical services.
+            </p>
+          </div>
         </footer>
       </body>
     </html>

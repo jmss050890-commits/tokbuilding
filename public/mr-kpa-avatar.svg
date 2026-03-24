@@ -1,0 +1,53 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#122033"/>
+      <stop offset="0.5" stop-color="#09111D"/>
+      <stop offset="1" stop-color="#05080D"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="124" y1="96" x2="390" y2="414" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7E3A2"/>
+      <stop offset="0.52" stop-color="#D3A84A"/>
+      <stop offset="1" stop-color="#8D6421"/>
+    </linearGradient>
+    <linearGradient id="goldSoft" x1="164" y1="146" x2="344" y2="334" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF2C7"/>
+      <stop offset="1" stop-color="#C58A2E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="256" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="220" stroke="url(#gold)" stroke-width="8" opacity="0.5"/>
+  <circle cx="256" cy="256" r="188" stroke="url(#gold)" stroke-width="2" opacity="0.22"/>
+
+  <path d="M135 326C106 294 88 255 88 212C88 183 97 155 111 131" stroke="url(#gold)" stroke-width="14" stroke-linecap="round"/>
+  <path d="M377 326C406 294 424 255 424 212C424 183 415 155 401 131" stroke="url(#gold)" stroke-width="14" stroke-linecap="round"/>
+
+  <path d="M122 300L138 285L155 294L149 274L164 262L145 259L138 241L131 259L112 262L127 274L121 294L138 285L154 300" fill="url(#gold)" opacity="0.92"/>
+  <path d="M390 300L374 285L357 294L363 274L348 262L367 259L374 241L381 259L400 262L385 274L391 294L374 285L358 300" fill="url(#gold)" opacity="0.92"/>
+
+  <circle cx="256" cy="222" r="86" fill="none" stroke="url(#gold)" stroke-width="10"/>
+  <circle cx="256" cy="222" r="70" fill="none" stroke="url(#gold)" stroke-width="2" opacity="0.45"/>
+
+  <path d="M256 118L266 136L286 139L272 153L276 173L256 163L236 173L240 153L226 139L246 136L256 118Z" fill="url(#goldSoft)"/>
+  <path d="M228 118L236 94L248 110L264 82L280 110L292 94L300 118H228Z" fill="url(#goldSoft)"/>
+
+  <path d="M200 170L170 154" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M312 170L342 154" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M192 178L154 146" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M320 178L358 146" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+
+  <path d="M192 182L228 154H284L320 182L306 294L256 338L206 294L192 182Z" fill="url(#goldSoft)"/>
+  <path d="M208 194L234 172H278L304 194L294 286L256 315L218 286L208 194Z" fill="#0A111A"/>
+  <path d="M255 174V310" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M218 240H293" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+
+  <text x="234" y="227" fill="url(#goldSoft)" font-family="Georgia, serif" font-size="44" font-weight="700" text-anchor="middle">J</text>
+  <text x="278" y="273" fill="url(#goldSoft)" font-family="Georgia, serif" font-size="44" font-weight="700" text-anchor="middle">W</text>
+  <text x="165" y="236" fill="url(#goldSoft)" font-family="Georgia, serif" font-size="28" font-weight="700" text-anchor="middle">JJ</text>
+  <text x="347" y="236" fill="url(#goldSoft)" font-family="Georgia, serif" font-size="28" font-weight="700" text-anchor="middle">W</text>
+
+  <path d="M166 378H346" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+  <text x="256" y="404" fill="url(#goldSoft)" font-family="Georgia, serif" font-size="30" font-weight="700" text-anchor="middle">KPA</text>
+  <text x="256" y="432" fill="url(#goldSoft)" font-family="Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="4" text-anchor="middle">SANDERS LEGACY</text>
+</svg>

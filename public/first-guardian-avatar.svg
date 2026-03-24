@@ -1,0 +1,43 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="72" y1="52" x2="438" y2="458" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3C2417"/>
+      <stop offset="0.45" stop-color="#20110C"/>
+      <stop offset="1" stop-color="#0B0908"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="124" y1="108" x2="390" y2="402" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2C27B"/>
+      <stop offset="0.52" stop-color="#C08457"/>
+      <stop offset="1" stop-color="#7B4A2E"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="214" y1="162" x2="306" y2="306" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B86B56"/>
+      <stop offset="1" stop-color="#7B4336"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="182" y1="302" x2="328" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#D9D9D9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="256" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="214" fill="none" stroke="url(#glow)" stroke-width="10" opacity="0.45"/>
+  <circle cx="256" cy="188" r="118" fill="url(#glow)" opacity="0.16"/>
+
+  <path d="M158 408C175 348 204 314 256 314C308 314 337 348 354 408C324 430 292 442 256 442C220 442 188 430 158 408Z" fill="url(#shirt)"/>
+  <path d="M190 398C200 356 221 334 256 334C291 334 312 356 322 398" stroke="#EFE8E3" stroke-width="18" stroke-linecap="round"/>
+
+  <path d="M192 160C205 116 235 94 276 94C308 94 333 112 346 148C350 160 352 174 352 190C352 233 329 275 293 297C281 304 269 308 256 308C243 308 231 304 219 297C183 275 160 233 160 190C160 178 162 168 166 158C172 143 181 130 192 120Z" fill="#1B1110"/>
+  <path d="M184 214C184 159 216 126 256 126C296 126 328 159 328 214C328 250 312 280 287 297C277 304 266 308 256 308C246 308 235 304 225 297C200 280 184 250 184 214Z" fill="url(#skin)"/>
+
+  <path d="M194 178C216 150 247 144 267 144C292 144 309 151 320 163C312 129 289 108 255 108C225 108 201 131 194 178Z" fill="#231615"/>
+  <path d="M216 230C224 222 236 218 250 218C264 218 276 222 284 230" stroke="#2A1513" stroke-width="8" stroke-linecap="round" opacity="0.68"/>
+  <path d="M230 258C238 265 246 268 256 268C266 268 274 265 282 258" stroke="#5A2C26" stroke-width="7" stroke-linecap="round"/>
+  <ellipse cx="226" cy="214" rx="10" ry="13" fill="#1C0F0E"/>
+  <ellipse cx="286" cy="214" rx="10" ry="13" fill="#1C0F0E"/>
+  <path d="M222 191C229 186 237 184 245 187" stroke="#2A1513" stroke-width="7" stroke-linecap="round"/>
+  <path d="M268 187C276 184 284 186 291 191" stroke="#2A1513" stroke-width="7" stroke-linecap="round"/>
+
+  <path d="M144 134L162 116L184 124L176 100L194 84L170 82L162 60L154 82L130 84L148 100L140 124L162 116L180 134" fill="url(#glow)" opacity="0.92"/>
+  <text x="256" y="392" fill="#C08457" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="4" text-anchor="middle">HOME FIRST</text>
+</svg>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { buildSvlAgentSystemPrompt } from '@/lib/svl-kpa-engine';
 
 interface FormData {
   agentName: string;
@@ -38,7 +39,7 @@ export default function TokBuilding() {
       try {
         const saved = localStorage.getItem('tokbuilding_draft');
         if (saved) return JSON.parse(saved);
-      } catch (_e) {
+      } catch {
         // ignore
       }
     }
@@ -51,7 +52,7 @@ export default function TokBuilding() {
   useEffect(() => {
     try {
       localStorage.setItem('tokbuilding_draft', JSON.stringify(form));
-    } catch (e) {}
+    } catch {}
   }, [form]);
 
   const updateForm = <K extends keyof FormData>(key: K, value: FormData[K]) => {
@@ -116,7 +117,9 @@ You are ${agentName}. Ready to assist.`;
     knowledgeFocus: form.knowledgeFocus,
     targetAudience: form.targetAudience,
     specialization: form.specialization,
-    systemPrompt: generateSystemPrompt(),
+    systemPrompt: form.agentName && form.agentRole
+      ? buildSvlAgentSystemPrompt(generateSystemPrompt())
+      : generateSystemPrompt(),
     createdAt: new Date().toISOString(),
   };
 

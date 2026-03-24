@@ -94,5 +94,5 @@ export interface EmailData {
   brand: string;
   template: EmailTemplate;
   to: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }

@@ -1,11 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 
 export default function OurStoryPage() {
-  const [showModal, setShowModal] = useState(false);
-
   const journeySteps = [
     {
       platform: 'Emergent',
@@ -55,6 +52,9 @@ export default function OurStoryPage() {
           <div className="flex gap-6 items-center">
             <Link href="/sanders-viopro-labs" className="text-purple-300 hover:text-white transition">
               Home
+            </Link>
+            <Link href="/svl-progress" className="text-amber-300 hover:text-white transition">
+              Progress
             </Link>
             <Link href="/tokstore" className="text-purple-300 hover:text-white transition">
               TokStore
@@ -494,6 +494,7 @@ export default function OurStoryPage() {
             <h4 className="text-white font-bold mb-4">Resources</h4>
             <ul className="space-y-2 text-purple-300 text-sm">
               <li><Link href="/our-story" className="hover:text-white transition">Our Story</Link></li>
+              <li><Link href="/svl-progress" className="hover:text-white transition">SVL Progress</Link></li>
               <li><Link href="/sanders-viopro-labs" className="hover:text-white transition">Home</Link></li>
             </ul>
           </div>

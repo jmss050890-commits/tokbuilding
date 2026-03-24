@@ -1,7 +1,7 @@
 // Email service with SendGrid integration
 // Brand-aware email system mirroring SVL agent architecture
 
-import { BRAND_EMAILS, getBrandEmailConfig } from './email-config';
+import { getBrandEmailConfig } from './email-config';
 
 interface LicenseEmailData {
   brand?: string;
@@ -26,16 +26,8 @@ interface OrderConfirmationData {
   downloadLink?: string;
 }
 
-// Initialize SendGrid client (only in server context)
-let sgMail: any = null;
-if (typeof process !== 'undefined' && process.env.SENDGRID_API_KEY) {
-  try {
-    const sgPackage = require('@sendgrid/mail');
-    sgMail = sgPackage.default || sgPackage;
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  } catch (e) {
-    console.log('[Email Service] SendGrid not available - using log mode');
-  }
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : 'Unknown error';
 }
 
 async function sendEmailViaSendGrid(
@@ -45,7 +37,7 @@ async function sendEmailViaSendGrid(
   subject: string,
   html: string
 ): Promise<{ success: boolean; messageId?: string; message?: string }> {
-  if (!sgMail) {
+  if (!process.env.SENDGRID_API_KEY) {
     console.log(`[Email Service] DEMO MODE - Would send email:`);
     console.log(`  From: ${fromName} <${from}>`);
     console.log(`  To: ${to}`);
@@ -54,26 +46,39 @@ async function sendEmailViaSendGrid(
   }
 
   try {
-    const msg = {
-      to: to,
-      from: { email: from, name: fromName },
-      subject: subject,
-      html: html,
-      trackingSettings: {
-        clickTracking: { enabled: true },
-        openTracking: { enabled: true },
+    const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+        'Content-Type': 'application/json',
       },
-    };
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: to }] }],
+        from: { email: from, name: fromName },
+        subject,
+        content: [{ type: 'text/html', value: html }],
+        trackingSettings: {
+          clickTracking: { enabled: true },
+          openTracking: { enabled: true },
+        },
+      }),
+    });
 
-    const response = await sgMail.send(msg);
-    console.log('[Email Service] Email sent:', response[0]?.statusCode);
+    if (!response.ok) {
+      const responseBody = await response.text();
+      console.error('[Email Service] SendGrid error:', responseBody);
+      return { success: false, message: responseBody };
+    }
+
+    console.log('[Email Service] Email sent:', response.status);
     return {
-      success: response[0]?.statusCode === 202,
-      messageId: response[0]?.headers?.['x-message-id'],
+      success: response.status === 202,
+      messageId: response.headers.get('x-message-id') || undefined,
     };
-  } catch (error: any) {
-    console.error('[Email Service] SendGrid error:', error.message);
-    return { success: false, message: error.message };
+  } catch (error) {
+    const message = getErrorMessage(error);
+    console.error('[Email Service] SendGrid error:', message);
+    return { success: false, message };
   }
 }
 

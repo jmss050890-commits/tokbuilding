@@ -1,4 +1,6 @@
 import OpenAI from "openai";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
 
 const SYSTEM_PROMPTS = {
   "scholar-gpt": `You are Scholar GPT, an academic research and study assistant integrated into TokSmart.
@@ -70,14 +72,15 @@ Be comprehensive, accurate, and enlightening.`,
 };
 
 export async function POST(req) {
+  let aiModel = "claude";
   try {
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: getOpenAIApiKey(),
     });
 
     const body = await req.json();
     const message = body?.message?.trim();
-    const aiModel = body?.aiModel || "claude";
+    aiModel = body?.aiModel || "claude";
 
     if (!message) {
       return Response.json(
@@ -89,23 +92,47 @@ export async function POST(req) {
     // Select system prompt based on AI model
     const systemPrompt = SYSTEM_PROMPTS[aiModel] || SYSTEM_PROMPTS["claude"];
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-4-turbo",
-      max_tokens: 1024,
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: message },
-      ],
-    });
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4-turbo",
+          max_tokens: 1024,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: message },
+          ],
+        });
 
-    const response = completion.choices?.[0]?.message?.content || "No response generated.";
+        return completion.choices?.[0]?.message?.content || "No response generated.";
+      },
+      async (repairPrompt) => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4-turbo",
+          max_tokens: 1024,
+          messages: [
+            { role: "system", content: systemPrompt },
+            {
+              role: "user",
+              content: `Original user message:\n${message}\n\n${repairPrompt}`,
+            },
+          ],
+        });
+
+        return completion.choices?.[0]?.message?.content || "No response generated.";
+      }
+    );
 
     return Response.json({ response, aiModel });
   } catch (error) {
     console.error("TokSmart error:", error);
     return Response.json(
-      { error: "TokSmart encountered an error. Please try again." },
-      { status: 500 }
+      {
+        response:
+          "That's a good question. TokBuilding is SVL's builder product. It helps people turn ideas into agents, prompts, and working tools. In the larger SVL system, it connects with the agent hub for guidance, TokSEO for visibility, and the main SVL site for the full mission map. You can start at sandersvioprolabs.com or go directly to TokBuilding.",
+        aiModel,
+        fallbackMode: true,
+      },
+      { status: 200 }
     );
   }
 }

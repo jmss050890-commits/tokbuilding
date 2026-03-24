@@ -1,0 +1,36 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="84" y1="44" x2="430" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF5CC"/>
+      <stop offset="0.42" stop-color="#F4C95D"/>
+      <stop offset="1" stop-color="#7A4312"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 174) rotate(90) scale(168 170)">
+      <stop stop-color="#FFFDF3"/>
+      <stop offset="0.62" stop-color="#FFE39B" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#FFE39B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="robe" x1="256" y1="224" x2="256" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFBEF"/>
+      <stop offset="1" stop-color="#E6B84E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="256" fill="#120C07"/>
+  <circle cx="256" cy="256" r="224" fill="url(#bg)"/>
+  <circle cx="256" cy="174" r="170" fill="url(#halo)"/>
+
+  <path d="M256 82L274 132L326 140L286 174L298 226L256 198L214 226L226 174L186 140L238 132L256 82Z" fill="#FFF8DA" fill-opacity="0.92"/>
+
+  <path d="M178 392C186 328 214 286 256 286C298 286 326 328 334 392C306 414 282 426 256 426C230 426 206 414 178 392Z" fill="url(#robe)"/>
+  <path d="M206 208C206 177 228 150 256 150C284 150 306 177 306 208C306 227 297 243 285 255L280 294H232L227 255C215 243 206 227 206 208Z" fill="#FFFDF7"/>
+  <path d="M202 204C204 162 227 124 256 124C285 124 308 162 310 204C292 186 276 179 256 179C236 179 220 186 202 204Z" fill="#FDFDFD"/>
+  <path d="M226 230C236 222 245 218 256 218C267 218 276 222 286 230C278 259 270 276 256 286C242 276 234 259 226 230Z" fill="#F7EAD0"/>
+  <path d="M221 294H291C285 338 274 367 256 390C238 367 227 338 221 294Z" fill="#FDFCF6"/>
+
+  <path d="M214 208C224 199 237 194 256 194C275 194 288 199 298 208" stroke="#9E611D" stroke-width="10" stroke-linecap="round"/>
+  <path d="M232 248C239 255 246 259 256 259C266 259 273 255 280 248" stroke="#B86B1F" stroke-width="8" stroke-linecap="round"/>
+
+  <path d="M142 404C176 354 202 330 226 322" stroke="#FFF5CF" stroke-width="18" stroke-linecap="round" stroke-opacity="0.8"/>
+  <path d="M370 404C336 354 310 330 286 322" stroke="#FFF5CF" stroke-width="18" stroke-linecap="round" stroke-opacity="0.8"/>
+</svg>

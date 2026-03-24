@@ -1,40 +1,44 @@
 'use client';
 
+import type { CSSProperties } from 'react';
+import Image from 'next/image';
 import HeroVideo from './HeroVideo';
+
+const guardianStyles = {
+  '--bg-1': '#020812',
+  '--bg-2': '#071624',
+  '--glass': 'rgba(255,255,255,0.08)',
+  '--glass-2': 'rgba(255,255,255,0.12)',
+  '--border': 'rgba(255,255,255,0.14)',
+  '--text': '#f4f8fc',
+  '--muted': '#b8c6d2',
+  '--blue': '#49bfff',
+  '--tok-blue': '#39b8ff',
+  '--cyan': '#7cf5ff',
+  '--green': '#73ffb0',
+  '--gold': '#ffd76d',
+  '--gold-2': '#ffbf3f',
+  '--red': '#ff5362',
+  '--purple': '#b891ff',
+  '--shadow': '0 24px 60px rgba(0,0,0,0.42)',
+  '--glow-blue': '0 0 28px rgba(57,184,255,0.22)',
+  '--glow-gold': '0 0 28px rgba(255,215,109,0.20)',
+  background: 'radial-gradient(circle at 10% 15%, rgba(57,184,255,0.14), transparent 24%), radial-gradient(circle at 90% 20%, rgba(124,245,255,0.10), transparent 22%), radial-gradient(circle at 50% 100%, rgba(255,215,109,0.08), transparent 26%), linear-gradient(135deg, #020812, #071624)',
+  color: '#f4f8fc',
+  maxWidth: '1480px',
+  margin: '0 auto',
+  padding: '34px 18px',
+  borderRadius: '30px',
+  position: 'relative',
+  overflow: 'hidden',
+  fontFamily: 'Arial, Helvetica, sans-serif',
+  boxShadow: '0 24px 60px rgba(0,0,0,0.42)',
+  isolation: 'isolate',
+} satisfies CSSProperties & Record<string, string>;
 
 export default function SVLGuardian() {
   return (
-    <div id="svl-kpa-guardian" style={{
-      '--bg-1': '#020812',
-      '--bg-2': '#071624',
-      '--glass': 'rgba(255,255,255,0.08)',
-      '--glass-2': 'rgba(255,255,255,0.12)',
-      '--border': 'rgba(255,255,255,0.14)',
-      '--text': '#f4f8fc',
-      '--muted': '#b8c6d2',
-      '--blue': '#49bfff',
-      '--tok-blue': '#39b8ff',
-      '--cyan': '#7cf5ff',
-      '--green': '#73ffb0',
-      '--gold': '#ffd76d',
-      '--gold-2': '#ffbf3f',
-      '--red': '#ff5362',
-      '--purple': '#b891ff',
-      '--shadow': '0 24px 60px rgba(0,0,0,0.42)',
-      '--glow-blue': '0 0 28px rgba(57,184,255,0.22)',
-      '--glow-gold': '0 0 28px rgba(255,215,109,0.20)',
-      background: 'radial-gradient(circle at 10% 15%, rgba(57,184,255,0.14), transparent 24%), radial-gradient(circle at 90% 20%, rgba(124,245,255,0.10), transparent 22%), radial-gradient(circle at 50% 100%, rgba(255,215,109,0.08), transparent 26%), linear-gradient(135deg, #020812, #071624)',
-      color: '#f4f8fc',
-      maxWidth: '1480px',
-      margin: '0 auto',
-      padding: '34px 18px',
-      borderRadius: '30px',
-      position: 'relative',
-      overflow: 'hidden',
-      fontFamily: 'Arial, Helvetica, sans-serif',
-      boxShadow: '0 24px 60px rgba(0,0,0,0.42)',
-      isolation: 'isolate',
-    } as any}>
+    <div id="svl-kpa-guardian" style={guardianStyles}>
       <style>{`
         #svl-kpa-guardian * { box-sizing: border-box; }
         
@@ -382,9 +386,11 @@ export default function SVLGuardian() {
           <div className="svl-panel">
             <div className="svl-creator-box">
               <div className="svl-photo-frame">
-                <img 
+                <Image 
                   src="/jerome-founder.png" 
                   alt="Jerome Sanders, founder of Sanders Viopro Labs"
+                  width={320}
+                  height={400}
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.parentElement!.innerHTML = '<div style="padding: 14px; color: #b8c6d2; font-size: 13px; text-align: center; z-index: 2; position: relative;"><strong style="display: block; color: #f4f8fc; margin-bottom: 4px; font-size: 15px;">Jerome Photo</strong>Add founder image</div>';

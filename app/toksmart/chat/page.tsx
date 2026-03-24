@@ -2,6 +2,12 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import {
+  getSpeechRecognitionAPI,
+  type SpeechRecognitionErrorEventLike,
+  type SpeechRecognitionEventLike,
+  type SpeechRecognitionLike,
+} from '@/lib/browser-speech';
 
 interface Message {
   id: string;
@@ -23,7 +29,7 @@ export default function TokSmartChat() {
   const [showRouting, setShowRouting] = useState(false);
   const [routingMessage, setRoutingMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -35,7 +41,7 @@ export default function TokSmartChat() {
 
   // Initialize Speech Recognition
   useEffect(() => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SpeechRecognition = getSpeechRecognitionAPI(window);
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
@@ -44,19 +50,16 @@ export default function TokSmartChat() {
 
       recognition.onstart = () => setIsListening(true);
       recognition.onend = () => setIsListening(false);
-      recognition.onresult = (event: any) => {
-        let interimTranscript = '';
+      recognition.onresult = (event: SpeechRecognitionEventLike) => {
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
             setInputValue((prev) => prev + transcript);
-          } else {
-            interimTranscript += transcript;
           }
         }
       };
 
-      recognition.onerror = (event: any) => {
+      recognition.onerror = (event: SpeechRecognitionErrorEventLike) => {
         console.error('Speech recognition error:', event.error);
         setIsListening(false);
       };
@@ -195,7 +198,6 @@ export default function TokSmartChat() {
     setSelectedAI(detectedAI);
 
     // Show routing message with animation
-    const reason = getReasonForSelection(detectedAI);
     setShowRouting(true);
     setRoutingMessage(`Analyzing your question… Routing to ${getAIDisplayName(detectedAI)}`);
 

@@ -94,8 +94,8 @@ export const FEATURED_APPS: TokApp[] = [
     name: 'Tok Health VCC',
     category: 'health',
     emoji: '🏥',
-    description: 'Comprehensive health tracking and medical records',
-    longDescription: 'Tok Health VCC is your personal health companion. Track meals, medications, vital signs, and maintain comprehensive health records. Export medical documentation for doctors with just one click.',
+    description: 'Original combined TokHealth mobile app with wellness, safety, and fun challenges',
+    longDescription: 'TokHealth is the original combined TokHealth experience under SVL: wellness tracking, medication logging, emergency contact awareness, and fun challenge loops in one mobile-first app. It preserves the original TokHealth and TokThru spirit while keeping the health record and doctor-export core intact.',
     developer: 'Tok Development Team',
     icon: '🏥',
     screenshots: [],
@@ -124,10 +124,10 @@ export const FEATURED_APPS: TokApp[] = [
     ],
     requirements: ['Microphone access', 'Camera access', 'Health data permissions'],
     permissions: ['Camera', 'Microphone', 'Storage', 'Health data'],
-    privacy: 'https://tok.health/privacy',
+    privacy: 'https://tokhealth.sandersvioprolabs.com',
     support: {
       email: 'support@tok.health',
-      website: 'https://tok.health',
+      website: 'https://tokhealth.sandersvioprolabs.com',
     },
     status: 'available',
     releaseDate: new Date('2025-06-15'),
@@ -136,24 +136,24 @@ export const FEATURED_APPS: TokApp[] = [
         type: 'free',
         price: 0,
         currency: 'USD',
-        description: 'Basic health tracking',
-        features: ['Daily meal logging', 'Vital signs tracking', 'Basic reports']
+        description: 'Basic health tracking and challenge access',
+        features: ['Daily meal logging', 'Vital signs tracking', 'Basic reports', 'Entry challenge loops']
       },
       {
         type: 'subscription',
         price: 9.99,
         currency: 'USD',
         interval: 'monthly',
-        description: 'Premium Health Companion',
-        features: ['Unlimited logging', 'Advanced AI insights', 'Doctor export', 'Prescription reminders', 'Family sharing']
+        description: 'Premium original TokHealth experience',
+        features: ['Unlimited logging', 'Doctor export', 'Prescription reminders', 'Family sharing', 'Safety-aware routines', 'Challenge progression']
       },
       {
         type: 'subscription',
         price: 99.99,
         currency: 'USD',
         interval: 'yearly',
-        description: 'Premium yearly (save 17%)',
-        features: ['All monthly features', '+3 family members', 'Priority support', 'Data backup to cloud']
+        description: 'Premium yearly original experience (save 17%)',
+        features: ['All monthly features', '+3 family members', 'Priority support', 'Data backup to cloud', 'Long-term challenge tracking']
       }
     ]
   },
