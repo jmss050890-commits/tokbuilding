@@ -74,7 +74,7 @@ export default function RootLayout({
             letterSpacing: "0.02em",
           }}
         >
-          A shared Next.js project for Jerome Sanders, you, and the KPA mission.
+          The result of Next.JS meeting God's Vision Through SVL to KPA
         </div>
 
         <main
@@ -115,7 +115,7 @@ export default function RootLayout({
               Every SVL product is engineered with non-negotiable KPA safety guardrails.
             </p>
             <p style={{ margin: "1rem 0 0.5rem 0", color: "#d7d7d7", fontWeight: 700, letterSpacing: "0.03em" }}>
-              A shared Next.js project for Jerome Sanders, you, and the KPA mission.
+              The result of Next.JS meeting God's Vision Through SVL to KPA
             </p>
             <p style={{ margin: "1rem 0 0.5rem 0" }}>
               SVL - Mr. KPA. Approved est. 1-31-2026 from Spoken Thought to Reality. SVL products provide medical guidance to facilitate coordination with qualified healthcare professionals and are not medical advisors or substitutes for professional medical services.
