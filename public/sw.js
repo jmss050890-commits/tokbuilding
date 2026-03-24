@@ -1,5 +1,5 @@
-const CACHE_NAME = "grace-shell-v1";
-const STATIC_ASSETS = ["/agent/grace", "/manifest.webmanifest", "/icon", "/apple-icon"];
+const CACHE_NAME = "grace-shell-v2";
+const STATIC_ASSETS = ["/agent/grace", "/agent/tokfaith", "/manifest.webmanifest", "/icon", "/apple-icon"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
