@@ -319,11 +319,13 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
       ) || voices[0];
   }
 
-  if (agent?.slug === "tokfaith" && selectedVoice && voiceLooksMale(selectedVoice.name)) {
+  const isMobile = isMobileSpeechDevice();
+
+  if (agent?.slug === "tokfaith" && selectedVoice && voiceLooksMale(selectedVoice.name) && !isMobile) {
     selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences || TOKFAITH_FEMALE_VOICE_PATTERNS);
   }
 
-  if (agent?.slug === "mr-kpa" && selectedVoice && voiceLooksFemale(selectedVoice.name)) {
+  if (agent?.slug === "mr-kpa" && selectedVoice && voiceLooksFemale(selectedVoice.name) && !isMobile) {
     selectedVoice = getMrKpaLockedVoice(voices, agent.voicePreferences || MALE_VOICE_PATTERNS);
   }
 
