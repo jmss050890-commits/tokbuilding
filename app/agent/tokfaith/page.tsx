@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Heart, Send, BookOpen, Lightbulb, Loader2 } from 'lucide-react';
+import { Heart, Send, Loader2, Zap, Users } from 'lucide-react';
 import Link from 'next/link';
 
 interface Message {
@@ -31,19 +31,33 @@ export default function TokFaithAgent() {
   const [loading, setLoading] = useState(false);
   const [currentPerspective, setCurrentPerspective] = useState('ethiopian-with-kjv-option');
   const [perspectiveHistory, setPerspectiveHistory] = useState({});
-  const [promptIndex, setPromptIndex] = useState(0);
+  const [voiceMode, setVoiceMode] = useState<'tokfaith' | 'jerome' | 'mrkpa'>('tokfaith');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const rotatablePrompts = [
-    'Ask about your struggles...',
-    'What does faith mean to you?',
-    'Tell me about your identity...',
-    'How can I find peace?',
-    'Show me Ethiopian scripture wisdom...',
-    'What does the King James say about...?',
-    'I need guidance on...',
-    'Help me understand...',
+  const jeromeWisdom = [
+    "Do not just ask what sounds good. Ask what keeps people alive.",
+    "Faith is real, but so is discipline. Put both in the room.",
+    "We are not here to perform mission. We are here to carry it.",
+    "Sometimes the next breakthrough is one honest decision away.",
   ];
+
+  const quickPrompts = {
+    jerome: [
+      "Give me the fatherly truth I need right now",
+      "Talk big brother real to me about discipline",
+      "Help me think clearly about my next move",
+    ],
+    mrkpa: [
+      "What does Mr. KPA see in my situation?",
+      "Guide me with fatherly wisdom",
+      "How do I make the next honest decision?",
+    ],
+    tokfaith: [
+      "Show me Ethiopian scripture wisdom on this",
+      "What does the King James say about my struggle?",
+      "Help me find faith in this moment",
+    ],
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -52,14 +66,6 @@ export default function TokFaithAgent() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  useEffect(() => {
-    const promptInterval = setInterval(() => {
-      setPromptIndex((prev) => (prev + 1) % rotatablePrompts.length);
-    }, 4000); // Rotate every 4 seconds
-
-    return () => clearInterval(promptInterval);
-  }, [rotatablePrompts.length]);
 
   const handleSendMessage = async () => {
     if (!input.trim() || loading) return;
@@ -81,12 +87,20 @@ export default function TokFaithAgent() {
     setLoading(true);
 
     try {
+      const systemContext = 
+        voiceMode === 'jerome'
+          ? 'You are TokFaith speaking with Jerome Sanders\'s fatherly wisdom. Be direct, honest, and compassionate. Use his philosophy: "Do not just ask what sounds good. Ask what keeps people alive." Answer with the kind of fatherly truth Jerome would give.'
+          : voiceMode === 'mrkpa'
+            ? 'You are Mr. KPA speaking to guide this person. Be a protective, strong big brother. Use fatherly wisdom combined with practical strategy. Help them see what decision keeps them alive.'
+            : '';
+
       const response = await fetch('/api/tokfaith', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: userMessage,
           forcePerspective: currentPerspective,
+          systemContext,
         }),
       });
 
@@ -253,10 +267,78 @@ export default function TokFaithAgent() {
 
       {/* Input Area */}
       <div className="border-t border-amber-800/30 bg-slate-900/80 backdrop-blur">
-        <div className="max-w-4xl mx-auto px-4 py-6 space-y-3">
+        <div className="max-w-4xl mx-auto px-4 py-6 space-y-4">
+          {/* Voice Mode Selector */}
+          <div className="flex gap-2 flex-wrap items-center">
+            <span className="text-amber-200/70 text-xs">Choose voice:</span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setVoiceMode('tokfaith')}
+                className={`px-3 py-1.5 rounded text-xs font-medium transition ${
+                  voiceMode === 'tokfaith'
+                    ? 'bg-amber-600/60 border border-amber-600/80 text-amber-100'
+                    : 'bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60'
+                }`}
+              >
+                🤲 TokFaith
+              </button>
+              <button
+                onClick={() => setVoiceMode('jerome')}
+                className={`px-3 py-1.5 rounded text-xs font-medium transition ${
+                  voiceMode === 'jerome'
+                    ? 'bg-amber-600/60 border border-amber-600/80 text-amber-100'
+                    : 'bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60'
+                }`}
+              >
+                🙏 Jerome
+              </button>
+              <button
+                onClick={() => setVoiceMode('mrkpa')}
+                className={`px-3 py-1.5 rounded text-xs font-medium transition ${
+                  voiceMode === 'mrkpa'
+                    ? 'bg-amber-600/60 border border-amber-600/80 text-amber-100'
+                    : 'bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60'
+                }`}
+              >
+                👨 Mr. KPA
+              </button>
+            </div>
+          </div>
+
+          {/* Jerome wisdom quote rotating */}
+          {voiceMode === 'jerome' && (
+            <div className="bg-amber-900/20 border border-amber-700/30 rounded-lg p-3">
+              <p className="text-xs text-amber-200/70 italic">
+                "{jeromeWisdom[Math.floor(Math.random() * jeromeWisdom.length)]}"
+              </p>
+            </div>
+          )}
+
+          {/* Quick Prompt Buttons */}
+          <div className="space-y-2">
+            <p className="text-xs text-amber-200/70">Quick prompts:</p>
+            <div className="flex gap-2 flex-wrap">
+              {quickPrompts[voiceMode].map((prompt, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setInput(prompt);
+                    setTimeout(() => {
+                      const textarea = document.querySelector('textarea');
+                      if (textarea) textarea.focus();
+                    }, 0);
+                  }}
+                  className="px-3 py-1.5 rounded text-xs bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60 hover:bg-slate-700/60 transition"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Perspective Selector */}
           <div className="flex gap-2 flex-wrap items-center text-xs">
-            <span className="text-amber-200/70">Current perspective:</span>
+            <span className="text-amber-200/70">Scripture perspective:</span>
             <select
               value={currentPerspective}
               onChange={(e) => setCurrentPerspective(e.target.value)}
@@ -274,7 +356,7 @@ export default function TokFaithAgent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder={rotatablePrompts[promptIndex]}
+              placeholder="Bring your questions, struggles, or thoughts..."
               className="flex-1 px-4 py-3 bg-slate-800 border border-amber-700/50 text-amber-50 placeholder-amber-200/40 rounded-lg focus:outline-none focus:border-amber-600/80 focus:ring-1 focus:ring-amber-600/30 resize-none"
               rows={3}
             />
