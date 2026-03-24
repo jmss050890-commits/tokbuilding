@@ -17,7 +17,7 @@ export default function FirstGuardianAgent() {
       id: 'welcome',
       type: 'assistant',
       content:
-        'I am the First Guardian. My role is your household protection and crisis navigation. When things feel unsafe, unclear, or urgent, bring it to me. I will listen, assess what\'s real, and help you find your way to safety. What\'s happening?',
+        'I\'m The First Guardian, built in honor of Cheria Michelle Daniels. I know what it means to carry pressure, come through family storms, and still make sure the people in your care are covered. So yes, bring me the messy, the loud, the disrespectful, the draining, and the hard-to-explain. We\'ll sort it out with warmth, common sense, and Home First protection.',
     },
   ]);
   const [input, setInput] = useState('');
@@ -25,14 +25,23 @@ export default function FirstGuardianAgent() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Welcome audio on mount
-  const welcomeMessage = 'I am the First Guardian. My role is your household protection and crisis navigation. When things feel unsafe, unclear, or urgent, bring it to me. I will listen, assess what\'s real, and help you find your way to safety.';
-  useWelcomeAudio(welcomeMessage);
+  const welcomeMessage = 'I\'m The First Guardian, built in honor of Cheria Michelle Daniels. I know what it means to carry pressure, come through family storms, and still make sure the people in your care are covered. So yes, bring me the messy, the loud, the disrespectful, the draining, and the hard-to-explain. We\'ll sort it out with warmth, common sense, and Home First protection.';
+  useWelcomeAudio(welcomeMessage, true, {
+    rate: 0.9,
+    pitch: 1.0,
+    volume: 0.8,
+    voiceGender: 'female',
+  });
 
   const quickPrompts = [
-    "I don't feel safe right now",
-    "Help me navigate this crisis",
-    "What should I do about this situation?",
-    "How do I protect myself and my household?",
+    "Help me calm down a tense situation at home",
+    "How do I protect the kids from adult chaos?",
+    "I need a practical plan for a family crisis",
+    "Help me set a boundary without making things worse",
+    "How do I handle a disrespectful family member without losing myself?",
+    "Help me deal with grown folks bringing drama in my house",
+    "What do I do when love is making me ignore red flags?",
+    "Talk to me like Michelle about family stress and money pressure",
   ];
 
   const scrollToBottom = () => {
