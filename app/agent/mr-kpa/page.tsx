@@ -27,8 +27,8 @@ export default function MrKPAAgent() {
   // Welcome audio on mount
   const welcomeMessage = 'I am Mr. KPA. Jerome built me around one mission: Keep People Alive. I see the whole system. I understand the strategy. And I speak the unfiltered truth about what it takes to survive, build, and lead.';
   useWelcomeAudio(welcomeMessage, true, {
-    rate: 0.8, // Slower, more deliberate
-    pitch: 0.8, // Lower pitch for male authority
+    rate: 0.8, // Founder authority - deliberate, decisive
+    pitch: 0.76, // Deep male voice for command presence
     volume: 0.8,
     voiceGender: 'male',
   });
