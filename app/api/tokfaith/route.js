@@ -116,7 +116,7 @@ async function saveTokFaithLesson(userMessage, responseData) {
 
 export async function POST(request) {
   try {
-    const { message, forcePerpsective } = await request.json();
+    const { message, forcePerspective } = await request.json();
 
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return new Response(
@@ -128,7 +128,7 @@ export async function POST(request) {
       );
     }
 
-    const perspective = forcePerpsective || detectTokFaithPerspective(message);
+    const perspective = forcePerspective || detectTokFaithPerspective(message);
     const responseData = await generateTokFaithResponse(message, perspective);
 
     // Save to memory (non-blocking)

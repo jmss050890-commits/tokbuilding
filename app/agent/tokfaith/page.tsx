@@ -31,7 +31,19 @@ export default function TokFaithAgent() {
   const [loading, setLoading] = useState(false);
   const [currentPerspective, setCurrentPerspective] = useState('ethiopian-with-kjv-option');
   const [perspectiveHistory, setPerspectiveHistory] = useState({});
+  const [promptIndex, setPromptIndex] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const rotatablePrompts = [
+    'Ask about your struggles...',
+    'What does faith mean to you?',
+    'Tell me about your identity...',
+    'How can I find peace?',
+    'Show me Ethiopian scripture wisdom...',
+    'What does the King James say about...?',
+    'I need guidance on...',
+    'Help me understand...',
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -40,6 +52,14 @@ export default function TokFaithAgent() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    const promptInterval = setInterval(() => {
+      setPromptIndex((prev) => (prev + 1) % rotatablePrompts.length);
+    }, 4000); // Rotate every 4 seconds
+
+    return () => clearInterval(promptInterval);
+  }, [rotatablePrompts.length]);
 
   const handleSendMessage = async () => {
     if (!input.trim() || loading) return;
@@ -254,7 +274,7 @@ export default function TokFaithAgent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask TokFaith about faith, scripture, your struggles, or your identity..."
+              placeholder={rotatablePrompts[promptIndex]}
               className="flex-1 px-4 py-3 bg-slate-800 border border-amber-700/50 text-amber-50 placeholder-amber-200/40 rounded-lg focus:outline-none focus:border-amber-600/80 focus:ring-1 focus:ring-amber-600/30 resize-none"
               rows={3}
             />
