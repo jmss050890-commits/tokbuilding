@@ -175,7 +175,7 @@ export default function SandersVioProLabs() {
       <div className="bg-slate-900 border-t border-slate-800 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">Sanders Viopro Labs - Innovation for Safety</p>
-          <p className="text-sm text-slate-300 mb-4">A shared Next.js project for Jerome Sanders, you, and the KPA mission.</p>
+          <p className="text-sm text-slate-300 mb-4">The result of Next.JS meeting God's Vision Through SVL to KPA</p>
           <p className="text-xs text-slate-500">#Sandersvioprolabs | #KPA-Keeppeoplealive | #thinkspeakworkandwatchGodwork4U</p>
         </div>
       </div>
