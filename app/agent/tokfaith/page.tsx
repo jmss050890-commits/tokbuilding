@@ -37,7 +37,12 @@ export default function TokFaithAgent() {
 
   // Welcome audio on mount
   const welcomeMessage = 'Peace to you. I am TokFaith. When you have a question that touches your spirit—about faith, your struggles, your identity—bring it here. I will listen deeply and show you wisdom from both the Ethiopian Canon and the King James tradition.';
-  useWelcomeAudio(welcomeMessage);
+  useWelcomeAudio(welcomeMessage, true, {
+    rate: 0.9,
+    pitch: 1.1, // Slightly higher for warm, spiritual tone
+    volume: 0.8,
+    voiceGender: 'female',
+  });
 
   const jeromeWisdom = [
     "Do not just ask what sounds good. Ask what keeps people alive.",
