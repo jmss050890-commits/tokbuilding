@@ -91,6 +91,72 @@ export interface PurchaseHistory {
   licenseKey: string;
 }
 
+export interface TokFaithProfile {
+  _id?: string;
+  userId: string;
+  userName?: string;
+  source: 'auth' | 'guest';
+  spiritualProfileSummary?: string;
+  currentStudyFocus?: string;
+  spiritualNeeds: string[];
+  prayerNeeds: string[];
+  favoriteTopics: string[];
+  openQuestions: string[];
+  growthMilestones: string[];
+  lastLessonAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface TokFaithLessonMemory {
+  _id?: string;
+  userId: string;
+  lessonKey: string;
+  lessonTitle: string;
+  sourceTopic: string;
+  notesSummary?: string;
+  userQuestions: string[];
+  userComments: string[];
+  followUpIdeas: string[];
+  lastDiscussedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  messageCount: number;
+}
+
+export interface FirstGuardianProfile {
+  _id?: string;
+  userId: string;
+  userName?: string;
+  source: 'auth' | 'guest';
+  householdProfileSummary?: string;
+  currentFocus?: string;
+  householdNeeds: string[];
+  childSafetyNotes: string[];
+  boundaryGoals: string[];
+  openQuestions: string[];
+  recentWins: string[];
+  lastConversationAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface FirstGuardianThreadMemory {
+  _id?: string;
+  userId: string;
+  threadKey: string;
+  threadTitle: string;
+  topic: string;
+  notesSummary?: string;
+  userQuestions: string[];
+  userComments: string[];
+  followUpIdeas: string[];
+  lastDiscussedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  messageCount: number;
+}
+
 /**
  * MongoDB Connection Helper
  */
@@ -170,5 +236,45 @@ export async function getLicenseKeysCollection() {
   await collection.createIndex({ orderId: 1 });
   await collection.createIndex({ subscriptionId: 1 });
   
+  return collection;
+}
+
+export async function getTokFaithProfilesCollection() {
+  const db = await getDatabase();
+  const collection = db.collection<TokFaithProfile>('tokfaithProfiles');
+
+  await collection.createIndex({ userId: 1 }, { unique: true });
+  await collection.createIndex({ updatedAt: -1 });
+
+  return collection;
+}
+
+export async function getTokFaithLessonMemoriesCollection() {
+  const db = await getDatabase();
+  const collection = db.collection<TokFaithLessonMemory>('tokfaithLessonMemories');
+
+  await collection.createIndex({ userId: 1, lastDiscussedAt: -1 });
+  await collection.createIndex({ userId: 1, lessonKey: 1 }, { unique: true });
+
+  return collection;
+}
+
+export async function getFirstGuardianProfilesCollection() {
+  const db = await getDatabase();
+  const collection = db.collection<FirstGuardianProfile>('firstGuardianProfiles');
+
+  await collection.createIndex({ userId: 1 }, { unique: true });
+  await collection.createIndex({ updatedAt: -1 });
+
+  return collection;
+}
+
+export async function getFirstGuardianThreadMemoriesCollection() {
+  const db = await getDatabase();
+  const collection = db.collection<FirstGuardianThreadMemory>('firstGuardianThreadMemories');
+
+  await collection.createIndex({ userId: 1, lastDiscussedAt: -1 });
+  await collection.createIndex({ userId: 1, threadKey: 1 }, { unique: true });
+
   return collection;
 }

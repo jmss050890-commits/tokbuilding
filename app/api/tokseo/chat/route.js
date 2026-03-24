@@ -1,68 +1,23 @@
-// /app/api/tokseo/chat/route.js
-// TokSEO Chat Agent - Conversational SEO strategy powered by Search Atlas
-
 import OpenAI from "openai";
-import { searchAtlas } from '@/lib/services/search-atlas';
-
-const TOKSEO_SYSTEM = `You are TokSEO — the SEO and Digital Visibility Agent created by Jerome Sanders of Sanders Viopro Labs. You are the strategic SEO and digital visibility expert for the TokBuilding ecosystem.
-
-YOUR IDENTITY:
-- Name: TokSEO
-- Role: Full-spectrum SEO strategist, local SEO optimizer, content strategy architect
-- Personality: Authoritative yet approachable, strategic thinker, data-driven problem solver. You help businesses see their digital opportunity and build sustainable visibility.
-- Tone: Professional, clear, confident. Explain SEO strategy simply without jargon. Be action-oriented.
-
-YOUR THREE CORE SPECIALTIES:
-
-1. LOCAL SEO OPTIMIZATION
-   - Google Business Profile strategy and optimization
-   - Local rankings, citations, review management
-   - Local search heatmaps and competitive analysis
-   - Geographic targeting and multi-location strategy
-   - Tracking local search performance vs competitors
-
-2. CONTENT STRATEGY & KEYWORD RESEARCH
-   - Content gap analysis and opportunity identification
-   - Keyword mapping to user intent
-   - Content calendar and topic clustering
-   - SEO content architecture
-   - Topical authority building
-
-3. FULL SEO CONSULTING
-   - Technical SEO audits and fixes
-   - On-page optimization guidance
-   - Link building strategy and authority development
-   - Site structure and information architecture
-   - SEO roadmap development for sustainable growth
-
-YOUR SERVICE MODEL (FREEMIUM):
-- FREE: Discovery assessment. Help prospects understand their SEO needs, competitive landscape, and opportunity. Build a strategic roadmap. Identify what agents/content they need to create.
-- PAID (TokSEO Prime Edition): Ongoing optimization, monthly strategy, content recommendations, performance tracking, competitive monitoring, continuous improvement.
-
-WHEN WORKING WITH PROSPECTS:
-1. DISCOVERY PHASE (Free): Ask about their business, goals, target audience, current visibility. Share honest assessment of their SEO opportunity. Guide them on what they need to build.
-2. RECOMMENDATION PHASE: Based on discovery, recommend agent type/AI tool (via TokBuilding), content strategy, and TokSEO Prime Edition engagement.
-3. PRIME EDITION PHASE: Manage ongoing SEO execution — optimizations, new content, link building, performance reviews, competitive responses.
-
-REAL DATA ACCESS:
-You have access to real-time SEO data from Search Atlas including:
-- Client keyword rankings and trends
-- Competitor analysis and benchmarks
-- Content gap opportunities
-- Local SEO metrics
-- Visibility scores and trending keywords
-
-When users ask about rankings, competitors, keywords, or opportunity analysis, reference this actual data to provide specific, actionable advice.
-
-THE KPA MISSION:
-Every business you help grow uses their platform to Keep People Alive — whether through health, education, community protection, or positive impact. SEO is the visibility engine for that mission. When you help a business rank higher, you help them reach more people with their message of care.
-
-You are TokSEO. You build visibility. You help businesses reach their audience. You serve the KPA mission.`;
+import { AGENTS } from "@/lib/lib/lib/agents";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { searchAtlas } from "@/lib/services/search-atlas";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from "@/lib/svl-supportive-handoff";
 
 export async function POST(req) {
+  let userMessage = "";
+  let safetyMode = false;
+  let dataSource = "general-seo-guidance";
+  let isLiveData = false;
   try {
     const body = await req.json();
-    const userMessage = body?.message?.trim();
+    userMessage = body?.message?.trim();
+    const tokSeoAgent = AGENTS.tokseo;
 
     if (!userMessage) {
       return new Response(
@@ -71,78 +26,116 @@ export async function POST(req) {
       );
     }
 
+    const safetyCase = detectSupportiveHandoffCase(userMessage);
+    safetyMode = safetyCase.requiresSupportiveTone;
+    if (safetyCase.requiresEmergencyResponse) {
+      return new Response(
+        JSON.stringify({ response: buildSupportiveEmergencyResponse(safetyCase), safetyMode: true }),
+        { status: 200 }
+      );
+    }
+
     console.log(`[TokSEO Chat] User: ${userMessage.substring(0, 50)}...`);
 
-    // Detect if user is asking about rankings/competitors and fetch real data
     let contextData = "";
     const lowerMessage = userMessage.toLowerCase();
 
-    if (lowerMessage.includes('rank') || 
-        lowerMessage.includes('keyword') || 
-        lowerMessage.includes('competitor') ||
-        lowerMessage.includes('opportunity') ||
-        lowerMessage.includes('visibility') ||
-        lowerMessage.includes('gap')) {
-      
-      console.log('[TokSEO Chat] Fetching Search Atlas data...');
-      
-      try {
-        // Get keywords
-        const keywords = await searchAtlas.getKeywordRankings();
-        const topKeywords = keywords.slice(0, 5);
+    if (
+      lowerMessage.includes("rank") ||
+      lowerMessage.includes("keyword") ||
+      lowerMessage.includes("competitor") ||
+      lowerMessage.includes("opportunity") ||
+      lowerMessage.includes("visibility") ||
+      lowerMessage.includes("gap")
+    ) {
+      console.log("[TokSEO Chat] Fetching SEO intelligence...");
 
-        // Get competitors
-        const competitors = await searchAtlas.getCompetitorData();
-        const topCompetitors = competitors.slice(0, 3);
+      const [keywordResult, competitorResult] = await Promise.all([
+        searchAtlas.getKeywordRankings(),
+        searchAtlas.getCompetitorData(),
+      ]);
 
-        // Build context for Claude
-        contextData = `
+      const topKeywords = keywordResult.data.slice(0, 5);
+      const topCompetitors = competitorResult.data.slice(0, 3);
+      isLiveData = keywordResult.isLiveData && competitorResult.isLiveData;
+      dataSource = isLiveData ? "search-atlas" : "svl-sample-data";
 
-=== CURRENT SEO DATA FROM SEARCH ATLAS ===
+      contextData = `
+
+=== ${isLiveData ? "CURRENT SEO DATA FROM SEARCH ATLAS" : "SAMPLE SEO DATA FROM SVL (DEMO DATA, NOT LIVE SEARCH CONSOLE OR GOOGLE DATA)"} ===
 
 TOP KEYWORDS (Ranked):
-${topKeywords.map(k => `- "${k.keyword}": Rank #${k.rank}, Volume ${k.volume}/mo, Difficulty ${k.difficulty}%, Trend: ${k.trend}`).join('\n')}
+${topKeywords.map((keyword) => `- "${keyword.keyword}": Rank #${keyword.rank}, Volume ${keyword.volume}/mo, Difficulty ${keyword.difficulty}%, Trend: ${keyword.trend}`).join("\n")}
 
 TOP COMPETITORS:
-${topCompetitors.map(c => `- ${c.name} (${c.domain}): ${c.keywords} keywords, ~${c.estimatedTraffic?.toLocaleString()} monthly traffic`).join('\n')}
+${topCompetitors.map((competitor) => `- ${competitor.name} (${competitor.domain}): ${competitor.keywords} keywords, ~${competitor.estimatedTraffic?.toLocaleString()} monthly traffic`).join("\n")}
 
-Use this data to provide specific, data-backed recommendations to the user.`;
+${isLiveData
+  ? "Use this live Search Atlas data to provide specific, data-backed recommendations."
+  : "Use this sample data to give directional recommendations. Do not present it as live client reporting."}
+${keywordResult.error || competitorResult.error
+  ? `\n\n[Data note: ${keywordResult.error || competitorResult.error}]`
+  : ""}`;
 
-        console.log('[TokSEO Chat] Data loaded, preparing response...');
-      } catch (dataError) {
-        console.warn('[TokSEO Chat] Could not fetch data, continuing with general advice:', dataError.message);
-        contextData = "\n\n[Note: Data unavailable at this moment, using general SEO knowledge]";
-      }
+      console.log(`[TokSEO Chat] SEO data loaded from ${dataSource}`);
     }
 
-// Demo mode if API key is missing
-  if (!process.env.OPENAI_API_KEY) {
-    return new Response(
-      JSON.stringify({ response: "I'm TokSEO, your SEO and content strategy agent. I'm in demo mode right now. In production, I'll help you optimize your site visibility, create content strategies, and drive organic growth." }),
-      { status: 200 }
+    const openAiApiKey = getOpenAIApiKey();
+
+    if (!openAiApiKey) {
+      return new Response(
+        JSON.stringify({
+          response:
+            "I'm TokSEO, your SEO and digital visibility strategist. I know the SVL story, the live site upgrade, and the current product map. I'm in demo mode right now, so any rankings, competitor snapshots, or opportunity analysis here should be treated as sample SVL data and strategy guidance unless live Search Atlas data is explicitly available.",
+          dataUsed: Boolean(contextData),
+          dataSource,
+          isLiveData,
+          safetyMode,
+        }),
+        { status: 200 }
+      );
+    }
+
+    const client = new OpenAI({
+      apiKey: openAiApiKey,
+    });
+
+    const systemMessages = [
+      {
+        role: "system",
+        content: tokSeoAgent.systemPrompt + contextData,
+      },
+      ...(safetyCase.requiresSupportiveTone
+        ? [{ role: "system", content: getSupportiveHandoffSystemMessage("TokSEO") }]
+        : []),
+    ];
+
+    const responseText = await generateWithKpaGuard(
+      async () => {
+        const response = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          max_tokens: 1024,
+          messages: [...systemMessages, { role: "user", content: userMessage }],
+        });
+
+        return response.choices[0]?.message?.content || "I'm here to help with SEO strategy.";
+      },
+      async (repairPrompt) => {
+        const response = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          max_tokens: 1024,
+          messages: [
+            ...systemMessages,
+            {
+              role: "user",
+              content: `Original user message:\n${userMessage}\n\n${repairPrompt}`,
+            },
+          ],
+        });
+
+        return response.choices[0]?.message?.content || "I'm here to help with SEO strategy.";
+      }
     );
-  }
-
-  const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      max_tokens: 1024,
-      messages: [
-        {
-          role: "system",
-          content: TOKSEO_SYSTEM + contextData
-        },
-        { 
-          role: "user", 
-          content: userMessage 
-        }
-      ],
-    });
-
-    const responseText = response.choices[0]?.message?.content || "I'm here to help with SEO strategy.";
 
     console.log(`[TokSEO Chat] Response generated (${responseText.length} chars)`);
 
@@ -150,15 +143,27 @@ Use this data to provide specific, data-backed recommendations to the user.`;
       JSON.stringify({
         response: responseText,
         timestamp: new Date().toISOString(),
-        dataUsed: contextData ? true : false
+        dataUsed: Boolean(contextData),
+        dataSource,
+        isLiveData,
+        safetyMode,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("[TokSEO Chat] Error:", error);
     return new Response(
-      JSON.stringify({ error: "TokSEO failed to respond." }),
-      { status: 500 }
+      JSON.stringify({
+        response:
+          "Let's break that down simply. TokBuilding is the builder lane inside SVL. It helps people create agents, prompts, and business tools they can actually use. TokSEO then helps those tools get found, trusted, and connected to the people who need them. The practical next step is to start at sandersvioprolabs.com for the whole map or go straight to TokBuilding if you're ready to build.",
+        timestamp: new Date().toISOString(),
+        dataUsed: false,
+        dataSource,
+        isLiveData,
+        safetyMode,
+        fallbackMode: true,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   }
 }

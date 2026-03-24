@@ -1,77 +1,70 @@
 // /app/api/tokseo/data/route.js
-// TokSEO Data Endpoint - Real-time Search Atlas integration
+// TokSEO Data Endpoint - Search Atlas when configured, sample SVL data as fallback
 
-import { searchAtlas } from '@/lib/services/search-atlas';
+import { searchAtlas } from "@/lib/services/search-atlas";
+
+function getErrorMessage(error) {
+  return error instanceof Error ? error.message : "Unknown error";
+}
 
 /**
  * GET /api/tokseo/data?type=keywords|competitors|gaps|analysis
- * Returns real-time SEO data from Search Atlas
- * Used by TokSEO chat and dashboard
+ * Returns live Search Atlas data when configured, otherwise sample SVL data
  */
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
-    const dataType = searchParams.get('type') || 'keywords';
-    const domain = searchParams.get('domain'); // for analysis endpoint
-    const useCase = searchParams.get('useCase') || 'health'; // for analysis endpoint
+    const dataType = searchParams.get("type") || "keywords";
+    const domain = searchParams.get("domain");
+    const useCase = searchParams.get("useCase") || "health";
 
     console.log(`[TokSEO API] Request: type=${dataType}, domain=${domain}`);
 
-    let data;
-    let error = null;
+    let result;
 
-    try {
-      switch (dataType) {
-        case 'keywords':
-          data = await searchAtlas.getKeywordRankings();
-          break;
-
-        case 'competitors':
-          data = await searchAtlas.getCompetitorData();
-          break;
-
-        case 'gaps':
-          data = await searchAtlas.getContentGaps();
-          break;
-
-        case 'analysis':
-          if (!domain) {
-            return Response.json(
-              { error: 'domain parameter required for analysis' },
-              { status: 400 }
-            );
-          }
-          data = await searchAtlas.analyzeDomain(domain, useCase);
-          break;
-
-        default:
+    switch (dataType) {
+      case "keywords":
+        result = await searchAtlas.getKeywordRankings();
+        break;
+      case "competitors":
+        result = await searchAtlas.getCompetitorData();
+        break;
+      case "gaps":
+        result = await searchAtlas.getContentGaps();
+        break;
+      case "analysis":
+        if (!domain) {
           return Response.json(
-            { error: `Unknown data type: ${dataType}` },
+            { error: "domain parameter required for analysis" },
             { status: 400 }
           );
-      }
-    } catch (apiError) {
-      console.error(`[TokSEO API] Search Atlas error:`, apiError);
-      error = apiError.message;
-      // Return fallback data or error response
-      data = null;
+        }
+        result = await searchAtlas.analyzeDomain(domain, useCase);
+        break;
+      default:
+        return Response.json(
+          { error: `Unknown data type: ${dataType}` },
+          { status: 400 }
+        );
     }
 
     return Response.json({
-      success: !error,
+      success: !result.error,
       dataType,
-      data,
-      error,
+      data: result.data,
+      error: result.error || null,
+      dataSource: result.dataSource,
+      isLiveData: result.isLiveData,
       timestamp: new Date().toISOString(),
-      cacheControl: 'max-age=86400' // 24 hour cache
+      cacheControl: "max-age=86400",
     });
   } catch (error) {
-    console.error('[TokSEO API] Route error:', error);
+    console.error("[TokSEO API] Route error:", error);
     return Response.json(
-      { 
+      {
         success: false,
-        error: error.message,
-        dataType: 'error'
+        error: getErrorMessage(error),
+        dataType: "error",
       },
       { status: 500 }
     );
@@ -79,7 +72,7 @@ export async function GET(req) {
 }
 
 /**
- * POST /api/tokseo/data (future endpoint for bulk operations)
+ * POST /api/tokseo/data
  * Allows TokSEO to request multiple data types at once
  */
 export async function POST(req) {
@@ -89,45 +82,56 @@ export async function POST(req) {
 
     if (!types || !Array.isArray(types)) {
       return Response.json(
-        { error: 'types array is required' },
+        { error: "types array is required" },
         { status: 400 }
       );
     }
 
     const results = {};
+    const meta = [];
 
     for (const type of types) {
       try {
         switch (type) {
-          case 'keywords':
+          case "keywords":
             results.keywords = await searchAtlas.getKeywordRankings();
+            meta.push(results.keywords);
             break;
-          case 'competitors':
+          case "competitors":
             results.competitors = await searchAtlas.getCompetitorData();
+            meta.push(results.competitors);
             break;
-          case 'gaps':
+          case "gaps":
             results.gaps = await searchAtlas.getContentGaps();
+            meta.push(results.gaps);
             break;
-          case 'analysis':
+          case "analysis":
             if (domain) {
               results.analysis = await searchAtlas.analyzeDomain(domain, useCase);
+              meta.push(results.analysis);
             }
             break;
+          default:
+            results[type] = { error: `Unknown data type: ${type}` };
         }
-      } catch (e) {
-        results[type] = { error: e.message };
+      } catch (error) {
+        results[type] = { error: getErrorMessage(error) };
       }
     }
+
+    const allLive = meta.length > 0 && meta.every((entry) => entry.isLiveData);
 
     return Response.json({
       success: true,
       data: results,
-      timestamp: new Date().toISOString()
+      dataSource: allLive ? "search-atlas" : "svl-sample-data",
+      isLiveData: allLive,
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('[TokSEO API] Route error:', error);
+    console.error("[TokSEO API] Route error:", error);
     return Response.json(
-      { error: error.message },
+      { error: getErrorMessage(error) },
       { status: 500 }
     );
   }

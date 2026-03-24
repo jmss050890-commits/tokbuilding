@@ -1,196 +1,191 @@
-// /lib/services/search-atlas.ts
-// Search Atlas API Service - Powered by your Brand Vault
+import { svlSeoData, type AnalysisResult, type CompetitorData, type KeywordData } from '@/lib/services/svl-seo-data';
 
-import axios, { AxiosInstance } from 'axios';
+export type SeoDataSource = 'search-atlas' | 'svl-sample-data';
 
-interface KeywordData {
-  keyword: string;
-  rank: number;
-  volume: number;
-  difficulty: number;
-  change: number;
-  trend: string;
+export type SeoDataResult<T> = {
+  data: T;
+  dataSource: SeoDataSource;
+  isLiveData: boolean;
+  error?: string;
+};
+
+type ContentGap = Awaited<ReturnType<typeof svlSeoData.getContentGaps>>[number];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
 }
 
-interface CompetitorData {
-  name: string;
-  domain: string;
-  keywords: number;
-  topKeywords: string[];
-  estimatedTraffic: number;
+function getString(value: unknown, fallback = '') {
+  return typeof value === 'string' ? value : fallback;
 }
 
-interface AnalysisResult {
-  domain: string;
-  visibility: number;
-  gap: number;
-  opportunities: string[];
-  competitors: string[];
+function getNumber(value: unknown, fallback = 0) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
+function getStringArray(value: unknown) {
+  return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === 'string') : [];
 }
 
 class SearchAtlasService {
-  private client: AxiosInstance;
-  private vaultId: string;
+  private readonly apiKey = process.env.SEARCH_ATLAS_API_KEY;
+  private readonly accountId = process.env.SEARCH_ATLAS_ACCOUNT_ID;
+  private readonly vaultId = process.env.SEARCH_ATLAS_BRAND_VAULT_ID;
+  private readonly baseUrl = process.env.SEARCH_ATLAS_BASE_URL || 'https://api.searchatlas.com';
 
-  constructor() {
-    const apiKey = process.env.SEARCH_ATLAS_API_KEY;
-    const baseUrl = process.env.SEARCH_ATLAS_BASE_URL || 'https://api.searchatlas.com/v1';
-    this.vaultId = process.env.SEARCH_ATLAS_BRAND_VAULT_ID || '';
+  private get isConfigured() {
+    return Boolean(this.apiKey && this.accountId && this.vaultId);
+  }
 
-    if (!apiKey) {
-      console.warn('⚠️ SEARCH_ATLAS_API_KEY not set - Search Atlas features disabled');
+  private async requestJson(path: string) {
+    if (!this.isConfigured) {
+      throw new Error('Search Atlas is not configured');
     }
 
-    this.client = axios.create({
-      baseURL: baseUrl,
+    const response = await fetch(`${this.baseUrl}${path}`, {
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${this.apiKey}`,
+        'Content-Type': 'application/json',
+        'User-Agent': 'TokSEO/1.0',
       },
-      timeout: 10000
+      cache: 'no-store',
     });
-  }
 
-  /**
-   * Get current keyword rankings from Search Atlas
-   * Used by TokSEO to show client's SEO performance
-   */
-  async getKeywordRankings(): Promise<KeywordData[]> {
-    try {
-      console.log('[SearchAtlas] Fetching keyword rankings...');
-      const response = await this.client.get('/keywords', {
-        params: {
-          vault_id: this.vaultId,
-          limit: 50,
-          sort_by: 'rank'
-        }
-      });
-
-      // Parse API response into standardized format
-      return response.data.keywords?.map((k: any) => ({
-        keyword: k.keyword,
-        rank: k.rank_position,
-        volume: k.monthly_volume,
-        difficulty: k.keyword_difficulty,
-        change: k.rank_change,
-        trend: k.trend_direction
-      })) || [];
-    } catch (error) {
-      console.error('[SearchAtlas] Error fetching keywords:', error);
-      return this.getMockKeywordData(); // Fallback for demo
+    if (!response.ok) {
+      throw new Error(`Search Atlas request failed with status ${response.status}`);
     }
+
+    return response.json() as Promise<unknown>;
   }
 
-  /**
-   * Get competitor analysis data
-   * Used by TokSEO to provide competitive insights
-   */
-  async getCompetitorData(): Promise<CompetitorData[]> {
-    try {
-      console.log('[SearchAtlas] Fetching competitor data...');
-      const response = await this.client.get('/competitors', {
-        params: {
-          vault_id: this.vaultId,
-          limit: 8
-        }
-      });
-
-      return response.data.competitors?.map((c: any) => ({
-        name: c.domain.split('.')[0].charAt(0).toUpperCase() + c.domain.split('.')[0].slice(1),
-        domain: c.domain,
-        keywords: c.keyword_count,
-        topKeywords: c.top_keywords?.slice(0, 3) || [],
-        estimatedTraffic: c.estimated_traffic
-      })) || [];
-    } catch (error) {
-      console.error('[SearchAtlas] Error fetching competitors:', error);
-      return this.getMockCompetitorData(); // Fallback for demo
-    }
-  }
-
-  /**
-   * Analyze a client's domain against benchmarks
-   * Used by TokSEO to assess SEO need and opportunity
-   */
-  async analyzeDomain(domain: string, useCase: string): Promise<AnalysisResult> {
-    try {
-      console.log(`[SearchAtlas] Analyzing domain: ${domain}`);
-      const response = await this.client.post('/analysis', {
-        domain,
-        vault_id: this.vaultId,
-        use_case: useCase
-      });
-
-      const data = response.data;
+  private async withFallback<T>(
+    loadLive: () => Promise<T>,
+    loadFallback: () => Promise<T>,
+  ): Promise<SeoDataResult<T>> {
+    if (!this.isConfigured) {
       return {
-        domain,
-        visibility: data.visibility_score || 0,
-        gap: 100 - (data.visibility_score || 0),
-        opportunities: data.opportunity_keywords?.slice(0, 5) || [],
-        competitors: data.competing_domains?.slice(0, 3) || []
+        data: await loadFallback(),
+        dataSource: 'svl-sample-data',
+        isLiveData: false,
+        error: 'Search Atlas is not configured',
+      };
+    }
+
+    try {
+      return {
+        data: await loadLive(),
+        dataSource: 'search-atlas',
+        isLiveData: true,
       };
     } catch (error) {
-      console.error('[SearchAtlas] Error analyzing domain:', error);
       return {
-        domain,
-        visibility: 0,
-        gap: 100,
-        opportunities: ['Health crisis support', 'Mental health platform', 'Wellness coaching'],
-        competitors: ['calm.com', 'betterhelp.com', 'headspace.com']
+        data: await loadFallback(),
+        dataSource: 'svl-sample-data',
+        isLiveData: false,
+        error: error instanceof Error ? error.message : 'Search Atlas request failed',
       };
     }
   }
 
-  /**
-   * Get content gap analysis
-   * Used by TokSEO to recommend what content to create
-   */
-  async getContentGaps(): Promise<{ keyword: string; volume: number; opportunity: string }[]> {
-    try {
-      console.log('[SearchAtlas] Fetching content gaps...');
-      const response = await this.client.get('/gaps', {
-        params: {
-          vault_id: this.vaultId,
-          limit: 20
-        }
-      });
+  async getKeywordRankings(): Promise<SeoDataResult<KeywordData[]>> {
+    return this.withFallback(async () => {
+      const payload = await this.requestJson(
+        `/api/v1/accounts/${this.accountId}/brand-vaults/${this.vaultId}/keywords`,
+      );
 
-      return response.data.gaps?.map((gap: any) => ({
-        keyword: gap.keyword,
-        volume: gap.monthly_volume,
-        opportunity: gap.opportunity_level
-      })) || [];
-    } catch (error) {
-      console.error('[SearchAtlas] Error fetching gaps:', error);
-      return [];
-    }
+      const keywordList = isRecord(payload) && Array.isArray(payload.keywords)
+        ? payload.keywords
+        : Array.isArray(payload)
+          ? payload
+          : [];
+
+      return keywordList
+        .filter(isRecord)
+        .map((entry) => ({
+          keyword: getString(entry.keyword || entry.term),
+          rank: getNumber(entry.rank_position ?? entry.rank),
+          volume: getNumber(entry.monthly_volume ?? entry.volume),
+          difficulty: getNumber(entry.keyword_difficulty ?? entry.difficulty),
+          change: getNumber(entry.rank_change ?? entry.change),
+          trend: getString(entry.trend_direction ?? entry.trend, 'stable'),
+        }))
+        .filter((entry) => entry.keyword);
+    }, () => svlSeoData.getKeywordRankings());
   }
 
-  /**
-   * Mock data for demo/testing (returns same structure as real API)
-   * Removed once Brand Vault is set up
-   */
-  private getMockKeywordData(): KeywordData[] {
-    return [
-      { keyword: 'crisis support app', rank: 12, volume: 1200, difficulty: 45, change: -2, trend: 'stable' },
-      { keyword: 'mental health coaching', rank: 8, volume: 890, difficulty: 38, change: 1, trend: 'up' },
-      { keyword: 'wellness platform', rank: 25, volume: 650, difficulty: 52, change: -3, trend: 'down' },
-      { keyword: 'AI health coach', rank: 31, volume: 420, difficulty: 35, change: 2, trend: 'up' },
-      { keyword: 'emergency mental health', rank: 6, volume: 780, difficulty: 41, change: 0, trend: 'stable' }
-    ];
+  async getCompetitorData(): Promise<SeoDataResult<CompetitorData[]>> {
+    return this.withFallback(async () => {
+      const payload = await this.requestJson(
+        `/api/v1/accounts/${this.accountId}/brand-vaults/${this.vaultId}/competitors`,
+      );
+
+      const competitorList = isRecord(payload) && Array.isArray(payload.competitors)
+        ? payload.competitors
+        : Array.isArray(payload)
+          ? payload
+          : [];
+
+      return competitorList
+        .filter(isRecord)
+        .map((entry) => ({
+          name: getString(entry.name || entry.domain, 'Competitor'),
+          domain: getString(entry.domain),
+          keywords: getNumber(entry.keyword_count ?? entry.keywords),
+          topKeywords: getStringArray(entry.top_keywords).slice(0, 3),
+          estimatedTraffic: getNumber(entry.estimated_traffic ?? entry.estimatedTraffic),
+        }))
+        .filter((entry) => entry.domain);
+    }, () => svlSeoData.getCompetitorData());
   }
 
-  private getMockCompetitorData(): CompetitorData[] {
-    return [
-      { name: 'Calm', domain: 'calm.com', keywords: 2340, topKeywords: ['meditation app', 'sleep app', 'stress relief'], estimatedTraffic: 5000000 },
-      { name: 'Headspace', domain: 'headspace.com', keywords: 1890, topKeywords: ['meditation', 'mental health', 'anxiety'], estimatedTraffic: 3200000 },
-      { name: 'BetterHelp', domain: 'betterhelp.com', keywords: 1650, topKeywords: ['online therapy', 'therapist', 'counseling'], estimatedTraffic: 2800000 }
-    ];
+  async getContentGaps(): Promise<SeoDataResult<ContentGap[]>> {
+    return this.withFallback(async () => {
+      const payload = await this.requestJson(
+        `/api/v1/accounts/${this.accountId}/brand-vaults/${this.vaultId}/gaps`,
+      );
+
+      const gapList = isRecord(payload) && Array.isArray(payload.gaps)
+        ? payload.gaps
+        : Array.isArray(payload)
+          ? payload
+          : [];
+
+      return gapList
+        .filter(isRecord)
+        .map((entry) => ({
+          keyword: getString(entry.keyword || entry.term),
+          volume: getNumber(entry.monthly_volume ?? entry.volume),
+          opportunity: getString(entry.opportunity_level ?? entry.opportunity, 'unknown'),
+        }))
+        .filter((entry) => entry.keyword);
+    }, () => svlSeoData.getContentGaps());
+  }
+
+  async analyzeDomain(domain: string, useCase: string): Promise<SeoDataResult<AnalysisResult>> {
+    return this.withFallback(async () => {
+      const [keywords, competitors, gaps] = await Promise.all([
+        this.getKeywordRankings(),
+        this.getCompetitorData(),
+        this.getContentGaps(),
+      ]);
+
+      const visibility = Math.max(
+        0,
+        Math.round(
+          keywords.data.slice(0, 10).reduce((score, keyword) => score + Math.max(0, 101 - keyword.rank), 0) /
+            Math.max(keywords.data.slice(0, 10).length, 1),
+        ),
+      );
+
+      return {
+        domain,
+        visibility,
+        gap: Math.max(0, 100 - visibility),
+        opportunities: gaps.data.slice(0, 3).map((entry) => entry.keyword || `${useCase} seo strategy`),
+        competitors: competitors.data.slice(0, 3).map((entry) => entry.domain),
+      };
+    }, () => svlSeoData.analyzeDomain(domain, useCase));
   }
 }
 
-// Export singleton instance
 export const searchAtlas = new SearchAtlasService();
-
-// Export types for Client
-export type { KeywordData, CompetitorData, AnalysisResult };

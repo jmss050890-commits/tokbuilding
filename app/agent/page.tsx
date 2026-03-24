@@ -13,8 +13,51 @@ export default function AgentHub() {
       hatata: "#e05c1a",
       wisdom: "#0fa89e",
       "coach-daniels": "#2ecc71",
+      tokseo: "#f59e0b",
+      tok2myia: "#1e40af",
+      tokfaith: "#f4c95d",
+      "first-guardian": "#c08457",
+      "mr-kpa": "#ef4444",
     };
     return colors[slug] || "#888";
+  };
+
+  const renderAvatar = (agent: AgentConfig, accentColor: string) => {
+    if (agent.avatar.startsWith("/")) {
+      return (
+        <img
+          src={agent.avatar}
+          alt={`${agent.name} avatar`}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: "50%",
+            objectFit: "cover",
+            border: `2px solid ${accentColor}`,
+            backgroundColor: "#111",
+          }}
+        />
+      );
+    }
+
+    return (
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: "50%",
+          backgroundColor: accentColor,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "#111",
+        }}
+      >
+        {agent.avatar}
+      </div>
+    );
   };
 
   return (
@@ -52,22 +95,7 @@ export default function AgentHub() {
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: "50%",
-                    backgroundColor: accentColor,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    color: "#111",
-                  }}
-                >
-                  {agent.avatar}
-                </div>
+                {renderAvatar(agent, accentColor)}
                 <div>
                   <h2 style={{ margin: 0, fontSize: 20 }}>{agent.name}</h2>
                 </div>
@@ -75,6 +103,11 @@ export default function AgentHub() {
               <p style={{ margin: "8px 0", color: accentColor, fontSize: 12, fontWeight: 500 }}>
                 {agent.defaultStatus}
               </p>
+              {agent.tagline ? (
+                <p style={{ margin: "8px 0", color: "#f2e7dc", fontSize: 13, fontWeight: 600 }}>
+                  {agent.tagline}
+                </p>
+              ) : null}
               <p style={{ margin: "12px 0 0 0", color: "#ccc", fontSize: 14, lineHeight: 1.5 }}>
                 {agent.welcomeMessage}
               </p>

@@ -25,8 +25,10 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       success: true,
       message: 'Installation tracked',
       installId: `inst-${Date.now()}`,
+      appId: id,
+      version: body.version || null,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, error: 'Failed to track installation' },
       { status: 500 }

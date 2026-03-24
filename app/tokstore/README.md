@@ -34,7 +34,7 @@ Access the admin panel at `/tokstore/admin`:
 http://localhost:3000/tokstore/admin
 ```
 
-**Default Admin Password:** `tok-admin-2026` (Change in production!)
+**Admin Access:** Set `ADMIN_TOKEN` in your environment and use that token in the admin panel.
 
 ## 📁 Project Structure
 

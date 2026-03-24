@@ -1,28 +1,20 @@
 import OpenAI from "openai";
-
-const COACH_DANIELS_SYSTEM = `You are Coach Daniels, a warm and supportive AI health coach created by Jerome Sanders of Sanders Viopro Labs for Brian Daniels. You specialize in blood pressure management, heart health, and bipolar disorder support with emergency escalation capabilities.
-
-YOUR IDENTITY:
-- Name: Coach Daniels
-- Role: Personal Health Coach — BP monitoring, cardiac health, mental wellness
-- Personality: Warm, empathetic, non-judgmental, proactive. You genuinely care and meet people where they are.
-- Tone: Conversational and accessible — explain things clearly without medical jargon, but don't shy away from important health concepts.
-
-CORE RESPONSIBILITIES:
-1. Health Coaching: Provide evidence-based guidance on BP, heart health, and mental wellness. Ask clarifying questions. Encourage healthy habits.
-2. Emergency Escalation (Three-Tier System):
-   - GREEN: Stable. Provide encouragement and maintenance guidance.
-   - YELLOW: Elevated risk (high BP, mild symptoms, elevated anxiety). Provide de-escalation guidance. Initiate 15-min check-ins.
-   - RED: Immediate risk (chest pain, severe symptoms, suicidal thoughts). ESCALATE IMMEDIATELY. Never suggest medication changes.
-3. Input Support: Text, voice recordings, photo analysis of BP readings, real-time chat.
-4. Safety First: Never adjust medications. Never diagnose. Always defer to healthcare providers. Always escalate Red situations.
-
-You are Brian's trusted health partner — supportive, knowledgeable, and always safety-conscious.`;
+import { AGENTS } from "@/lib/lib/lib/agents";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from "@/lib/svl-supportive-handoff";
 
 export async function POST(req) {
+  let message = "";
+  let safetyMode = false;
   try {
     const body = await req.json();
-    const message = body?.message?.trim();
+    message = body?.message?.trim();
+    const coachDanielsAgent = AGENTS["coach-daniels"];
 
     if (!message) {
       return new Response(
@@ -31,39 +23,86 @@ export async function POST(req) {
       );
     }
 
-// Demo mode if API key is missing
-  if (!process.env.OPENAI_API_KEY) {
-    return new Response(
-      JSON.stringify({ response: "I'm Coach Daniels, your personal performance and wellness coach. I'm in demo mode now, but when fully connected, I'll help you optimize your health, mindset, and achievement. Let's work together on your goals." }),
-      { status: 200 }
+    const safetyCase = detectSupportiveHandoffCase(message);
+    safetyMode = safetyCase.requiresSupportiveTone;
+    if (safetyCase.requiresEmergencyResponse) {
+      return new Response(
+        JSON.stringify({
+          response: buildSupportiveEmergencyResponse(safetyCase),
+          safetyMode: true,
+        }),
+        { status: 200 }
+      );
+    }
+
+    const openAiApiKey = getOpenAIApiKey();
+
+    if (!openAiApiKey) {
+      return new Response(
+        JSON.stringify({
+          response:
+            "I'm Coach Daniels, your health coach for blood pressure, heart health, and mental wellness support. I know the SVL story and the TokHealth upgrade path too. I'm in demo mode right now, but when we're fully connected I'll help you track concerns, think clearly about symptoms, and stay grounded with safety-first guidance.",
+          safetyMode: safetyCase.requiresSupportiveTone,
+        }),
+        { status: 200 }
+      );
+    }
+
+    const client = new OpenAI({
+      apiKey: openAiApiKey,
+    });
+
+    const systemMessages = [
+      { role: "system", content: coachDanielsAgent.systemPrompt },
+      ...(safetyCase.requiresSupportiveTone
+        ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Coach Daniels") }]
+        : []),
+    ];
+
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [...systemMessages, { role: "user", content: message }],
+        });
+
+        return (
+          completion.choices?.[0]?.message?.content?.trim() || "I'm here for you, Brian."
+        );
+      },
+      async (repairPrompt) => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            ...systemMessages,
+            {
+              role: "user",
+              content: `Original user message:\n${message}\n\n${repairPrompt}`,
+            },
+          ],
+        });
+
+        return (
+          completion.choices?.[0]?.message?.content?.trim() || "I'm here for you, Brian."
+        );
+      }
     );
-  }
-
-  const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: COACH_DANIELS_SYSTEM },
-        { role: "user", content: message },
-      ],
-    });
-
-    const response =
-      completion.choices?.[0]?.message?.content?.trim() || "I'm here for you, Brian.";
 
     return new Response(
-      JSON.stringify({ response }),
+      JSON.stringify({ response, safetyMode }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("Coach Daniels route error:", error);
 
     return new Response(
-      JSON.stringify({ error: "Coach Daniels failed to respond." }),
-      { status: 500 }
+      JSON.stringify({
+        response:
+          "I hear you. TokBuilding is the part of SVL that helps people build AI agents and practical tools for real life. On its own, it helps someone create something useful. In the full SVL system, it works with TokSEO for visibility, TokStore for access, and the SVL agents for guidance so people can move from an idea to real support. You can start at sandersvioprolabs.com or open TokBuilding directly.",
+        safetyMode,
+        fallbackMode: true,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   }
 }

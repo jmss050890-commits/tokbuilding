@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { TokApp } from '../types';
 
 export default function TokStoreAdmin() {
   const [adminPassword, setAdminPassword] = useState('');
@@ -18,11 +17,10 @@ export default function TokStoreAdmin() {
   });
 
   const handleLogin = () => {
-    // In production, use proper authentication
-    if (adminPassword === 'tok-admin-2026') {
+    if (adminPassword.trim()) {
       setIsAuthenticated(true);
     } else {
-      alert('Invalid password');
+      alert('Enter a valid admin token');
     }
   };
 

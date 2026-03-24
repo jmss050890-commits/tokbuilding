@@ -1,43 +1,42 @@
 import OpenAI from "openai";
+import { AGENTS } from "@/lib/lib/lib/agents";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from "@/lib/svl-supportive-handoff";
 
-const HATATA_SYSTEM = `You are HATÄTA — the first AI agent built and deployed under Sanders Viopro Labs, created personally for Jerome Sanders (Founder & Chief Architect, known as Mr. KPA / Verified Signature Authority · The Lab).
+function buildHatataDemoResponse(message) {
+  const lowerMessage = message.toLowerCase();
 
-You are Jerome's right hand: strategic advisor, brand voice architect, operations commander, business development engine, and creative co-conspirator.
+  if (
+    lowerMessage.includes("tokhealth") ||
+    lowerMessage.includes("tokthru") ||
+    lowerMessage.includes("upgrade")
+  ) {
+    return "Strategic read: the upgrades changed SVL from a set of pages into guided user pathways. Leverage unlocked: TokHealth is now a clearer integrated surface, the public site is stronger, and agents can hand users into real flows instead of just informing them. Risk: consistency and measurement still matter as scale grows. Decision: keep pushing user pathways and operational alignment, not just feature count. Next move: tighten engagement flow and track how people move from page to agent to outcome.";
+  }
 
-YOUR IDENTITY:
-- Name: HATÄTA (pronounced hah-TAH-tah)
-- Origin: First agent born under the SVL seal, March 2026
-- Role: All-in-one — strategy, content, sales, ops, tech guidance, vision alignment
-- Tone: Adaptive — sharp and direct when Jerome needs clarity, warm and encouraging when he needs momentum, bold and visionary when building
+  if (
+    lowerMessage.includes("agent") ||
+    lowerMessage.includes("roles") ||
+    lowerMessage.includes("svl")
+  ) {
+    return "Strategic read: the agent system is now role-driven instead of overlapping. Leverage unlocked: Mr. KPA handles mission alignment, HATATA handles command and strategy, A1 handles systems, Grace handles heart, Wisdom handles TokHealth wellness, Coach Daniels handles health support, TokSEO handles visibility, Tok2Myia handles knowledge, and The First Guardian handles home protection. Risk: keep role boundaries sharp as new features land. Decision: maintain specialization and route users intentionally. Next move: keep training prompts and flows around those defined lanes.";
+  }
 
-SANDERS VIOPRO LABS (SVL):
-Jerome's vision-born company. Brand: "Mr. KPA / Verified Signature Authority · The Lab."
-
-THE PRODUCTS:
-1. TokHealth — wellness platform with AI Coach "Wisdom"
-2. TokThru / KPA (Keeping People Alive) — personal safety & crisis app
-3. TokBuilding — AI agent builder platform. This is how clients create agents like you.
-
-BUSINESS MODEL:
-- D2C: TokHealth + TokThru/KPA subscriptions
-- B2B: TokBuilding as white-label platform. Clients pay monthly, SVL handles API costs
-- Marketing: Facebook Live with Wisdom as core acquisition channel
-- Community-first brand trust through KPA mission
-
-OPERATING PRINCIPLES:
-- Always align with Jerome's vision, not just the immediate question
-- Never give generic advice — be specific to SVL and Jerome
-- When Jerome needs a draft, produce it immediately
-- When Jerome is building, be his thinking partner
-- Protect the brand: bold, verified, community-protecting, premium
-- You speak with authority because you ARE the product
-
-You are HATÄTA. First. Verified. SVL-sealed.`;
+  return "I'm HATATA, Jerome's and Mr. KPA's strategic right hand. I now respond in command mode: strategic read, leverage unlocked, risks, decision call, and next moves. Bring me the situation and I'll give you the sharper operating answer.";
+}
 
 export async function POST(req) {
+  let message = "";
+  let safetyMode = false;
   try {
     const body = await req.json();
-    const message = body?.message?.trim();
+    message = body?.message?.trim();
+    const hatataAgent = AGENTS.hatata;
 
     if (!message) {
       return new Response(
@@ -46,40 +45,79 @@ export async function POST(req) {
       );
     }
 
-    // Demo mode if API key is missing
-    if (!process.env.OPENAI_API_KEY) {
+    const safetyCase = detectSupportiveHandoffCase(message);
+    safetyMode = safetyCase.requiresSupportiveTone;
+    if (safetyCase.requiresEmergencyResponse) {
       return new Response(
-        JSON.stringify({ response: "I'm HATÄTA, Jerome's strategic right hand. I operate across SVL strategy, product positioning, sales, and brand voice. Right now I'm in demo mode, but in production I'll bring full strategic guidance aligned with the SVL mission." }),
+        JSON.stringify({
+          response: buildSupportiveEmergencyResponse(safetyCase),
+          safetyMode: true,
+        }),
+        { status: 200 }
+      );
+    }
+
+    const openAiApiKey = getOpenAIApiKey();
+
+    if (!openAiApiKey) {
+      return new Response(
+        JSON.stringify({
+          response: buildHatataDemoResponse(message),
+          safetyMode: safetyCase.requiresSupportiveTone,
+        }),
         { status: 200 }
       );
     }
 
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: openAiApiKey,
     });
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: HATATA_SYSTEM },
-        { role: "user", content: message },
-      ],
-    });
+    const systemMessages = [
+      { role: "system", content: hatataAgent.systemPrompt },
+      ...(safetyCase.requiresSupportiveTone
+        ? [{ role: "system", content: getSupportiveHandoffSystemMessage("HATATA") }]
+        : []),
+    ];
 
-    const response =
-      completion.choices?.[0]?.message?.content?.trim() || "I'm here, Jerome.";
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [...systemMessages, { role: "user", content: message }],
+        });
 
-    return Response.json({ response });
+        return completion.choices?.[0]?.message?.content?.trim() || "I'm here, Jerome.";
+      },
+      async (repairPrompt) => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            ...systemMessages,
+            {
+              role: "user",
+              content: `Original user message:\n${message}\n\n${repairPrompt}`,
+            },
+          ],
+        });
+
+        return completion.choices?.[0]?.message?.content?.trim() || "I'm here, Jerome.";
+      }
+    );
+
+    return Response.json({ response, safetyMode });
   } catch (error) {
-    console.error("HATÄTA route error:", error?.message || error);
+    console.error("HATATA route error:", error?.message || error);
     console.error("Full error:", error);
 
     return Response.json(
-      { 
-        error: "HATÄTA failed to respond.",
-        details: process.env.NODE_ENV === 'development' ? error?.message : undefined
+      {
+        response: buildHatataDemoResponse(message || "What is TokBuilding?"),
+        safetyMode,
+        fallbackMode: true,
+        details: process.env.NODE_ENV === "development" ? error?.message : undefined,
       },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

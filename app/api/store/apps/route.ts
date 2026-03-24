@@ -1,5 +1,6 @@
 import { FEATURED_APPS } from '@/app/tokstore/types';
 import { NextRequest, NextResponse } from 'next/server';
+import { isValidAdminToken } from '@/lib/admin';
 
 // GET /api/store/apps - Get all apps with filters
 export async function GET(request: NextRequest) {
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
       count: apps.length,
       apps,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, error: 'Failed to fetch apps' },
       { status: 500 }
@@ -50,9 +51,8 @@ export async function GET(request: NextRequest) {
 // POST /api/store/apps - Create new app (admin only)
 export async function POST(request: NextRequest) {
   try {
-    // In production, verify admin token
     const adminToken = request.headers.get('x-admin-token');
-    if (!adminToken || adminToken !== process.env.ADMIN_TOKEN) {
+    if (!isValidAdminToken(adminToken)) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' },
         { status: 401 }
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       ...body,
     };
 
-    // In production, save to database
+    // Persist new apps in a database before enabling write operations in production.
     // db.apps.create(newApp);
 
     return NextResponse.json({
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
       message: 'App created successfully',
       app: newApp,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, error: 'Failed to create app' },
       { status: 500 }

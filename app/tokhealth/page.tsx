@@ -52,6 +52,19 @@ interface HealthRecord {
   photo?: string;
 }
 
+interface MealAnalysis {
+  mealName: string;
+  estimatedCalories: number;
+  proteinGrams: number;
+  carbsGrams: number;
+  fatGrams: number;
+  fiberGrams: number;
+  sodiumMg: number;
+  hydrationNote: string;
+  wellnessTakeaway: string;
+  caution: string;
+}
+
 interface EmergencyContact {
   id: string;
   name: string;
@@ -96,6 +109,8 @@ export default function TokHealthVCC() {
   const [cameraActive, setCameraActive] = useState(false);
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
   const [scanInput, setScanInput] = useState('');
+  const [mealScanLoading, setMealScanLoading] = useState(false);
+  const [mealScanError, setMealScanError] = useState('');
   const [newAllergy, setNewAllergy] = useState('');
   const [newContact, setNewContact] = useState({ name: '', relationship: '', phone: '' });
   const [healthData, setHealthData] = useState<HealthData>(() => {
@@ -260,23 +275,77 @@ export default function TokHealthVCC() {
     }
   };
 
-  const handleScanMeal = () => {
-    if (scanInput.trim() || capturedPhoto) {
+  const formatMealAnalysis = (analysis: MealAnalysis, originalInput: string) => {
+    const detailLines = [
+      `${analysis.estimatedCalories} cal`,
+      `${analysis.proteinGrams}g protein`,
+      `${analysis.carbsGrams}g carbs`,
+      `${analysis.fatGrams}g fat`,
+      `${analysis.fiberGrams}g fiber`,
+      `${analysis.sodiumMg}mg sodium`,
+    ];
+
+    return [
+      `Estimate: ${detailLines.join(' | ')}`,
+      `Hydration: ${analysis.hydrationNote}`,
+      `Takeaway: ${analysis.wellnessTakeaway}`,
+      `Caution: ${analysis.caution}`,
+      originalInput ? `Original note: ${originalInput}` : '',
+    ].filter(Boolean).join('\n');
+  };
+
+  const handleScanMeal = async () => {
+    if (!scanInput.trim() && !capturedPhoto) {
+      return;
+    }
+
+    setMealScanLoading(true);
+    setMealScanError('');
+
+    try {
+      const response = await fetch('/api/tokhealth/meal-scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          description: scanInput,
+          photoData: capturedPhoto,
+          allergies: healthData.allergies,
+          intolerances: healthData.intolerances,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Meal scan failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (!data?.analysis) {
+        throw new Error('No meal analysis returned.');
+      }
+
+      const analysis = data.analysis as MealAnalysis;
       const newRecord: HealthRecord = {
         id: Date.now().toString(),
         type: 'meal',
-        title: '🍽️ Meal Logged',
-        description: scanInput,
+        title: `🍽️ ${analysis.mealName || 'Meal Analysis'}`,
+        description: formatMealAnalysis(analysis, scanInput),
         timestamp: new Date(),
+        value: `${analysis.estimatedCalories || 0} cal`,
         photo: capturedPhoto || undefined,
       };
+
       setHealthData(prev => ({
         ...prev,
         records: [newRecord, ...prev.records].slice(0, 90),
       }));
-      speakMessage(`Meal logged: ${scanInput}`);
+      speakMessage(`Meal analyzed. Estimated ${analysis.estimatedCalories || 0} calories.`);
       setScanInput('');
       setCapturedPhoto(null);
+    } catch (error) {
+      console.error('Meal scan error:', error);
+      setMealScanError(error instanceof Error ? error.message : 'Meal analysis failed.');
+    } finally {
+      setMealScanLoading(false);
     }
   };
 
@@ -697,6 +766,12 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="w-full h-32 p-4 rounded-lg bg-slate-700 border border-slate-600 text-white mb-4 focus:border-emerald-500"
             />
 
+            {scannerType === 'meal' && mealScanError ? (
+              <div className="mb-4 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                {mealScanError}
+              </div>
+            ) : null}
+
             {/* Action Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 mb-4">
               <button
@@ -717,10 +792,12 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   scannerType === 'medicine' ? handleScanMedicine :
                   handleScanBarcode
                 }
-                disabled={!scanInput.trim() && !capturedPhoto}
+                disabled={(!scanInput.trim() && !capturedPhoto) || (scannerType === 'meal' && mealScanLoading)}
                 className="px-2 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition disabled:opacity-50 text-xs sm:text-sm whitespace-nowrap"
               >
-                ✅ Log
+                {scannerType === 'meal'
+                  ? (mealScanLoading ? '🔍 Analyzing...' : '🔍 Analyze')
+                  : '✅ Log'}
               </button>
               <button
                 onClick={startListening}

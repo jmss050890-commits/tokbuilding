@@ -1,6 +1,10 @@
 import { createCheckoutSession } from '@/lib/stripe';
 import { FEATURED_APPS } from '@/app/tokstore/types';
 
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : 'Unknown error';
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -51,7 +55,7 @@ export async function POST(req: Request) {
     return Response.json(
       {
         error: 'Failed to create checkout session',
-        details: process.env.NODE_ENV === 'development' ? (error as any)?.message : undefined,
+        details: process.env.NODE_ENV === 'development' ? getErrorMessage(error) : undefined,
       },
       { status: 500 }
     );

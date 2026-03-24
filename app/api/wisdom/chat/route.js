@@ -1,35 +1,35 @@
 import OpenAI from "openai";
+import { AGENTS } from "@/lib/lib/lib/agents";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from "@/lib/svl-supportive-handoff";
 
-const WISDOM_SYSTEM = `You are Wisdom — the AI Health Coach of TokHealth, created by Jerome Sanders of Sanders Viopro Labs. You are Jerome's co-host on Facebook Lives and a beloved guide for the TokHealth community.
+function buildWisdomDemoResponse(message) {
+  const lowerMessage = message.toLowerCase();
 
-YOUR IDENTITY:
-- Name: Wisdom
-- Role: AI Health Coach, wellness guide, Facebook Live cohost, community champion
-- Personality: Warm, brilliant, encouraging, deeply knowledgeable, community-oriented. You make people feel seen, supported, and empowered. You are like a wise, caring friend who knows health and wellness.
-- Tone: Uplifting and energetic on Facebook Lives, gentle and supportive one-on-one, authoritative but accessible when sharing health knowledge.
+  if (
+    lowerMessage.includes("tokhealth") ||
+    lowerMessage.includes("tokthru") ||
+    lowerMessage.includes("integration") ||
+    lowerMessage.includes("upgrade")
+  ) {
+    return "Baby, TokHealth has grown into a stronger integrated experience. The branded home is tokhealth.sandersvioprolabs.com, and the original TokThru safety functions now live inside TokHealth so wellness support, emergency readiness, and practical guidance can all work together in one place. That's smart, clean, and good for the people.";
+  }
 
-WHAT YOU KNOW DEEPLY:
-- Nutrition science, macro/micronutrients, healthy eating patterns
-- Wellness, mental health, stress management, sleep, hydration
-- Fitness, movement, sustainable healthy habits
-- Community health — how families and friend groups support each other
-- Emergency safety integration — TokHealth connects to emergency contacts
-- The TokHealth family/friend challenge system and community prizes
-- Jerome's vision: health is community, not just individual — the whole family thrives together
-
-YOUR CAPABILITIES:
-- Coach through nutrition questions with warmth and specificity
-- Help set realistic, sustainable health goals
-- Motivate and inspire — you are an encourager, not a critic
-- Build community — celebrate wins, create belonging
-- Make health accessible, not intimidating
-
-You are Wisdom. Brilliant. Kind. Community-focused. Real.`;
+  return "Hey baby, I'm Wisdom, your TokHealth health and wellness coach. I know the SVL story, the TokHealth upgrade, and how the original TokThru functions now live inside one stronger experience at tokhealth.sandersvioprolabs.com. I'm in demo mode right now, but I'm still here to give you love, facts, and practical support without all the extra fuss.";
+}
 
 export async function POST(req) {
+  let message = "";
+  let safetyMode = false;
   try {
     const body = await req.json();
-    const message = body?.message?.trim();
+    message = body?.message?.trim();
+    const wisdomAgent = AGENTS.wisdom;
 
     if (!message) {
       return new Response(
@@ -38,39 +38,77 @@ export async function POST(req) {
       );
     }
 
-    // Demo mode if API key is missing
-    if (!process.env.OPENAI_API_KEY) {
+    const safetyCase = detectSupportiveHandoffCase(message);
+    safetyMode = safetyCase.requiresSupportiveTone;
+    if (safetyCase.requiresEmergencyResponse) {
       return new Response(
-        JSON.stringify({ response: "Hey there! I'm Wisdom, your health and wellness coach. I'm in demo mode right now, but when we're fully connected, I'll guide you through nutrition, wellness, fitness, and community health support. You're not alone in this journey." }),
+        JSON.stringify({ response: buildSupportiveEmergencyResponse(safetyCase), safetyMode: true }),
+        { status: 200 }
+      );
+    }
+
+    const openAiApiKey = getOpenAIApiKey();
+
+    if (!openAiApiKey) {
+      return new Response(
+        JSON.stringify({
+          response: buildWisdomDemoResponse(message),
+          safetyMode: safetyCase.requiresSupportiveTone,
+        }),
         { status: 200 }
       );
     }
 
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: openAiApiKey,
     });
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: WISDOM_SYSTEM },
-        { role: "user", content: message },
-      ],
-    });
+    const systemMessages = [
+      { role: "system", content: wisdomAgent.systemPrompt },
+      ...(safetyCase.requiresSupportiveTone
+        ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Wisdom") }]
+        : []),
+    ];
 
-    const response =
-      completion.choices?.[0]?.message?.content?.trim() || "I'm here with you.";
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [...systemMessages, { role: "user", content: message }],
+        });
+
+        return completion.choices?.[0]?.message?.content?.trim() || "I'm here with you.";
+      },
+      async (repairPrompt) => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            ...systemMessages,
+            {
+              role: "user",
+              content: `Original user message:\n${message}\n\n${repairPrompt}`,
+            },
+          ],
+        });
+
+        return completion.choices?.[0]?.message?.content?.trim() || "I'm here with you.";
+      }
+    );
 
     return new Response(
-      JSON.stringify({ response }),
+      JSON.stringify({ response, safetyMode }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("Wisdom route error:", error);
 
     return new Response(
-      JSON.stringify({ error: "Wisdom failed to respond." }),
-      { status: 500 }
+      JSON.stringify({
+        response: buildWisdomDemoResponse(message || "What is TokBuilding?"),
+        safetyMode,
+        fallbackMode: true,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   }
 }

@@ -1,40 +1,26 @@
 import OpenAI from "openai";
-
-const A1_SYSTEM = `
-You are A1, Jerome Sanders' primary AI builder inside the SVL ecosystem.
-
-Core Principle:
-"We don't just send alerts—we guide you to safety, and stay with you every step of the way."
-
-Mission:
-KPA — Keeping People Alive.
-
-Your role:
-- Help build AI agents, systems, and features
-- Design practical tools that protect, guide, and support people
-- Be direct, practical, and real
-- No fluff, no robotic tone
-
-Think like:
-- Architect
-- Strategist
-- Builder
-- Protector
-
-Your mindset:
-- Build for real-world usefulness
-- Keep safety at the center
-- Create systems that do more than notify; they guide
-- Help Jerome turn vision into deployable reality
-
-Always give actionable answers.
-Always prioritize clarity, usefulness, safety, and execution.
-`;
+import { AGENTS } from "@/lib/lib/lib/agents";
+import { getOpenAIApiKey } from "@/lib/openai-key";
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from "@/lib/svl-supportive-handoff";
+import {
+  detectMastermindLessonTrigger,
+  findLessonById,
+  formatLessonTeaching,
+  getAvailableLessonsSummary,
+} from "@/lib/outskill-mastermind-lessons";
 
 export async function POST(req) {
+  let message = "";
+  let safetyMode = false;
   try {
     const body = await req.json();
-    const message = body?.message?.trim();
+    message = body?.message?.trim();
+    const a1Agent = AGENTS["a1"];
 
     if (!message) {
       return new Response(
@@ -43,39 +29,115 @@ export async function POST(req) {
       );
     }
 
-// Demo mode if API key is missing
-  if (!process.env.OPENAI_API_KEY) {
-    return new Response(
-      JSON.stringify({ response: "I'm A1, SVL's strategic intelligence agent. I'm currently in demo mode, but in production I'll help you design systems, solve technical problems, and build AI agents aligned with the SVL mission." }),
-      { status: 200 }
+    const safetyCase = detectSupportiveHandoffCase(message);
+    safetyMode = safetyCase.requiresSupportiveTone;
+    if (safetyCase.requiresEmergencyResponse) {
+      return new Response(
+        JSON.stringify({
+          response: buildSupportiveEmergencyResponse(safetyCase),
+          safetyMode: true,
+        }),
+        { status: 200 }
+      );
+    }
+
+    // Check if user is asking for an OutSkill Mastermind lesson
+    const lessonTrigger = detectMastermindLessonTrigger(message);
+    if (lessonTrigger.triggered) {
+      // If specific lesson requested, serve it
+      if (lessonTrigger.suggestedLessonIds.length > 0) {
+        const lessonId = lessonTrigger.suggestedLessonIds[0]; // Get first match
+        const lesson = findLessonById(lessonId);
+
+        if (lesson) {
+          return new Response(
+            JSON.stringify({
+              response: formatLessonTeaching(lesson),
+              isMastermindLesson: true,
+              lessonId: lesson.id,
+              lessonTitle: lesson.title,
+              safetyMode: false,
+            }),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+          );
+        }
+      }
+
+      // If no specific lesson matched, offer the full lesson library
+      return new Response(
+        JSON.stringify({
+          response: getAvailableLessonsSummary(),
+          isMastermindLessonLibrary: true,
+          safetyMode: false,
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    const openAiApiKey = getOpenAIApiKey();
+
+    if (!openAiApiKey) {
+      return new Response(
+        JSON.stringify({
+          response:
+            "I'm A1, SVL's strategic intelligence agent. I know the SVL story, the sandersvioprolabs.com upgrade, and the TokHealth plus TokThru integration. I'm currently in demo mode, but in production I'll help you turn that vision into systems, products, and deployable reality.",
+          safetyMode: safetyCase.requiresSupportiveTone,
+        }),
+        { status: 200 }
+      );
+    }
+
+    const client = new OpenAI({
+      apiKey: openAiApiKey,
+    });
+
+    const systemMessages = [
+      { role: "system", content: a1Agent.systemPrompt },
+      ...(safetyCase.requiresSupportiveTone
+        ? [{ role: "system", content: getSupportiveHandoffSystemMessage("A1") }]
+        : []),
+    ];
+
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [...systemMessages, { role: "user", content: message }],
+        });
+
+        return completion.choices?.[0]?.message?.content?.trim() || "No response.";
+      },
+      async (repairPrompt) => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            ...systemMessages,
+            {
+              role: "user",
+              content: `Original user message:\n${message}\n\n${repairPrompt}`,
+            },
+          ],
+        });
+
+        return completion.choices?.[0]?.message?.content?.trim() || "No response.";
+      }
     );
-  }
-
-  const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: A1_SYSTEM },
-        { role: "user", content: message },
-      ],
-    });
-
-    const response =
-      completion.choices?.[0]?.message?.content?.trim() || "No response.";
 
     return new Response(
-      JSON.stringify({ response }),
+      JSON.stringify({ response, safetyMode }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("A1 route error:", error);
 
     return new Response(
-      JSON.stringify({ error: "A1 failed to respond." }),
-      { status: 500 }
+      JSON.stringify({
+        response:
+          "That's a good question. TokBuilding is SVL's builder lane. It helps people turn ideas into AI agents, prompts, and real tools they can actually use. In the bigger system, TokBuilding helps create what TokSEO helps people find and what the SVL agent hub helps people understand and use. You can start at sandersvioprolabs.com or go straight to TokBuilding to see that lane in action.",
+        safetyMode,
+        fallbackMode: true,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   }
 }

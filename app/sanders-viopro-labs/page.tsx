@@ -16,6 +16,9 @@ export default function SandersVioProLabs() {
             <Link href="/our-story" className="px-4 py-2 rounded-lg text-purple-300 hover:text-white transition">
               Our Story
             </Link>
+            <Link href="/svl-progress" className="px-4 py-2 rounded-lg text-amber-300 hover:text-white transition">
+              SVL Progress
+            </Link>
             <Link href="/" className="px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition">
               ← Back Home
             </Link>
@@ -89,6 +92,21 @@ export default function SandersVioProLabs() {
           </Link>
         </div>
 
+        <div className="mb-16">
+          <Link href="/svl-progress" className="block bg-gradient-to-br from-amber-900/40 via-slate-900/40 to-black rounded-xl border-2 border-amber-500/40 hover:border-amber-300/80 p-12 transition transform hover:scale-105 cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">△</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SVL Progress Map</h2>
+              <p className="text-xl text-amber-100 mb-6 max-w-3xl mx-auto">
+                See the current system structure, today's upgrades, active agent roles, live routes, and how the whole SVL build fits together right now.
+              </p>
+              <span className="inline-block px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-lg transition">
+                View Progress →
+              </span>
+            </div>
+          </Link>
+        </div>
+
         {/* Our Products */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-center">Our Products</h2>
@@ -157,6 +175,7 @@ export default function SandersVioProLabs() {
       <div className="bg-slate-900 border-t border-slate-800 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">Sanders Viopro Labs - Innovation for Safety</p>
+          <p className="text-sm text-slate-300 mb-4">A shared Next.js project for Jerome Sanders, you, and the KPA mission.</p>
           <p className="text-xs text-slate-500">#Sandersvioprolabs | #KPA-Keeppeoplealive | #thinkspeakworkandwatchGodwork4U</p>
         </div>
       </div>
