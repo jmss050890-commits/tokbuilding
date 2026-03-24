@@ -1241,11 +1241,12 @@ export default function AgentClient({
   const [showTokFaithDetails, setShowTokFaithDetails] = useState(true);
   const [clientUserId, setClientUserId] = useState<string | null>(null);
   const [clientUserName, setClientUserName] = useState<string | null>(null);
+  const [currentSpeakingMessageIndex, setCurrentSpeakingMessageIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const pendingSpeechRef = useRef<string | null>(null);
   const speechQueueRef = useRef<SpeechSynthesisUtterance[]>([]);
-  const speakRef = useRef<(text: string) => void>(() => {});
+  const speakRef = useRef<(text: string, messageIndex?: number) => void>(() => {});
   const hasAutoPlayedWelcomeRef = useRef(false);
   const resolvedSlug = resolveAgentSlug(slug);
   const apiSlug = agent?.slug ?? resolvedSlug ?? null;
@@ -1482,7 +1483,7 @@ export default function AgentClient({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const speak = (text: string) => {
+  const speak = (text: string, messageIndex?: number) => {
     if (!text.trim()) {
       return;
     }
@@ -1530,10 +1531,16 @@ export default function AgentClient({
         ? `Speaking with ${selectedVoice.name}.`
         : "Speaking with your browser's default voice.",
     );
+    
+    // Track which message is currently being spoken
+    if (messageIndex !== undefined) {
+      setCurrentSpeakingMessageIndex(messageIndex);
+    }
 
     const playChunk = (index: number) => {
       if (index >= chunks.length) {
         setIsSpeaking(false);
+        setCurrentSpeakingMessageIndex(null);
         return;
       }
 
@@ -1553,6 +1560,7 @@ export default function AgentClient({
       utterance.onend = () => playChunk(index + 1);
       utterance.onerror = () => {
         setIsSpeaking(false);
+        setCurrentSpeakingMessageIndex(null);
         setVoiceStatus("Voice playback failed on this device/browser.");
       };
 
@@ -1571,6 +1579,7 @@ export default function AgentClient({
       window.speechSynthesis.cancel();
     }
     setIsSpeaking(false);
+    setCurrentSpeakingMessageIndex(null);
     setVoiceStatus("Voice playback stopped.");
   };
 
@@ -1660,8 +1669,9 @@ export default function AgentClient({
       if (data.error) {
         setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${data.error}` }]);
       } else if (data.response) {
+        const newMessageIndex = messages.length + 1; // +1 for the user message already added
         setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
-        speak(data.response);
+        speak(data.response, newMessageIndex);
       } else {
         setMessages((prev) => [...prev, { role: "assistant", content: "No response received." }]);
       }
@@ -1732,8 +1742,9 @@ export default function AgentClient({
       if (data.error) {
         setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${data.error}` }]);
       } else if (data.response) {
+        const newMessageIndex = messages.length + 1; // +1 for the user message already added
         setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
-        speak(data.response);
+        speak(data.response, newMessageIndex);
       } else {
         setMessages((prev) => [...prev, { role: "assistant", content: "No response received." }]);
       }
@@ -1952,8 +1963,31 @@ export default function AgentClient({
               style={{
                 display: "flex",
                 justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+                alignItems: "flex-end",
+                gap: "8px",
               }}
             >
+              {msg.role === "assistant" && (
+                <button
+                  type="button"
+                  onClick={() => speak(msg.content, i)}
+                  style={{
+                    padding: "6px 10px",
+                    borderRadius: 8,
+                    backgroundColor: currentSpeakingMessageIndex === i ? `${accentColor}60` : `${accentColor}20`,
+                    border: `1px solid ${currentSpeakingMessageIndex === i ? accentColor : `${accentColor}40`}`,
+                    color: accentColor,
+                    fontSize: 12,
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                    transition: "all 0.2s",
+                    minWidth: "36px",
+                  }}
+                  title={currentSpeakingMessageIndex === i ? "Now playing" : "Click to speak"}
+                >
+                  {currentSpeakingMessageIndex === i ? "🔊" : "🔉"}
+                </button>
+              )}
               <div
                 style={{
                   maxWidth: "70%",
