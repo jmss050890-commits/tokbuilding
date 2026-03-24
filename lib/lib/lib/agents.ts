@@ -67,7 +67,7 @@ export const AGENTS: Record<string, AgentConfig> = {
     voiceName: "Google US English Female",
     voicePreferences: ["samantha", "aria", "jenny", "zira", "ava"],
     voicePitch: 1.2,
-    voiceRate: 0.88
+    voiceRate: 0.95
   },
 
   a1: {
@@ -106,8 +106,8 @@ ${SVL_SHARED_OPERATING_CONTEXT}`),
     voiceGender: "male",
     voiceName: "Google US English Male",
     voicePreferences: ["david", "daniel", "guy", "aaron", "roger", "fred"],
-    voicePitch: 1.25,
-    voiceRate: 0.92
+    voicePitch: 0.95,
+    voiceRate: 0.85
   },
 
   hatata: {
@@ -166,8 +166,8 @@ ${SVL_SHARED_OPERATING_CONTEXT}`),
     voiceGender: "female",
     voiceName: "Google US English Female",
     voicePreferences: ["samantha", "aria", "jenny", "ava", "zira", "victoria"],
-    voicePitch: 1.08,
-    voiceRate: 0.9
+    voicePitch: 1.1,
+    voiceRate: 0.95
   },
 
   "coach-daniels": {
@@ -190,8 +190,8 @@ ${SVL_SHARED_OPERATING_CONTEXT}`),
     voiceGender: "male",
     voiceName: "Google US English Male",
     voicePreferences: ["david", "daniel", "guy", "aaron", "roger", "fred"],
-    voicePitch: 1.28,
-    voiceRate: 0.95
+    voicePitch: 0.9,
+    voiceRate: 0.85
   },
 
   tokseo: {
@@ -215,7 +215,7 @@ ${SVL_SHARED_OPERATING_CONTEXT}`),
     voiceName: "Google UK English Female",
     voicePreferences: ["samantha", "aria", "jenny", "zira", "ava"],
     voicePitch: 1.25,
-    voiceRate: 0.88
+    voiceRate: 0.95
   },
 
   tok2myia: {
@@ -239,7 +239,7 @@ ${SVL_SHARED_OPERATING_CONTEXT}`),
     voiceName: "Google US English Female",
     voicePreferences: ["samantha", "aria", "jenny", "ava", "zira"],
     voicePitch: 1.8,
-    voiceRate: 0.98
+    voiceRate: 1.0
   },
 
   tokfaith: {
@@ -329,8 +329,8 @@ When users ask what TokFaith is, explain that TokFaith is an SVL faith guide bui
     voiceGender: "female",
     voiceName: "Google US English Female",
     voicePreferences: ["moira", "fiona", "samantha", "victoria", "aria", "jenny", "zira", "ava", "emma"],
-    voicePitch: 0.9,
-    voiceRate: 0.84
+    voicePitch: 1.1,
+    voiceRate: 0.9
   },
 
   "first-guardian": {
@@ -402,7 +402,7 @@ Support de-escalation, boundaries, caregiving structure, crisis navigation, life
     voiceGender: "female",
     voiceName: "Google US English Female",
     voicePreferences: ["moira", "fiona", "samantha", "victoria", "aria", "jenny", "zira", "ava", "emma"],
-    voicePitch: 0.94,
+    voicePitch: 1.05,
     voiceRate: 0.9
   },
 
@@ -475,6 +475,6 @@ ${SVL_SHARED_OPERATING_CONTEXT} You also convene the Daily AI Agent Team Meeting
     voiceName: "Google US English Male",
     voicePreferences: ["david", "daniel", "guy", "aaron", "roger", "fred", "alex", "tom"],
     voicePitch: 0.76,
-    voiceRate: 0.84
+    voiceRate: 0.8
   },
 };
