@@ -18,7 +18,7 @@ async function generateMrKpaResponse(userMessage) {
           content: userMessage,
         },
       ],
-      max_tokens: 1200,
+      max_tokens: 900,
       temperature: 0.8,
     });
 
