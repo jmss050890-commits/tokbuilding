@@ -14,7 +14,7 @@ export interface VoiceReaderConfig {
 const MR_KPA_CONFIG: VoiceReaderConfig = {
   pitch: 0.76,
   rate: 0.84,
-  voicePattern: ['david', 'daniel', 'guy', 'aaron', 'roger', 'fred', 'alex', 'tom', 'google'],
+  voicePattern: ['david', 'daniel', 'guy', 'aaron', 'roger', 'fred', 'alex', 'tom', 'google', 'en-US', 'en_US'],
 };
 
 /**
@@ -49,25 +49,52 @@ export function splitIntoSpeechChunks(text: string, maxChunkSize = 200): string[
 
 /**
  * Get Mr. KPA-locked voice from available voices
+ * Enforces male voice across all platforms (Windows, Mac, iOS, Android)
  */
 export function getMrKpaVoice(): SpeechSynthesisVoice | null {
   const voices = window.speechSynthesis.getVoices();
-  
-  // Try to find voice matching Mr. KPA's preference pattern
-  for (const pattern of MR_KPA_CONFIG.voicePattern || []) {
-    const voice = voices.find(v => 
-      v.name.toLowerCase().includes(pattern.toLowerCase()) &&
-      v.name.toLowerCase().includes('male')
-    );
+  if (!voices.length) return null;
+
+  // Platform-specific male voice patterns for Mr. KPA (Jerome-locked)
+  const malePatterns = [
+    // Desktop Windows/Mac English male voices
+    'david', 'daniel', 'guy', 'aaron', 'roger', 'fred', 'alex', 'tom', 'mark', 'mike',
+    // iOS male voices  
+    'aaron', 'adam', 'charles', 'david', 'fred', 'gordon', 'james', 'john', 'michael', 'ralph',
+    // Android Google male voices
+    'en-US-Neural2-A', 'en-US-Neural2-C', 'en-US-Neural2-E', 'en-US-Neural2-G',
+    // Generic fallback indicators
+    'male', 'man', 'boy', 'male voice', 'masculine',
+  ];
+
+  // Try platform-specific patterns first
+  for (const pattern of malePatterns) {
+    const voice = voices.find(v => {
+      const safeName = v.name.toLowerCase();
+      const safePattern = pattern.toLowerCase();
+      return safeName.includes(safePattern);
+    });
     if (voice) return voice;
   }
 
-  // Fallback: any male voice
-  const maleVoice = voices.find(v => v.name.toLowerCase().includes('male'));
+  // Strict fallback: only accept voices explicitly marked as male
+  const maleVoice = voices.find(v => {
+    const nameLower = v.name.toLowerCase();
+    // Check name AND lang to prefer English male voices
+    return (nameLower.includes('male') || nameLower.includes('man')) &&
+           (v.lang.startsWith('en-') || v.lang === 'en');
+  });
   if (maleVoice) return maleVoice;
 
-  // Last resort: first available voice
-  return voices[0] || null;
+  // Second fallback: any English voice (avoid female-only languages)
+  const englishVoice = voices.find(v => 
+    v.lang.startsWith('en-') && 
+    !v.name.toLowerCase().includes('female')
+  );
+  if (englishVoice) return englishVoice;
+
+  // Last resort: first English voice, period
+  return voices.find(v => v.lang.startsWith('en-')) || voices[0] || null;
 }
 
 /**
