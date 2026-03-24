@@ -46,7 +46,7 @@ function detectTokFaithPerspective(message) {
   return 'ethiopian-with-kjv-option';
 }
 
-async function generateTokFaithResponse(userMessage, perspective) {
+async function generateTokFaithResponse(userMessage, perspective, systemContext) {
   const perspectivePrompts = {
     ethiopian: {
       name: 'Ethiopian Lens',
@@ -66,6 +66,11 @@ async function generateTokFaithResponse(userMessage, perspective) {
   };
 
   const perspectiveConfig = perspectivePrompts[perspective] || perspectivePrompts['ethiopian-with-kjv-option'];
+  
+  // If systemContext provided (Jerome or Mr. KPA mode), augment the system prompt
+  const finalSystemPrompt = systemContext 
+    ? `${systemContext}\n\nAlways draw on scripture and wisdom. Remember to keep people alive (KPA).`
+    : perspectiveConfig.system;
 
   try {
     const response = await openai.chat.completions.create({
@@ -73,7 +78,7 @@ async function generateTokFaithResponse(userMessage, perspective) {
       messages: [
         {
           role: 'system',
-          content: perspectiveConfig.system,
+          content: finalSystemPrompt,
         },
         {
           role: 'user',
@@ -116,7 +121,7 @@ async function saveTokFaithLesson(userMessage, responseData) {
 
 export async function POST(request) {
   try {
-    const { message, forcePerspective } = await request.json();
+    const { message, forcePerspective, systemContext } = await request.json();
 
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return new Response(
@@ -129,7 +134,7 @@ export async function POST(request) {
     }
 
     const perspective = forcePerspective || detectTokFaithPerspective(message);
-    const responseData = await generateTokFaithResponse(message, perspective);
+    const responseData = await generateTokFaithResponse(message, perspective, systemContext);
 
     // Save to memory (non-blocking)
     await saveTokFaithLesson(message, responseData);
