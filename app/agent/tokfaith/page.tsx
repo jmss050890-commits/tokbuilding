@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Heart, Send, Loader2, Zap, Users } from 'lucide-react';
 import Link from 'next/link';
+import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 
 interface Message {
   id: string;
@@ -33,6 +34,10 @@ export default function TokFaithAgent() {
   const [perspectiveHistory, setPerspectiveHistory] = useState({});
   const [voiceMode, setVoiceMode] = useState<'tokfaith' | 'jerome' | 'mrkpa'>('tokfaith');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Welcome audio on mount
+  const welcomeMessage = 'Peace to you. I am TokFaith. When you have a question that touches your spirit—about faith, your struggles, your identity—bring it here. I will listen deeply and show you wisdom from both the Ethiopian Canon and the King James tradition.';
+  useWelcomeAudio(welcomeMessage);
 
   const jeromeWisdom = [
     "Do not just ask what sounds good. Ask what keeps people alive.",
@@ -323,10 +328,83 @@ export default function TokFaithAgent() {
                   key={idx}
                   onClick={() => {
                     setInput(prompt);
-                    setTimeout(() => {
-                      const textarea = document.querySelector('textarea');
-                      if (textarea) textarea.focus();
-                    }, 0);
+                    // Auto-send the prompt after setting it
+                    setTimeout(async () => {
+                      const userMessage = prompt;
+                      setInput('');
+
+                      // Add user message
+                      const userMessageId = Date.now().toString();
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          id: userMessageId,
+                          type: 'user',
+                          content: userMessage,
+                        } as Message,
+                      ]);
+
+                      setLoading(true);
+
+                      try {
+                        const systemContext = 
+                          voiceMode === 'jerome'
+                            ? 'You are TokFaith speaking with Jerome Sanders\'s fatherly wisdom. Be direct, honest, and compassionate. Use his philosophy: "Do not just ask what sounds good. Ask what keeps people alive." Answer with the kind of fatherly truth Jerome would give.'
+                            : voiceMode === 'mrkpa'
+                              ? 'You are Mr. KPA speaking to guide this person. Be a protective, strong big brother. Use fatherly wisdom combined with practical strategy. Help them see what decision keeps them alive.'
+                              : '';
+
+                        const response = await fetch('/api/tokfaith', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            message: userMessage,
+                            forcePerspective: currentPerspective,
+                            systemContext,
+                          }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                          throw new Error(data.error || 'Failed to get response from TokFaith');
+                        }
+
+                        // Store perspective option for this message
+                        setPerspectiveHistory((prev) => ({
+                          ...prev,
+                          [userMessageId]: data.perspectives,
+                        }));
+
+                        // Add assistant response
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            id: Date.now().toString(),
+                            type: 'assistant',
+                            content: data.response,
+                            perspective: data.perspective,
+                            description: data.description,
+                            perspectives: data.perspectives,
+                          } as Message,
+                        ]);
+
+                        setCurrentPerspective(data.perspectives.current);
+                      } catch (error) {
+                        console.error('Error:', error);
+                        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            id: Date.now().toString(),
+                            type: 'assistant-error',
+                            content: `I encountered an error: ${errorMessage}. Please try again.`,
+                          } as Message,
+                        ]);
+                      }
+
+                      setLoading(false);
+                    }, 50);
                   }}
                   className="px-3 py-1.5 rounded text-xs bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60 hover:bg-slate-700/60 transition"
                 >

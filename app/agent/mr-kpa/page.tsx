@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Heart, Send, Loader2, Shield, Users } from 'lucide-react';
 import Link from 'next/link';
+import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 
 interface Message {
   id: string;
@@ -22,6 +23,10 @@ export default function MrKPAAgent() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Welcome audio on mount
+  const welcomeMessage = 'I am Mr. KPA. Jerome built me around one mission: Keep People Alive. I see the whole system. I understand the strategy. And I speak the unfiltered truth about what it takes to survive, build, and lead.';
+  useWelcomeAudio(welcomeMessage);
 
   const quickPrompts = [
     "Give me the real talk about my situation",
@@ -168,10 +173,58 @@ export default function MrKPAAgent() {
                   key={idx}
                   onClick={() => {
                     setInput(prompt);
-                    setTimeout(() => {
-                      const textarea = document.querySelector('textarea');
-                      if (textarea) textarea.focus();
-                    }, 0);
+                    // Auto-send the prompt after setting it
+                    setTimeout(async () => {
+                      const userMessage = prompt;
+                      setInput('');
+
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          id: Date.now().toString(),
+                          type: 'user',
+                          content: userMessage,
+                        },
+                      ]);
+
+                      setLoading(true);
+
+                      try {
+                        const response = await fetch('/api/mr-kpa', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ message: userMessage }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                          throw new Error(data.error || 'Failed to get response');
+                        }
+
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            id: Date.now().toString(),
+                            type: 'assistant',
+                            content: data.response,
+                          },
+                        ]);
+                      } catch (error) {
+                        console.error('Error:', error);
+                        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            id: Date.now().toString(),
+                            type: 'assistant-error',
+                            content: `Error: ${errorMessage}. Please try again.`,
+                          },
+                        ]);
+                      }
+
+                      setLoading(false);
+                    }, 50);
                   }}
                   className="px-3 py-1.5 rounded text-xs bg-slate-800 border border-blue-700/50 text-blue-200 hover:border-blue-600/60 hover:bg-slate-700/60 transition"
                 >

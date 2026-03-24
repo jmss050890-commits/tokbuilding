@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Heart, Send, Loader2, Shield } from 'lucide-react';
 import Link from 'next/link';
+import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 
 interface Message {
   id: string;
@@ -22,6 +23,10 @@ export default function FirstGuardianAgent() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Welcome audio on mount
+  const welcomeMessage = 'I am the First Guardian. My role is your household protection and crisis navigation. When things feel unsafe, unclear, or urgent, bring it to me. I will listen, assess what\'s real, and help you find your way to safety.';
+  useWelcomeAudio(welcomeMessage);
 
   const quickPrompts = [
     "I don't feel safe right now",
@@ -168,10 +173,58 @@ export default function FirstGuardianAgent() {
                   key={idx}
                   onClick={() => {
                     setInput(prompt);
-                    setTimeout(() => {
-                      const textarea = document.querySelector('textarea');
-                      if (textarea) textarea.focus();
-                    }, 0);
+                    // Auto-send the prompt after setting it
+                    setTimeout(async () => {
+                      const userMessage = prompt;
+                      setInput('');
+
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          id: Date.now().toString(),
+                          type: 'user',
+                          content: userMessage,
+                        },
+                      ]);
+
+                      setLoading(true);
+
+                      try {
+                        const response = await fetch('/api/first-guardian', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ message: userMessage }),
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                          throw new Error(data.error || 'Failed to get response');
+                        }
+
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            id: Date.now().toString(),
+                            type: 'assistant',
+                            content: data.response,
+                          },
+                        ]);
+                      } catch (error) {
+                        console.error('Error:', error);
+                        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            id: Date.now().toString(),
+                            type: 'assistant-error',
+                            content: `Error: ${errorMessage}. Please try again.`,
+                          },
+                        ]);
+                      }
+
+                      setLoading(false);
+                    }, 50);
                   }}
                   className="px-3 py-1.5 rounded text-xs bg-slate-800 border border-purple-700/50 text-purple-200 hover:border-purple-600/60 hover:bg-slate-700/60 transition"
                 >
