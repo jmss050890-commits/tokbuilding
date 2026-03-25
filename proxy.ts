@@ -1,5 +1,14 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import {
+  addSiteLanguagePrefix,
+  DEFAULT_SITE_LANGUAGE,
+  getPathSiteLanguage,
+  removeSiteLanguagePrefix,
+  resolveSiteLanguage,
+  SITE_LANGUAGE_COOKIE_KEY,
+  SITE_LANGUAGE_REQUEST_HEADER,
+} from "@/lib/site-language";
 
 const SUBDOMAIN_REDIRECT_MAP: Record<string, string> = {
   "tokhealth.sandersvioprolabs.com": "https://tokhealth-mobile.emergent.host",
@@ -78,6 +87,26 @@ function getRequestHost(request: NextRequest) {
   return host.toLowerCase().split(",")[0].trim().split(":")[0];
 }
 
+function shouldBypassLocaleRouting(pathname: string) {
+  return pathname.startsWith("/_next") || pathname.startsWith("/api") || /\.[^/]+$/.test(pathname);
+}
+
+function withLanguageRequestHeader(request: NextRequest, language: string) {
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set(SITE_LANGUAGE_REQUEST_HEADER, language);
+  return requestHeaders;
+}
+
+function withLanguageCookie(response: NextResponse, language: string) {
+  response.cookies.set(SITE_LANGUAGE_COOKIE_KEY, language, {
+    path: "/",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 365,
+  });
+
+  return response;
+}
+
 export function proxy(request: NextRequest) {
   const { nextUrl } = request;
   const host = getRequestHost(request);
@@ -88,6 +117,55 @@ export function proxy(request: NextRequest) {
     redirectUrl.pathname = nextUrl.pathname;
     redirectUrl.search = nextUrl.search;
     return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  const pathname = nextUrl.pathname;
+  const pathnameLanguage = getPathSiteLanguage(pathname);
+  const localeBypassed = shouldBypassLocaleRouting(pathname);
+
+  if (!localeBypassed && pathnameLanguage) {
+    const internalPathname = removeSiteLanguagePrefix(pathname);
+
+    if (internalPathname.startsWith("/agent/")) {
+      const rawSlug = internalPathname.slice("/agent/".length);
+      const resolvedSlug = resolveProxyAgentSlug(rawSlug);
+
+      if (!resolvedSlug) {
+        return withLanguageCookie(
+          NextResponse.redirect(new URL(addSiteLanguagePrefix("/agent", pathnameLanguage), request.url)),
+          pathnameLanguage,
+        );
+      }
+
+      if (resolvedSlug !== rawSlug) {
+        return withLanguageCookie(
+          NextResponse.redirect(new URL(addSiteLanguagePrefix(`/agent/${resolvedSlug}`, pathnameLanguage), request.url)),
+          pathnameLanguage,
+        );
+      }
+    }
+
+    const rewriteUrl = nextUrl.clone();
+    rewriteUrl.pathname = internalPathname;
+
+    return withLanguageCookie(
+      NextResponse.rewrite(rewriteUrl, {
+        request: {
+          headers: withLanguageRequestHeader(request, pathnameLanguage),
+        },
+      }),
+      pathnameLanguage,
+    );
+  }
+
+  if (!localeBypassed && !pathnameLanguage) {
+    const preferredLanguage = resolveSiteLanguage(request.cookies.get(SITE_LANGUAGE_COOKIE_KEY)?.value);
+
+    if (preferredLanguage !== DEFAULT_SITE_LANGUAGE) {
+      const redirectUrl = nextUrl.clone();
+      redirectUrl.pathname = addSiteLanguagePrefix(pathname, preferredLanguage);
+      return withLanguageCookie(NextResponse.redirect(redirectUrl), preferredLanguage);
+    }
   }
 
   if (nextUrl.pathname.startsWith("/agent/")) {
@@ -103,7 +181,14 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  return withLanguageCookie(
+    NextResponse.next({
+      request: {
+        headers: withLanguageRequestHeader(request, DEFAULT_SITE_LANGUAGE),
+      },
+    }),
+    DEFAULT_SITE_LANGUAGE,
+  );
 }
 
 export const config = {

@@ -1,4 +1,6 @@
 export const SITE_LANGUAGE_STORAGE_KEY = "svl.siteLanguage";
+export const SITE_LANGUAGE_COOKIE_KEY = "svl.siteLanguage";
+export const SITE_LANGUAGE_REQUEST_HEADER = "x-site-language";
 
 export const SITE_LANGUAGES = [
   { code: "en", label: "English" },
@@ -44,4 +46,38 @@ export function resolveSiteLanguage(value: string | null | undefined): SiteLangu
 
 export function getSiteLanguageLocale(value: string | null | undefined) {
   return SITE_LANGUAGE_LOCALES[resolveSiteLanguage(value)];
+}
+
+export function getPathSiteLanguage(pathname: string | null | undefined) {
+  if (!pathname) {
+    return null;
+  }
+
+  const [, maybeLanguage] = pathname.split("/");
+  return isValidSiteLanguage(maybeLanguage) ? maybeLanguage : null;
+}
+
+export function removeSiteLanguagePrefix(pathname: string | null | undefined) {
+  if (!pathname) {
+    return "/";
+  }
+
+  const pathLanguage = getPathSiteLanguage(pathname);
+
+  if (!pathLanguage) {
+    return pathname || "/";
+  }
+
+  const withoutLanguage = pathname.slice(pathLanguage.length + 1);
+  return withoutLanguage.startsWith("/") ? withoutLanguage : withoutLanguage ? `/${withoutLanguage}` : "/";
+}
+
+export function addSiteLanguagePrefix(pathname: string | null | undefined, language: SiteLanguageCode) {
+  const normalizedPath = removeSiteLanguagePrefix(pathname || "/");
+
+  if (language === DEFAULT_SITE_LANGUAGE) {
+    return normalizedPath;
+  }
+
+  return normalizedPath === "/" ? `/${language}` : `/${language}${normalizedPath}`;
 }
