@@ -30,18 +30,9 @@ export function SiteLanguageProvider({
   initialLanguage?: SiteLanguageCode;
 }) {
   const pathname = usePathname();
-  const [language, setLanguage] = useState<SiteLanguageCode>(initialLanguage);
-
-  useEffect(() => {
-    const pathLanguage = getPathSiteLanguage(pathname);
-
-    if (pathLanguage) {
-      setLanguage(pathLanguage);
-      return;
-    }
-
-    setLanguage(initialLanguage);
-  }, [initialLanguage, pathname]);
+  const pathnameLanguage = getPathSiteLanguage(pathname);
+  const [preferredLanguage, setPreferredLanguage] = useState<SiteLanguageCode | null>(null);
+  const language = pathnameLanguage ?? preferredLanguage ?? initialLanguage;
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -53,7 +44,7 @@ export function SiteLanguageProvider({
   const contextValue = useMemo(
     () => ({
       language,
-      setLanguage,
+      setLanguage: setPreferredLanguage,
     }),
     [language],
   );

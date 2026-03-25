@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { NarrativeVoiceReader, VoiceReaderConfig } from '@/lib/voice-reader';
 
 export interface UseVoiceReaderOptions {
@@ -10,48 +10,38 @@ export interface UseVoiceReaderOptions {
 export function useVoiceReader(options: UseVoiceReaderOptions = {}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
-  const readerRef = useRef<NarrativeVoiceReader | null>(null);
-  const [isReaderReady, setIsReaderReady] = useState(false);
-
-  // Initialize reader after component mounts (client-side only)
-  useEffect(() => {
-    readerRef.current = new NarrativeVoiceReader(options.config);
-    setIsReaderReady(true);
-  }, [options.config]);
+  const reader = useMemo(() => new NarrativeVoiceReader(options.config), [options.config]);
+  const isReaderReady = true;
 
   const handlePlayStatusChange = useCallback((status: 'playing' | 'paused' | 'stopped') => {
     setIsPlaying(status === 'playing');
   }, []);
 
   const read = useCallback((text: string) => {
-    if (!readerRef.current) return;
-    readerRef.current.read(text, handlePlayStatusChange);
-  }, [handlePlayStatusChange]);
+    reader.read(text, handlePlayStatusChange);
+  }, [handlePlayStatusChange, reader]);
 
   const play = useCallback(() => {
-    if (!readerRef.current) return;
     if (isPlaying) {
-      readerRef.current.pause();
+      reader.pause();
     } else {
-      if (progress.current === 0) {
+      if (reader.getProgress().current === 0) {
         // Need to start fresh - requires text
         console.warn('Use read() to start reading with text');
       } else {
-        readerRef.current.resume();
+        reader.resume();
       }
     }
-  }, [isPlaying, progress.current]);
+  }, [isPlaying, reader]);
 
   const pause = useCallback(() => {
-    if (!readerRef.current) return;
-    readerRef.current.pause();
-  }, []);
+    reader.pause();
+  }, [reader]);
 
   const stop = useCallback(() => {
-    if (!readerRef.current) return;
-    readerRef.current.stop();
+    reader.stop();
     setProgress({ current: 0, total: 0 });
-  }, []);
+  }, [reader]);
 
   return {
     isPlaying,
