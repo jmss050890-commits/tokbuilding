@@ -322,10 +322,14 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
   if (agent?.slug === "mr-kpa" && selectedVoice) {
     const isFemaleVoice = voiceLooksFemale(selectedVoice.name);
     if (isFemaleVoice) {
-      // Wrong gender — force male
+      // Wrong gender — force male (strict enforcement)
       const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
-      const maleVoice = englishVoices.find((voice) => voiceLooksMale(voice.name));
-      if (maleVoice) selectedVoice = maleVoice;
+      const strictMaleVoice = englishVoices.find((voice) => {
+        const voiceName = voice.name.toLowerCase();
+        return MALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern)) && 
+               !FEMALE_VOICE_PATTERNS.some((p) => voiceName.includes(p));
+      });
+      if (strictMaleVoice) selectedVoice = strictMaleVoice;
     }
   }
 
@@ -399,8 +403,14 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     }
   }
 
-  if (agent?.slug === "tokfaith" && selectedVoice && voiceLooksMale(selectedVoice.name) && !isMobile) {
-    selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences || TOKFAITH_FEMALE_VOICE_PATTERNS);
+  if (agent?.slug === "tokfaith" && selectedVoice) {
+    const isMaleVoice = voiceLooksMale(selectedVoice.name);
+    if (isMaleVoice) {
+      // Wrong gender — force female
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const femaleVoice = englishVoices.find((voice) => voiceLooksFemale(voice.name));
+      if (femaleVoice) selectedVoice = femaleVoice;
+    }
   }
 
   return selectedVoice;
@@ -424,7 +434,7 @@ function getSpeechSettings(agent: AgentConfig | null, selectedVoice?: SpeechSynt
     const shouldSoftenVoice = TOKFAITH_SOFT_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
 
     return {
-      pitch: shouldSoftenVoice ? Math.max(defaultPitch, 0.88) : Math.max(defaultPitch, 0.84),
+      pitch: shouldSoftenVoice ? Math.min(defaultPitch, 0.88) : Math.min(defaultPitch, 0.84),
       rate: shouldSoftenVoice ? Math.min(defaultRate, 0.8) : Math.min(defaultRate, 0.84),
     };
   }
