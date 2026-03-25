@@ -246,6 +246,16 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     selectedVoice = getTokFaithLockedVoice(voices, TOKFAITH_FEMALE_VOICE_PATTERNS);
   }
 
+  if (!selectedVoice && agent?.slug === "first-guardian" && !isMobileDevice) {
+    // First Guardian: female voice with warmth
+    selectedVoice = englishVoices.find((voice) => {
+      const voiceName = voice.name.toLowerCase();
+      const voicePattern = agent.voicePreferences?.some((pattern) => voiceName.includes(pattern.toLowerCase()));
+      const isFemale = FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
+      return voicePattern || (isFemale && !MALE_VOICE_PATTERNS.some((p) => voiceName.includes(p)));
+    });
+  }
+
   if (!selectedVoice && agent?.slug === "mr-kpa") {
     if (!isMobileDevice) {
       // Desktop: strict male voice lock
@@ -256,61 +266,20 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     }
   }
 
-  if (!selectedVoice && agent?.voiceGender) {
-    if (agent.voiceGender === "female") {
-      selectedVoice = englishVoices.find((voice) => {
-        const isEnglish = voice.lang?.toLowerCase().startsWith("en");
-        const soundsFemale = !MALE_VOICE_PATTERNS.some((pattern) =>
-          voice.name.toLowerCase().includes(pattern),
-        );
-        return isEnglish && soundsFemale;
-      });
-    } else {
-      selectedVoice = humanEnglishVoices.find((voice) => {
-        const voiceName = voice.name.toLowerCase();
-        const soundsFemale = FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
-        const soundsMale = MALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
-        return !soundsFemale && soundsMale;
-      });
-
-      selectedVoice = selectedVoice ?? humanEnglishVoices.find((voice) => {
-        const voiceName = voice.name.toLowerCase();
-        const soundsFemale = FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
-        const soundsMale = voiceName.includes("male");
-        return !soundsFemale && soundsMale;
-      });
-
-      selectedVoice = selectedVoice ?? humanEnglishVoices.find((voice) => {
-        const voiceName = voice.name.toLowerCase();
-        const soundsFemale = FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
-        return !soundsFemale && !voiceName.includes("female");
-      });
-    }
-  }
-
-  if (!selectedVoice && agent?.voiceGender) {
-    if (agent.voiceGender === "female") {
-      selectedVoice = englishVoices.find((voice) => {
-        const isEnglish = voice.lang?.toLowerCase().startsWith("en");
-        const soundsFemale = !MALE_VOICE_PATTERNS.some((pattern) =>
-          voice.name.toLowerCase().includes(pattern),
-        );
-        return isEnglish && soundsFemale;
-      });
-    } else {
-      selectedVoice = englishVoices.find((voice) => {
-        const isEnglish = voice.lang?.toLowerCase().startsWith("en");
-        const voiceName = voice.name.toLowerCase();
-        const soundsFemale = FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
-        const soundsMale = MALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern)) || voiceName.includes("male");
-        return isEnglish && soundsMale && !soundsFemale;
-      });
-    }
-  }
-
   if (!selectedVoice) {
     // Final absolute guard for TokFaith: ALWAYS female, no exceptions
     if (agent?.slug === "tokfaith") {
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      selectedVoice = englishVoices.find((voice) => {
+        const voiceName = voice.name.toLowerCase();
+        // Ensure it's not a known male voice
+        const isMale = MALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
+        return !isMale;
+      });
+    }
+
+    // Final absolute guard for First Guardian: ALWAYS female, no exceptions
+    if (!selectedVoice && agent?.slug === "first-guardian") {
       const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
       selectedVoice = englishVoices.find((voice) => {
         const voiceName = voice.name.toLowerCase();
@@ -337,6 +306,15 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
 
   if (agent?.slug === "tokfaith" && selectedVoice && voiceLooksMale(selectedVoice.name) && !isMobile) {
     selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences || TOKFAITH_FEMALE_VOICE_PATTERNS);
+  }
+
+  if (agent?.slug === "first-guardian" && selectedVoice && voiceLooksMale(selectedVoice.name) && !isMobile) {
+    // Override with female voice if somehow a male voice made it through
+    const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+    selectedVoice = englishVoices.find((voice) => {
+      const voiceName = voice.name.toLowerCase();
+      return FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
+    }) ?? selectedVoice;
   }
 
   if (agent?.slug === "mr-kpa" && selectedVoice && voiceLooksFemale(selectedVoice.name) && !isMobile) {
