@@ -51,7 +51,7 @@ jobs:
             exit 1
           fi
 
-          if ! vercel whoami --token="$VERCEL_TOKEN"; then
+          if ! vercel whoami --debug --token="$VERCEL_TOKEN"; then
             echo "::error::VERCEL_TOKEN is invalid or expired. Rotate the token in GitHub Actions secrets before rerunning deploy."
             exit 1
           fi
@@ -63,7 +63,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          output=$(vercel pull --yes --environment=production --token="$VERCEL_TOKEN" 2>&1)
+          output=$(vercel pull --debug --yes --environment=production --token="$VERCEL_TOKEN" 2>&1)
           status=$?
           echo "$output"
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Deploy to Vercel
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --debug --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Comment PR with deployment status
         if: github.event_name == 'pull_request'
