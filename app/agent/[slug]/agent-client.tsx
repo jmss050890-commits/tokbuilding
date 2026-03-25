@@ -1713,7 +1713,7 @@ export default function AgentClient({
     if (!apiSlug) {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "This agent link is invalid. Redirecting to the agent hub." },
+        { role: "assistant", content: "This guardian link is invalid. Redirecting to the guardian hub." },
       ]);
       router.push("/agent");
       return;
@@ -1785,7 +1785,7 @@ export default function AgentClient({
     if (!apiSlug) {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "This agent link is invalid. Redirecting to the agent hub." },
+        { role: "assistant", content: "This guardian link is invalid. Redirecting to the guardian hub." },
       ]);
       router.push("/agent");
       return;
@@ -1864,7 +1864,7 @@ export default function AgentClient({
           justifyContent: "center",
         }}
       >
-        <div style={{ fontSize: 18, color: "#888" }}>Loading agent...</div>
+        <div style={{ fontSize: 18, color: "#888" }}>Loading guardian...</div>
       </div>
     );
   }
@@ -1891,7 +1891,7 @@ export default function AgentClient({
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <AvatarBadge agent={agent} accentColor={accentColor} size={48} fontSize={20} />
           <div>
-            <h1 style={{ margin: 0, fontSize: 20 }}>{agent?.name || "Agent"}</h1>
+            <h1 style={{ margin: 0, fontSize: 20 }}>{agent?.name || "Guardian"}</h1>
             <p style={{ margin: "4px 0 0 0", fontSize: 12, color: accentColor }}>
               {agent?.defaultStatus || "Loading..."}
             </p>
@@ -2006,7 +2006,7 @@ export default function AgentClient({
         {messages.length === 0 ? (
           <div style={{ textAlign: "center", marginTop: "40px", color: "#888" }}>
             <h2>{agent?.welcomeTitle || "Welcome"}</h2>
-            <p>{agent?.welcomeMessage || "Loading agent..."}</p>
+            <p>{agent?.welcomeMessage || "Loading guardian..."}</p>
             {agent?.suggestions && (
               <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
                 {(usesRotatingSuggestions ? rotatingSuggestions : agent.suggestions).map((suggestion, i) => (
@@ -2100,8 +2100,7 @@ export default function AgentClient({
           display: "flex",
           gap: "12px",
           alignItems: "center",
-          flexWrap: "nowrap",
-          minHeight: "56px",
+          flexWrap: "wrap",
         }}
       >
         <input
@@ -2111,8 +2110,7 @@ export default function AgentClient({
           placeholder="Type your message..."
           disabled={loading}
           style={{
-            flex: "1 1 100px",
-            minWidth: "100px",
+            flex: "1 1 150px",
             padding: "12px 16px",
             borderRadius: 8,
             border: `1px solid ${accentColor}`,
@@ -2136,8 +2134,6 @@ export default function AgentClient({
             fontSize: 13,
             transition: "all 0.2s",
             boxShadow: isListening ? `0 0 12px ${accentColor}60` : "none",
-            flex: "0 0 auto",
-            whiteSpace: "nowrap",
           }}
           title="Click to speak your message"
         >
@@ -2156,8 +2152,6 @@ export default function AgentClient({
               cursor: "pointer",
               fontWeight: "bold",
               fontSize: 12,
-              flex: "0 0 auto",
-              whiteSpace: "nowrap",
             }}
           >
             Stop 🔊
@@ -2175,8 +2169,6 @@ export default function AgentClient({
             cursor: loading ? "not-allowed" : "pointer",
             fontWeight: "bold",
             opacity: loading ? 0.6 : 1,
-            flex: "0 0 auto",
-            whiteSpace: "nowrap",
           }}
         >
           Send

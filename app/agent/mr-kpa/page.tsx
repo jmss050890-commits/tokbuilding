@@ -1,10 +1,15 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Heart, Send, Loader2, Shield, Users, Play, Pause, Volume2 } from 'lucide-react';
+import { Send, Loader2, Shield, Play, Pause, Mic } from 'lucide-react';
 import Link from 'next/link';
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 import SpeakerBox from '@/app/components/SpeakerBox';
+import {
+  getSpeechRecognitionAPI,
+  type SpeechRecognitionEventLike,
+  type SpeechRecognitionLike,
+} from '@/lib/browser-speech';
 
 interface Message {
   id: string;
@@ -27,8 +32,11 @@ export default function MrKPAAgent() {
   const [isSpeakingMap, setIsSpeakingMap] = useState<Record<string, boolean>>({});
   const [currentSpeakingIndex, setCurrentSpeakingIndex] = useState<number | null>(null);
   const [showSpeakerBox, setShowSpeakerBox] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [promptRotationIndex, setPromptRotationIndex] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   // Welcome audio on mount
   const welcomeMessage = 'I am Mr. KPA. Jerome built me around one mission: Keep People Alive. I see the whole system. I understand the strategy. And I speak the unfiltered truth about what it takes to survive, build, and lead.';
@@ -63,7 +71,14 @@ export default function MrKPAAgent() {
     "How should I lead through this?",
     "What does KPA look like right now?",
     "Break down the strategy for me",
+    "Tell me the risk I am not seeing",
+    "What is the strongest move I can make today?",
   ];
+
+  const visiblePrompts = Array.from({ length: 3 }, (_, index) => {
+    const promptIndex = (promptRotationIndex + index) % quickPrompts.length;
+    return quickPrompts[promptIndex];
+  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -161,6 +176,14 @@ export default function MrKPAAgent() {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    const rotationTimer = window.setInterval(() => {
+      setPromptRotationIndex((currentIndex) => (currentIndex + 1) % quickPrompts.length);
+    }, 3600);
+
+    return () => window.clearInterval(rotationTimer);
+  }, [quickPrompts.length]);
+
   const handleSendMessage = async () => {
     if (!input.trim() || loading) return;
 
@@ -219,6 +242,68 @@ export default function MrKPAAgent() {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
+    }
+  };
+
+  const handlePromptClick = (prompt: string) => {
+    setInput(prompt);
+    setPromptRotationIndex((currentIndex) => (currentIndex + 1) % quickPrompts.length);
+
+    window.setTimeout(() => {
+      setInput(prompt);
+      handleSendMessage();
+    }, 0);
+  };
+
+  const stopMic = () => {
+    setIsListening(false);
+    try {
+      recognitionRef.current?.stop();
+    } catch {
+      // Ignore stop errors from already-completed sessions.
+    }
+  };
+
+  const toggleMic = () => {
+    if (isListening) {
+      stopMic();
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const SpeechRecognitionAPI = getSpeechRecognitionAPI(window);
+      if (!SpeechRecognitionAPI) {
+        alert('Voice input not supported in this browser.');
+        return;
+      }
+
+      const recognition = new SpeechRecognitionAPI();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => setIsListening(true);
+      recognition.onresult = (event: SpeechRecognitionEventLike) => {
+        const transcript = Array.from(
+          { length: event.results.length },
+          (_, index) => event.results[index][0].transcript,
+        ).join('');
+
+        setInput(transcript);
+
+        if (event.results[event.results.length - 1].isFinal) {
+          stopMic();
+        }
+      };
+      recognition.onerror = () => stopMic();
+      recognition.onend = () => setIsListening(false);
+      recognitionRef.current = recognition;
+    }
+
+    try {
+      recognitionRef.current.start();
+    } catch {
+      // Ignore repeated starts while the browser is already listening.
     }
   };
 
@@ -315,64 +400,10 @@ export default function MrKPAAgent() {
           <div className="space-y-2">
             <p className="text-xs text-blue-200/70">Ask Mr. KPA:</p>
             <div className="flex gap-2 flex-wrap">
-              {quickPrompts.map((prompt, idx) => (
+              {visiblePrompts.map((prompt) => (
                 <button
-                  key={idx}
-                  onClick={() => {
-                    setInput(prompt);
-                    // Auto-send the prompt after setting it
-                    setTimeout(async () => {
-                      const userMessage = prompt;
-                      setInput('');
-
-                      setMessages((prev) => [
-                        ...prev,
-                        {
-                          id: Date.now().toString(),
-                          type: 'user',
-                          content: userMessage,
-                        },
-                      ]);
-
-                      setLoading(true);
-
-                      try {
-                        const response = await fetch('/api/mr-kpa', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ message: userMessage }),
-                        });
-
-                        const data = await response.json();
-
-                        if (!response.ok) {
-                          throw new Error(data.error || 'Failed to get response');
-                        }
-
-                        setMessages((prev) => [
-                          ...prev,
-                          {
-                            id: Date.now().toString(),
-                            type: 'assistant',
-                            content: data.response,
-                          },
-                        ]);
-                      } catch (error) {
-                        console.error('Error:', error);
-                        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                        setMessages((prev) => [
-                          ...prev,
-                          {
-                            id: Date.now().toString(),
-                            type: 'assistant-error',
-                            content: `Error: ${errorMessage}. Please try again.`,
-                          },
-                        ]);
-                      }
-
-                      setLoading(false);
-                    }, 50);
-                  }}
+                  key={prompt}
+                  onClick={() => handlePromptClick(prompt)}
                   className="px-3 py-1.5 rounded text-xs bg-slate-800 border border-blue-700/50 text-blue-200 hover:border-blue-600/60 hover:bg-slate-700/60 transition"
                 >
                   {prompt}
@@ -382,23 +413,37 @@ export default function MrKPAAgent() {
           </div>
 
           {/* Message Input */}
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Talk to Mr. KPA..."
-              className="flex-1 px-4 py-3 bg-slate-800 border border-blue-700/50 text-blue-50 placeholder-blue-200/40 rounded-lg focus:outline-none focus:border-blue-600/80 focus:ring-1 focus:ring-blue-600/30 resize-none"
-              rows={3}
+              className="min-h-14 max-h-32 flex-1 px-4 py-3 bg-slate-800 border border-blue-700/50 text-blue-50 placeholder-blue-200/40 rounded-lg focus:outline-none focus:border-blue-600/80 focus:ring-1 focus:ring-blue-600/30 resize-y"
+              rows={2}
             />
-            <button
-              onClick={handleSendMessage}
-              disabled={!input.trim() || loading}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-slate-700 disabled:to-slate-700 text-white font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2 flex-shrink-0"
-            >
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-              Send
-            </button>
+            <div className="flex gap-3 md:flex-shrink-0">
+              <button
+                onClick={toggleMic}
+                disabled={loading}
+                className={`px-4 py-3 font-bold rounded-lg transition flex items-center justify-center gap-2 border ${
+                  isListening
+                    ? 'bg-blue-500 text-white border-blue-300 shadow-[0_0_18px_rgba(59,130,246,0.45)]'
+                    : 'bg-slate-800 text-blue-200 border-blue-700/50 hover:border-blue-500/80 hover:bg-slate-700/70'
+                }`}
+              >
+                <Mic className="w-4 h-4" />
+                {isListening ? 'Listening...' : 'Speak'}
+              </button>
+              <button
+                onClick={handleSendMessage}
+                disabled={!input.trim() || loading}
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-slate-700 disabled:to-slate-700 text-white font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2"
+              >
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                Send
+              </button>
+            </div>
           </div>
 
           <p className="text-xs text-blue-200/50 text-center">

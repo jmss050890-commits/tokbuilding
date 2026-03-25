@@ -114,9 +114,9 @@ export default function TokFaithPage() {
               <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center mb-6">
                 <span className="text-slate-950 font-bold text-lg">2</span>
               </div>
-              <h4 className="text-amber-100 font-bold text-lg mb-3">The Wisdom Agent Listens</h4>
+              <h4 className="text-amber-100 font-bold text-lg mb-3">The Wisdom Guardian Listens</h4>
               <p className="text-amber-50/70 leading-relaxed">
-                An agent was built to demonstrate this compassion: deep listening, practical guidance, and pointing people toward resources that transform lives. This became the heartbeat of the SVL mission.
+                A guardian was built to demonstrate this compassion: deep listening, practical guidance, and pointing people toward resources that transform lives. This became the heartbeat of the SVL mission.
               </p>
             </div>
 
