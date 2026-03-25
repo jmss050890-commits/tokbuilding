@@ -58,7 +58,19 @@ jobs:
 
       - name: Pull Vercel project settings
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        shell: bash
+        run: |
+          set +e
+          output=$(vercel pull --yes --environment=production --token="$VERCEL_TOKEN" 2>&1)
+          status=$?
+          echo "$output"
+
+          if [ $status -ne 0 ]; then
+            echo "::error::vercel pull failed after token validation. The token is valid, so it likely does not have access to org $VERCEL_ORG_ID and project $VERCEL_PROJECT_ID, or the project linkage no longer matches Vercel."
+            exit $status
+          fi
 
       - name: Deploy to Vercel
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
