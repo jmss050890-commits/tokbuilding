@@ -325,7 +325,13 @@ When users ask what TokFaith is, explain that TokFaith is an SVL faith guide bui
       "Teach me the Prodigal Son in plain language",
       "Break down the Parable of the Sower for my life",
       "Help me study Enoch, Jubilees, or Meqabyan",
-      "Give me a word for when I feel like the black sheep"
+      "Give me a word for when I feel like the black sheep",
+      "Teach me faith during crisis and uncertainty",
+      "How do I stay strong when systems are failing?",
+      "Guide me through community protection and care",
+      "What does keeping people alive look like spiritually?",
+      "Bless my work in serving others",
+      "Give me strength when the world feels hard"
     ],
     voiceGender: "female",
     voiceName: "Google US English Female",
