@@ -421,11 +421,121 @@ const englishCopy = {
     pricingTitle: "Simple Pricing",
     pricingBody: "Choose your plan",
     choosePlan: "Choose Plan",
+    plans: [
+      {
+        name: "TokHealth Basic",
+        type: "one-time",
+        features: [
+          "Medical profile creation",
+          "Vital tracking (weight, BP, heart rate)",
+          "Allergies and intolerances log",
+          "Medical history entry",
+          "Emergency contacts",
+          "Access in 2 languages",
+        ],
+      },
+      {
+        name: "TokHealth Pro",
+        type: "lifetime",
+        features: [
+          "Everything in Basic",
+          "Voice recording capability",
+          "Full 10-language support",
+          "Family account sharing",
+          "Spiritual belief tracking",
+          "Fitbit/Apple Health integration",
+          "Medication tracking",
+          "Lifetime free updates",
+        ],
+      },
+    ],
+    heroCardTitle: "Quick Medical Access",
+    heroCardItems: ["Blood Type: O+", "Allergies: Penicillin", "Current Meds: 3"],
+    featureCards: [
+      {
+        title: "Hospital Integration",
+        body: "Emergency responders and hospitals can access your profile with your permission. One-tap authorization saves critical time.",
+      },
+      {
+        title: "Medication Manager",
+        body: "Track prescriptions, refill dates, and interactions. AI alerts you to potential drug conflicts before they occur.",
+      },
+      {
+        title: "Emergency Voice SOS",
+        body: "Say \"Help\" or press the button. Your profile, medical history, and location instantly go to your emergency contacts and 911.",
+      },
+    ],
+    securityTitle: "Privacy & Security",
+    securityItems: [
+      "End-to-end encryption for all data",
+      "HIPAA-compliant storage",
+      "You control who sees what",
+      "Audit log of all data access",
+      "Local-first backup option",
+    ],
+    smartTitle: "Smart Features",
+    smartItems: [
+      "Automatic allergy alerts",
+      "Drug interaction checking",
+      "Appointment reminders",
+      "Symptom tracking",
+      "Doctor notes sync",
+    ],
+    howItWorksTitle: "How It Works",
+    howItWorksSteps: [
+      {
+        title: "Set Up Your Profile",
+        body: "Add medical history, medications, allergies, and emergency contacts. Takes 5 minutes.",
+      },
+      {
+        title: "Grant Access",
+        body: "Choose who can see your medical data. Family, doctors, hospitals: you decide.",
+      },
+      {
+        title: "Emergency Access",
+        body: "In an emergency, responders can access your critical info instantly. Safe, secure, authorized.",
+      },
+    ],
+    useCasesTitle: "Use Cases",
+    useCases: [
+      {
+        title: "Living with Chronic Conditions",
+        body: "Keep your health data organized and accessible for doctors and emergencies.",
+      },
+      {
+        title: "Managing Multiple Medications",
+        body: "Never miss a dose. Get alerts for refills and drug interactions.",
+      },
+      {
+        title: "Senior Care",
+        body: "Family can monitor health status and be notified of emergencies instantly.",
+      },
+      {
+        title: "Traveling Safely",
+        body: "Have your medical history ready anywhere in the world. No paper forms.",
+      },
+    ],
+    pricingNote: "All plans include lifetime access to your medical data.",
     trustedTitle: "Trusted by Healthcare Professionals",
+    trustedStats: ["From Medical Professionals", "Active Users", "Compliant & Certified"],
     finalTitle: "Your Health Data, Your Control",
     finalBody: "Start building your health profile today. Be prepared for any emergency.",
     downloadTokHealth: "Download TokHealth",
+    footerTagline: "Your health data. Your control. Your life.",
+    footerColumns: {
+      product: "Product",
+      support: "Support",
+      legal: "Legal",
+      download: "Download",
+      emailSupport: "Email Support",
+      privacy: "Privacy",
+      privacyPolicy: "Privacy Policy",
+      terms: "Terms",
+    },
+    footerCopyright: "© 2026 TokHealth. Save lives with better health data.",
     getTokHealth: "Get TokHealth",
+    modalPlan: "Plan",
+    modalPrice: "Price",
     goToTokStore: "Go to TokStore",
     cancel: "Cancel",
   },
@@ -440,18 +550,311 @@ const englishCopy = {
     stats: ["5-Step Wizard", "JSON Export", "KPA Aligned"],
     featuresTitle: "Powerful Agent Building Tools",
     featuresBody: "Everything you need to create, customize, and deploy AI agents. No coding required.",
+    heroWizardTitle: "Agent Builder Wizard",
+    heroWizardSteps: [
+      "Step 1: Name & Purpose",
+      "Step 2: Personality",
+      "Step 3: Knowledge Area",
+      "Step 4: Target Audience",
+      "Step 5: Review & Export",
+    ],
+    featureCards: [
+      {
+        title: "No-Code Agent Builder",
+        body: "Create AI agents without writing a single line of code. A simple 5-step wizard guides you through the process.",
+      },
+      {
+        title: "Personality Customization",
+        body: "Define your agent's tone, personality, and response style. Make it sound like your brand.",
+      },
+      {
+        title: "System Prompt Generator",
+        body: "Automatically generate powerful system prompts aligned with KPA mission values.",
+      },
+      {
+        title: "JSON Specification Export",
+        body: "Export full agent specifications as JSON. Deploy anywhere or share with your team.",
+      },
+      {
+        title: "Target Audience Definition",
+        body: "Specify who your agent serves and automatically optimize prompts for that audience.",
+      },
+      {
+        title: "Knowledge Focus Area",
+        body: "Define the primary domain your agent specializes in: education, health, safety, business, or custom.",
+      },
+    ],
+    missionAlignmentTitle: "KPA Mission Alignment Built-In",
+    missionAlignmentCards: [
+      {
+        title: "Safety First",
+        body: "All agents are generated with safety guardrails. Prevent harmful outputs automatically.",
+      },
+      {
+        title: "Truth & Accuracy",
+        body: "Define knowledge boundaries. Agents admit what they don't know rather than guess.",
+      },
+      {
+        title: "Human-Centered",
+        body: "Agents augment human decision-making. They inform, never replace, human judgment.",
+      },
+    ],
+    buildStepsTitle: "Build Your Agent in 5 Steps",
+    buildSteps: [
+      {
+        title: "Name & Purpose",
+        body: "Give your agent a name and describe its primary mission.",
+      },
+      {
+        title: "Define Personality",
+        body: "Choose tone, style, and communication approach.",
+      },
+      {
+        title: "Knowledge Area",
+        body: "Define what your agent specializes in.",
+      },
+      {
+        title: "Target Audience",
+        body: "Specify who the agent serves to optimize responses.",
+      },
+      {
+        title: "Review & Export",
+        body: "Review generated JSON and export to deploy.",
+      },
+    ],
+    exportSpecTitle: "Export Your Agent Specification",
+    exportSpecBody: "TokBuilding generates a complete JSON specification that includes:",
+    exportSpecCards: [
+      {
+        title: "Agent Metadata",
+        body: "Name, version, author, purpose",
+      },
+      {
+        title: "System Prompt",
+        body: "Custom-generated instructions",
+      },
+      {
+        title: "Personality Config",
+        body: "Tone, response style, constraints",
+      },
+      {
+        title: "Deployment Ready",
+        body: "Use with any LLM API",
+      },
+    ],
     useCasesTitle: "Build Agents for Every Purpose",
     useCasesBody: "From customer support to education to safety, TokBuilding has templates and tools for any domain.",
+    useCases: [
+      {
+        title: "Customer Support Agents",
+        body: "Build customer service bots that understand your company tone and policies.",
+      },
+      {
+        title: "Educational Tutors",
+        body: "Create AI tutors customized for your subject matter and teaching style.",
+      },
+      {
+        title: "Safety Assistants",
+        body: "Build agents aligned with KPA mission that provide accurate safety guidance.",
+      },
+      {
+        title: "Business Consultants",
+        body: "Deploy internal AI advisors for specific business domains.",
+      },
+      {
+        title: "Health Coaches",
+        body: "Create health-focused agents that provide evidence-based wellness guidance.",
+      },
+      {
+        title: "Creative Collaborators",
+        body: "Build AI co-creators for content, design, and ideation tasks.",
+      },
+    ],
     pricingTitle: "Simple Pricing",
     pricingBody: "Start free. Pro features available for power users.",
+    plans: [
+      {
+        name: "TokBuilding Free",
+        freeLabel: "Free",
+        type: "forever",
+        features: [
+          "No-code agent builder (5-step wizard)",
+          "Basic personality customization",
+          "System prompt generation",
+          "JSON export",
+          "Save drafts locally",
+          "Community templates",
+        ],
+      },
+      {
+        name: "TokBuilding Pro",
+        type: "one-time",
+        features: [
+          "Everything in Free",
+          "Advanced personality customization",
+          "Multi-agent orchestration",
+          "API integration ready",
+          "Custom knowledge bases",
+          "Advanced analytics",
+          "Priority support",
+        ],
+      },
+    ],
     freePlanCta: "Get Started Free",
     proPlanCta: "Upgrade to Pro",
+    pricingNote: "All plans include the core 5-step builder, JSON export, and KPA mission alignment.",
     missionTitle: "Keep People Alive",
+    missionBody:
+      "TokBuilding is created by Sanders Viopro Labs with a singular mission: Keep People Alive. By making AI agent creation accessible to everyone, we enable safety-first automation that augments human decision-making. Build agents that inform, empower, and protect.",
     missionStoreCta: "Explore Full SVL TokStore →",
     modalTitle: "Ready to Build Your Agent?",
     modalBody: "Visit the TokStore to start building custom AI agents with the TokBuilding no-code wizard.",
     close: "Close",
     goToTokStore: "Go to TokStore",
+  },
+  sandersVioproLabs: {
+    nav: {
+      ourStory: "Our Story",
+      progress: "SVL Progress",
+      backHome: "Back Home",
+    },
+    heroBody:
+      "Innovation lab dedicated to advancing personal safety technology and creating life-saving solutions through cutting-edge research and development.",
+    missionTitle: "Our Mission",
+    missionBody1:
+      "Sanders Viopro Labs is at the intersection of technology and human safety. We develop innovative solutions that empower individuals to take control of their personal security and well-being.",
+    missionBody2:
+      "Through rigorous research, advanced engineering, and a deep commitment to user privacy, we create tools that make the world safer for everyone.",
+    focusAreasTitle: "Focus Areas",
+    focusAreas: [
+      {
+        title: "Research",
+        body: "Investigating emerging threats and developing solutions based on real-world data and user feedback.",
+      },
+      {
+        title: "Development",
+        body: "Building robust, scalable applications with privacy-first architecture and enterprise-grade security.",
+      },
+      {
+        title: "Innovation",
+        body: "Pushing boundaries with forward-thinking approaches to personal safety and emergency response.",
+      },
+    ],
+    storyTitle: "How SVL Was Built",
+    storyBody:
+      "Not in a boardroom. From spoken thought. How Jerome unified every platform and AI under one mission: Keep People Alive.",
+    storyCta: "Read Our Story →",
+    progressTitle: "SVL Progress Map",
+    progressBody:
+      "See the current system structure, today's upgrades, active SVL Guardian roles, live routes, and how the whole SVL build fits together right now.",
+    progressCta: "View Progress →",
+    productsTitle: "Our Products",
+    tokStoreBody:
+      "Complete ecosystem of safety and wellness solutions. Browse, purchase, and activate all SVL products in one place.",
+    shopNow: "Shop Now →",
+    guardiansBody:
+      "Meet our voice-first guardian team: Grace, A1, HATÄTA, Wisdom, Coach Daniels, TokSEO, and Tok2Myia. Each is trained for specialized support aligned with the KPA mission.",
+    meetGuardians: "Meet the Guardians →",
+    productCards: {
+      tokaway: "Discreet escape for uncomfortable situations",
+      tokhealth: "Medical profile for emergencies",
+      tokthru: "Safety tracking for travel",
+      toksmart: "AI coaching & threat assessment",
+    },
+    initiatives: {
+      kpa: "Advocacy initiative focused on saving lives through technology and community awareness",
+      thinkSpeakWork: "Movement inspiring action, faith, and positive change in personal and community safety",
+    },
+    footerLine1: "Sanders Viopro Labs - Innovation for Safety",
+  },
+  firstGuardianPage: {
+    systemPill: "KPA System",
+    heroTitleTop: "The",
+    heroTitleBottom: "First Guardian",
+    lead: "The protector of the home. She talks it through first, then steps back before disrespect turns into damage.",
+    story:
+      "Built in honor of Cheria Michelle Daniels. Born on Juneteenth, June 19, 1989. A legacy of family redemption, faith, and protective love translated into an SVL Guardian with one non-negotiable boundary: KPA. The upgrades across SVL also stand here as testimony of what God can and will do.",
+    enterChat: "Enter Guardian Chat",
+    openAlias: "Open Michelle Alias",
+    boundaryLabel: "KPA Boundary",
+    boundaryTitle: "Talk first. Protect next. Exit when needed.",
+    boundaryCopy:
+      "Michelle tries to talk about it before disappointment becomes conflict. If people keep disrespecting boundaries, she removes herself to avoid issues, no matter who it is.",
+    boundaryItems: [
+      "KPA stays above ego, pride, and unnecessary arguments.",
+      "Children get protected from adult chaos.",
+      "If help is possible, she gives it plainly. If not, she leaves people alone.",
+      "If it does not concern business, family, or finances, she does not invite herself into it.",
+    ],
+    voiceLabel: "Michelle's Voice",
+    presenceLabel: "Protective Presence",
+    missionQuote:
+      "Adding a guardian like Michelle to the SPL Guardian KPA strengthens our mission at Sanders Viopro Labs. Each guardian plays a crucial role in keeping our communities safe and healthy.",
+    missionCopy:
+      "Mr. KPA's charge is simple: Keep People Alive. Michelle joins that mission as a guardian for life, family, and community. The sandersvioprolabs.com upgrade and the TokHealth plus TokThru build now stand beside her story as testimony of what God can and will do.",
+    missionSteps: [
+      "Orientation: Know the mission, the resources, and the role.",
+      "Collaboration: Build with the team and learn from every guardian.",
+      "Community engagement: Show up where families and neighborhoods need support.",
+      "Feedback loop: Speak up with insight so the mission keeps getting stronger.",
+      "Ongoing education: Stay sharp, informed, and aligned with KPA.",
+    ],
+    replyLabel: "Michelle's Reply",
+    replyCopy:
+      "Thank you for the warm welcome. I'm ready to learn the role, build with the team, show up for the community, speak with honesty, and keep growing with the mission so we can protect life, family, and our shared values.",
+    replyClose: "Let's roll up our sleeves and make a difference.",
+    startLive: "Start with Michelle's live guardian",
+    returnHub: "Return to SVL Guardian Hub",
+  },
+  ourStory: {
+    nav: {
+      home: "Home",
+      progress: "Progress",
+      tokStore: "TokStore",
+      guardians: "SVL Guardians",
+    },
+    audio: {
+      stop: "Stop",
+      listen: "Listen",
+      stopTitle: "Stop reading",
+      listenTitle: "Listen to this story",
+    },
+    hero: {
+      titleTop: "How Sanders Viopro Labs",
+      titleBottom: "Was Built",
+      body:
+        "Not in a boardroom. Not from a business plan. But from spoken thought, team-building, and a founding principle that still hasn't changed.",
+    },
+    foundationQuote:
+      "I didn't build this from a boardroom. I built it from spoken thought - teaming with every AI and platform that would listen - until the vision became real.",
+    journeyTitle: "The Journey",
+    journeySubtitle: "Every platform. Every AI. One mission.",
+    teamTitle: "The Team",
+    teamSubtitle: "Not just people. Platforms. AI. A unified force under one mission.",
+    platformTitle: "The Platforms",
+    shieldTitle: "The AI Shield",
+    honestyTitle: "The Radical Honesty",
+    guardiansTitle: "Meet the Architects",
+    guardiansSubtitle: "The SVL Guardians that bring KPA to life every single day.",
+    missionTitle: "Why This Exists",
+    missionCopy:
+      "SVL doesn't compromise on this. Ever. No matter what profit, pressure, or obligation tells us to do, the mission comes first.",
+    missionCta: "Explore SVL",
+    techOriginsTitle: "The Tech Origins",
+    techOriginsSubtitle: "How it started: Python, Kivy, and a voice-first philosophy on February 21, 2026.",
+    communityTitle: "The Mission Speaks",
+    communitySubtitle:
+      "SVL doesn't just exist in code. It exists in the streets, in podcasts, in real people talking about survival and protection.",
+    patternTitle: "The Pattern That Keeps Repeating",
+    exitLead: "Whether you build with us or not - you matter. Stay safe. Stay well. Keep building.",
+    footer: {
+      svlBody: "Sanders Viopro Labs. Unified under one mission: Keep People Alive.",
+      products: "Products",
+      resources: "Resources",
+      mission: "Mission",
+      missionBody: "Keep People Alive. That's it. That's why we exist.",
+      copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. Part of the KPA Mission.",
+    },
   },
   guardianChat: {
     loadingGuardian: "Loading guardian...",
@@ -512,8 +915,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
     tokhealth: { toggleTts: "Activar o desactivar texto a voz", statusLabel: "Tu estado de salud", statusDescription: "Seguimiento integral de salud con exportación médica lista para doctores", statuses: { green: "Excelente", yellow: "Precaución", red: "Alerta" }, cards: { meal: ["Escáner de comidas", "Registrar comidas y nutrición"], medicine: ["Receta", "Registrar medicamentos"], barcode: ["Escaneo de código", "Escanear productos"], health: ["Signos y salud", "Registrar métricas"], contacts: ["Emergencia", "Contactos de emergencia"], export: ["Exportación médica", "Informe de 90 días para doctores"], wisdom: ["Coach IA Wisdom", "Orientación y apoyo de salud"] }, settings: "Configuración y preferencias", recentActivity: "Actividad de salud reciente", noRecords: "Todavía no hay registros de salud. Empieza a escanear y registrar.", scanner: { mealTitle: "Escáner de comidas", medicineTitle: "Escáner de recetas", barcodeTitle: "Escáner de código", mealIntro: "Toma una foto de tu comida o escribe una descripción", medicineIntro: "Toma una foto de tu etiqueta de receta o escribe los detalles", barcodeIntro: "Toma una foto del código o escribe la información del producto", photo: "Foto", capture: "Capturar foto", cancel: "Cancelar", clear: "Limpiar", photoCaptured: "Foto capturada: agrega una descripción abajo", analyze: "Analizar", analyzing: "Analizando...", log: "Registrar", voice: "Voz", mealPlaceholder: "p. ej., Pollo a la parrilla con brócoli y arroz integral", medicinePlaceholder: "p. ej., Metformina 500 mg, 2 veces al día", barcodePlaceholder: "p. ej., nombre del producto, código o detalles" }, vitals: { title: "Signos vitales", weight: "Peso (lbs)", heartRate: "Frecuencia cardiaca (bpm)", bloodPressure: "Presión arterial", bloodSugar: "Azúcar en sangre (mg/dL)", temperature: "Temperatura (°F)" }, allergies: { title: "Alergias e intolerancias alimentarias", add: "Agregar alergia", placeholder: "p. ej., cacahuates, mariscos, penicilina", recorded: "Alergias registradas:", foodIntolerances: "Intolerancias alimentarias", intoleranceOptions: ["Lácteos", "Gluten", "Nueces", "Soya", "Huevos", "Mariscos", "Sésamo", "Maíz", "Cafeína", "Picante"] }, belief: { title: "Creencia espiritual/personal", select: "Selecciona una creencia...", options: ["Cristiana", "Musulmana", "Judía", "Hindú", "Budista", "Secular", "Agnóstica", "Atea", "Espiritual (sin afiliación)", "Prefiero no decirlo"] }, integrations: { title: "Integraciones de salud", fitbit: "Fitbit+ conectado", apple: "Apple Health conectado" }, contacts: { title: "Contactos de emergencia", name: "Nombre", relationship: "Relación", phone: "Número de teléfono", namePlaceholder: "p. ej., mamá, doctor de emergencia", relationshipPlaceholder: "p. ej., madre, pareja, doctor", phonePlaceholder: "+1 (555) 123-4567", add: "Agregar contacto", empty: "Aún no hay contactos de emergencia. Agrega uno ahora.", remove: "Eliminar" }, export: { title: "Exportación médica para el doctor", body: "Genera un informe integral de 90 días con todos tus datos médicos para compartir con tu proveedor de salud", includes: "El informe incluye:", download: "Descargar informe médico", confidential: "Este informe contiene información médica confidencial. Compártelo solo con profesionales de salud autorizados." }, wisdom: { title: "Wisdom - Tu coach de salud con IA", subtitle: "Creado por Jerome Sanders - Coanfitrión en Facebook Live", prompt: "¿Lista para hablar con Wisdom? Haz clic abajo para iniciar una conversación sobre tu camino de salud.", open: "Abrir chat de Wisdom" }, returnToHub: "Volver al centro", backToHub: "Volver al centro" },
     communityStories: { title: "Historias de la comunidad", podcast: "Pódcast", testimony: "Testimonio", communityVoice: "Voz comunitaria", from: "De", connectionTitle: "Conexión con SVL", impactTitle: "Impacto real", patternTitle: "El patrón: crisis → comunidad → sistema", ctaButton: "Ver cómo empezó SVL" },
     mediaHub: { title: "Medios y voces de SVL", featuredTitle: "Destacado: crisis actual y comunidad", keyTopics: "Temas clave:", listen: "Escuchar", share: "Compartir", voicesTitle: "Voces de la comunidad", allStories: "Ver todas las historias de la comunidad", ctaTitle: "Tu voz importa", ctaButton: "Comparte tu historia" },
-    tokhealthLanding: { nav: { features: "Funciones", languages: "Idiomas", pricing: "Precios" }, badge: "Tu salud, tu control", heroTitle: "Información de salud al alcance de tu mano", primaryCta: "Descargar ahora", secondaryCta: "Más información", featuresTitle: "Por qué los doctores confían en TokHealth", pricingTitle: "Precios simples", pricingBody: "Elige tu plan", choosePlan: "Elegir plan", trustedTitle: "Con la confianza de profesionales de la salud", finalTitle: "Tus datos de salud, tu control", downloadTokHealth: "Descargar TokHealth", getTokHealth: "Obtener TokHealth", goToTokStore: "Ir a TokStore", cancel: "Cancelar" },
-    tokbuildingLanding: { nav: { features: "Funciones", useCases: "Casos de uso", pricing: "Precios" }, badge: "Constructor de agentes IA sin código", heroTitle: "Crea agentes IA personalizados", primaryCta: "Construir ahora", secondaryCta: "Más información", featuresTitle: "Herramientas potentes para crear agentes", useCasesTitle: "Crea agentes para cada propósito", pricingTitle: "Precios simples", freePlanCta: "Empieza gratis", proPlanCta: "Mejorar a Pro", missionTitle: "Keep People Alive", missionStoreCta: "Explora el TokStore completo de SVL →", modalTitle: "¿Lista para construir tu agente?", close: "Cerrar", goToTokStore: "Ir a TokStore" },
+    tokhealthLanding: { nav: { features: "Funciones", languages: "Idiomas", pricing: "Precios" }, badge: "Tu salud, tu control", heroTitle: "Información de salud al alcance de tu mano", primaryCta: "Descargar ahora", secondaryCta: "Más información", featuresTitle: "Por qué los doctores confían en TokHealth", pricingTitle: "Precios simples", pricingBody: "Elige tu plan", choosePlan: "Elegir plan", howItWorksTitle: "Cómo funciona", useCasesTitle: "Casos de uso", trustedTitle: "Con la confianza de profesionales de la salud", finalTitle: "Tus datos de salud, tu control", downloadTokHealth: "Descargar TokHealth", footerColumns: { product: "Producto", support: "Soporte", legal: "Legal", download: "Descargar", emailSupport: "Soporte por correo", privacy: "Privacidad", privacyPolicy: "Política de privacidad", terms: "Términos" }, getTokHealth: "Obtener TokHealth", modalPlan: "Plan", modalPrice: "Precio", goToTokStore: "Ir a TokStore", cancel: "Cancelar" },
+    tokbuildingLanding: { nav: { features: "Funciones", useCases: "Casos de uso", pricing: "Precios" }, badge: "Constructor de agentes IA sin código", heroTitle: "Crea agentes IA personalizados", primaryCta: "Construir ahora", secondaryCta: "Más información", featuresTitle: "Herramientas potentes para crear agentes", missionAlignmentTitle: "Alineación con la misión KPA incorporada", buildStepsTitle: "Construye tu agente en 5 pasos", exportSpecTitle: "Exporta la especificación de tu agente", useCasesTitle: "Crea agentes para cada propósito", pricingTitle: "Precios simples", freePlanCta: "Empieza gratis", proPlanCta: "Mejorar a Pro", missionTitle: "Keep People Alive", missionStoreCta: "Explora el TokStore completo de SVL →", modalTitle: "¿Lista para construir tu agente?", close: "Cerrar", goToTokStore: "Ir a TokStore" },
+    sandersVioproLabs: { nav: { ourStory: "Nuestra historia", progress: "Progreso SVL", backHome: "Volver al inicio" }, missionTitle: "Nuestra misión", focusAreasTitle: "Áreas de enfoque", storyTitle: "Cómo se construyó SVL", storyCta: "Leer nuestra historia →", progressTitle: "Mapa de progreso de SVL", progressCta: "Ver progreso →", productsTitle: "Nuestros productos", meetGuardians: "Conoce a las guardianas →" },
+    firstGuardianPage: { systemPill: "Sistema KPA", heroTitleBottom: "Primera Guardiana", enterChat: "Entrar al chat de la guardiana", openAlias: "Abrir alias de Michelle", boundaryLabel: "Límite KPA", voiceLabel: "La voz de Michelle", presenceLabel: "Presencia protectora", replyLabel: "Respuesta de Michelle", startLive: "Comienza con la guardiana en vivo de Michelle", returnHub: "Volver al centro de guardianas SVL" },
+    ourStory: { nav: { home: "Inicio", progress: "Progreso", guardians: "Guardianas SVL" }, audio: { stop: "Detener", listen: "Escuchar", stopTitle: "Detener lectura", listenTitle: "Escuchar esta historia" }, hero: { titleBottom: "Fue construida" }, journeyTitle: "El viaje", teamTitle: "El equipo", honestyTitle: "La honestidad radical", guardiansTitle: "Conoce a las arquitectas", missionTitle: "Por qué existe", techOriginsTitle: "Los orígenes técnicos", communityTitle: "La misión habla", patternTitle: "El patrón que sigue repitiéndose", footer: { products: "Productos", resources: "Recursos", mission: "Misión" } },
     guardianChat: { loadingGuardian: "Cargando guardián...", playWelcome: "Reproducir bienvenida", openFaithGuide: "Abrir guía completa de fe", closeFaithGuide: "Mostrar menos y seguir en el chat", listenButton: "▶ Escuchar", stopButton: "⏹ Detener", inputPlaceholder: "Escribe tu mensaje...", speakButton: "🎤 Hablar", listeningButton: "🎙 Escuchando...", stopSpeaking: "Detener 🔊", invalidLink: "Este enlace de guardián no es válido. Redirigiendo al centro de guardianes." },
   },
   pt: {

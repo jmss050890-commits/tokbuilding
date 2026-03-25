@@ -3,42 +3,16 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+import { getSiteCopy } from '@/lib/site-copy';
 
 export default function TokHealthLanding() {
   const [selectedPlan, setSelectedPlan] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const copy = useSiteCopy();
-
-  const plans = [
-    {
-      name: 'TokHealth Basic',
-      price: 2.99,
-      type: 'one-time',
-      features: [
-        'Medical profile creation',
-        'Vital tracking (weight, BP, heart rate)',
-        'Allergies & intolerances log',
-        'Medical history entry',
-        'Emergency contacts',
-        'Access in 2 languages',
-      ],
-    },
-    {
-      name: 'TokHealth Pro',
-      price: 7.99,
-      type: 'lifetime',
-      features: [
-        'Everything in Basic',
-        'Voice recording capability',
-        'Full 10-language support',
-        'Family account sharing',
-        'Spiritual belief tracking',
-        'Fitbit/Apple Health integration',
-        'Medication tracking',
-        'Lifetime free updates',
-      ],
-    },
-  ];
+  const englishCopy = getSiteCopy('en');
+  const landingCopy = copy.tokhealthLanding;
+  const plans = landingCopy.plans.length ? landingCopy.plans : englishCopy.tokhealthLanding.plans;
+  const planPrices = [2.99, 7.99];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-green-950 to-slate-950 text-white">
@@ -103,12 +77,12 @@ export default function TokHealthLanding() {
             <div className="relative w-full h-96 bg-gradient-to-b from-green-900/30 to-transparent rounded-3xl border border-green-700/40 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl mb-4">💊</div>
-                <p className="text-slate-300">Quick Medical Access</p>
+                <p className="text-slate-300">{landingCopy.heroCardTitle}</p>
                 <p className="text-2xl font-bold text-green-400 mt-4">Your Health Profile</p>
                 <div className="mt-6 space-y-2 text-sm text-slate-400">
-                  <p>Blood Type: O+</p>
-                  <p>Allergies: Penicillin</p>
-                  <p>Current Meds: 3</p>
+                  {landingCopy.heroCardItems.map((item) => (
+                    <p key={item}>{item}</p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -125,45 +99,31 @@ export default function TokHealthLanding() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-slate-900/60 border border-green-700/30 rounded-2xl p-8 hover:border-green-600/60 transition">
-              <div className="text-4xl mb-4">🏥</div>
-              <h3 className="text-xl font-bold mb-3">Hospital Integration</h3>
-              <p className="text-slate-300">Emergency responders and hospitals can access your profile with your permission. One-tap authorization saves critical time.</p>
-            </div>
-
-            <div className="bg-slate-900/60 border border-green-700/30 rounded-2xl p-8 hover:border-green-600/60 transition">
-              <div className="text-4xl mb-4">💊</div>
-              <h3 className="text-xl font-bold mb-3">Medication Manager</h3>
-              <p className="text-slate-300">Track prescriptions, refill dates, and interactions. AI alerts you to potential drug conflicts before they occur.</p>
-            </div>
-
-            <div className="bg-slate-900/60 border border-green-700/30 rounded-2xl p-8 hover:border-green-600/60 transition">
-              <div className="text-4xl mb-4">🆘</div>
-              <h3 className="text-xl font-bold mb-3">Emergency Voice SOS</h3>
-              <p className="text-slate-300">Say &quot;Help&quot; or press the button. Your profile, medical history, and location instantly go to your emergency contacts and 911.</p>
-            </div>
+            {landingCopy.featureCards.map((feature, index) => (
+              <div key={feature.title} className="bg-slate-900/60 border border-green-700/30 rounded-2xl p-8 hover:border-green-600/60 transition">
+                <div className="text-4xl mb-4">{['🏥', '💊', '🆘'][index]}</div>
+                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                <p className="text-slate-300">{feature.body}</p>
+              </div>
+            ))}
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-slate-900/60 border border-green-700/30 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4">🔒 Privacy & Security</h3>
+              <h3 className="text-2xl font-bold mb-4">🔒 {landingCopy.securityTitle}</h3>
               <ul className="space-y-3 text-slate-300">
-                <li>✓ End-to-end encryption for all data</li>
-                <li>✓ HIPAA-compliant storage</li>
-                <li>✓ You control who sees what</li>
-                <li>✓ Audit log of all data access</li>
-                <li>✓ Local-first backup option</li>
+                {landingCopy.securityItems.map((item) => (
+                  <li key={item}>✓ {item}</li>
+                ))}
               </ul>
             </div>
 
             <div className="bg-slate-900/60 border border-green-700/30 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4">⚡ Smart Features</h3>
+              <h3 className="text-2xl font-bold mb-4">⚡ {landingCopy.smartTitle}</h3>
               <ul className="space-y-3 text-slate-300">
-                <li>✓ Automatic allergy alerts</li>
-                <li>✓ Drug interaction checking</li>
-                <li>✓ Appointment reminders</li>
-                <li>✓ Symptom tracking</li>
-                <li>✓ Doctor notes sync</li>
+                {landingCopy.smartItems.map((item) => (
+                  <li key={item}>✓ {item}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -172,47 +132,27 @@ export default function TokHealthLanding() {
 
       {/* How It Works */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold mb-12 text-center">How It Works</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center">{landingCopy.howItWorksTitle}</h2>
         
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-green-600/30 border-2 border-green-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">1</div>
-            <h3 className="text-xl font-bold mb-3">Set Up Your Profile</h3>
-            <p className="text-slate-300">Add medical history, medications, allergies, and emergency contacts. Takes 5 minutes.</p>
-          </div>
-
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-green-600/30 border-2 border-green-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">2</div>
-            <h3 className="text-xl font-bold mb-3">Grant Access</h3>
-            <p className="text-slate-300">Choose who can see your medical data. Family, doctors, hospitals—you decide.</p>
-          </div>
-
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-green-600/30 border-2 border-green-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">3</div>
-            <h3 className="text-xl font-bold mb-3">Emergency Access</h3>
-            <p className="text-slate-300">In an emergency, responders can access your critical info instantly. Safe, secure, authorized.</p>
-          </div>
+          {landingCopy.howItWorksSteps.map((step, index) => (
+            <div key={step.title} className="text-center">
+              <div className="w-16 h-16 rounded-full bg-green-600/30 border-2 border-green-600 flex items-center justify-center font-bold text-2xl mx-auto mb-4">{index + 1}</div>
+              <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+              <p className="text-slate-300">{step.body}</p>
+            </div>
+          ))}
         </div>
 
         <div className="bg-green-900/30 border border-green-700/40 rounded-3xl p-8">
-          <h3 className="text-2xl font-bold mb-6">Use Cases</h3>
+          <h3 className="text-2xl font-bold mb-6">{landingCopy.useCasesTitle}</h3>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-green-600">
-              <p className="font-bold text-green-400 mb-2">Living with Chronic Conditions</p>
-              <p className="text-slate-300 text-sm">Keep your health data organized and accessible for doctors and emergencies.</p>
-            </div>
-            <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-green-600">
-              <p className="font-bold text-green-400 mb-2">Managing Multiple Medications</p>
-              <p className="text-slate-300 text-sm">Never miss a dose. Get alerts for refills and drug interactions.</p>
-            </div>
-            <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-green-600">
-              <p className="font-bold text-green-400 mb-2">Senior Care</p>
-              <p className="text-slate-300 text-sm">Family can monitor health status and be notified of emergencies instantly.</p>
-            </div>
-            <div className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-green-600">
-              <p className="font-bold text-green-400 mb-2">Traveling Safely</p>
-              <p className="text-slate-300 text-sm">Have your medical history ready anywhere in the world. No paper forms.</p>
-            </div>
+            {landingCopy.useCases.map((useCase) => (
+              <div key={useCase.title} className="bg-slate-800/60 rounded-lg p-6 border-l-4 border-green-600">
+                <p className="font-bold text-green-400 mb-2">{useCase.title}</p>
+                <p className="text-slate-300 text-sm">{useCase.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -236,7 +176,7 @@ export default function TokHealthLanding() {
               >
                 <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
                 <div className="mb-6">
-                  <span className="text-4xl font-bold">${plan.price.toFixed(2)}</span>
+                  <span className="text-4xl font-bold">${planPrices[idx].toFixed(2)}</span>
                   <span className="text-slate-400 ml-2">{plan.type}</span>
                 </div>
                 <ul className="space-y-3 mb-8">
@@ -262,7 +202,7 @@ export default function TokHealthLanding() {
           </div>
 
           <p className="text-center text-slate-400 text-sm">
-            All plans include lifetime access to your medical data.
+            {landingCopy.pricingNote}
           </p>
         </div>
       </section>
@@ -273,15 +213,15 @@ export default function TokHealthLanding() {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="text-3xl font-bold text-green-400 mb-2">4.9★</div>
-            <p className="text-slate-300">From Medical Professionals</p>
+            <p className="text-slate-300">{landingCopy.trustedStats[0]}</p>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-emerald-400 mb-2">25K+</div>
-            <p className="text-slate-300">Active Users</p>
+            <p className="text-slate-300">{landingCopy.trustedStats[1]}</p>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-green-400 mb-2">HIPAA</div>
-            <p className="text-slate-300">Compliant & Certified</p>
+            <p className="text-slate-300">{landingCopy.trustedStats[2]}</p>
           </div>
         </div>
       </section>
@@ -308,34 +248,34 @@ export default function TokHealthLanding() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="font-bold mb-4 text-green-400">TokHealth</h3>
-              <p className="text-slate-400 text-sm">Your health data. Your control. Your life.</p>
+              <p className="text-slate-400 text-sm">{landingCopy.footerTagline}</p>
             </div>
             <div>
-              <h4 className="font-bold mb-3 text-slate-300">Product</h4>
+              <h4 className="font-bold mb-3 text-slate-300">{landingCopy.footerColumns.product}</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#features" className="hover:text-green-400">Features</a></li>
-                <li><a href="#pricing" className="hover:text-green-400">Pricing</a></li>
-                <li><a href="/tokstore" className="hover:text-green-400">Download</a></li>
+                <li><a href="#features" className="hover:text-green-400">{landingCopy.nav.features}</a></li>
+                <li><a href="#pricing" className="hover:text-green-400">{landingCopy.nav.pricing}</a></li>
+                <li><a href="/tokstore" className="hover:text-green-400">{landingCopy.footerColumns.download}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-3 text-slate-300">Support</h4>
+              <h4 className="font-bold mb-3 text-slate-300">{landingCopy.footerColumns.support}</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="mailto:support@tokhealth.app" className="hover:text-green-400">Email Support</a></li>
-                <li><a href="https://tokhealth.app/privacy" className="hover:text-green-400">Privacy</a></li>
+                <li><a href="mailto:support@tokhealth.app" className="hover:text-green-400">{landingCopy.footerColumns.emailSupport}</a></li>
+                <li><a href="https://tokhealth.app/privacy" className="hover:text-green-400">{landingCopy.footerColumns.privacy}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-3 text-slate-300">Legal</h4>
+              <h4 className="font-bold mb-3 text-slate-300">{landingCopy.footerColumns.legal}</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="https://tokhealth.app/privacy" className="hover:text-green-400">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-green-400">Terms</a></li>
+                <li><a href="https://tokhealth.app/privacy" className="hover:text-green-400">{landingCopy.footerColumns.privacyPolicy}</a></li>
+                <li><a href="#" className="hover:text-green-400">{landingCopy.footerColumns.terms}</a></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8">
             <p className="text-center text-slate-400 text-sm">
-              © 2026 TokHealth. Save lives with better health data.
+              {landingCopy.footerCopyright}
             </p>
           </div>
         </div>
@@ -356,8 +296,8 @@ export default function TokHealthLanding() {
             </div>
 
             <div className="space-y-3 mb-6">
-              <p className="text-slate-300">Plan: <span className="font-bold text-green-400">{plans[selectedPlan].name}</span></p>
-              <p className="text-slate-300">Price: <span className="font-bold text-2xl">${plans[selectedPlan].price.toFixed(2)}</span></p>
+              <p className="text-slate-300">{landingCopy.modalPlan}: <span className="font-bold text-green-400">{plans[selectedPlan].name}</span></p>
+              <p className="text-slate-300">{landingCopy.modalPrice}: <span className="font-bold text-2xl">${planPrices[selectedPlan].toFixed(2)}</span></p>
             </div>
 
             <Link

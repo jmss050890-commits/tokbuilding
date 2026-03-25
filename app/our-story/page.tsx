@@ -3,10 +3,13 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { Play, Pause } from 'lucide-react';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
 export default function OurStoryPage() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const pageContentRef = useRef<HTMLDivElement>(null);
+  const copy = useSiteCopy();
+  const pageCopy = copy.ourStory;
 
   const extractPageText = (): string => {
     if (!pageContentRef.current) return '';
@@ -169,16 +172,16 @@ export default function OurStoryPage() {
           </Link>
           <div className="flex gap-6 items-center">
             <Link href="/sanders-viopro-labs" className="text-purple-300 hover:text-white transition">
-              Home
+              {pageCopy.nav.home}
             </Link>
             <Link href="/svl-progress" className="text-amber-300 hover:text-white transition">
-              Progress
+              {pageCopy.nav.progress}
             </Link>
             <Link href="/tokstore" className="text-purple-300 hover:text-white transition">
-              TokStore
+              {pageCopy.nav.tokStore}
             </Link>
             <Link href="/agent" className="text-purple-300 hover:text-white transition">
-              SVL Guardians
+              {pageCopy.nav.guardians}
             </Link>
             <button
               onClick={speakPage}
@@ -187,17 +190,17 @@ export default function OurStoryPage() {
                   ? 'bg-purple-600/70 text-white'
                   : 'bg-slate-700/50 text-purple-300 hover:bg-slate-600 hover:text-white'
               }`}
-              title={isSpeaking ? 'Stop reading' : 'Listen to this story'}
+              title={isSpeaking ? pageCopy.audio.stopTitle : pageCopy.audio.listenTitle}
             >
               {isSpeaking ? (
                 <>
                   <Pause className="w-4 h-4" />
-                  <span className="text-sm">Stop</span>
+                  <span className="text-sm">{pageCopy.audio.stop}</span>
                 </>
               ) : (
                 <>
                   <Play className="w-4 h-4" />
-                  <span className="text-sm">Listen</span>
+                  <span className="text-sm">{pageCopy.audio.listen}</span>
                 </>
               )}
             </button>
@@ -212,13 +215,13 @@ export default function OurStoryPage() {
             <span className="text-6xl">📖</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            How Sanders Viopro Labs<br />
+            {pageCopy.hero.titleTop}<br />
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-              Was Built
+              {pageCopy.hero.titleBottom}
             </span>
           </h1>
           <p className="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">
-            Not in a boardroom. Not from a business plan. But from spoken thought, team-building, and a founding principle that still hasn't changed.
+            {pageCopy.hero.body}
           </p>
           <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
         </div>
@@ -229,7 +232,7 @@ export default function OurStoryPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/20 border border-purple-700/50 rounded-2xl p-12 text-center">
             <p className="text-2xl text-purple-100 mb-6 leading-relaxed">
-              "I didn't build this from a boardroom. I built it from spoken thought — teaming with every AI and platform that would listen — until the vision became real."
+              &quot;{pageCopy.foundationQuote}&quot;
             </p>
             <p className="text-lg text-purple-300">
               — Jerome Sanders · Mr. KPA
@@ -241,8 +244,8 @@ export default function OurStoryPage() {
       {/* The Journey */}
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-4 text-center">The Journey</h2>
-          <p className="text-center text-purple-300 mb-16">Every platform. Every AI. One mission.</p>
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">{pageCopy.journeyTitle}</h2>
+          <p className="text-center text-purple-300 mb-16">{pageCopy.journeySubtitle}</p>
 
           <div className="space-y-8">
             {journeySteps.map((step, index) => (
@@ -283,13 +286,13 @@ export default function OurStoryPage() {
       {/* The Team */}
       <section className="py-20 px-6 bg-slate-900/50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-4 text-center">The Team</h2>
-          <p className="text-center text-purple-300 mb-12">Not just people. Platforms. AI. A unified force under one mission.</p>
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">{pageCopy.teamTitle}</h2>
+          <p className="text-center text-purple-300 mb-12">{pageCopy.teamSubtitle}</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Platforms */}
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-purple-700/30 rounded-xl p-8">
-              <h3 className="text-xl font-bold text-purple-300 mb-6">The Platforms</h3>
+              <h3 className="text-xl font-bold text-purple-300 mb-6">{pageCopy.platformTitle}</h3>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3">
                   <span className="text-pink-500">→</span>
@@ -312,7 +315,7 @@ export default function OurStoryPage() {
 
             {/* AI Partners */}
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-purple-700/30 rounded-xl p-8">
-              <h3 className="text-xl font-bold text-purple-300 mb-6">The AI Shield</h3>
+              <h3 className="text-xl font-bold text-purple-300 mb-6">{pageCopy.shieldTitle}</h3>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3">
                   <span className="text-purple-500">→</span>
@@ -339,7 +342,7 @@ export default function OurStoryPage() {
       {/* The Truth */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-8 text-center">The Radical Honesty</h2>
+          <h2 className="text-4xl font-bold text-white mb-8 text-center">{pageCopy.honestyTitle}</h2>
 
           <div className="space-y-8">
             <div className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 border border-purple-700/50 rounded-xl p-12">
@@ -375,8 +378,8 @@ export default function OurStoryPage() {
       {/* The Guardians */}
       <section className="py-20 px-6 bg-slate-900/50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-4 text-center">Meet the Architects</h2>
-          <p className="text-center text-purple-300 mb-12">The SVL Guardians that bring KPA to life every single day.</p>
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">{pageCopy.guardiansTitle}</h2>
+          <p className="text-center text-purple-300 mb-12">{pageCopy.guardiansSubtitle}</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-blue-700/30 rounded-xl p-8">
@@ -421,7 +424,7 @@ export default function OurStoryPage() {
       {/* The Mission */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">Why This Exists</h2>
+          <h2 className="text-4xl font-bold text-white mb-8">{pageCopy.missionTitle}</h2>
 
           <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 border-2 border-purple-600/50 rounded-2xl p-16 mb-12">
             <p className="text-3xl font-bold text-white mb-6 leading-tight">
@@ -431,7 +434,7 @@ export default function OurStoryPage() {
               </span>"
             </p>
             <p className="text-purple-200 text-lg">
-              SVL doesn't compromise on this. Ever. No matter what profit, pressure, or obligation tells us to do — the mission comes first.
+              {pageCopy.missionCopy}
             </p>
           </div>
 
@@ -439,7 +442,7 @@ export default function OurStoryPage() {
             href="/sanders-viopro-labs"
             className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-4 px-12 rounded-xl transition transform hover:scale-105"
           >
-            Explore SVL
+            {pageCopy.missionCta}
           </Link>
         </div>
       </section>
@@ -447,8 +450,8 @@ export default function OurStoryPage() {
       {/* Tech Origins Section */}
       <section className="py-20 px-6 bg-slate-900/50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-4 text-center">The Tech Origins</h2>
-          <p className="text-center text-purple-300 mb-12">How it started: Python, Kivy, and a voice-first philosophy on February 21, 2026.</p>
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">{pageCopy.techOriginsTitle}</h2>
+          <p className="text-center text-purple-300 mb-12">{pageCopy.techOriginsSubtitle}</p>
 
           {/* Original Stack */}
           <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-green-700/30 rounded-xl p-8 mb-8">
@@ -594,8 +597,8 @@ export default function OurStoryPage() {
       {/* Real-World Community Stories */}
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-4 text-center">The Mission Speaks</h2>
-          <p className="text-center text-purple-300 mb-12">SVL doesn't just exist in code. It exists in the streets, in podcasts, in real people talking about survival and protection.</p>
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">{pageCopy.communityTitle}</h2>
+          <p className="text-center text-purple-300 mb-12">{pageCopy.communitySubtitle}</p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             {/* Reese Waters Story */}
@@ -631,7 +634,7 @@ export default function OurStoryPage() {
 
           {/* Pattern */}
           <div className="bg-gradient-to-br from-purple-900/20 to-slate-900 border border-purple-700/30 rounded-xl p-8 text-center">
-            <h3 className="text-2xl font-bold text-purple-300 mb-4">The Pattern That Keeps Repeating</h3>
+            <h3 className="text-2xl font-bold text-purple-300 mb-4">{pageCopy.patternTitle}</h3>
             <div className="grid md:grid-cols-3 gap-6">
               <div>
                 <p className="text-3xl mb-2">🔥</p>
@@ -660,7 +663,7 @@ export default function OurStoryPage() {
             <span className="text-6xl">💜</span>
           </div>
           <p className="text-2xl text-white leading-relaxed mb-8">
-            Whether you build with us or not — you matter. Stay safe. Stay well. Keep building.
+            {pageCopy.exitLead}
           </p>
           <p className="text-lg text-purple-200 mb-12 leading-relaxed">
             I didn't build SVL to sell you something. I built it because I almost didn't make it.
@@ -682,17 +685,17 @@ export default function OurStoryPage() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8">
           <div>
             <h4 className="text-white font-bold mb-4">SVL</h4>
-            <p className="text-purple-300 text-sm">Sanders Viopro Labs. Unified under one mission: Keep People Alive.</p>
+            <p className="text-purple-300 text-sm">{pageCopy.footer.svlBody}</p>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-4">Products</h4>
+            <h4 className="text-white font-bold mb-4">{pageCopy.footer.products}</h4>
             <ul className="space-y-2 text-purple-300 text-sm">
               <li><Link href="/tokstore" className="hover:text-white transition">TokStore</Link></li>
               <li><Link href="/agent" className="hover:text-white transition">SVL Guardians</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-4">Resources</h4>
+            <h4 className="text-white font-bold mb-4">{pageCopy.footer.resources}</h4>
             <ul className="space-y-2 text-purple-300 text-sm">
               <li><Link href="/our-story" className="hover:text-white transition">Our Story</Link></li>
               <li><Link href="/svl-progress" className="hover:text-white transition">SVL Progress</Link></li>
@@ -700,12 +703,12 @@ export default function OurStoryPage() {
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-4">Mission</h4>
-            <p className="text-purple-300 text-sm">Keep People Alive. That's it. That's why we exist.</p>
+            <h4 className="text-white font-bold mb-4">{pageCopy.footer.mission}</h4>
+            <p className="text-purple-300 text-sm">{pageCopy.footer.missionBody}</p>
           </div>
         </div>
         <div className="border-t border-purple-800/30 mt-8 pt-8 text-center text-purple-400 text-sm">
-          <p>© 2026 Sanders Viopro Labs. Keep People Alive. Part of the KPA Mission.</p>
+          <p>{pageCopy.footer.copyright}</p>
         </div>
       </footer>
     </div>

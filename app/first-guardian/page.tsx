@@ -1,9 +1,15 @@
+'use client';
+
 import Link from "next/link";
 import { AGENTS } from "@/lib/lib/lib/agents";
+import { useSiteCopy } from "@/app/components/SiteLanguageControl";
 
 const agent = AGENTS["first-guardian"];
 
 export default function FirstGuardianPage() {
+  const copy = useSiteCopy();
+  const pageCopy = copy.firstGuardianPage;
+
   return (
     <div className="guardian-page">
       <section className="guardian-shell guardian-hero-shell">
@@ -11,33 +17,25 @@ export default function FirstGuardianPage() {
           <div className="hero-card hero-card-primary">
             <div className="pill-row">
               <span className="pill pill-soft">{agent.tagline}</span>
-              <span className="pill pill-outline">KPA System</span>
+              <span className="pill pill-outline">{pageCopy.systemPill}</span>
             </div>
 
             <h1 className="guardian-title">
-              The
+              {pageCopy.heroTitleTop}
               <br />
-              First Guardian
+              {pageCopy.heroTitleBottom}
             </h1>
 
-            <p className="guardian-lead">
-              The protector of the home. She talks it through first, then steps back before
-              disrespect turns into damage.
-            </p>
+            <p className="guardian-lead">{pageCopy.lead}</p>
 
-            <p className="guardian-story">
-              Built in honor of Cheria Michelle Daniels. Born on Juneteenth, June 19, 1989. A
-              legacy of family redemption, faith, and protective love translated into an SVL Guardian
-              with one non-negotiable boundary: KPA. The upgrades across SVL also stand here as
-              testimony of what God can and will do.
-            </p>
+            <p className="guardian-story">{pageCopy.story}</p>
 
             <div className="action-row">
               <Link href="/agent/first-guardian" className="cta cta-primary">
-                Enter Guardian Chat
+                {pageCopy.enterChat}
               </Link>
               <Link href="/agent/michelle" className="cta cta-secondary">
-                Open Michelle Alias
+                {pageCopy.openAlias}
               </Link>
             </div>
 
@@ -51,21 +49,12 @@ export default function FirstGuardianPage() {
           </div>
 
           <div className="hero-card hero-card-secondary">
-            <p className="section-label">KPA Boundary</p>
-            <h2 className="boundary-title">Talk first. Protect next. Exit when needed.</h2>
-            <p className="boundary-copy">
-              Michelle tries to talk about it before disappointment becomes conflict. If people
-              keep disrespecting boundaries, she removes herself to avoid issues, no matter who it
-              is.
-            </p>
+            <p className="section-label">{pageCopy.boundaryLabel}</p>
+            <h2 className="boundary-title">{pageCopy.boundaryTitle}</h2>
+            <p className="boundary-copy">{pageCopy.boundaryCopy}</p>
 
             <div className="compact-list">
-              {[
-                "KPA stays above ego, pride, and unnecessary arguments.",
-                "Children get protected from adult chaos.",
-                "If help is possible, she gives it plainly. If not, she leaves people alone.",
-                "If it does not concern business, family, or finances, she does not invite herself into it.",
-              ].map((item) => (
+              {pageCopy.boundaryItems.map((item) => (
                 <div key={item} className="compact-item">
                   {item}
                 </div>
@@ -78,7 +67,7 @@ export default function FirstGuardianPage() {
       <section className="guardian-shell guardian-lower-shell">
         <div className="lower-grid">
           <div className="lower-card voice-card">
-            <p className="section-label">Michelle's Voice</p>
+            <p className="section-label">{pageCopy.voiceLabel}</p>
             <div className="quote-grid">
               {(agent.signatureLines || []).map((line) => (
                 <div key={line} className="quote-card">
@@ -89,19 +78,12 @@ export default function FirstGuardianPage() {
           </div>
 
           <div className="lower-card presence-card">
-            <p className="section-label">Protective Presence</p>
+            <p className="section-label">{pageCopy.presenceLabel}</p>
             <div className="mission-note">
               <p className="mission-quote">
-                "Adding a guardian like Michelle to the SPL Guardian KPA strengthens our mission at
-                Sanders Viopro Labs. Each guardian plays a crucial role in keeping our communities
-                safe and healthy."
+                &quot;{pageCopy.missionQuote}&quot;
               </p>
-              <p className="mission-copy">
-                Mr. KPA's charge is simple: Keep People Alive. Michelle joins that mission as a
-                guardian for life, family, and community. The sandersvioprolabs.com upgrade and
-                the TokHealth plus TokThru build now stand beside her story as testimony of what
-                God can and will do.
-              </p>
+              <p className="mission-copy">{pageCopy.missionCopy}</p>
             </div>
 
             <div className="presence-list">
@@ -113,13 +95,7 @@ export default function FirstGuardianPage() {
             </div>
 
             <div className="mission-steps">
-              {[
-                "Orientation: Know the mission, the resources, and the role.",
-                "Collaboration: Build with the team and learn from every guardian.",
-                "Community engagement: Show up where families and neighborhoods need support.",
-                "Feedback loop: Speak up with insight so the mission keeps getting stronger.",
-                "Ongoing education: Stay sharp, informed, and aligned with KPA.",
-              ].map((item) => (
+              {pageCopy.missionSteps.map((item) => (
                 <div key={item} className="mission-step">
                   {item}
                 </div>
@@ -127,21 +103,17 @@ export default function FirstGuardianPage() {
             </div>
 
             <div className="acceptance-note">
-              <p className="acceptance-label">Michelle's Reply</p>
-              <p className="acceptance-copy">
-                Thank you for the warm welcome. I&apos;m ready to learn the role, build with the
-                team, show up for the community, speak with honesty, and keep growing with the
-                mission so we can protect life, family, and our shared values.
-              </p>
-              <p className="acceptance-close">"Let&apos;s roll up our sleeves and make a difference."</p>
+              <p className="acceptance-label">{pageCopy.replyLabel}</p>
+              <p className="acceptance-copy">{pageCopy.replyCopy}</p>
+              <p className="acceptance-close">&quot;{pageCopy.replyClose}&quot;</p>
             </div>
 
             <div className="action-stack">
               <Link href="/agent/first-guardian" className="stack-link">
-                Start with Michelle's live guardian
+                {pageCopy.startLive}
               </Link>
               <Link href="/agent" className="stack-link stack-link-muted">
-                Return to SVL Guardian Hub
+                {pageCopy.returnHub}
               </Link>
             </div>
           </div>
