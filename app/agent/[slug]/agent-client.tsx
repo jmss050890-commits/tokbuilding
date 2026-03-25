@@ -349,6 +349,56 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     }
   }
 
+  if (agent?.slug === "grace" && selectedVoice) {
+    const isMaleVoice = voiceLooksMale(selectedVoice.name);
+    if (isMaleVoice) {
+      // Wrong gender — force female
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const femaleVoice = englishVoices.find((voice) => voiceLooksFemale(voice.name));
+      if (femaleVoice) selectedVoice = femaleVoice;
+    }
+  }
+
+  if (agent?.slug === "a1" && selectedVoice) {
+    const isFemaleVoice = voiceLooksFemale(selectedVoice.name);
+    if (isFemaleVoice) {
+      // Wrong gender — force male
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const maleVoice = englishVoices.find((voice) => voiceLooksMale(voice.name));
+      if (maleVoice) selectedVoice = maleVoice;
+    }
+  }
+
+  if (agent?.slug === "coach-daniels" && selectedVoice) {
+    const isFemaleVoice = voiceLooksFemale(selectedVoice.name);
+    if (isFemaleVoice) {
+      // Wrong gender — force male
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const maleVoice = englishVoices.find((voice) => voiceLooksMale(voice.name));
+      if (maleVoice) selectedVoice = maleVoice;
+    }
+  }
+
+  if (agent?.slug === "tokseo" && selectedVoice) {
+    const isMaleVoice = voiceLooksMale(selectedVoice.name);
+    if (isMaleVoice) {
+      // Wrong gender — force female
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const femaleVoice = englishVoices.find((voice) => voiceLooksFemale(voice.name));
+      if (femaleVoice) selectedVoice = femaleVoice;
+    }
+  }
+
+  if (agent?.slug === "tok2myia" && selectedVoice) {
+    const isMaleVoice = voiceLooksMale(selectedVoice.name);
+    if (isMaleVoice) {
+      // Wrong gender — force female
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const femaleVoice = englishVoices.find((voice) => voiceLooksFemale(voice.name));
+      if (femaleVoice) selectedVoice = femaleVoice;
+    }
+  }
+
   if (agent?.slug === "tokfaith" && selectedVoice && voiceLooksMale(selectedVoice.name) && !isMobile) {
     selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences || TOKFAITH_FEMALE_VOICE_PATTERNS);
   }
