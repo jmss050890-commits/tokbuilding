@@ -92,7 +92,7 @@ export default function FirstGuardianPage() {
             <p className="section-label">Protective Presence</p>
             <div className="mission-note">
               <p className="mission-quote">
-                "Adding a guardian like Michelle to the SPL Agent KPA strengthens our mission at
+                "Adding a guardian like Michelle to the SPL Guardian KPA strengthens our mission at
                 Sanders Viopro Labs. Each guardian plays a crucial role in keeping our communities
                 safe and healthy."
               </p>
@@ -138,10 +138,10 @@ export default function FirstGuardianPage() {
 
             <div className="action-stack">
               <Link href="/agent/first-guardian" className="stack-link">
-                Start with Michelle's live agent
+                Start with Michelle's live guardian
               </Link>
               <Link href="/agent" className="stack-link stack-link-muted">
-                Return to SVL Agent Hub
+                Return to SVL Guardian Hub
               </Link>
             </div>
           </div>

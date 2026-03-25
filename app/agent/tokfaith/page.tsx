@@ -1,8 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Heart, Send, Loader2, Zap, Users } from 'lucide-react';
+import { Heart, Send, Loader2, Mic } from 'lucide-react';
 import Link from 'next/link';
+import {
+  getSpeechRecognitionAPI,
+  type SpeechRecognitionEventLike,
+  type SpeechRecognitionLike,
+} from '@/lib/browser-speech';
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 
 interface Message {
@@ -33,7 +38,10 @@ export default function TokFaithAgent() {
   const [currentPerspective, setCurrentPerspective] = useState('ethiopian-with-kjv-option');
   const [perspectiveHistory, setPerspectiveHistory] = useState({});
   const [voiceMode, setVoiceMode] = useState<'tokfaith' | 'jerome' | 'mrkpa'>('tokfaith');
+  const [isListening, setIsListening] = useState(false);
+  const [promptRotationIndex, setPromptRotationIndex] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   // Welcome audio on mount
   const welcomeMessage = 'Peace to you. I am TokFaith. When you have a question that touches your spirit—about faith, your struggles, your identity—bring it here. I will listen deeply and show you wisdom from both the Ethiopian Canon and the King James tradition.';
@@ -56,18 +64,29 @@ export default function TokFaithAgent() {
       "Give me the fatherly truth I need right now",
       "Talk big brother real to me about discipline",
       "Help me think clearly about my next move",
+      "Tell me what keeps people alive in this situation",
+      "Give me Jerome-level honesty about this pressure",
     ],
     mrkpa: [
       "What does Mr. KPA see in my situation?",
       "Guide me with fatherly wisdom",
       "How do I make the next honest decision?",
+      "What keeps me alive and moving forward here?",
+      "Talk strategy to me without sugarcoating it",
     ],
     tokfaith: [
       "Show me Ethiopian scripture wisdom on this",
       "What does the King James say about my struggle?",
       "Help me find faith in this moment",
+      "Teach me faith during crisis and uncertainty",
+      "Give me a scripture-based next step for today",
     ],
   };
+
+  const visiblePrompts = Array.from({ length: Math.min(3, quickPrompts[voiceMode].length) }, (_, index) => {
+    const promptIndex = (promptRotationIndex + index) % quickPrompts[voiceMode].length;
+    return quickPrompts[voiceMode][promptIndex];
+  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -76,6 +95,20 @@ export default function TokFaithAgent() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    setPromptRotationIndex(0);
+
+    if (quickPrompts[voiceMode].length <= 3) {
+      return;
+    }
+
+    const rotationTimer = window.setInterval(() => {
+      setPromptRotationIndex((currentIndex) => (currentIndex + 1) % quickPrompts[voiceMode].length);
+    }, 3600);
+
+    return () => window.clearInterval(rotationTimer);
+  }, [voiceMode]);
 
   const handleSendMessage = async () => {
     if (!input.trim() || loading) return;
@@ -163,6 +196,68 @@ export default function TokFaithAgent() {
     // The next message will use the new perspective
   };
 
+  const handlePromptClick = (prompt: string) => {
+    setInput(prompt);
+    setPromptRotationIndex((currentIndex) => (currentIndex + 1) % quickPrompts[voiceMode].length);
+
+    window.setTimeout(() => {
+      setInput(prompt);
+      handleSendMessage();
+    }, 0);
+  };
+
+  const stopMic = () => {
+    setIsListening(false);
+    try {
+      recognitionRef.current?.stop();
+    } catch {
+      // Ignore stop errors from already-completed sessions.
+    }
+  };
+
+  const toggleMic = () => {
+    if (isListening) {
+      stopMic();
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const SpeechRecognitionAPI = getSpeechRecognitionAPI(window);
+      if (!SpeechRecognitionAPI) {
+        alert('Voice input not supported in this browser.');
+        return;
+      }
+
+      const recognition = new SpeechRecognitionAPI();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => setIsListening(true);
+      recognition.onresult = (event: SpeechRecognitionEventLike) => {
+        const transcript = Array.from(
+          { length: event.results.length },
+          (_, index) => event.results[index][0].transcript,
+        ).join('');
+
+        setInput(transcript);
+
+        if (event.results[event.results.length - 1].isFinal) {
+          stopMic();
+        }
+      };
+      recognition.onerror = () => stopMic();
+      recognition.onend = () => setIsListening(false);
+      recognitionRef.current = recognition;
+    }
+
+    try {
+      recognitionRef.current.start();
+    } catch {
+      // Ignore repeated starts while the browser is already listening.
+    }
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -197,7 +292,7 @@ export default function TokFaithAgent() {
                 href="/agent"
                 className="text-amber-200 hover:text-amber-100 transition"
               >
-                All Agents
+                All Guardians
               </Link>
             </div>
           </div>
@@ -328,89 +423,10 @@ export default function TokFaithAgent() {
           <div className="space-y-2">
             <p className="text-xs text-amber-200/70">Quick prompts:</p>
             <div className="flex gap-2 flex-wrap">
-              {quickPrompts[voiceMode].map((prompt, idx) => (
+              {visiblePrompts.map((prompt) => (
                 <button
-                  key={idx}
-                  onClick={() => {
-                    setInput(prompt);
-                    // Auto-send the prompt after setting it
-                    setTimeout(async () => {
-                      const userMessage = prompt;
-                      setInput('');
-
-                      // Add user message
-                      const userMessageId = Date.now().toString();
-                      setMessages((prev) => [
-                        ...prev,
-                        {
-                          id: userMessageId,
-                          type: 'user',
-                          content: userMessage,
-                        } as Message,
-                      ]);
-
-                      setLoading(true);
-
-                      try {
-                        const systemContext = 
-                          voiceMode === 'jerome'
-                            ? 'You are TokFaith speaking with Jerome Sanders\'s fatherly wisdom. Be direct, honest, and compassionate. Use his philosophy: "Do not just ask what sounds good. Ask what keeps people alive." Answer with the kind of fatherly truth Jerome would give.'
-                            : voiceMode === 'mrkpa'
-                              ? 'You are Mr. KPA speaking to guide this person. Be a protective, strong big brother. Use fatherly wisdom combined with practical strategy. Help them see what decision keeps them alive.'
-                              : '';
-
-                        const response = await fetch('/api/tokfaith', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            message: userMessage,
-                            forcePerspective: currentPerspective,
-                            systemContext,
-                          }),
-                        });
-
-                        const data = await response.json();
-
-                        if (!response.ok) {
-                          throw new Error(data.error || 'Failed to get response from TokFaith');
-                        }
-
-                        // Store perspective option for this message
-                        setPerspectiveHistory((prev) => ({
-                          ...prev,
-                          [userMessageId]: data.perspectives,
-                        }));
-
-                        // Add assistant response
-                        setMessages((prev) => [
-                          ...prev,
-                          {
-                            id: Date.now().toString(),
-                            type: 'assistant',
-                            content: data.response,
-                            perspective: data.perspective,
-                            description: data.description,
-                            perspectives: data.perspectives,
-                          } as Message,
-                        ]);
-
-                        setCurrentPerspective(data.perspectives.current);
-                      } catch (error) {
-                        console.error('Error:', error);
-                        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                        setMessages((prev) => [
-                          ...prev,
-                          {
-                            id: Date.now().toString(),
-                            type: 'assistant-error',
-                            content: `I encountered an error: ${errorMessage}. Please try again.`,
-                          } as Message,
-                        ]);
-                      }
-
-                      setLoading(false);
-                    }, 50);
-                  }}
+                  key={prompt}
+                  onClick={() => handlePromptClick(prompt)}
                   className="px-3 py-1.5 rounded text-xs bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60 hover:bg-slate-700/60 transition"
                 >
                   {prompt}
@@ -434,27 +450,41 @@ export default function TokFaithAgent() {
           </div>
 
           {/* Message Input */}
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Bring your questions, struggles, or thoughts..."
-              className="flex-1 px-4 py-3 bg-slate-800 border border-amber-700/50 text-amber-50 placeholder-amber-200/40 rounded-lg focus:outline-none focus:border-amber-600/80 focus:ring-1 focus:ring-amber-600/30 resize-none"
-              rows={3}
+              className="min-h-14 max-h-32 flex-1 px-4 py-3 bg-slate-800 border border-amber-700/50 text-amber-50 placeholder-amber-200/40 rounded-lg focus:outline-none focus:border-amber-600/80 focus:ring-1 focus:ring-amber-600/30 resize-y"
+              rows={2}
             />
-            <button
-              onClick={handleSendMessage}
-              disabled={!input.trim() || loading}
-              className="px-6 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 disabled:from-slate-700 disabled:to-slate-700 text-slate-900 font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2 flex-shrink-0"
-            >
-              {loading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )}
-              Send
-            </button>
+            <div className="flex gap-3 md:flex-shrink-0">
+              <button
+                onClick={toggleMic}
+                disabled={loading}
+                className={`px-4 py-3 font-bold rounded-lg transition flex items-center justify-center gap-2 border ${
+                  isListening
+                    ? 'bg-amber-500 text-slate-950 border-amber-300 shadow-[0_0_18px_rgba(245,158,11,0.45)]'
+                    : 'bg-slate-800 text-amber-200 border-amber-700/50 hover:border-amber-500/80 hover:bg-slate-700/70'
+                }`}
+              >
+                <Mic className="w-4 h-4" />
+                {isListening ? 'Listening...' : 'Speak'}
+              </button>
+              <button
+                onClick={handleSendMessage}
+                disabled={!input.trim() || loading}
+                className="px-6 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 disabled:from-slate-700 disabled:to-slate-700 text-slate-900 font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+                Send
+              </button>
+            </div>
           </div>
 
           <p className="text-xs text-amber-200/50 text-center">
