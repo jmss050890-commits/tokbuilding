@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Play, MessageCircle, Share2, Radio } from 'lucide-react';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
 const mediaContent = [
   {
@@ -11,7 +12,7 @@ const mediaContent = [
     duration: "1:27:58",
     category: "Current Affairs",
     tags: ["government shutdown", "TSA", "ICE", "community"],
-    description: "Through the Government Shutdown, airport lines, and policy impacts, Reese explores how crisis navigation affects real people. Where SVL's protection mission intersects with everyday safety.",
+    description: "Through the Government Shutdown, airport lines, and policy impacts, Reese explores how crisis navigation affects real people. Where SVL's protection mission intersects with everyday safety, and where the follow-on community thread reaches a Philippines-based team studying the same Ethiopian Bible.",
     featured: true,
     engagement: {
       comments: 28,
@@ -36,22 +37,22 @@ const mediaContent = [
 ];
 
 export default function MediaHub() {
+  const copy = useSiteCopy();
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#111", color: "#fff", paddingBottom: 60 }}>
       {/* Header */}
       <div style={{ borderBottom: "2px solid #e05c1a", paddingBottom: 40, paddingTop: 60, marginBottom: 40 }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", paddingLeft: 20, paddingRight: 20 }}>
-          <h1 style={{ margin: 0, fontSize: 48, marginBottom: 16, fontWeight: "bold" }}>SVL Media & Voices</h1>
+          <h1 style={{ margin: 0, fontSize: 48, marginBottom: 16, fontWeight: "bold" }}>{copy.mediaHub.title}</h1>
           <p style={{ margin: 0, fontSize: 18, color: "#bbb", lineHeight: 1.6 }}>
-            Real people. Real stories. Real protection. Where the SVL mission speaks through community voices, crisis response, 
-            and the faith work that keeps people alive.
+            {copy.mediaHub.intro}
           </p>
         </div>
       </div>
 
       {/* Featured */}
       <div style={{ maxWidth: 1200, margin: "0 auto", paddingLeft: 20, paddingRight: 20, marginBottom: 60 }}>
-        <h2 style={{ fontSize: 28, marginBottom: 24, marginTop: 0 }}>Featured: Current Crisis & Community</h2>
+        <h2 style={{ fontSize: 28, marginBottom: 24, marginTop: 0 }}>{copy.mediaHub.featuredTitle}</h2>
         {mediaContent
           .filter((m) => m.featured)
           .map((media) => (
@@ -104,7 +105,7 @@ export default function MediaHub() {
 
                   {media.highlights && (
                     <div style={{ marginBottom: 20 }}>
-                      <p style={{ margin: "0 0 10px 0", fontSize: 12, color: "#999", fontWeight: "bold" }}>Key Topics:</p>
+                      <p style={{ margin: "0 0 10px 0", fontSize: 12, color: "#999", fontWeight: "bold" }}>{copy.mediaHub.keyTopics}</p>
                       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                         {media.highlights.map((h) => (
                           <span
@@ -161,7 +162,7 @@ export default function MediaHub() {
                     }}
                   >
                     <Play style={{ width: 16, height: 16 }} />
-                    Listen
+                    {copy.mediaHub.listen}
                   </button>
                   <button
                     style={{
@@ -180,7 +181,7 @@ export default function MediaHub() {
                     }}
                   >
                     <Share2 style={{ width: 16, height: 16 }} />
-                    Share
+                    {copy.mediaHub.share}
                   </button>
                 </div>
               </div>
@@ -190,10 +191,9 @@ export default function MediaHub() {
 
       {/* Community Stories */}
       <div style={{ maxWidth: 1200, margin: "0 auto", paddingLeft: 20, paddingRight: 20, marginBottom: 60 }}>
-        <h2 style={{ fontSize: 28, marginBottom: 24, marginTop: 0 }}>Voices from the Community</h2>
+        <h2 style={{ fontSize: 28, marginBottom: 24, marginTop: 0 }}>{copy.mediaHub.voicesTitle}</h2>
         <p style={{ fontSize: 16, color: "#bbb", marginBottom: 32, lineHeight: 1.7 }}>
-          SVL isn't built in isolation. It's built in the real world—in crisis, in conversation, in the spaces where people 
-          are trying to survive and help others do the same. These are the voices speaking SVL's mission from the ground.
+          {copy.mediaHub.voicesBody}
         </p>
 
         <Link href="/community-stories" style={{ textDecoration: "none" }}>
@@ -209,7 +209,7 @@ export default function MediaHub() {
               fontSize: 16,
             }}
           >
-            View All Community Stories
+            {copy.mediaHub.allStories}
           </button>
         </Link>
       </div>
@@ -228,10 +228,9 @@ export default function MediaHub() {
           textAlign: "center",
         }}
       >
-        <h2 style={{ margin: "0 0 12px 0", fontSize: 24 }}>Your Voice Matters</h2>
+        <h2 style={{ margin: "0 0 12px 0", fontSize: 24 }}>{copy.mediaHub.ctaTitle}</h2>
         <p style={{ margin: "0 0 24px 0", fontSize: 16, color: "#ddd", lineHeight: 1.6 }}>
-          Are you speaking SVL's mission in your community? Recording, teaching, or sharing the KPA work? 
-          Connect with us.
+          {copy.mediaHub.ctaBody}
         </p>
         <a
           href="mailto:jerome@sandersvioprolabs.com"
@@ -246,7 +245,7 @@ export default function MediaHub() {
             cursor: "pointer",
           }}
         >
-          Share Your Story
+          {copy.mediaHub.ctaButton}
         </a>
       </div>
     </div>

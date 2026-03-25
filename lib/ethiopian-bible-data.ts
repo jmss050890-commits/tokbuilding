@@ -144,7 +144,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 4,
         text: `This is the history of the division of the days of the law and of the testimony, of the events of the years, of their (the years') weeks, of their jubilees throughout all the years of the world, as the Lord spake to Moses on Mount Sinai when he came down to give to him the two tables of the division of the years, the jubilees, according to the individual years. And He said: 'Write down everything; for I know that the children of Israel will not keep the statutes and the ordinances which I am telling thee this day. For I know their transgressions and the stubbornness of their hearts. And when they have many blessings, they will turn to gods that cannot help them, and they will call upon gods fashioned of stone, and will incense and adore worthless and demonic gods.'`,
-        sourceNote: "1917 translation by R.H. Charles"
+        sourceNote: "1917 translation by R.H. Charles",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Exodus",
+          kjvChapter: 34,
+          kjvStartVerse: 1,
+          kjvEndVerse: 3,
+          kjvText: `And the LORD said unto Moses, Hew thee two tables of stone like unto the first: and I will write upon these tables the words that were in the first tables, which thou brakest. And be ready in the morning, and come up in the morning unto mount Sinai, and present thyself there to me in the top of the mount. And no man shall come up with thee, neither let any man be seen throughout all the mount; neither let the flocks nor herds feed before that mount.`,
+          kjvSourceNote: "King James Bible - Exodus 34:1-3",
+          theologicalConnection: "Jubilees preserves Moses receiving the divine law at Mount Sinai, directly paralleling the Exodus account in the KJV but with additional detail about God's foreknowledge of Israel's future disobedience."
+        }
       },
       {
         book: "Jubilees",
@@ -201,7 +211,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 15,
         text: `I will write down the mighty acts of the kings of Ethiopia descended from the Solomonid line, and the succession of their kingdom. And these are they who received the Law and the Ark of the Covenant of the Lord from Jerusalem, and kept and observed the ordinances of God which were given to Israel. For the Lord chose this nation from among all the nations of the earth, and He set His love upon them, saying: "You shall be my people, and I shall be your God." Therefore, the kings of Ethiopia have held the Ark sacred, and have ruled according to the law of God.`,
-        sourceNote: "Ethiopian Orthodox tradition (translation for modern readers)"
+        sourceNote: "Ethiopian Orthodox tradition (translation for modern readers)",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "1 Kings",
+          kjvChapter: 10,
+          kjvStartVerse: 1,
+          kjvEndVerse: 13,
+          kjvText: `And when the queen of Sheba heard of the fame of Solomon concerning the name of the LORD, she came to prove him with hard questions. And she came to Jerusalem with a very great train, with camels that bare spices, and very much gold, and precious stones: and when she was come to Solomon, she communed with him of all that was in her heart.`,
+          kjvSourceNote: "King James Bible - 1 Kings 10:1-2",
+          theologicalConnection: "Meqabyan preserves the Ethiopian royal lineage traced through the Queen of Sheba and Solomon, recording the dynasty that carried the Ark of the Covenant to Ethiopia—historical records of this relationship barely mentioned in the KJV but central to Ethiopian Christianity."
+        }
       },
       {
         book: "Meqabyan",
@@ -209,7 +229,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 10,
         text: `And the king shall be just and merciful to his people, for the Lord hath chosen him to shepherd His flock. He shall judge with righteousness and shall not turn aside from the law. And all his days he shall remember that he is but a servant of the Most High, and that the Ark of the Covenant is the treasure of his kingdom. Blessed is the nation that hath such a king, for the Lord shall preserve it and bless all the works of its hands.`,
-        sourceNote: "Ethiopian Orthodox tradition"
+        sourceNote: "Ethiopian Orthodox tradition",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Psalms",
+          kjvChapter: 89,
+          kjvStartVerse: 15,
+          kjvEndVerse: 18,
+          kjvText: `Blessed is the people that know the joyful sound: they shall walk, O LORD, in the light of thy countenance. In thy name shall they rejoice all the day: and in thy righteousness shall they be exalted.`,
+          kjvSourceNote: "King James Bible - Psalms 89:15-16",
+          theologicalConnection: "Meqabyan's teachings on righteous kingship echo the Psalms' vision of blessed rule, but Meqabyan applies these principles specifically to the Ethiopian monarchy as guardians of the Ark—fulfilling an ancient covenant not explicitly addressed in the KJV."
+        }
       },
       {
         book: "Meqabyan",
@@ -217,7 +247,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 8,
         text: `And the glory of Ethiopia shall extend from sea to sea, and from the river to the ends of the earth, because the Lord hath set His blessing upon its throne. And in the last days, when many nations shall seek wisdom and knowledge, they shall come to Ethiopia, saying: 'Where is the Ark of the Covenant of the Lord? Teach us the ways of God.' And the keepers of the Ark shall respond with gladness and shall teach all nations the commandments of the Most High.`,
-        sourceNote: "Ethiopian Orthodox tradition"
+        sourceNote: "Ethiopian Orthodox tradition",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Isaiah",
+          kjvChapter: 45,
+          kjvStartVerse: 22,
+          kjvEndVerse: 24,
+          kjvText: `Look unto me, and be ye saved, all the ends of the earth: for I am God, and there is none else. I have sworn by myself, the word is gone out of my mouth in righteousness, and shall not return.`,
+          kjvSourceNote: "King James Bible - Isaiah 45:22",
+          theologicalConnection: "Meqabyan's prophecy about Ethiopia becoming a beacon of spiritual wisdom and the Ark's centrality parallels Isaiah's vision of God's salvation reaching the ends of the earth—with Ethiopia understood as the fulfillment of this Isaianic promise."
+        }
       }
     ]
   },
@@ -234,7 +274,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 10,
         text: `All wisdom comes from the Lord and is with him forever. The sand of the sea, the drops of rain, and the days of eternity—who can count them? The height of heaven, the breadth of the earth, the depth of the abyss—who can explore these? Wisdom was created before all other things, and prudent understanding from eternity. The root of wisdom—to whom has it been revealed? Her clever devices—who knows them? There is but one who is wise, greatly to be feared, seated upon his throne—the Lord. It is he who created her; he saw her and took her measure; he poured her out upon all his works.`,
-        sourceNote: "Catholic/Orthodox Apocrypha texts"
+        sourceNote: "Catholic/Orthodox Apocrypha texts",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Proverbs",
+          kjvChapter: 8,
+          kjvStartVerse: 1,
+          kjvEndVerse: 11,
+          kjvText: `Doth not wisdom cry? and understanding put forth her voice? She standeth in the top of high places, by the way in the places of the paths. She crieth at the gates, at the entry of the city, at the coming in at the doors: Hear; for I will speak of excellent things; and the opening of my lips shall be right things.`,
+          kjvSourceNote: "King James Bible - Proverbs 8:1-6",
+          theologicalConnection: "Sirach expands Proverbs' personification of Wisdom as a divine emanation, providing detailed practical wisdom teachings (ethics, family, friendship) that fill the gap between Proverbs' poetry and Job's questioning."
+        }
       },
       {
         book: "Sirach",
@@ -242,7 +292,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 16,
         text: `Children, listen to your father's instruction, pay attention so that you may gain understanding. The Lord honors the father above the children, and he confirms the right of the mother over her sons. Whoever honors his father atones for sins, and whoever respects his mother is like one who lays up treasure. Whoever honors his father will have joy from his own children, and when he prays, he will be heard. Whoever respects his father will have long life, and whoever obeys the Lord honors his mother.`,
-        sourceNote: "Douay-Rheims Apocrypha"
+        sourceNote: "Douay-Rheims Apocrypha",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Exodus",
+          kjvChapter: 20,
+          kjvStartVerse: 12,
+          kjvEndVerse: 12,
+          kjvText: `Honour thy father and thy mother: that thy days may be long upon the land which the LORD thy God giveth thee.`,
+          kjvSourceNote: "King James Bible - Exodus 20:12 (Fifth Commandment)",
+          theologicalConnection: "Sirach develops the fifth commandment into detailed teachings on family honor, showing how honoring parents leads to personal blessing and social harmony—extending Mosaic law into practical family ethics."
+        }
       },
       {
         book: "Sirach",
@@ -250,7 +310,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 5,
         endVerse: 17,
         text: `A faithful friend is a strong defense: and he that hath found him, hath found a treasure. Nothing can be compared to a faithful friend, and no weight of gold and silver is able to countervail the goodness of his fidelity. A faithful friend is the medicine of life and immortality: and they that fear the Lord shall find him. He that feareth God shall likewise have good friendship: because according to his virtue his friend shall be like to him.`,
-        sourceNote: "Douay-Rheims Apocrypha"
+        sourceNote: "Douay-Rheims Apocrypha",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Proverbs",
+          kjvChapter: 17,
+          kjvStartVerse: 17,
+          kjvEndVerse: 17,
+          kjvText: `A friend loveth at all times, and a brother is born for adversity.`,
+          kjvSourceNote: "King James Bible - Proverbs 17:17",
+          theologicalConnection: "Sirach develops the Proverbs' reference to friendship into an extended meditation on its spiritual value and healing power—showing friendship as divine gift and path to spiritual immortality."
+        }
       },
       {
         book: "Sirach",
@@ -258,7 +328,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 12,
         text: `The wisdom of a humble man shall lift up his head, and shall make him sit in the midst of great men. Despise not a man in his sickness for the sake of that he is sick: neither despise a man that is in the decline of his days. For the falling away of man is easy in the sight of God. And he that is fallen to-day may rise to-morrow. A soft answer breaketh wrath: but a harsh word stirreth up anger.`,
-        sourceNote: "Douay-Rheims Apocrypha"
+        sourceNote: "Douay-Rheims Apocrypha",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Proverbs",
+          kjvChapter: 15,
+          kjvStartVerse: 1,
+          kjvEndVerse: 1,
+          kjvText: `A soft answer turneth away wrath: but grievous words stir up anger.`,
+          kjvSourceNote: "King James Bible - Proverbs 15:1",
+          theologicalConnection: "Sirach reinforces Proverbs' wisdom about humility and gentle speech while adding protection theology—the principle that compassion shown to the afflicted brings divine grace and restoration."
+        }
       },
       {
         book: "Sirach",
@@ -266,7 +346,17 @@ export const EthiopianBibleBooks: Record<string, BiblicalBook> = {
         startVerse: 1,
         endVerse: 10,
         text: `He that showeth mercy, lendeth to his neighbor: and he that is strong in hand, keepeth the commandments. Lend to thy neighbor in the time of his need, and pay thou thy neighbor again in due time. Keep thy word and deal faithfully with him, and thou shalt always find that which thou needest. Many have refused to lend, not out of wickedness, but from fear of losing their substance. But be thou fruitful in mercy with him that needeth thee.`,
-        sourceNote: "Douay-Rheims Apocrypha"
+        sourceNote: "Douay-Rheims Apocrypha",
+        version: "Both",
+        kjvParallel: {
+          kjvBook: "Proverbs",
+          kjvChapter: 22,
+          kjvStartVerse: 9,
+          kjvEndVerse: 9,
+          kjvText: `He that hath a bountiful eye shall be blessed; for he giveth of his bread to the poor.`,
+          kjvSourceNote: "King James Bible - Proverbs 22:9",
+          theologicalConnection: "Sirach expands Proverbs' instruction on generosity into a comprehensive ethical teaching that merciful lending honors God, fulfills commandments, and creates reciprocal divine blessing—mercy as both moral duty and spiritual investment."
+        }
       }
     ]
   },

@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
 export default function TokHealthLanding() {
   const [selectedPlan, setSelectedPlan] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const copy = useSiteCopy();
 
   const plans = [
     {
@@ -51,13 +53,13 @@ export default function TokHealthLanding() {
           </div>
           <div className="flex gap-6">
             <a href="#features" className="hover:text-teal-400 transition">
-              Features
+              {copy.tokhealthLanding.nav.features}
             </a>
             <a href="#languages" className="hover:text-teal-400 transition">
-              Languages
+              {copy.tokhealthLanding.nav.languages}
             </a>
             <a href="#pricing" className="hover:text-teal-400 transition">
-              Pricing
+              {copy.tokhealthLanding.nav.pricing}
             </a>
           </div>
         </div>
@@ -68,32 +70,32 @@ export default function TokHealthLanding() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-block mb-4 px-4 py-2 rounded-full bg-green-900/40 border border-green-700/60">
-              <span className="text-sm text-green-300">Your Health, Your Control</span>
+              <span className="text-sm text-green-300">{copy.tokhealthLanding.badge}</span>
             </div>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Health Information at Your <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Fingertips</span>
+              {copy.tokhealthLanding.heroTitle}
             </h2>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-              Keep critical health data accessible during emergencies. TokHealth ensures your medical history, medications, and emergency contacts are always available—even if you can't speak.
+              {copy.tokhealthLanding.heroBody}
             </p>
             <div className="flex gap-4 mb-8">
               <button
                 onClick={() => setShowModal(true)}
                 className="px-8 py-3 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 font-bold transition transform hover:scale-105"
               >
-                Download Now
+                {copy.tokhealthLanding.primaryCta}
               </button>
               <a
                 href="#features"
                 className="px-8 py-3 rounded-lg border border-green-600 hover:bg-green-900/30 font-bold transition"
               >
-                Learn More
+                {copy.tokhealthLanding.secondaryCta}
               </a>
             </div>
             <div className="flex gap-6 text-sm text-slate-400">
-              <div>⭐ 4.9 Rating</div>
-              <div>📥 25K+ Downloads</div>
-              <div>🔒 End-to-End Encrypted</div>
+              <div>⭐ {copy.tokhealthLanding.stats[0]}</div>
+              <div>📥 {copy.tokhealthLanding.stats[1]}</div>
+              <div>🔒 {copy.tokhealthLanding.stats[2]}</div>
             </div>
           </div>
 
@@ -117,9 +119,9 @@ export default function TokHealthLanding() {
       {/* Features Section */}
       <section id="features" className="bg-green-900/20 border-y border-green-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">Why Doctors Trust TokHealth</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center">{copy.tokhealthLanding.featuresTitle}</h2>
           <p className="text-center text-slate-300 mb-16 max-w-2xl mx-auto">
-            Real-time medical data that saves lives in critical moments.
+            {copy.tokhealthLanding.featuresBody}
           </p>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -218,8 +220,8 @@ export default function TokHealthLanding() {
       {/* Pricing Section */}
       <section id="pricing" className="bg-green-900/20 border-y border-green-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">Simple Pricing</h2>
-          <p className="text-center text-slate-300 mb-16">Choose your plan</p>
+          <h2 className="text-4xl font-bold mb-4 text-center">{copy.tokhealthLanding.pricingTitle}</h2>
+          <p className="text-center text-slate-300 mb-16">{copy.tokhealthLanding.pricingBody}</p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
             {plans.map((plan, idx) => (
@@ -253,7 +255,7 @@ export default function TokHealthLanding() {
                       : 'bg-slate-700 hover:bg-slate-600'
                   }`}
                 >
-                  Choose Plan
+                  {copy.tokhealthLanding.choosePlan}
                 </button>
               </div>
             ))}
@@ -267,7 +269,7 @@ export default function TokHealthLanding() {
 
       {/* Trust Section */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold mb-12 text-center">Trusted by Healthcare Professionals</h2>
+        <h2 className="text-3xl font-bold mb-12 text-center">{copy.tokhealthLanding.trustedTitle}</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="text-3xl font-bold text-green-400 mb-2">4.9★</div>
@@ -287,15 +289,15 @@ export default function TokHealthLanding() {
       {/* CTA Section */}
       <section className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border-t border-green-800/30 py-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">Your Health Data, Your Control</h2>
+          <h2 className="text-3xl font-bold mb-4">{copy.tokhealthLanding.finalTitle}</h2>
           <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-            Start building your health profile today. Be prepared for any emergency.
+            {copy.tokhealthLanding.finalBody}
           </p>
           <button
             onClick={() => setShowModal(true)}
             className="px-8 py-4 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 font-bold text-lg transition transform hover:scale-105"
           >
-            Download TokHealth
+            {copy.tokhealthLanding.downloadTokHealth}
           </button>
         </div>
       </section>
@@ -344,7 +346,7 @@ export default function TokHealthLanding() {
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
           <div className="bg-slate-900 rounded-2xl p-8 max-w-md w-full mx-4 border border-green-700/40">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold">Get TokHealth</h3>
+              <h3 className="text-2xl font-bold">{copy.tokhealthLanding.getTokHealth}</h3>
               <button
                 onClick={() => setShowModal(false)}
                 className="text-slate-400 hover:text-white text-2xl"
@@ -363,14 +365,14 @@ export default function TokHealthLanding() {
               onClick={() => setShowModal(false)}
               className="w-full block text-center px-6 py-3 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 font-bold transition mb-3"
             >
-              Go to TokStore
+              {copy.tokhealthLanding.goToTokStore}
             </Link>
 
             <button
               onClick={() => setShowModal(false)}
               className="w-full px-6 py-3 rounded-lg border border-green-600 hover:bg-green-900/30 font-bold transition"
             >
-              Cancel
+              {copy.tokhealthLanding.cancel}
             </button>
           </div>
         </div>

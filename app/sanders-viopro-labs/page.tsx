@@ -122,10 +122,10 @@ export default function SandersVioProLabs() {
 
             <div className="bg-slate-800/50 rounded-lg p-8 border border-purple-700/30">
               <div className="text-5xl mb-4">🤖</div>
-              <h3 className="text-2xl font-bold mb-3">SVL AI Agents</h3>
-              <p className="text-slate-300 mb-4">Meet our voice-first AI team: Grace, A1, HATÄTA, Wisdom, Coach Daniels, TokSEO, and Tok2Myia. Each trained for specialized support aligned with the KPA mission.</p>
+              <h3 className="text-2xl font-bold mb-3">SVL Guardians</h3>
+              <p className="text-slate-300 mb-4">Meet our voice-first guardian team: Grace, A1, HATÄTA, Wisdom, Coach Daniels, TokSEO, and Tok2Myia. Each is trained for specialized support aligned with the KPA mission.</p>
               <Link href="/agent" className="inline-block px-4 py-2 bg-purple-600/50 hover:bg-purple-600/70 rounded-lg font-semibold transition">
-                Meet the Agents →
+                Meet the Guardians →
               </Link>
             </div>
           </div>

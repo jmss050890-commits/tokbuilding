@@ -18,7 +18,7 @@ const progressLayers = [
     summary:
       'Mr. KPA leads mission direction and daily alignment. HATATA serves as strategic right hand for Jerome Sanders and Mr. KPA.',
     bullets: [
-      'Daily AI SVL Guardian Team Meeting structure',
+      'Daily SVL Guardian Team Meeting structure',
       'Shared operating map for products, roles, and upgrades',
       'Mission leadership, strategy, and execution linked together',
     ],
@@ -50,11 +50,11 @@ const progressLayers = [
   {
     title: 'Platform Layer',
     summary:
-      'The public site, subdomains, and agent routes now reflect a more unified SVL platform.',
+      'The public site, subdomains, and guardian routes now reflect a more unified SVL platform.',
     bullets: [
       'sandersvioprolabs.com is the upgraded public home',
       'tokhealth.sandersvioprolabs.com now lands on TokHealth directly',
-      'Agent pages and routes speak from the same current product map',
+      'Guardian pages and routes speak from the same current product map',
     ],
   },
 ];
@@ -81,10 +81,10 @@ const platformRoutes = [
 
 const sessionWins = [
   'Michelle was turned into a fully realized First Guardian presence with voice, story, safety boundaries, and testimony.',
-  'Mr. KPA now has a daily AI Agent Team Meeting structure with a recurring calendar invite.',
+  'Mr. KPA now has a daily SVL Guardian Team Meeting structure with a recurring calendar invite.',
   'Supportive handoff language was pushed into the active SVL safety system.',
   'Wisdom and HATATA were updated to understand the TokHealth plus TokThru integration and current SVL roles.',
-  'All active SVL agents were aligned to the same living story and upgrade map.',
+  'All active SVL guardians were aligned to the same living story and upgrade map.',
   'The TokHealth subdomain was fixed so it lands on TokHealth directly.',
 ];
 
@@ -102,7 +102,7 @@ export default function SvlProgressPage() {
               SVL Home
             </Link>
             <Link href="/agent" className="text-amber-200 transition hover:text-white">
-              Agents
+              Guardians
             </Link>
             <Link href="/our-story" className="text-amber-200 transition hover:text-white">
               Our Story
@@ -226,7 +226,7 @@ export default function SvlProgressPage() {
 
         <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-8">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-rose-300">
-            Active Agent Roles
+            Active Guardian Roles
           </p>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {activeAgents.map((agent) => (

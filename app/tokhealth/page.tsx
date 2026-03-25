@@ -2,6 +2,15 @@
 
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
+import {
+  DEFAULT_SITE_LANGUAGE,
+  getSiteLanguageLabel,
+  resolveSiteLanguage,
+  SITE_LANGUAGES,
+  SITE_LANGUAGE_STORAGE_KEY,
+} from '@/lib/site-language';
+import { useSiteCopy, useSiteLanguage } from '@/app/components/SiteLanguageControl';
+import { getSiteCopy } from '@/lib/site-copy';
 
 // Type definition for Web Speech API
 interface SpeechRecognitionEvent extends Event {
@@ -88,17 +97,18 @@ interface HealthData {
   appleHealthConnected: boolean;
 }
 
-const LANGUAGES = [
-  'English', 'Español', 'Français', 'Deutsch', 'Italiano',
-  '中文', '日本語', '한국어', 'العربية', 'Português'
-];
-
-const SPIRITUAL_BELIEFS = [
-  'Christian', 'Muslim', 'Jewish', 'Hindu', 'Buddhist',
-  'Secular', 'Agnostic', 'Atheist', 'Spiritual (Unaffiliated)', 'Prefer not to say'
-];
-
 export default function TokHealthVCC() {
+  const copy = useSiteCopy();
+  const { setLanguage } = useSiteLanguage();
+  const englishCopy = getSiteCopy('en');
+  const spiritualBeliefOptions = englishCopy.tokhealth.belief.options.map((value, index) => ({
+    value,
+    label: copy.tokhealth.belief.options[index] ?? value,
+  }));
+  const intoleranceOptions = englishCopy.tokhealth.allergies.intoleranceOptions.map((value, index) => ({
+    value,
+    label: copy.tokhealth.allergies.intoleranceOptions[index] ?? value,
+  }));
   // State declarations (all at top)
   const [currentView, setCurrentView] = useState<'hub' | 'scanner' | 'health' | 'export' | 'contacts' | 'settings' | 'wisdom'>('hub');
   const [scannerType, setScannerType] = useState<'meal' | 'medicine' | 'barcode' | null>(null);
@@ -133,7 +143,11 @@ export default function TokHealthVCC() {
       spiritualBelief: '',
       emergencyContacts: [],
       records: [],
-      language: 'English',
+      language: getSiteLanguageLabel(
+        typeof window !== 'undefined'
+          ? resolveSiteLanguage(window.localStorage.getItem(SITE_LANGUAGE_STORAGE_KEY))
+          : DEFAULT_SITE_LANGUAGE,
+      ),
       fitbitConnected: false,
       appleHealthConnected: false,
     };
@@ -151,6 +165,7 @@ export default function TokHealthVCC() {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 0.95;
       utterance.pitch = 1.0;
+      utterance.lang = document.documentElement.lang || 'en';
       utterance.onstart = () => setIsSpeaking(true);
       utterance.onend = () => setIsSpeaking(false);
       window.speechSynthesis.speak(utterance);
@@ -181,6 +196,30 @@ export default function TokHealthVCC() {
   }, [healthData]);
 
   useEffect(() => {
+    const currentSiteLanguage = resolveSiteLanguage(localStorage.getItem(SITE_LANGUAGE_STORAGE_KEY));
+    const currentSiteLanguageLabel = getSiteLanguageLabel(currentSiteLanguage);
+
+    setHealthData((prev) => (
+      prev.language === currentSiteLanguageLabel
+        ? prev
+        : { ...prev, language: currentSiteLanguageLabel }
+    ));
+
+    const syncLanguage = (event: StorageEvent) => {
+      if (event.key !== SITE_LANGUAGE_STORAGE_KEY) {
+        return;
+      }
+
+      const nextLanguage = resolveSiteLanguage(event.newValue);
+      setHealthData((prev) => ({ ...prev, language: getSiteLanguageLabel(nextLanguage) }));
+    };
+
+    window.addEventListener('storage', syncLanguage);
+
+    return () => window.removeEventListener('storage', syncLanguage);
+  }, []);
+
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const SpeechRecognitionConstructor = (
         window.webkitSpeechRecognition || 
@@ -190,7 +229,7 @@ export default function TokHealthVCC() {
         recognitionRef.current = new SpeechRecognitionConstructor();
         recognitionRef.current.continuous = false;
         recognitionRef.current.interimResults = false;
-        recognitionRef.current.lang = 'en-US';
+        recognitionRef.current.lang = `${document.documentElement.lang || 'en'}-${(document.documentElement.lang || 'en').toUpperCase()}`;
         
         recognitionRef.current.onresult = (event: Event) => {
           const speechEvent = event as unknown as { results: Array<{ [key: number]: { transcript: string } }> };
@@ -269,9 +308,9 @@ export default function TokHealthVCC() {
 
   const getHealthStatusEmoji = (): string => {
     switch (healthStatus as 'green' | 'yellow' | 'red') {
-      case 'green': return '✅ Excellent';
-      case 'yellow': return '⚠️ Caution';
-      case 'red': return '🚨 Alert';
+      case 'green': return `✅ ${copy.tokhealth.statuses.green}`;
+      case 'yellow': return `⚠️ ${copy.tokhealth.statuses.yellow}`;
+      case 'red': return `🚨 ${copy.tokhealth.statuses.red}`;
     }
   };
 
@@ -425,72 +464,69 @@ export default function TokHealthVCC() {
     const recentRecords = healthData.records.slice(0, 90);
     const exportText = `
 ╔═══════════════════════════════════════════════════════════╗
-║           COMPREHENSIVE MEDICAL REPORT                   ║
-║              TokHealth - KPA Keep People Alive           ║
+║           ${copy.tokhealth.export.report.comprehensiveTitle.padEnd(33, ' ')}║
+║              ${copy.tokhealth.export.report.subtitle.padEnd(35, ' ')}║
 ╚═══════════════════════════════════════════════════════════╝
 
 ═══════════════════════════════════════════════════════════
-PATIENT INFORMATION
+${copy.tokhealth.export.report.patientInformation}
 ═══════════════════════════════════════════════════════════
-Generated: ${new Date().toLocaleString()}
-Report Period: Last 90 Days
-Health Status: ${getHealthStatusEmoji()}
-Language: ${healthData.language}
+${copy.tokhealth.export.report.generated}: ${new Date().toLocaleString()}
+${copy.tokhealth.export.report.period}: ${copy.tokhealth.export.report.periodValue}
+${copy.tokhealth.export.report.healthStatus}: ${getHealthStatusEmoji()}
+${copy.tokhealth.export.report.language}: ${healthData.language}
 
 ═══════════════════════════════════════════════════════════
-VITAL SIGNS SNAPSHOT
+${copy.tokhealth.export.report.vitalSnapshot}
 ═══════════════════════════════════════════════════════════
-🫀 Heart Rate: ${healthData.heartRate || 'Not recorded'} bpm
-📊 Blood Pressure: ${healthData.bloodPressure} mmHg
-🩸 Blood Sugar: ${healthData.bloodSugar || 'Not recorded'} mg/dL
-🌡️  Temperature: ${healthData.temperature || 'Not recorded'}°F
-⚖️  Weight: ${healthData.weight || 'Not recorded'} lbs
+🫀 ${copy.tokhealth.vitals.heartRate}: ${healthData.heartRate || copy.tokhealth.export.report.noneRecorded}
+📊 ${copy.tokhealth.vitals.bloodPressure}: ${healthData.bloodPressure} mmHg
+🩸 ${copy.tokhealth.vitals.bloodSugar}: ${healthData.bloodSugar || copy.tokhealth.export.report.noneRecorded}
+🌡️  ${copy.tokhealth.vitals.temperature}: ${healthData.temperature || copy.tokhealth.export.report.noneRecorded}
+⚖️  ${copy.tokhealth.vitals.weight}: ${healthData.weight || copy.tokhealth.export.report.noneRecorded}
 
 ═══════════════════════════════════════════════════════════
-ALLERGIES & FOOD INTOLERANCES
+${copy.tokhealth.export.report.allergiesTitle}
 ═══════════════════════════════════════════════════════════
-Known Allergies:
-${healthData.allergies.length > 0 ? healthData.allergies.map(a => `  • ${a}`).join('\n') : '  • None recorded'}
+${copy.tokhealth.export.report.knownAllergies}:
+${healthData.allergies.length > 0 ? healthData.allergies.map(a => `  • ${a}`).join('\n') : `  • ${copy.tokhealth.export.report.noneRecorded}`}
 
-Food Intolerances:
-${healthData.intolerances.length > 0 ? healthData.intolerances.map(i => `  • ${i}`).join('\n') : '  • None recorded'}
+${copy.tokhealth.export.report.foodIntolerances}:
+${healthData.intolerances.length > 0 ? healthData.intolerances.map(i => `  • ${i}`).join('\n') : `  • ${copy.tokhealth.export.report.noneRecorded}`}
 
-CRITICAL: Report all allergies to healthcare providers!
+${copy.tokhealth.export.report.criticalNotice}
 
 ═══════════════════════════════════════════════════════════
-EMERGENCY CONTACTS (Keep on file)
+${copy.tokhealth.export.report.emergencyContacts}
 ═══════════════════════════════════════════════════════════
 ${healthData.emergencyContacts.length > 0 
   ? healthData.emergencyContacts.map(c => `${c.name} (${c.relationship})\nPhone: ${c.phone}`).join('\n\n')
-  : 'No emergency contacts on file - PLEASE ADD'}
+  : copy.tokhealth.export.report.noContacts}
 
 ═══════════════════════════════════════════════════════════
-PERSONAL HEALTH INFORMATION
+${copy.tokhealth.export.report.personalHealthInformation}
 ═══════════════════════════════════════════════════════════
-Spiritual/Personal Belief: ${healthData.spiritualBelief || 'Not specified'}
-Fitbit+ Connected: ${healthData.fitbitConnected ? 'Yes' : 'No'}
-Apple Health Connected: ${healthData.appleHealthConnected ? 'Yes' : 'No'}
+${copy.tokhealth.export.report.spiritualBelief}: ${healthData.spiritualBelief || copy.common.notSpecified}
+${copy.tokhealth.export.report.fitbit}: ${healthData.fitbitConnected ? copy.common.yes : copy.common.no}
+${copy.tokhealth.export.report.apple}: ${healthData.appleHealthConnected ? copy.common.yes : copy.common.no}
 
 ═══════════════════════════════════════════════════════════
-90-DAY HEALTH ACTIVITY LOG (${recentRecords.length} entries)
+${copy.tokhealth.export.report.activityLog} (${recentRecords.length} entries)
 ═══════════════════════════════════════════════════════════
 ${recentRecords.length > 0
   ? recentRecords.map(r => `[${new Date(r.timestamp).toLocaleDateString()}] ${r.title}\n   ${r.description}`).join('\n\n')
-  : 'No health records available'
+  : copy.tokhealth.export.report.noRecords
 }
 
 ═══════════════════════════════════════════════════════════
-IMPORTANT DISCLAIMERS
+${copy.tokhealth.export.report.disclaimersTitle}
 ═══════════════════════════════════════════════════════════
-⚠️  This report contains self-recorded health data
-⚠️  Data should be reviewed by a licensed physician
-⚠️  Emergency: Call 911 for life-threatening situations
-⚠️  Do not delay medical attention for urgent conditions
+${copy.tokhealth.export.report.disclaimers.map((item) => `⚠️  ${item}`).join('\n')}
 
 ═══════════════════════════════════════════════════════════
-Prepared by: TokHealth by Sanders Viopro Labs
-Mission: KPA - Keep People Alive
-Report: CONFIDENTIAL MEDICAL INFORMATION
+${copy.tokhealth.export.report.preparedBy}: ${copy.tokhealth.export.report.preparedByValue}
+${copy.tokhealth.export.report.mission}: ${copy.tokhealth.export.report.missionValue}
+${copy.tokhealth.export.report.confidentialLabel}: ${copy.tokhealth.export.report.confidentialValue}
 ═══════════════════════════════════════════════════════════
     `;
 
@@ -534,7 +570,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
           <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div className="text-4xl">💚</div>
-              <h1 className="text-3xl font-bold text-emerald-400">TokHealth v2</h1>
+              <h1 className="text-3xl font-bold text-emerald-400">{copy.tokhealth.title}</h1>
               <div className={`px-3 py-1 rounded-full text-xs font-bold ${getHealthStatusColor()}`}>
                 {getHealthStatusEmoji()}
               </div>
@@ -545,25 +581,35 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                 className={`px-3 py-2 rounded-lg text-sm font-bold transition ${
                   voiceEnabled ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-300'
                 }`}
-                title="Toggle text-to-speech"
+                title={copy.tokhealth.toggleTts}
               >
                 {voiceEnabled ? '🔊' : '🔇'}
               </button>
               {isSpeaking && (
                 <span className="text-xs text-emerald-300 font-semibold animate-pulse">
-                  🔊 Speaking...
+                  🔊 {copy.common.speaking}
                 </span>
               )}
               <select 
                 aria-label="Select language"
                 value={healthData.language}
-                onChange={(e) => setHealthData(prev => ({ ...prev, language: e.target.value }))}
+                onChange={(e) => {
+                  const nextLanguage = SITE_LANGUAGES.find((language) => language.label === e.target.value)?.code;
+                  if (!nextLanguage) {
+                    return;
+                  }
+
+                  setLanguage(nextLanguage);
+                  setHealthData(prev => ({ ...prev, language: e.target.value }));
+                }}
                 className="px-3 py-2 rounded-lg text-sm bg-slate-700 text-white border border-emerald-500/30"
               >
-                {LANGUAGES.map(lang => <option key={lang}>{lang}</option>)}
+                {SITE_LANGUAGES.map((language) => (
+                  <option key={language.code}>{language.label}</option>
+                ))}
               </select>
               <Link href="/vcc-hub" className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition">
-                ← Hub
+                ← {copy.common.hub}
               </Link>
             </div>
           </div>
@@ -572,8 +618,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
         <div className="max-w-7xl mx-auto px-6 py-8">
           {/* Status Card */}
           <div className={`mb-8 p-6 rounded-lg border-2 ${getHealthStatusColor()}`}>
-            <h2 className="text-2xl font-bold mb-2">Your Health Status: {getHealthStatusEmoji()}</h2>
-            <p className="text-sm opacity-80">Comprehensive health tracking with medical export ready for doctors</p>
+            <h2 className="text-2xl font-bold mb-2">{copy.tokhealth.statusLabel}: {getHealthStatusEmoji()}</h2>
+            <p className="text-sm opacity-80">{copy.tokhealth.statusDescription}</p>
           </div>
 
           {/* Feature Grid */}
@@ -584,8 +630,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-blue-500 bg-slate-800 hover:bg-slate-700 hover:border-blue-400 transition text-left"
             >
               <div className="text-4xl mb-3">🍽️</div>
-              <h3 className="font-bold text-blue-300 text-lg">Meal Scanner</h3>
-              <p className="text-sm text-slate-400">Log meals & nutrition</p>
+              <h3 className="font-bold text-blue-300 text-lg">{copy.tokhealth.cards.meal[0]}</h3>
+              <p className="text-sm text-slate-400">{copy.tokhealth.cards.meal[1]}</p>
             </button>
 
             {/* Prescription */}
@@ -594,8 +640,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-purple-500 bg-slate-800 hover:bg-slate-700 hover:border-purple-400 transition text-left"
             >
               <div className="text-4xl mb-3">💊</div>
-              <h3 className="font-bold text-purple-300 text-lg">Prescription</h3>
-              <p className="text-sm text-slate-400">Track medications</p>
+              <h3 className="font-bold text-purple-300 text-lg">{copy.tokhealth.cards.medicine[0]}</h3>
+              <p className="text-sm text-slate-400">{copy.tokhealth.cards.medicine[1]}</p>
             </button>
 
             {/* Barcode */}
@@ -604,8 +650,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-orange-500 bg-slate-800 hover:bg-slate-700 hover:border-orange-400 transition text-left"
             >
               <div className="text-4xl mb-3">📱</div>
-              <h3 className="font-bold text-orange-300 text-lg">Barcode Scan</h3>
-              <p className="text-sm text-slate-400">Scan products</p>
+              <h3 className="font-bold text-orange-300 text-lg">{copy.tokhealth.cards.barcode[0]}</h3>
+              <p className="text-sm text-slate-400">{copy.tokhealth.cards.barcode[1]}</p>
             </button>
 
             {/* Health Vitals */}
@@ -614,8 +660,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-emerald-500 bg-slate-800 hover:bg-slate-700 hover:border-emerald-400 transition text-left"
             >
               <div className="text-4xl mb-3">📊</div>
-              <h3 className="font-bold text-emerald-300 text-lg">Vitals & Health</h3>
-              <p className="text-sm text-slate-400">Track health metrics</p>
+              <h3 className="font-bold text-emerald-300 text-lg">{copy.tokhealth.cards.health[0]}</h3>
+              <p className="text-sm text-slate-400">{copy.tokhealth.cards.health[1]}</p>
             </button>
 
             {/* Emergency */}
@@ -624,8 +670,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-red-500 bg-slate-800 hover:bg-slate-700 hover:border-red-400 transition text-left"
             >
               <div className="text-4xl mb-3">🆘</div>
-              <h3 className="font-bold text-red-300 text-lg">Emergency</h3>
-              <p className="text-sm text-slate-400">Emergency contacts</p>
+              <h3 className="font-bold text-red-300 text-lg">{copy.tokhealth.cards.contacts[0]}</h3>
+              <p className="text-sm text-slate-400">{copy.tokhealth.cards.contacts[1]}</p>
             </button>
 
             {/* Medical Export */}
@@ -634,8 +680,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-yellow-500 bg-slate-800 hover:bg-slate-700 hover:border-yellow-400 transition text-left"
             >
               <div className="text-4xl mb-3">📄</div>
-              <h3 className="font-bold text-yellow-300 text-lg">Medical Export</h3>
-              <p className="text-sm text-slate-400">90-day report for doctors</p>
+              <h3 className="font-bold text-yellow-300 text-lg">{copy.tokhealth.cards.export[0]}</h3>
+              <p className="text-sm text-slate-400">{copy.tokhealth.cards.export[1]}</p>
             </button>
 
             {/* AI Coach - Wisdom */}
@@ -644,8 +690,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               className="p-6 rounded-lg border-2 border-teal-500 bg-slate-800 hover:bg-slate-700 hover:border-teal-400 transition text-left"
             >
               <div className="text-4xl mb-3">✨</div>
-              <h3 className="font-bold text-teal-300 text-lg">Wisdom AI Coach</h3>
-              <p className="text-sm text-slate-400">Health guidance & support</p>
+              <h3 className="font-bold text-teal-300 text-lg">{copy.tokhealth.cards.wisdom[0]}</h3>
+              <p className="text-sm text-slate-400">{copy.tokhealth.cards.wisdom[1]}</p>
             </button>
           </div>
 
@@ -655,15 +701,15 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               onClick={() => setCurrentView('settings')}
               className="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition"
             >
-              ⚙️ Settings & Preferences
+              ⚙️ {copy.tokhealth.settings}
             </button>
           </div>
 
           {/* Recent Activity */}
           <div className="mt-8 p-6 rounded-lg bg-slate-800/50 border border-slate-700">
-            <h3 className="text-xl font-bold mb-4 text-white">📋 Recent Health Activity</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">📋 {copy.tokhealth.recentActivity}</h3>
             {healthData.records.length === 0 ? (
-              <p className="text-slate-400">No health records yet. Start scanning and logging!</p>
+              <p className="text-slate-400">{copy.tokhealth.noRecords}</p>
             ) : (
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {healthData.records.slice(0, 15).map(record => (
@@ -695,20 +741,20 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             }}
             className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
           >
-            ← Back
+            ← {copy.common.back}
           </button>
 
           <div className="p-8 rounded-lg bg-slate-800 border border-slate-700">
             <h2 className="text-3xl font-bold mb-2 text-white">
-              {scannerType === 'meal' && '🍽️ Meal Scanner'}
-              {scannerType === 'medicine' && '💊 Prescription Scanner'}
-              {scannerType === 'barcode' && '📱 Barcode Scanner'}
+              {scannerType === 'meal' && `🍽️ ${copy.tokhealth.scanner.mealTitle}`}
+              {scannerType === 'medicine' && `💊 ${copy.tokhealth.scanner.medicineTitle}`}
+              {scannerType === 'barcode' && `📱 ${copy.tokhealth.scanner.barcodeTitle}`}
             </h2>
 
             <p className="mb-6 text-slate-400 text-sm">
-              {scannerType === 'meal' && 'Take a photo of your meal or type description'}
-              {scannerType === 'medicine' && 'Take a photo of your prescription label or type details'}
-              {scannerType === 'barcode' && 'Take a photo of the barcode or type product info'}
+              {scannerType === 'meal' && copy.tokhealth.scanner.mealIntro}
+              {scannerType === 'medicine' && copy.tokhealth.scanner.medicineIntro}
+              {scannerType === 'barcode' && copy.tokhealth.scanner.barcodeIntro}
             </p>
 
             {/* Camera Active View */}
@@ -725,13 +771,13 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                     onClick={capturePhoto}
                     className="flex-1 px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition"
                   >
-                    📸 Capture Photo
+                    📸 {copy.tokhealth.scanner.capture}
                   </button>
                   <button
                     onClick={stopCamera}
                     className="px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition"
                   >
-                    ✕ Cancel
+                    ✕ {copy.tokhealth.scanner.cancel}
                   </button>
                 </div>
               </div>
@@ -747,10 +793,10 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                     onClick={clearPhoto}
                     className="absolute top-2 right-2 px-3 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-bold"
                   >
-                    ✕ Clear
+                    ✕ {copy.tokhealth.scanner.clear}
                   </button>
                 </div>
-                <p className="text-sm text-emerald-300 mt-2">Photo captured - add description below</p>
+                <p className="text-sm text-emerald-300 mt-2">{copy.tokhealth.scanner.photoCaptured}</p>
               </div>
             )}
 
@@ -759,9 +805,9 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               value={scanInput}
               onChange={(e) => setScanInput(e.target.value)}
               placeholder={
-                scannerType === 'meal' ? 'e.g., Grilled chicken with broccoli and brown rice' :
-                scannerType === 'medicine' ? 'e.g., Metformin 500mg, 2x daily' :
-                'e.g., Product name, barcode, or details'
+                scannerType === 'meal' ? copy.tokhealth.scanner.mealPlaceholder :
+                scannerType === 'medicine' ? copy.tokhealth.scanner.medicinePlaceholder :
+                copy.tokhealth.scanner.barcodePlaceholder
               }
               className="w-full h-32 p-4 rounded-lg bg-slate-700 border border-slate-600 text-white mb-4 focus:border-emerald-500"
             />
@@ -784,7 +830,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                 disabled={cameraActive}
                 className="px-2 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold transition disabled:opacity-50 text-xs sm:text-sm whitespace-nowrap"
               >
-                📷 Photo
+                📷 {copy.tokhealth.scanner.photo}
               </button>
               <button
                 onClick={
@@ -796,8 +842,8 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                 className="px-2 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition disabled:opacity-50 text-xs sm:text-sm whitespace-nowrap"
               >
                 {scannerType === 'meal'
-                  ? (mealScanLoading ? '🔍 Analyzing...' : '🔍 Analyze')
-                  : '✅ Log'}
+                  ? (mealScanLoading ? `🔍 ${copy.tokhealth.scanner.analyzing}` : `🔍 ${copy.tokhealth.scanner.analyze}`)
+                  : `✅ ${copy.tokhealth.scanner.log}`}
               </button>
               <button
                 onClick={startListening}
@@ -810,13 +856,13 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                     : 'bg-slate-700 hover:bg-slate-600 text-white'
                 }`}
               >
-                {isListening ? '🎤...' : '🎤 Voice'}
+                {isListening ? '🎤...' : `🎤 ${copy.tokhealth.scanner.voice}`}
               </button>
             </div>
 
             {isListening && (
               <div className="text-center text-emerald-300 text-sm font-semibold">
-                Listening for your input...
+                {copy.common.listening}
               </div>
             )}
           </div>
@@ -837,16 +883,16 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             onClick={() => setCurrentView('hub')}
             className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
           >
-            ← Back
+            ← {copy.common.back}
           </button>
 
           <div className="space-y-6">
             {/* Vitals */}
             <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
-              <h3 className="text-2xl font-bold mb-6 text-white">📊 Vital Signs</h3>
+              <h3 className="text-2xl font-bold mb-6 text-white">📊 {copy.tokhealth.vitals.title}</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="weight-input" className="block text-sm font-semibold text-slate-300 mb-2">⚖️ Weight (lbs)</label>
+                  <label htmlFor="weight-input" className="block text-sm font-semibold text-slate-300 mb-2">⚖️ {copy.tokhealth.vitals.weight}</label>
                   <input
                     id="weight-input"
                     type="number"
@@ -856,7 +902,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div>
-                  <label htmlFor="heart-rate-input" className="block text-sm font-semibold text-slate-300 mb-2">🫀 Heart Rate (bpm)</label>
+                  <label htmlFor="heart-rate-input" className="block text-sm font-semibold text-slate-300 mb-2">🫀 {copy.tokhealth.vitals.heartRate}</label>
                   <input
                     id="heart-rate-input"
                     type="number"
@@ -866,7 +912,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div>
-                  <label htmlFor="blood-pressure-input" className="block text-sm font-semibold text-slate-300 mb-2">📊 Blood Pressure</label>
+                  <label htmlFor="blood-pressure-input" className="block text-sm font-semibold text-slate-300 mb-2">📊 {copy.tokhealth.vitals.bloodPressure}</label>
                   <input
                     id="blood-pressure-input"
                     type="text"
@@ -877,7 +923,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div>
-                  <label htmlFor="blood-sugar-input" className="block text-sm font-semibold text-slate-300 mb-2">🩸 Blood Sugar (mg/dL)</label>
+                  <label htmlFor="blood-sugar-input" className="block text-sm font-semibold text-slate-300 mb-2">🩸 {copy.tokhealth.vitals.bloodSugar}</label>
                   <input
                     id="blood-sugar-input"
                     type="number"
@@ -887,7 +933,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                   />
                 </div>
                 <div className="col-span-2">
-                  <label htmlFor="temperature-input" className="block text-sm font-semibold text-slate-300 mb-2">🌡️ Temperature (°F)</label>
+                  <label htmlFor="temperature-input" className="block text-sm font-semibold text-slate-300 mb-2">🌡️ {copy.tokhealth.vitals.temperature}</label>
                   <input
                     id="temperature-input"
                     type="number"
@@ -902,16 +948,16 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
 
             {/* Allergies & Intolerances */}
             <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
-              <h3 className="text-2xl font-bold mb-4 text-red-400">🚨 Allergies & Food Intolerances</h3>
+              <h3 className="text-2xl font-bold mb-4 text-red-400">🚨 {copy.tokhealth.allergies.title}</h3>
               
               <div className="mb-6">
-                <label className="block text-sm font-semibold text-slate-300 mb-2">Add Allergy</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">{copy.tokhealth.allergies.add}</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={newAllergy}
                     onChange={(e) => setNewAllergy(e.target.value)}
-                    placeholder="e.g., Peanuts, Shellfish, Penicillin"
+                    placeholder={copy.tokhealth.allergies.placeholder}
                     className="flex-1 p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
                     onKeyPress={(e) => e.key === 'Enter' && handleAddAllergy()}
                   />
@@ -919,14 +965,14 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                     onClick={handleAddAllergy}
                     className="px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition"
                   >
-                    Add
+                    {copy.common.add}
                   </button>
                 </div>
               </div>
 
               {healthData.allergies.length > 0 && (
                 <div className="mb-6">
-                  <p className="text-sm text-slate-400 mb-2">Recorded Allergies:</p>
+                  <p className="text-sm text-slate-400 mb-2">{copy.tokhealth.allergies.recorded}</p>
                   <div className="flex flex-wrap gap-2">
                     {healthData.allergies.map(allergy => (
                       <button
@@ -942,25 +988,25 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               )}
 
               <div>
-                <label className="block text-sm font-semibold text-slate-300 mb-3">Food Intolerances</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-3">{copy.tokhealth.allergies.foodIntolerances}</label>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                  {['Dairy', 'Gluten', 'Nuts', 'Soy', 'Eggs', 'Shellfish', 'Sesame', 'Corn', 'Caffeine', 'Spicy'].map(item => (
+                  {intoleranceOptions.map((item) => (
                     <button
-                      key={item}
+                      key={item.value}
                       onClick={() => {
-                        if (healthData.intolerances.includes(item)) {
-                          removeIntolerance(item);
+                        if (healthData.intolerances.includes(item.value)) {
+                          removeIntolerance(item.value);
                         } else {
-                          handleAddIntolerance(item);
+                          handleAddIntolerance(item.value);
                         }
                       }}
                       className={`p-2 rounded-lg text-sm font-semibold transition ${
-                        healthData.intolerances.includes(item)
+                        healthData.intolerances.includes(item.value)
                           ? 'bg-amber-600 text-white'
                           : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                       }`}
                     >
-                      {item}
+                      {item.label}
                     </button>
                   ))}
                 </div>
@@ -969,21 +1015,21 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
 
             {/* Spiritual Belief */}
             <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
-              <h3 className="text-2xl font-bold mb-4 text-white">🙏 Spiritual/Personal Belief</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">🙏 {copy.tokhealth.belief.title}</h3>
               <select
                 aria-label="Select spiritual or personal belief"
                 value={healthData.spiritualBelief}
                 onChange={(e) => setHealthData(prev => ({ ...prev, spiritualBelief: e.target.value }))}
                 className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-emerald-500"
               >
-                <option value="">Select a belief...</option>
-                {SPIRITUAL_BELIEFS.map(belief => <option key={belief}>{belief}</option>)}
+                <option value="">{copy.tokhealth.belief.select}</option>
+                {spiritualBeliefOptions.map((belief) => <option key={belief.value} value={belief.value}>{belief.label}</option>)}
               </select>
             </div>
 
             {/* Health Integrations */}
             <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
-              <h3 className="text-2xl font-bold mb-4 text-white">🔗 Health Integrations</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">🔗 {copy.tokhealth.integrations.title}</h3>
               <div className="space-y-3">
                 <button
                   onClick={() => setHealthData(prev => ({ ...prev, fitbitConnected: !prev.fitbitConnected }))}
@@ -993,7 +1039,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
                 >
-                  {healthData.fitbitConnected ? '✓' : '◯'} Fitbit+ Connected
+                  {healthData.fitbitConnected ? '✓' : '◯'} {copy.tokhealth.integrations.fitbit}
                 </button>
                 <button
                   onClick={() => setHealthData(prev => ({ ...prev, appleHealthConnected: !prev.appleHealthConnected }))}
@@ -1003,7 +1049,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
                 >
-                  {healthData.appleHealthConnected ? '✓' : '◯'} Apple Health Connected
+                  {healthData.appleHealthConnected ? '✓' : '◯'} {copy.tokhealth.integrations.apple}
                 </button>
               </div>
             </div>
@@ -1022,40 +1068,40 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             onClick={() => setCurrentView('hub')}
             className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
           >
-            ← Back
+            ← {copy.common.back}
           </button>
 
           <div className="p-6 rounded-lg bg-slate-800 border border-slate-700">
-            <h2 className="text-3xl font-bold mb-6 text-red-400">🆘 Emergency Contacts</h2>
+            <h2 className="text-3xl font-bold mb-6 text-red-400">🆘 {copy.tokhealth.contacts.title}</h2>
 
             <div className="space-y-4 mb-8 p-6 rounded-lg bg-slate-700/50">
               <div>
-                <label className="block text-sm font-semibold text-slate-300 mb-2">Name</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">{copy.tokhealth.contacts.name}</label>
                 <input
                   type="text"
                   value={newContact.name}
                   onChange={(e) => setNewContact(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder="e.g., Mom, Emergency Doctor"
+                  placeholder={copy.tokhealth.contacts.namePlaceholder}
                   className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-slate-300 mb-2">Relationship</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">{copy.tokhealth.contacts.relationship}</label>
                 <input
                   type="text"
                   value={newContact.relationship}
                   onChange={(e) => setNewContact(prev => ({ ...prev, relationship: e.target.value }))}
-                  placeholder="e.g., Mother, Spouse, Doctor"
+                  placeholder={copy.tokhealth.contacts.relationshipPlaceholder}
                   className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-slate-300 mb-2">Phone Number</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">{copy.tokhealth.contacts.phone}</label>
                 <input
                   type="tel"
                   value={newContact.phone}
                   onChange={(e) => setNewContact(prev => ({ ...prev, phone: e.target.value }))}
-                  placeholder="+1 (555) 123-4567"
+                  placeholder={copy.tokhealth.contacts.phonePlaceholder}
                   className="w-full p-3 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-red-500"
                 />
               </div>
@@ -1063,13 +1109,13 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                 onClick={handleAddContact}
                 className="w-full px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition"
               >
-                ➕ Add Contact
+                ➕ {copy.tokhealth.contacts.add}
               </button>
             </div>
 
             <div className="space-y-4">
               {healthData.emergencyContacts.length === 0 ? (
-                <p className="text-slate-400 text-center py-8">No emergency contacts added yet. Add one now!</p>
+                <p className="text-slate-400 text-center py-8">{copy.tokhealth.contacts.empty}</p>
               ) : (
                 healthData.emergencyContacts.map(contact => (
                   <div key={contact.id} className="p-4 rounded-lg bg-slate-700 border border-red-500/30">
@@ -1082,7 +1128,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
                         onClick={() => removeContact(contact.id)}
                         className="px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-sm transition"
                       >
-                        Remove
+                        {copy.tokhealth.contacts.remove}
                       </button>
                     </div>
                     <p className="text-green-400 font-semibold">{contact.phone}</p>
@@ -1105,26 +1151,21 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             onClick={() => setCurrentView('hub')}
             className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
           >
-            ← Back
+            ← {copy.common.back}
           </button>
 
           <div className="p-8 rounded-lg bg-slate-800 border border-slate-700 text-center">
-            <h2 className="text-4xl font-bold mb-4 text-white">📄 Medical Export for Doctor</h2>
+            <h2 className="text-4xl font-bold mb-4 text-white">📄 {copy.tokhealth.export.title}</h2>
             <p className="mb-6 text-slate-400 text-lg">
-              Generate a comprehensive 90-day health report with all your medical data to share with your healthcare provider
+              {copy.tokhealth.export.body}
             </p>
             
             <div className="mb-8 space-y-2 text-left p-6 rounded-lg bg-slate-700/50">
-              <p className="text-sm font-semibold text-emerald-300">✅ Report Includes:</p>
+              <p className="text-sm font-semibold text-emerald-300">✅ {copy.tokhealth.export.includes}</p>
               <ul className="text-sm text-slate-300 space-y-1 ml-4">
-                <li>• All vital signs recorded</li>
-                <li>• Complete allergy and intolerance information</li>
-                <li>• All medications and prescriptions</li>
-                <li>• 90 days of health activity log</li>
-                <li>• Meal and nutrition records</li>
-                <li>• Emergency contact information</li>
-                <li>• Fitbit/Apple Health status</li>
-                <li>• Overall health status summary</li>
+                {copy.tokhealth.export.items.map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
               </ul>
             </div>
 
@@ -1132,11 +1173,11 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               onClick={generateMedicalExport}
               className="w-full px-12 py-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg transition"
             >
-              📥 Download Medical Report
+              📥 {copy.tokhealth.export.download}
             </button>
 
             <p className="mt-6 text-xs text-slate-500">
-              This report is confidential medical information. Share only with licensed healthcare providers.
+              {copy.tokhealth.export.confidential}
             </p>
           </div>
         </div>
@@ -1153,18 +1194,18 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
             onClick={() => setCurrentView('hub')}
             className="mb-6 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white"
           >
-            ← Back to Hub
+            ← {copy.tokhealth.backToHub}
           </button>
 
           <div className="p-8 rounded-lg bg-slate-800 border border-teal-700">
             <h1 className="text-4xl font-bold mb-2 text-white flex items-center gap-3">
-              ✨ Wisdom - Your AI Health Coach
+              ✨ {copy.tokhealth.wisdom.title}
             </h1>
-            <p className="text-slate-400 mb-6">Created by Jerome Sanders - Co-host on Facebook Live</p>
+            <p className="text-slate-400 mb-6">{copy.tokhealth.wisdom.subtitle}</p>
             
             <div className="bg-teal-900 bg-opacity-30 border border-teal-700 rounded-lg p-6 mb-6 text-center">
               <p className="text-teal-200 text-lg font-semibold">
-                Ready to chat with Wisdom? Click below to start a conversation about your health journey.
+                {copy.tokhealth.wisdom.prompt}
               </p>
             </div>
 
@@ -1172,7 +1213,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
               href="/agent/wisdom"
               className="w-full block px-6 py-4 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold text-center transition text-lg"
             >
-              💬 Open Wisdom Chat
+              💬 {copy.tokhealth.wisdom.open}
             </Link>
           </div>
         </div>
@@ -1187,7 +1228,7 @@ Report: CONFIDENTIAL MEDICAL INFORMATION
         onClick={() => setCurrentView('hub')}
         className="px-8 py-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg"
       >
-        Return to Hub
+        {copy.tokhealth.returnToHub}
       </button>
     </div>
   );
