@@ -2064,15 +2064,15 @@ export default function AgentClient({
                   style={{
                     padding: "6px 12px",
                     borderRadius: 6,
-                    backgroundColor: currentSpeakingMessageIndex === i ? `${accentColor}70` : "rgba(255,255,255,0.1)",
-                    border: `1px solid ${currentSpeakingMessageIndex === i ? accentColor : "rgba(255,255,255,0.2)"}`,
-                    color: currentSpeakingMessageIndex === i ? accentColor : "#aaa",
+                    backgroundColor: currentSpeakingMessageIndex === i ? `${accentColor}70` : "rgba(255,255,255,0.15)",
+                    border: `1px solid ${currentSpeakingMessageIndex === i ? accentColor : "rgba(255,255,255,0.3)"}`,
+                    color: currentSpeakingMessageIndex === i ? "#fff" : "#bbb",
                     fontSize: 11,
                     fontWeight: "bold",
                     cursor: "pointer",
                     transition: "all 0.2s",
                     whiteSpace: "nowrap",
-                    opacity: 0,
+                    flex: "0 0 auto",
                   }}
                 >
                   {currentSpeakingMessageIndex === i ? "⏹ Stop" : "▶ Listen"}
@@ -2180,11 +2180,19 @@ export default function AgentClient({
         input:disabled {
           opacity: 0.6;
         }
-        .message-group:hover .speaker-button {
-          opacity: 1 !important;
+        .message-group {
+          align-items: flex-start;
         }
-        .speaker-button:hover {
-          background-color: ${accentColor}80 !important;
+        .message-group .speaker-button {
+          margin-top: 2px;
+          opacity: 0.5;
+        }
+        .message-group:hover .speaker-button {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        .speaker-button:active {
+          transform: scale(0.95);
         }
       `}</style>
     </div>
