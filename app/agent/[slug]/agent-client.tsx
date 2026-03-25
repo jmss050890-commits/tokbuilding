@@ -2099,6 +2099,8 @@ export default function AgentClient({
           borderTop: `1px solid #333`,
           display: "flex",
           gap: "12px",
+          alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
         <input
@@ -2109,6 +2111,7 @@ export default function AgentClient({
           disabled={loading}
           style={{
             flex: 1,
+            minWidth: "200px",
             padding: "12px 16px",
             borderRadius: 8,
             border: `1px solid ${accentColor}`,
@@ -2132,6 +2135,8 @@ export default function AgentClient({
             fontSize: 13,
             transition: "all 0.2s",
             boxShadow: isListening ? `0 0 12px ${accentColor}60` : "none",
+            flexShrink: 0,
+            whiteSpace: "nowrap",
           }}
           title="Click to speak your message"
         >
@@ -2150,6 +2155,8 @@ export default function AgentClient({
               cursor: "pointer",
               fontWeight: "bold",
               fontSize: 12,
+              flexShrink: 0,
+              whiteSpace: "nowrap",
             }}
           >
             Stop 🔊
@@ -2167,6 +2174,8 @@ export default function AgentClient({
             cursor: loading ? "not-allowed" : "pointer",
             fontWeight: "bold",
             opacity: loading ? 0.6 : 1,
+            flexShrink: 0,
+            whiteSpace: "nowrap",
           }}
         >
           Send
