@@ -2124,17 +2124,18 @@ export default function AgentClient({
           style={{
             padding: "12px 16px",
             borderRadius: 8,
-            backgroundColor: isListening ? `${accentColor}40` : "#1a1a1a",
-            color: isListening ? accentColor : "#888",
-            border: `2px solid ${isListening ? accentColor : "#333"}`,
+            backgroundColor: isListening ? accentColor : `${accentColor}20`,
+            color: isListening ? "#111" : accentColor,
+            border: `2px solid ${accentColor}`,
             cursor: loading ? "not-allowed" : "pointer",
             fontWeight: "bold",
-            fontSize: 12,
+            fontSize: 13,
             transition: "all 0.2s",
+            boxShadow: isListening ? `0 0 12px ${accentColor}60` : "none",
           }}
-          title="Click to start/stop listening"
+          title="Click to speak your message"
         >
-          {isListening ? "🎙 Listening..." : "🎙 Mic"}
+          {isListening ? "🎙 Listening..." : "🎤 Speak"}
         </button>
         {isSpeaking && (
           <button
