@@ -1,10 +1,14 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
+  addSiteLanguagePrefix,
   DEFAULT_SITE_LANGUAGE,
   getSiteLanguageLabel,
+  getPathSiteLanguage,
   resolveSiteLanguage,
+  SITE_LANGUAGE_COOKIE_KEY,
   SITE_LANGUAGES,
   SITE_LANGUAGE_STORAGE_KEY,
   type SiteLanguageCode,
@@ -18,18 +22,32 @@ type SiteLanguageContextValue = {
 
 const SiteLanguageContext = createContext<SiteLanguageContextValue | null>(null);
 
-export function SiteLanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<SiteLanguageCode>(DEFAULT_SITE_LANGUAGE);
+export function SiteLanguageProvider({
+  children,
+  initialLanguage = DEFAULT_SITE_LANGUAGE,
+}: {
+  children: ReactNode;
+  initialLanguage?: SiteLanguageCode;
+}) {
+  const pathname = usePathname();
+  const [language, setLanguage] = useState<SiteLanguageCode>(initialLanguage);
 
   useEffect(() => {
-    const storedLanguage = resolveSiteLanguage(window.localStorage.getItem(SITE_LANGUAGE_STORAGE_KEY));
-    setLanguage(storedLanguage);
-  }, []);
+    const pathLanguage = getPathSiteLanguage(pathname);
+
+    if (pathLanguage) {
+      setLanguage(pathLanguage);
+      return;
+    }
+
+    setLanguage(initialLanguage);
+  }, [initialLanguage, pathname]);
 
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.setAttribute("data-site-language", language);
     window.localStorage.setItem(SITE_LANGUAGE_STORAGE_KEY, language);
+    document.cookie = `${SITE_LANGUAGE_COOKIE_KEY}=${language}; path=/; max-age=31536000; samesite=lax`;
   }, [language]);
 
   const contextValue = useMemo(
@@ -133,8 +151,21 @@ export function SiteFrame({ children }: { children: ReactNode }) {
 }
 
 export function SiteLanguageSelector() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { language, setLanguage } = useSiteLanguage();
   const copy = useSiteCopy();
+
+  const handleLanguageChange = (nextLanguage: SiteLanguageCode) => {
+    setLanguage(nextLanguage);
+
+    const nextPathname = addSiteLanguagePrefix(pathname, nextLanguage);
+    const search = searchParams.toString();
+    const nextUrl = search ? `${nextPathname}?${search}` : nextPathname;
+
+    router.push(nextUrl);
+  };
 
   return (
     <label
@@ -150,7 +181,7 @@ export function SiteLanguageSelector() {
       <select
         aria-label="Select site language"
         value={language}
-        onChange={(event) => setLanguage(resolveSiteLanguage(event.target.value))}
+        onChange={(event) => handleLanguageChange(resolveSiteLanguage(event.target.value))}
         title={`Current language: ${getSiteLanguageLabel(language)}`}
         style={{
           backgroundColor: "#18181b",

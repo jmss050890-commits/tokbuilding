@@ -1,8 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import type { ReactNode } from "react";
+import { cookies, headers } from "next/headers";
 import PwaRegistration from "./PwaRegistration";
 import { SiteFrame, SiteLanguageProvider } from "./components/SiteLanguageControl";
+import {
+  resolveSiteLanguage,
+  SITE_LANGUAGE_COOKIE_KEY,
+  SITE_LANGUAGE_REQUEST_HEADER,
+} from "@/lib/site-language";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -32,13 +38,19 @@ export const viewport: Viewport = {
   themeColor: "#0d0d0f",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
+  const requestHeaders = await headers();
+  const cookieStore = await cookies();
+  const initialLanguage = resolveSiteLanguage(
+    requestHeaders.get(SITE_LANGUAGE_REQUEST_HEADER) ?? cookieStore.get(SITE_LANGUAGE_COOKIE_KEY)?.value,
+  );
+
   return (
-    <html lang="en">
+    <html lang={initialLanguage}>
       <head />
       <body
         style={{
@@ -51,7 +63,7 @@ export default function RootLayout({
           fontFamily: "Arial, sans-serif",
         }}
       >
-        <SiteLanguageProvider>
+        <SiteLanguageProvider initialLanguage={initialLanguage}>
           <PwaRegistration />
           <SiteFrame>{children}</SiteFrame>
         </SiteLanguageProvider>
