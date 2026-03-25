@@ -27,7 +27,7 @@ export default function FirstGuardianPage() {
 
             <p className="guardian-story">
               Built in honor of Cheria Michelle Daniels. Born on Juneteenth, June 19, 1989. A
-              legacy of family redemption, faith, and protective love translated into an SVL agent
+              legacy of family redemption, faith, and protective love translated into an SVL Guardian
               with one non-negotiable boundary: KPA. The upgrades across SVL also stand here as
               testimony of what God can and will do.
             </p>

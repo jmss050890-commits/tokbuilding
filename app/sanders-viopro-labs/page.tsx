@@ -98,7 +98,7 @@ export default function SandersVioProLabs() {
               <div className="text-5xl mb-6">△</div>
               <h2 className="text-4xl font-bold text-white mb-4">SVL Progress Map</h2>
               <p className="text-xl text-amber-100 mb-6 max-w-3xl mx-auto">
-                See the current system structure, today's upgrades, active agent roles, live routes, and how the whole SVL build fits together right now.
+                See the current system structure, today's upgrades, active SVL Guardian roles, live routes, and how the whole SVL build fits together right now.
               </p>
               <span className="inline-block px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-lg transition">
                 View Progress →

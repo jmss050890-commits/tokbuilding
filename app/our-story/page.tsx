@@ -237,25 +237,25 @@ export default function OurStoryPage() {
       <section className="py-20 px-6 bg-slate-900/50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-white mb-4 text-center">Meet the Architects</h2>
-          <p className="text-center text-purple-300 mb-12">The AI agents that bring KPA to life every single day.</p>
+          <p className="text-center text-purple-300 mb-12">The AI Guardians that bring KPA to life every single day.</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-blue-700/30 rounded-xl p-8">
               <div className="text-3xl mb-4">🧠</div>
-              <h3 className="text-xl font-bold text-blue-300 mb-2">Grace Agent</h3>
+              <h3 className="text-xl font-bold text-blue-300 mb-2">Grace Guardian</h3>
               <p className="text-slate-300">Health & wellness coaching with KPA mission at the core. Listens first, guides always.</p>
             </div>
 
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-teal-700/30 rounded-xl p-8">
               <div className="text-3xl mb-4">💙</div>
-              <h3 className="text-xl font-bold text-teal-300 mb-2">Wisdom Agent</h3>
+              <h3 className="text-xl font-bold text-teal-300 mb-2">Wisdom Guardian</h3>
               <p className="text-slate-300">Medical knowledge meets compassion. Every answer carries the weight of keeping you alive.</p>
             </div>
 
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-amber-700/30 rounded-xl p-8">
               <div className="text-3xl mb-4">⚡</div>
-              <h3 className="text-xl font-bold text-amber-300 mb-2">A1 Agent</h3>
-              <p className="text-slate-300">Technical precision. No fluff. The architect behind TokBuilding. Specs your agent idea into reality.</p>
+              <h3 className="text-xl font-bold text-amber-300 mb-2">A1 Guardian</h3>
+              <p className="text-slate-300">Technical precision. No fluff. The architect behind TokBuilding. Specs your Guardian idea into reality.</p>
             </div>
 
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-pink-700/30 rounded-xl p-8">
@@ -266,13 +266,13 @@ export default function OurStoryPage() {
 
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-purple-700/30 rounded-xl p-8">
               <div className="text-3xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-purple-300 mb-2">Tok2Myia Agent</h3>
+              <h3 className="text-xl font-bold text-purple-300 mb-2">Tok2Myia Guardian</h3>
               <p className="text-slate-300">Search. Knowledge. Explanation. Everything you need to know, explained simply and truly.</p>
             </div>
 
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-cyan-700/30 rounded-xl p-8">
               <div className="text-3xl mb-4">🌍</div>
-              <h3 className="text-xl font-bold text-cyan-300 mb-2">HATÄTA Agent</h3>
+              <h3 className="text-xl font-bold text-cyan-300 mb-2">HATÄTA Guardian</h3>
               <p className="text-slate-300">Navigation. Every SVL product. All the answers. Your guide to everything we've built.</p>
             </div>
           </div>
@@ -487,7 +487,7 @@ export default function OurStoryPage() {
             <h4 className="text-white font-bold mb-4">Products</h4>
             <ul className="space-y-2 text-purple-300 text-sm">
               <li><Link href="/tokstore" className="hover:text-white transition">TokStore</Link></li>
-              <li><Link href="/agent" className="hover:text-white transition">AI Agents</Link></li>
+              <li><Link href="/agent" className="hover:text-white transition">SVL Guardians</Link></li>
             </ul>
           </div>
           <div>
