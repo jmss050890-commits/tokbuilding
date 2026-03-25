@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
@@ -36,6 +39,22 @@ jobs:
       - name: Install Vercel CLI
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: npm install --global vercel@latest
+
+      - name: Validate Vercel token
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::Missing VERCEL_TOKEN secret. Add a Vercel token with access to org $VERCEL_ORG_ID and project $VERCEL_PROJECT_ID."
+            exit 1
+          fi
+
+          if ! vercel whoami --token="$VERCEL_TOKEN"; then
+            echo "::error::VERCEL_TOKEN is invalid or expired. Rotate the token in GitHub Actions secrets before rerunning deploy."
+            exit 1
+          fi
 
       - name: Pull Vercel project settings
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
