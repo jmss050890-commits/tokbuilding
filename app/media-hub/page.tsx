@@ -4,40 +4,9 @@ import Link from 'next/link';
 import { Play, MessageCircle, Share2, Radio } from 'lucide-react';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
-const mediaContent = [
-  {
-    id: 1,
-    title: "Reese Waters Runs Deep: Government Shutdown & TSA Precheck",
-    creator: "Reese Waters",
-    duration: "1:27:58",
-    category: "Current Affairs",
-    tags: ["government shutdown", "TSA", "ICE", "community"],
-    description: "Through the Government Shutdown, airport lines, and policy impacts, Reese explores how crisis navigation affects real people. Where SVL's protection mission intersects with everyday safety, and where the follow-on community thread reaches a Philippines-based team studying the same Ethiopian Bible.",
-    featured: true,
-    engagement: {
-      comments: 28,
-      discussions: 24,
-    },
-    highlights: [
-      "Government shutdown impacts",
-      "TSA Precheck challenges",
-      "ICE emergency response",
-      "Community crisis navigation"
-    ]
-  },
-  {
-    id: 2,
-    title: "TokFaith in the Community: When Single Words Change Systems",
-    creator: "Jerome Sanders / Community",
-    category: "Faith & Mission",
-    tags: ["faith", "tokfaith", "community", "impact"],
-    description: "Shirley Whaley's 'Amen' sparked TokFaith's creation. How one word of faith, one person listening, one system built around spirit—keeps people moving forward.",
-    featured: false,
-  },
-];
-
 export default function MediaHub() {
   const copy = useSiteCopy();
+  const mediaItems = copy.mediaHub.items;
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#111", color: "#fff", paddingBottom: 60 }}>
       {/* Header */}
@@ -53,11 +22,11 @@ export default function MediaHub() {
       {/* Featured */}
       <div style={{ maxWidth: 1200, margin: "0 auto", paddingLeft: 20, paddingRight: 20, marginBottom: 60 }}>
         <h2 style={{ fontSize: 28, marginBottom: 24, marginTop: 0 }}>{copy.mediaHub.featuredTitle}</h2>
-        {mediaContent
+        {mediaItems
           .filter((m) => m.featured)
-          .map((media) => (
+          .map((media, index) => (
             <div
-              key={media.id}
+              key={`${media.title}-${index}`}
               style={{
                 borderRadius: 16,
                 border: "1px solid #e05c1a",
@@ -134,10 +103,10 @@ export default function MediaHub() {
                       <>
                         <span style={{ fontSize: 13, color: "#999" }}>
                           <MessageCircle style={{ display: "inline", marginRight: 6, width: 16 }} />
-                          {media.engagement.comments} comments
+                          {media.engagement.comments} {copy.mediaHub.commentsLabel}
                         </span>
                         <span style={{ fontSize: 13, color: "#999" }}>
-                          {media.engagement.discussions} discussions
+                          {media.engagement.discussions} {copy.mediaHub.discussionsLabel}
                         </span>
                       </>
                     )}

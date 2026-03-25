@@ -1,6 +1,16 @@
 import { OpenAI } from 'openai';
 import { getTokFaithLessonMemoriesCollection } from '@/lib/db';
 import { detectTokFaithLessonTopic } from '@/lib/tokfaith-memory';
+import { generateWithKpaGuard } from '@/lib/svl-kpa-engine';
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from '@/lib/svl-supportive-handoff';
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from '@/lib/agent-response-language';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'sk-demo-mode',
@@ -46,7 +56,13 @@ function detectTokFaithPerspective(message) {
   return 'ethiopian-with-kjv-option';
 }
 
-async function generateTokFaithResponse(userMessage, perspective, systemContext) {
+async function generateTokFaithResponse(
+  userMessage,
+  perspective,
+  systemContext,
+  responseLanguageSystemMessage,
+  supportiveHandoffSystemMessage,
+) {
   const perspectivePrompts = {
     ethiopian: {
       name: 'Ethiopian Lens',
@@ -71,28 +87,53 @@ async function generateTokFaithResponse(userMessage, perspective, systemContext)
   const finalSystemPrompt = systemContext 
     ? `${systemContext}\n\nAlways draw on scripture and wisdom. Remember to keep people alive (KPA).`
     : perspectiveConfig.system;
+  const systemMessages = [
+    {
+      role: 'system',
+      content: finalSystemPrompt,
+    },
+    ...(responseLanguageSystemMessage
+      ? [{ role: 'system', content: responseLanguageSystemMessage }]
+      : []),
+    ...(supportiveHandoffSystemMessage
+      ? [{ role: 'system', content: supportiveHandoffSystemMessage }]
+      : []),
+  ];
 
   try {
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4-turbo',
-      messages: [
-        {
-          role: 'system',
-          content: finalSystemPrompt,
-        },
-        {
-          role: 'user',
-          content: userMessage,
-        },
-      ],
-      max_tokens: 900,
-      temperature: 0.8,
-    });
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await openai.chat.completions.create({
+          model: 'gpt-4-turbo',
+          messages: [...systemMessages, { role: 'user', content: userMessage }],
+          max_tokens: 900,
+          temperature: 0.8,
+        });
+
+        return completion.choices[0].message.content;
+      },
+      async (repairPrompt) => {
+        const completion = await openai.chat.completions.create({
+          model: 'gpt-4-turbo',
+          messages: [
+            ...systemMessages,
+            {
+              role: 'user',
+              content: `Original user message:\n${userMessage}\n\n${repairPrompt}`,
+            },
+          ],
+          max_tokens: 900,
+          temperature: 0.8,
+        });
+
+        return completion.choices[0].message.content;
+      },
+    );
 
     return {
       perspective: perspectiveConfig.name,
       description: perspectiveConfig.description,
-      response: response.choices[0].message.content,
+      response,
     };
   } catch (error) {
     console.error('TokFaith perspective generation error:', error);
@@ -121,7 +162,10 @@ async function saveTokFaithLesson(userMessage, responseData) {
 
 export async function POST(request) {
   try {
-    const { message, forcePerspective, systemContext } = await request.json();
+    const body = await request.json();
+    const { message, forcePerspective, systemContext } = body;
+    const language = getRequestSiteLanguage(request, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
 
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return new Response(
@@ -133,8 +177,36 @@ export async function POST(request) {
       );
     }
 
+    const safetyCase = detectSupportiveHandoffCase(message.trim());
+    if (safetyCase.requiresEmergencyResponse) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message,
+          perspective: forcePerspective || detectTokFaithPerspective(message),
+          description: 'KPA emergency response',
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
+          perspectives: {
+            available: ['ethiopian', 'kjv', 'ethiopian-with-kjv-option'],
+            current: forcePerspective || detectTokFaithPerspective(message),
+            canSwitch: true,
+          },
+          safetyMode: true,
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     const perspective = forcePerspective || detectTokFaithPerspective(message);
-    const responseData = await generateTokFaithResponse(message, perspective, systemContext);
+    const responseData = await generateTokFaithResponse(
+      message,
+      perspective,
+      systemContext,
+      responseLanguageSystemMessage,
+      safetyCase.requiresSupportiveTone
+        ? getSupportiveHandoffSystemMessage('TokFaith')
+        : null,
+    );
 
     // Save to memory (non-blocking)
     await saveTokFaithLesson(message, responseData);

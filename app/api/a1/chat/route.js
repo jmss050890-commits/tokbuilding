@@ -8,6 +8,14 @@ import {
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
 import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import {
+  buildAgentDemoModeResponse,
+  buildAgentRetryResponse,
+} from "@/lib/agent-fallback-copy";
+import {
   detectMastermindLessonTrigger,
   findLessonById,
   formatLessonTeaching,
@@ -20,6 +28,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     message = body?.message?.trim();
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     const a1Agent = AGENTS["a1"];
 
     if (!message) {
@@ -34,7 +44,7 @@ export async function POST(req) {
     if (safetyCase.requiresEmergencyResponse) {
       return new Response(
         JSON.stringify({
-          response: buildSupportiveEmergencyResponse(safetyCase),
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
           safetyMode: true,
         }),
         { status: 200 }
@@ -79,8 +89,11 @@ export async function POST(req) {
     if (!openAiApiKey) {
       return new Response(
         JSON.stringify({
-          response:
+          response: buildAgentDemoModeResponse(
+            a1Agent.name,
+            language,
             "I'm A1, SVL's strategic intelligence agent. I know the SVL story, the sandersvioprolabs.com upgrade, and the TokHealth plus TokThru integration. I'm currently in demo mode, but in production I'll help you turn that vision into systems, products, and deployable reality.",
+          ),
           safetyMode: safetyCase.requiresSupportiveTone,
         }),
         { status: 200 }
@@ -93,6 +106,9 @@ export async function POST(req) {
 
     const systemMessages = [
       { role: "system", content: a1Agent.systemPrompt },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("A1") }]
         : []),
@@ -105,7 +121,7 @@ export async function POST(req) {
           messages: [...systemMessages, { role: "user", content: message }],
         });
 
-        return completion.choices?.[0]?.message?.content?.trim() || "No response.";
+        return completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(a1Agent.name, language, "No response.");
       },
       async (repairPrompt) => {
         const completion = await client.chat.completions.create({
@@ -119,7 +135,7 @@ export async function POST(req) {
           ],
         });
 
-        return completion.choices?.[0]?.message?.content?.trim() || "No response.";
+        return completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(a1Agent.name, language, "No response.");
       }
     );
 
@@ -132,8 +148,11 @@ export async function POST(req) {
 
     return new Response(
       JSON.stringify({
-        response:
+        response: buildAgentRetryResponse(
+          "A1",
+          language,
           "That's a good question. TokBuilding is SVL's builder lane. It helps people turn ideas into AI agents, prompts, and real tools they can actually use. In the bigger system, TokBuilding helps create what TokSEO helps people find and what the SVL agent hub helps people understand and use. You can start at sandersvioprolabs.com or go straight to TokBuilding to see that lane in action.",
+        ),
         safetyMode,
         fallbackMode: true,
       }),

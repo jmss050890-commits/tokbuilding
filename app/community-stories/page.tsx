@@ -4,29 +4,9 @@ import Link from 'next/link';
 import { Heart, Users, Shield } from 'lucide-react';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
-const communityStories = [
-  {
-    id: 1,
-    title: "Government Shutdown & Crisis Navigation",
-    source: "Reese Waters Runs Deep",
-    type: "podcast",
-    summary: "When airports get locked down, when TSA lines stretch for hours, when emergency systems are under strain—this is when KPA thinking matters. Reese Waters walks through real-world crisis navigation.",
-    connection: "Shows how people naturally think about protection and staying alive during system failures, and how that conversation kept moving after Reese into a Philippines-based team studying the same Ethiopian Bible",
-    impact: "Demonstrates SVL's relevance in real crisis scenarios and in faith-rooted communities tracing the same restored Ethiopian Bible lane",
-  },
-  {
-    id: 2,
-    title: "Single Word, Single System: The Birth of TokFaith",
-    source: "Shirley Whaley's 'Amen'",
-    type: "testimony",
-    summary: "One person blessed TokFaith's creation with a single word. That word became the foundation for a whole faith-guidance system designed to keep people spiritually grounded during crisis.",
-    connection: "Living proof that faith, tech, and mission work together to serve people",
-    impact: "Shows SVL's belief that spirit-led work scales when built with love",
-  },
-];
-
 export default function CommunityStories() {
   const copy = useSiteCopy();
+  const stories = copy.communityStories.stories;
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#111", color: "#fff", paddingBottom: 60 }}>
       {/* Header */}
@@ -42,9 +22,9 @@ export default function CommunityStories() {
       {/* Stories */}
       <div style={{ maxWidth: 1200, margin: "0 auto", paddingLeft: 20, paddingRight: 20 }}>
         <div style={{ display: "grid", gap: 28 }}>
-          {communityStories.map((story) => (
+          {stories.map((story, index) => (
             <div
-              key={story.id}
+              key={`${story.title}-${index}`}
               style={{
                 borderRadius: 16,
                 border: "1px solid #0fa89e",

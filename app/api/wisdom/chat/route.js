@@ -7,8 +7,20 @@ import {
   detectSupportiveHandoffCase,
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import {
+  buildAgentDemoModeResponse,
+  buildAgentRetryResponse,
+} from "@/lib/agent-fallback-copy";
 
-function buildWisdomDemoResponse(message) {
+function buildWisdomDemoResponse(message, language = "en") {
+  if (language !== "en") {
+    return buildAgentDemoModeResponse("Wisdom", language);
+  }
+
   const lowerMessage = message.toLowerCase();
 
   if (
@@ -29,6 +41,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     message = body?.message?.trim();
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     const wisdomAgent = AGENTS.wisdom;
 
     if (!message) {
@@ -42,7 +56,7 @@ export async function POST(req) {
     safetyMode = safetyCase.requiresSupportiveTone;
     if (safetyCase.requiresEmergencyResponse) {
       return new Response(
-        JSON.stringify({ response: buildSupportiveEmergencyResponse(safetyCase), safetyMode: true }),
+        JSON.stringify({ response: buildSupportiveEmergencyResponse(safetyCase, language), safetyMode: true }),
         { status: 200 }
       );
     }
@@ -52,7 +66,7 @@ export async function POST(req) {
     if (!openAiApiKey) {
       return new Response(
         JSON.stringify({
-          response: buildWisdomDemoResponse(message),
+          response: buildWisdomDemoResponse(message, language),
           safetyMode: safetyCase.requiresSupportiveTone,
         }),
         { status: 200 }
@@ -65,6 +79,9 @@ export async function POST(req) {
 
     const systemMessages = [
       { role: "system", content: wisdomAgent.systemPrompt },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Wisdom") }]
         : []),
@@ -77,7 +94,7 @@ export async function POST(req) {
           messages: [...systemMessages, { role: "user", content: message }],
         });
 
-        return completion.choices?.[0]?.message?.content?.trim() || "I'm here with you.";
+        return completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(wisdomAgent.name, language, "I'm here with you.");
       },
       async (repairPrompt) => {
         const completion = await client.chat.completions.create({
@@ -91,7 +108,7 @@ export async function POST(req) {
           ],
         });
 
-        return completion.choices?.[0]?.message?.content?.trim() || "I'm here with you.";
+        return completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(wisdomAgent.name, language, "I'm here with you.");
       }
     );
 
@@ -104,7 +121,7 @@ export async function POST(req) {
 
     return new Response(
       JSON.stringify({
-        response: buildWisdomDemoResponse(message || "What is TokBuilding?"),
+        response: buildWisdomDemoResponse(message || "What is TokBuilding?", language),
         safetyMode,
         fallbackMode: true,
       }),

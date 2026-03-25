@@ -9,7 +9,7 @@ import {
   type SpeechRecognitionEventLike,
   type SpeechRecognitionLike,
 } from "@/lib/browser-speech";
-import { useSiteCopy } from "@/app/components/SiteLanguageControl";
+import { useSiteCopy, useSiteLanguage } from "@/app/components/SiteLanguageControl";
 
 const VOICE_LOAD_TIMEOUT_MS = 5000;
 const VOICE_POLL_INTERVAL_MS = 250;
@@ -472,6 +472,30 @@ function getRotatingSuggestions(suggestions: string[], rotationIndex: number, vi
   });
 }
 
+function getDisplayedWelcomeMessage(agent: AgentConfig | null, copy: ReturnType<typeof useSiteCopy>) {
+  if (agent?.slug === "first-guardian") {
+    return copy.firstGuardianPage.welcomeMessage;
+  }
+
+  return agent?.welcomeMessage ?? "";
+}
+
+function getDisplayedWelcomeTitle(agent: AgentConfig | null, copy: ReturnType<typeof useSiteCopy>) {
+  if (agent?.slug === "first-guardian") {
+    return copy.firstGuardianPage.welcomeTitle;
+  }
+
+  return agent?.welcomeTitle ?? copy.guardianChat.welcomeFallback;
+}
+
+function getDisplayedSuggestions(agent: AgentConfig | null, copy: ReturnType<typeof useSiteCopy>) {
+  if (agent?.slug === "first-guardian") {
+    return copy.firstGuardianPage.quickLinks;
+  }
+
+  return agent?.suggestions ?? [];
+}
+
 function AvatarBadge({
   agent,
   accentColor,
@@ -521,12 +545,13 @@ function AvatarBadge({
   );
 }
 
-function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, copy }: {
+function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, copy, pageCopy }: {
   agent: AgentConfig;
   accentColor: string;
   onPromptSelect: (prompt: string) => void;
   suggestions: string[];
   copy: ReturnType<typeof useSiteCopy>["guardianChat"];
+  pageCopy: ReturnType<typeof useSiteCopy>["firstGuardianPage"];
 }) {
   return (
     <div
@@ -553,9 +578,9 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, cop
             color: "#f8eadb",
           }}
         >
-          {agent.tagline || "SVL Legacy Edition"}
+          {pageCopy.tagline || agent.tagline || "SVL Legacy Edition"}
         </span>
-        {agent.protocolLabel ? (
+        {pageCopy.protocolLabel || agent.protocolLabel ? (
           <span
             style={{
               padding: "6px 12px",
@@ -569,7 +594,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, cop
               color: "#fff",
             }}
           >
-            Protocol: {agent.protocolLabel}
+            {pageCopy.protocolLabel || agent.protocolLabel}
           </span>
         ) : null}
       </div>
@@ -578,7 +603,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, cop
         <div>
           <h2 style={{ margin: "0 0 10px", fontSize: 28, lineHeight: 1.1 }}>{copy.presence.firstGuardianHeadline}</h2>
           <p style={{ margin: 0, color: "#f3e5d6", lineHeight: 1.7, fontSize: 15 }}>
-            {agent.legacyStory || agent.welcomeMessage}
+            {pageCopy.legacyStory || pageCopy.welcomeMessage || agent.legacyStory || agent.welcomeMessage}
           </p>
         </div>
 
@@ -594,7 +619,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, cop
             {copy.presence.protectivePresence}
           </p>
           <div style={{ display: "grid", gap: 10 }}>
-            {(agent.presenceNotes || []).map((note) => (
+            {(pageCopy.presenceNotes || agent.presenceNotes || []).map((note) => (
               <div
                 key={note}
                 style={{
@@ -613,7 +638,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, cop
         </div>
       </div>
 
-      {agent.signatureLines?.length ? (
+      {(pageCopy.signatureLines || agent.signatureLines)?.length ? (
         <div
           style={{
             marginTop: 18,
@@ -627,7 +652,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, cop
             {copy.presence.michellesVoice}
           </p>
           <div style={{ display: "grid", gap: 10 }}>
-            {agent.signatureLines.map((line) => (
+            {(pageCopy.signatureLines || agent.signatureLines || []).map((line) => (
               <div
                 key={line}
                 style={{
@@ -829,11 +854,15 @@ function MrKpaPresence({ agent, accentColor, onPromptSelect, suggestions, copy }
   );
 }
 
-function GuardianSafetyCard({ agent, accentColor }: {
+function GuardianSafetyCard({ agent, accentColor, title, bullets }: {
   agent: AgentConfig;
   accentColor: string;
+  title?: string;
+  bullets?: string[];
 }) {
-  if (!agent.safetyCardBullets?.length) {
+  const safetyBullets = bullets ?? agent.safetyCardBullets;
+
+  if (!safetyBullets?.length) {
     return null;
   }
 
@@ -857,10 +886,10 @@ function GuardianSafetyCard({ agent, accentColor }: {
           textTransform: "uppercase",
         }}
       >
-        {agent.safetyCardTitle || "KPA Safety"}
+        {title || agent.safetyCardTitle || "KPA Safety"}
       </p>
       <div style={{ display: "grid", gap: 8 }}>
-        {agent.safetyCardBullets.map((bullet) => (
+        {safetyBullets.map((bullet) => (
           <div
             key={bullet}
             style={{
@@ -1314,10 +1343,12 @@ export default function AgentClient({
 }) {
   const router = useRouter();
   const copy = useSiteCopy();
+  const { language } = useSiteLanguage();
+  const initialWelcomeMessage = getDisplayedWelcomeMessage(initialAgent, copy);
   
   const [agent, setAgent] = useState<AgentConfig | null>(initialAgent);
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
-    initialAgent ? [{ role: "assistant", content: initialAgent.welcomeMessage }] : []
+    initialAgent ? [{ role: "assistant", content: initialWelcomeMessage }] : []
   );
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -1345,7 +1376,8 @@ export default function AgentClient({
   const isFirstGuardian = agent?.slug === "first-guardian";
   const isMrKpa = agent?.slug === "mr-kpa";
   const usesRotatingSuggestions = isTokFaith || isFirstGuardian || isMrKpa;
-  const rotatingSuggestions = getRotatingSuggestions(agent?.suggestions || [], suggestionRotationIndex);
+  const displayedSuggestions = getDisplayedSuggestions(agent, copy);
+  const rotatingSuggestions = getRotatingSuggestions(displayedSuggestions, suggestionRotationIndex);
 
   useEffect(() => {
     if (resolvedSlug && resolvedSlug !== slug) {
@@ -1359,13 +1391,13 @@ export default function AgentClient({
       setMessages([
         {
           role: "assistant",
-          content: selectedAgent.welcomeMessage,
+          content: getDisplayedWelcomeMessage(selectedAgent, copy),
         },
       ]);
     } else if (!agent && slug) {
       router.push("/agent");
     }
-  }, [resolvedSlug, slug, agent, router]);
+  }, [resolvedSlug, slug, agent, router, copy]);
 
   useEffect(() => {
     let isMounted = true;
@@ -1425,16 +1457,16 @@ export default function AgentClient({
   useEffect(() => {
     setSuggestionRotationIndex(0);
 
-    if (!usesRotatingSuggestions || !agent?.suggestions?.length || agent.suggestions.length <= 3) {
+    if (!usesRotatingSuggestions || displayedSuggestions.length <= 3) {
       return;
     }
 
     const intervalId = window.setInterval(() => {
-      setSuggestionRotationIndex((currentIndex) => (currentIndex + 1) % agent.suggestions.length);
+      setSuggestionRotationIndex((currentIndex) => (currentIndex + 1) % displayedSuggestions.length);
     }, 3200);
 
     return () => window.clearInterval(intervalId);
-  }, [agent, usesRotatingSuggestions]);
+  }, [displayedSuggestions, usesRotatingSuggestions]);
 
   useEffect(() => {
     const updateCompactMode = () => {
@@ -1556,7 +1588,9 @@ export default function AgentClient({
   }, [availableVoices, isVoiceReady]);
 
   useEffect(() => {
-    if (!agent?.welcomeMessage || !voiceUnlocked || !isVoiceReady || hasAutoPlayedWelcomeRef.current) {
+    const welcomeMessage = getDisplayedWelcomeMessage(agent, copy);
+
+    if (!welcomeMessage || !voiceUnlocked || !isVoiceReady || hasAutoPlayedWelcomeRef.current) {
       return;
     }
 
@@ -1566,9 +1600,9 @@ export default function AgentClient({
 
     hasAutoPlayedWelcomeRef.current = true;
     window.setTimeout(() => {
-      speakRef.current(agent.welcomeMessage);
+      speakRef.current(welcomeMessage);
     }, 120);
-  }, [agent, isVoiceReady, messages, voiceUnlocked]);
+  }, [agent, copy, isVoiceReady, messages, voiceUnlocked]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -1730,9 +1764,13 @@ export default function AgentClient({
     try {
       const response = await fetch(`/api/${encodeURIComponent(apiSlug)}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-site-language": language,
+        },
         body: JSON.stringify({
           message: transcript,
+          language,
           userId: clientUserId,
           userName: clientUserName,
         }),
@@ -1769,8 +1807,8 @@ export default function AgentClient({
 
     if (isTokFaith || isFirstGuardian || isMrKpa) {
       setInput("");
-      if (agent?.suggestions?.length && agent.suggestions.length > 3) {
-        setSuggestionRotationIndex((currentIndex) => (currentIndex + 1) % agent.suggestions.length);
+      if (displayedSuggestions.length > 3) {
+        setSuggestionRotationIndex((currentIndex) => (currentIndex + 1) % displayedSuggestions.length);
       }
       void handleAutoSend(prompt);
       return;
@@ -1803,9 +1841,13 @@ export default function AgentClient({
     try {
       const response = await fetch(`/api/${encodeURIComponent(apiSlug)}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-site-language": language,
+        },
         body: JSON.stringify({
           message: userMessage,
+          language,
           userId: clientUserId,
           userName: clientUserName,
         }),
@@ -1902,7 +1944,7 @@ export default function AgentClient({
             </p>
             <button
               type="button"
-              onClick={() => speak(agent?.welcomeMessage || copy.guardianChat.voiceCheckComplete)}
+              onClick={() => speak(getDisplayedWelcomeMessage(agent, copy) || copy.guardianChat.voiceCheckComplete)}
               style={{
                 marginTop: 10,
                 padding: "6px 10px",
@@ -1929,8 +1971,14 @@ export default function AgentClient({
             onPromptSelect={handleSuggestedPrompt}
             suggestions={rotatingSuggestions}
             copy={copy.guardianChat}
+            pageCopy={copy.firstGuardianPage}
           />
-          <GuardianSafetyCard agent={agent} accentColor={accentColor} />
+          <GuardianSafetyCard
+            agent={agent}
+            accentColor={accentColor}
+            title={copy.firstGuardianPage.safetyCardTitle}
+            bullets={copy.firstGuardianPage.safetyCardBullets}
+          />
         </>
       ) : null}
 
@@ -2012,11 +2060,11 @@ export default function AgentClient({
       >
         {messages.length === 0 ? (
           <div style={{ textAlign: "center", marginTop: "40px", color: "#888" }}>
-            <h2>{agent?.welcomeTitle || copy.guardianChat.welcomeFallback}</h2>
-            <p>{agent?.welcomeMessage || copy.guardianChat.loadingGuardian}</p>
-            {agent?.suggestions && (
+            <h2>{getDisplayedWelcomeTitle(agent, copy)}</h2>
+            <p>{getDisplayedWelcomeMessage(agent, copy) || copy.guardianChat.loadingGuardian}</p>
+            {displayedSuggestions.length > 0 && (
               <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-                {(usesRotatingSuggestions ? rotatingSuggestions : agent.suggestions).map((suggestion, i) => (
+                {(usesRotatingSuggestions ? rotatingSuggestions : displayedSuggestions).map((suggestion, i) => (
                   <button
                     key={i}
                     onClick={() => handleSuggestedPrompt(suggestion)}

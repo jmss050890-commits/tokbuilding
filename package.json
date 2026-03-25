@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:agent-locales": "node scripts/test-agent-locale-regression.js",
+    "test:agent-fallbacks": "node scripts/test-agent-fallback-regression.js",
+    "test:tokfaith-contract": "node scripts/test-tokfaith-contract-regression.js",
+    "test:agent-standards": "node scripts/test-agent-standard-suite.js",
+    "test:mobile-agents": "playwright test tests/agent-mobile.spec.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
@@ -21,6 +26,7 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -7,6 +7,14 @@ import {
   detectSupportiveHandoffCase,
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import {
+  buildAgentDemoModeResponse,
+  buildAgentRetryResponse,
+} from "@/lib/agent-fallback-copy";
 
 export async function POST(req) {
   let message = "";
@@ -14,6 +22,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     message = body?.message?.trim();
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     const coachDanielsAgent = AGENTS["coach-daniels"];
 
     if (!message) {
@@ -28,7 +38,7 @@ export async function POST(req) {
     if (safetyCase.requiresEmergencyResponse) {
       return new Response(
         JSON.stringify({
-          response: buildSupportiveEmergencyResponse(safetyCase),
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
           safetyMode: true,
         }),
         { status: 200 }
@@ -40,8 +50,11 @@ export async function POST(req) {
     if (!openAiApiKey) {
       return new Response(
         JSON.stringify({
-          response:
+          response: buildAgentDemoModeResponse(
+            coachDanielsAgent.name,
+            language,
             "I'm Coach Daniels, your health coach for blood pressure, heart health, and mental wellness support. I know the SVL story and the TokHealth upgrade path too. I'm in demo mode right now, but when we're fully connected I'll help you track concerns, think clearly about symptoms, and stay grounded with safety-first guidance.",
+          ),
           safetyMode: safetyCase.requiresSupportiveTone,
         }),
         { status: 200 }
@@ -54,6 +67,9 @@ export async function POST(req) {
 
     const systemMessages = [
       { role: "system", content: coachDanielsAgent.systemPrompt },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Coach Daniels") }]
         : []),
@@ -67,7 +83,7 @@ export async function POST(req) {
         });
 
         return (
-          completion.choices?.[0]?.message?.content?.trim() || "I'm here for you, Brian."
+          completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(coachDanielsAgent.name, language, "I'm here for you, Brian.")
         );
       },
       async (repairPrompt) => {
@@ -83,7 +99,7 @@ export async function POST(req) {
         });
 
         return (
-          completion.choices?.[0]?.message?.content?.trim() || "I'm here for you, Brian."
+          completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(coachDanielsAgent.name, language, "I'm here for you, Brian.")
         );
       }
     );
@@ -97,8 +113,11 @@ export async function POST(req) {
 
     return new Response(
       JSON.stringify({
-        response:
+        response: buildAgentRetryResponse(
+          "Coach Daniels",
+          language,
           "I hear you. TokBuilding is the part of SVL that helps people build AI agents and practical tools for real life. On its own, it helps someone create something useful. In the full SVL system, it works with TokSEO for visibility, TokStore for access, and the SVL agents for guidance so people can move from an idea to real support. You can start at sandersvioprolabs.com or open TokBuilding directly.",
+        ),
         safetyMode,
         fallbackMode: true,
       }),

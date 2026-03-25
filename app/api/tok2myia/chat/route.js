@@ -6,6 +6,14 @@ import {
   detectSupportiveHandoffCase,
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import {
+  buildAgentDemoModeResponse,
+  buildAgentRetryResponse,
+} from "@/lib/agent-fallback-copy";
 
 export async function POST(req) {
   let userMessage = "";
@@ -14,6 +22,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     userMessage = body?.message?.trim();
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
 
     if (!userMessage) {
       return new Response(
@@ -29,7 +39,7 @@ export async function POST(req) {
     if (safetyCase.requiresEmergencyResponse) {
       return new Response(
         JSON.stringify({
-          response: buildSupportiveEmergencyResponse(safetyCase),
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
           role: "assistant",
           agentName: "Tok2Myia",
           safetyMode: true,
@@ -53,8 +63,11 @@ export async function POST(req) {
     if (!apiKey) {
       return new Response(
         JSON.stringify({
-          response:
+          response: buildAgentDemoModeResponse(
+            tok2myia.name,
+            language,
             "I'm Tok2Myia, your knowledge guide. I know the SVL story, the sandersvioprolabs.com upgrade, and the TokHealth plus TokThru integration too. I'm currently in demo mode. In production, I'll provide intelligent search, knowledge synthesis, research assistance, and decision support - all aligned with the KPA mission to help you stay informed and empowered.",
+          ),
           role: "assistant",
           agentName: tok2myia.name,
           safetyMode,
@@ -69,6 +82,9 @@ export async function POST(req) {
         role: "system",
         content: tok2myia.systemPrompt,
       },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Tok2Myia") }]
         : []),
@@ -98,7 +114,7 @@ export async function POST(req) {
       const data = await response.json();
       return (
         data?.choices?.[0]?.message?.content?.trim() ||
-        "Oh! I want to help with that. Can you ask me one more time?"
+        buildAgentRetryResponse(tok2myia.name, language, "Oh! I want to help with that. Can you ask me one more time?")
       );
     };
 
@@ -121,8 +137,11 @@ export async function POST(req) {
     console.error("Chat error:", error);
     return new Response(
       JSON.stringify({
-        response:
+        response: buildAgentRetryResponse(
+          agentName,
+          language,
           "Oh, let's break that down simply. TokBuilding is SVL's builder space. It helps people make AI agents, prompts, and useful tools for real life. Then other parts of SVL help those tools get seen, supported, and connected to the right people. You can start at sandersvioprolabs.com if you want the whole map, or go straight to TokBuilding if you want the builder part.",
+        ),
         role: "assistant",
         agentName,
         safetyMode,

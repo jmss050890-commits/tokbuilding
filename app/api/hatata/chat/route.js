@@ -7,8 +7,17 @@ import {
   detectSupportiveHandoffCase,
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import { buildAgentRetryResponse } from "@/lib/agent-fallback-copy";
 
-function buildHatataDemoResponse(message) {
+function buildHatataDemoResponse(message, language = "en") {
+  if (language !== "en") {
+    return buildAgentRetryResponse("HATATA", language);
+  }
+
   const lowerMessage = message.toLowerCase();
 
   if (
@@ -36,6 +45,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     message = body?.message?.trim();
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     const hatataAgent = AGENTS.hatata;
 
     if (!message) {
@@ -50,7 +61,7 @@ export async function POST(req) {
     if (safetyCase.requiresEmergencyResponse) {
       return new Response(
         JSON.stringify({
-          response: buildSupportiveEmergencyResponse(safetyCase),
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
           safetyMode: true,
         }),
         { status: 200 }
@@ -62,7 +73,7 @@ export async function POST(req) {
     if (!openAiApiKey) {
       return new Response(
         JSON.stringify({
-          response: buildHatataDemoResponse(message),
+          response: buildHatataDemoResponse(message, language),
           safetyMode: safetyCase.requiresSupportiveTone,
         }),
         { status: 200 }
@@ -75,6 +86,9 @@ export async function POST(req) {
 
     const systemMessages = [
       { role: "system", content: hatataAgent.systemPrompt },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("HATATA") }]
         : []),
@@ -87,7 +101,7 @@ export async function POST(req) {
           messages: [...systemMessages, { role: "user", content: message }],
         });
 
-        return completion.choices?.[0]?.message?.content?.trim() || "I'm here, Jerome.";
+        return completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(hatataAgent.name, language, "I'm here, Jerome.");
       },
       async (repairPrompt) => {
         const completion = await client.chat.completions.create({
@@ -101,7 +115,7 @@ export async function POST(req) {
           ],
         });
 
-        return completion.choices?.[0]?.message?.content?.trim() || "I'm here, Jerome.";
+        return completion.choices?.[0]?.message?.content?.trim() || buildAgentRetryResponse(hatataAgent.name, language, "I'm here, Jerome.");
       }
     );
 
@@ -112,7 +126,7 @@ export async function POST(req) {
 
     return Response.json(
       {
-        response: buildHatataDemoResponse(message || "What is TokBuilding?"),
+        response: buildHatataDemoResponse(message || "What is TokBuilding?", language),
         safetyMode,
         fallbackMode: true,
         details: process.env.NODE_ENV === "development" ? error?.message : undefined,
