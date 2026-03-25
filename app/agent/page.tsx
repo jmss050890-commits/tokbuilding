@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { AGENTS, type AgentConfig } from "../../lib/lib/lib/agents";
 
@@ -25,9 +26,12 @@ export default function GuardiansHub() {
   const renderAvatar = (agent: AgentConfig, accentColor: string) => {
     if (agent.avatar.startsWith("/")) {
       return (
-        <img
+        <Image
           src={agent.avatar}
           alt={`${agent.name} avatar`}
+          width={48}
+          height={48}
+          sizes="48px"
           style={{
             width: 48,
             height: 48,
