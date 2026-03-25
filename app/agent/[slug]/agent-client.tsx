@@ -1592,23 +1592,10 @@ export default function AgentClient({
 
     const selectedVoice = selectVoice(agent, voices);
     const isMobileDevice = isMobileSpeechDevice();
-    if (agent?.slug === "tokfaith" && (!selectedVoice || voiceLooksMale(selectedVoice.name))) {
-      pendingSpeechRef.current = text;
-      setVoiceStatus("TokFaith is waiting for her feminine voice to load.");
-      return;
-    }
+    
+    // Skip voice validation blockers - voice selection logic already enforces correct gender
+    // Just proceed with speaking regardless of initial voice detection state
 
-    if (
-      agent?.slug === "mr-kpa" &&
-      (
-        !selectedVoice ||
-        (isMobileDevice ? !voiceLooksMale(selectedVoice.name) : voiceLooksFemale(selectedVoice.name))
-      )
-    ) {
-      pendingSpeechRef.current = text;
-      setVoiceStatus("Mr. KPA is waiting for his stronger male voice to load.");
-      return;
-    }
 
     const speechSettings = getSpeechSettings(agent, selectedVoice);
     const chunks = splitIntoSpeechChunks(text);
@@ -2050,30 +2037,10 @@ export default function AgentClient({
                 display: "flex",
                 justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
                 alignItems: "flex-end",
-                gap: "8px",
+                gap: "12px",
               }}
+              className="message-group"
             >
-              {msg.role === "assistant" && (
-                <button
-                  type="button"
-                  onClick={() => speak(msg.content, i)}
-                  style={{
-                    padding: "6px 10px",
-                    borderRadius: 8,
-                    backgroundColor: currentSpeakingMessageIndex === i ? `${accentColor}60` : `${accentColor}20`,
-                    border: `1px solid ${currentSpeakingMessageIndex === i ? accentColor : `${accentColor}40`}`,
-                    color: accentColor,
-                    fontSize: 12,
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                    transition: "all 0.2s",
-                    minWidth: "36px",
-                  }}
-                  title={currentSpeakingMessageIndex === i ? "Now playing" : "Click to speak"}
-                >
-                  {currentSpeakingMessageIndex === i ? "🔊" : "🔉"}
-                </button>
-              )}
               <div
                 style={{
                   maxWidth: "70%",
@@ -2087,6 +2054,30 @@ export default function AgentClient({
               >
                 {msg.content}
               </div>
+              
+              {msg.role === "assistant" && (
+                <button
+                  type="button"
+                  onClick={() => speak(msg.content, i)}
+                  title={currentSpeakingMessageIndex === i ? "Stop" : "Listen to this message"}
+                  className="speaker-button"
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: 6,
+                    backgroundColor: currentSpeakingMessageIndex === i ? `${accentColor}70` : "rgba(255,255,255,0.1)",
+                    border: `1px solid ${currentSpeakingMessageIndex === i ? accentColor : "rgba(255,255,255,0.2)"}`,
+                    color: currentSpeakingMessageIndex === i ? accentColor : "#aaa",
+                    fontSize: 11,
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                    whiteSpace: "nowrap",
+                    opacity: 0,
+                  }}
+                >
+                  {currentSpeakingMessageIndex === i ? "⏹ Stop" : "▶ Listen"}
+                </button>
+              )}
             </div>
           ))
         )}
@@ -2188,6 +2179,12 @@ export default function AgentClient({
         }
         input:disabled {
           opacity: 0.6;
+        }
+        .message-group:hover .speaker-button {
+          opacity: 1 !important;
+        }
+        .speaker-button:hover {
+          background-color: ${accentColor}80 !important;
         }
       `}</style>
     </div>
