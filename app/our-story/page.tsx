@@ -591,6 +591,68 @@ export default function OurStoryPage() {
         </div>
       </section>
 
+      {/* Real-World Community Stories */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">The Mission Speaks</h2>
+          <p className="text-center text-purple-300 mb-12">SVL doesn't just exist in code. It exists in the streets, in podcasts, in real people talking about survival and protection.</p>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            {/* Reese Waters Story */}
+            <div className="bg-gradient-to-br from-orange-900/20 to-slate-900 border border-orange-700/30 rounded-xl p-8">
+              <div className="text-3xl mb-4">📻</div>
+              <h3 className="text-2xl font-bold text-orange-300 mb-4">Reese Waters Runs Deep</h3>
+              <p className="text-slate-300 mb-4">
+                When government shuts down. When TSA lines stretch for hours. When emergency systems strain under pressure—this is when KPA thinking matters most.
+              </p>
+              <p className="text-slate-400 text-sm mb-4">
+                Reese Waters walks through real-world crisis navigation. How people survive. How systems fail. How communities protect themselves.
+              </p>
+              <Link href="/media-hub" className="inline-block text-orange-400 hover:text-orange-300 font-semibold text-sm">
+                Listen to Full Episode →
+              </Link>
+            </div>
+
+            {/* TokFaith Testimony */}
+            <div className="bg-gradient-to-br from-yellow-900/20 to-slate-900 border border-yellow-700/30 rounded-xl p-8">
+              <div className="text-3xl mb-4">✨</div>
+              <h3 className="text-2xl font-bold text-yellow-300 mb-4">Shirley Whaley's "Amen"</h3>
+              <p className="text-slate-300 mb-4">
+                One word. One blessing. One elder's voice over TokFaith's creation changed everything.
+              </p>
+              <p className="text-slate-400 text-sm mb-4">
+                That moment proved what we believe: Faith, technology, and mission work together when built with love and respect for real people.
+              </p>
+              <Link href="/community-stories" className="inline-block text-yellow-400 hover:text-yellow-300 font-semibold text-sm">
+                Read Community Stories →
+              </Link>
+            </div>
+          </div>
+
+          {/* Pattern */}
+          <div className="bg-gradient-to-br from-purple-900/20 to-slate-900 border border-purple-700/30 rounded-xl p-8 text-center">
+            <h3 className="text-2xl font-bold text-purple-300 mb-4">The Pattern That Keeps Repeating</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <p className="text-3xl mb-2">🔥</p>
+                <p className="font-semibold text-white mb-2">Crisis Hits</p>
+                <p className="text-slate-400 text-sm">People face real problems: systems fail, danger emerges, survival becomes the only thought.</p>
+              </div>
+              <div>
+                <p className="text-3xl mb-2">🗣</p>
+                <p className="font-semibold text-white mb-2">Community Rises</p>
+                <p className="text-slate-400 text-sm">Voices like Reese speak truth. Faith leaders bless the work. People talk about protection and staying alive.</p>
+              </div>
+              <div>
+                <p className="text-3xl mb-2">🛡</p>
+                <p className="font-semibold text-white mb-2">Systems Answer</p>
+                <p className="text-slate-400 text-sm">SVL builds tools. Guardians listen. Systems emerge that serve the need the community identified.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Exit Moment */}
       <section className="py-20 px-6 bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 border-t border-purple-800/30">
         <div className="max-w-3xl mx-auto text-center">
