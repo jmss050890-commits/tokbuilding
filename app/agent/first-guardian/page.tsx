@@ -131,7 +131,7 @@ export default function FirstGuardianAgent() {
 
             <div className="flex gap-3 text-sm">
               <Link href="/agent" className="text-purple-200 hover:text-purple-100 transition">
-                All Agents
+                All Guardians
               </Link>
             </div>
           </div>

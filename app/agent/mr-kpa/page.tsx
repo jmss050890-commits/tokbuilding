@@ -127,7 +127,7 @@ export default function MrKPAAgent() {
 
             <div className="flex gap-3 text-sm">
               <Link href="/agent" className="text-blue-200 hover:text-blue-100 transition">
-                All Agents
+                All Guardians
               </Link>
             </div>
           </div>

@@ -155,7 +155,7 @@ export default function TokFaithPage() {
               <div className="space-y-6 text-left max-w-2xl mx-auto">
                 <p className="text-amber-50/80 leading-relaxed">
                   Your sister Venita has a friend named <strong className="text-amber-100">Shirley Whaley</strong>. 
-                  Jerome Sanders posted about the Wisdom agent with the SVL mission, saying: 
+                  Jerome Sanders posted about the Wisdom Guardian with the SVL mission, saying: 
                   <em>"I built this because people need support at hours when nobody picks up the phone."</em>
                 </p>
 
@@ -204,7 +204,7 @@ export default function TokFaithPage() {
                 <h4 className="text-amber-100 font-bold text-lg">Listens Deeply</h4>
               </div>
               <p className="text-amber-50/70 leading-relaxed">
-                Like the Wisdom agent who inspired her, TokFaith creates a calm space for your questions, struggles, and midnight hour thoughts. She doesn't judge. She listens.
+                Like the Wisdom Guardian who inspired her, TokFaith creates a calm space for your questions, struggles, and midnight hour thoughts. She doesn't judge. She listens.
               </p>
             </div>
 
@@ -289,7 +289,7 @@ export default function TokFaithPage() {
               href="/agent"
               className="px-10 py-5 border border-amber-600 text-amber-100 hover:bg-amber-900/30 font-bold rounded-lg transition text-center"
             >
-              Explore All SVL Agents
+              Explore All SVL Guardians
             </Link>
           </div>
 
