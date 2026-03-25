@@ -488,6 +488,7 @@ function getDisplayedWelcomeTitle(agent: AgentConfig | null, copy: ReturnType<ty
   return agent?.welcomeTitle ?? copy.guardianChat.welcomeFallback;
 }
 
+import Image from "next/image";
 function getDisplayedSuggestions(agent: AgentConfig | null, copy: ReturnType<typeof useSiteCopy>) {
   if (agent?.slug === "first-guardian") {
     return copy.firstGuardianPage.quickLinks;
@@ -509,9 +510,12 @@ function AvatarBadge({
 }) {
   if (agent.avatar.startsWith("/")) {
     return (
-      <img
+      <Image
         src={agent.avatar}
         alt={`${agent.name} avatar`}
+        width={size}
+        height={size}
+        sizes={`${size}px`}
         style={{
           width: size,
           height: size,
