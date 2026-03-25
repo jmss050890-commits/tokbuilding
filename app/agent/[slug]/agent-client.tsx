@@ -304,21 +304,33 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
 
   const isMobile = isMobileSpeechDevice();
 
+  // Final enforcement: override if wrong gender slipped through
+  if (agent?.slug === "first-guardian" && selectedVoice) {
+    const isMaleVoice = voiceLooksMale(selectedVoice.name);
+    if (isMaleVoice) {
+      // Wrong gender — force female
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const femaleVoice = englishVoices.find((voice) => {
+        const voiceName = voice.name.toLowerCase();
+        return FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern)) || 
+               (!MALE_VOICE_PATTERNS.some((p) => voiceName.includes(p)) && voiceName.includes("female"));
+      });
+      if (femaleVoice) selectedVoice = femaleVoice;
+    }
+  }
+
+  if (agent?.slug === "mr-kpa" && selectedVoice) {
+    const isFemaleVoice = voiceLooksFemale(selectedVoice.name);
+    if (isFemaleVoice) {
+      // Wrong gender — force male
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      const maleVoice = englishVoices.find((voice) => voiceLooksMale(voice.name));
+      if (maleVoice) selectedVoice = maleVoice;
+    }
+  }
+
   if (agent?.slug === "tokfaith" && selectedVoice && voiceLooksMale(selectedVoice.name) && !isMobile) {
     selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences || TOKFAITH_FEMALE_VOICE_PATTERNS);
-  }
-
-  if (agent?.slug === "first-guardian" && selectedVoice && voiceLooksMale(selectedVoice.name) && !isMobile) {
-    // Override with female voice if somehow a male voice made it through
-    const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
-    selectedVoice = englishVoices.find((voice) => {
-      const voiceName = voice.name.toLowerCase();
-      return FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
-    }) ?? selectedVoice;
-  }
-
-  if (agent?.slug === "mr-kpa" && selectedVoice && voiceLooksFemale(selectedVoice.name) && !isMobile) {
-    selectedVoice = getMrKpaLockedVoice(voices, agent.voicePreferences || MALE_VOICE_PATTERNS);
   }
 
   return selectedVoice;
