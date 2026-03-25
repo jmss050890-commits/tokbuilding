@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { buildSvlAgentSystemPrompt } from '@/lib/svl-kpa-engine';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+import { getSiteCopy } from '@/lib/site-copy';
 
 interface FormData {
   agentName: string;
@@ -33,6 +35,8 @@ const INITIAL_FORM: FormData = {
 };
 
 export default function TokBuilding() {
+  const copy = useSiteCopy();
+  const englishCopy = getSiteCopy('en');
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(() => {
     if (typeof window !== 'undefined') {
@@ -47,6 +51,26 @@ export default function TokBuilding() {
   });
   const [copied, setCopied] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+
+  const personalityOptions = englishCopy.tokbuilding.traits.map((value, index) => ({
+    value,
+    label: copy.tokbuilding.traits[index] ?? value,
+  }));
+  const toneOptions = englishCopy.tokbuilding.tones.map((value, index) => ({
+    value,
+    label: copy.tokbuilding.tones[index] ?? value,
+  }));
+  const communicationStyleOptions = englishCopy.tokbuilding.communicationStyles.map((value, index) => ({
+    value,
+    label: copy.tokbuilding.communicationStyles[index] ?? value,
+  }));
+  const knowledgeOptions = englishCopy.tokbuilding.knowledgeAreas.map((value, index) => ({
+    value,
+    label: copy.tokbuilding.knowledgeAreas[index] ?? value,
+  }));
+  const optionLabel = (value: string, options: Array<{ value: string; label: string }>) => {
+    return options.find((option) => option.value === value)?.label ?? value;
+  };
 
   // Save draft to localStorage on change
   useEffect(() => {
@@ -142,7 +166,7 @@ You are ${agentName}. Ready to assist.`;
   };
 
   const clearDraft = () => {
-    if (confirm('Clear draft? This cannot be undone.')) {
+    if (confirm(copy.tokbuilding.clearDraftConfirm)) {
       setForm(INITIAL_FORM);
       localStorage.removeItem('tokbuilding_draft');
       setStep(1);
@@ -150,7 +174,7 @@ You are ${agentName}. Ready to assist.`;
   };
 
   // Progress indicator
-  const progressSteps = ['Basic Info', 'Personality', 'Specialization', 'Details', 'Review'];
+  const progressSteps = copy.tokbuilding.progressSteps;
 
   return (
     <div style={{
@@ -199,7 +223,7 @@ You are ${agentName}. Ready to assist.`;
               BUILDER
             </div>
             <div style={{ fontSize: '10px', letterSpacing: '1.5px', color: '#5a5a72', textTransform: 'uppercase', marginTop: '2px' }}>
-              Agent Wizard
+              {copy.tokbuilding.headerSub}
             </div>
           </div>
         </div>
@@ -225,7 +249,7 @@ You are ${agentName}. Ready to assist.`;
           e.currentTarget.style.borderColor = '#2a1f5f';
         }}
         >
-          ← HUB
+          ← {copy.common.hub}
         </Link>
       </div>
 
@@ -262,16 +286,16 @@ You are ${agentName}. Ready to assist.`;
             {step === 1 && (
               <div style={{ animation: 'fadeUp 0.3s ease both' }}>
                 <h2 style={{ fontFamily: '"Bebas Neue", serif', fontSize: '32px', letterSpacing: '3px', marginBottom: '24px', color: '#8b5cf6' }}>
-                  Agent Basics
+                  {copy.tokbuilding.stepTitles.basics}
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Agent Name *
+                      {copy.tokbuilding.labels.agentName}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g., Luna, Sentinel, Nexus"
+                      placeholder={copy.tokbuilding.placeholders.agentName}
                       value={form.agentName}
                       onChange={e => updateForm('agentName', e.target.value)}
                       style={{
@@ -294,11 +318,11 @@ You are ${agentName}. Ready to assist.`;
 
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Role/Title *
+                      {copy.tokbuilding.labels.role}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g., Technical Support AI, Creative Copywriter, Health Coach"
+                      placeholder={copy.tokbuilding.placeholders.role}
                       value={form.agentRole}
                       onChange={e => updateForm('agentRole', e.target.value)}
                       style={{
@@ -321,10 +345,10 @@ You are ${agentName}. Ready to assist.`;
 
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Description
+                      {copy.tokbuilding.labels.description}
                     </label>
                     <textarea
-                      placeholder="Brief description of what this agent does and why it exists..."
+                      placeholder={copy.tokbuilding.placeholders.description}
                       value={form.description}
                       onChange={e => updateForm('description', e.target.value)}
                       style={{
@@ -354,30 +378,30 @@ You are ${agentName}. Ready to assist.`;
             {step === 2 && (
               <div style={{ animation: 'fadeUp 0.3s ease both' }}>
                 <h2 style={{ fontFamily: '"Bebas Neue", serif', fontSize: '32px', letterSpacing: '3px', marginBottom: '24px', color: '#8b5cf6' }}>
-                  Personality & Tone
+                  {copy.tokbuilding.stepTitles.personality}
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '12px' }}>
-                      Personality Traits
+                      {copy.tokbuilding.labels.personalityTraits}
                     </label>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                      {['Warm', 'Professional', 'Witty', 'Empathetic', 'Bold', 'Analytical', 'Creative', 'Patient', 'Energetic', 'Calm'].map(trait => (
+                      {personalityOptions.map((trait) => (
                         <button
-                          key={trait}
-                          onClick={() => toggleArray('personality', trait)}
+                          key={trait.value}
+                          onClick={() => toggleArray('personality', trait.value)}
                           style={{
                             padding: '8px 16px',
                             borderRadius: '20px',
                             fontSize: '12px',
-                            border: form.personality.includes(trait) ? '2px solid #6366f1' : '1px solid #2a1f5f',
-                            background: form.personality.includes(trait) ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
-                            color: form.personality.includes(trait) ? '#8b5cf6' : '#5a5a72',
+                            border: form.personality.includes(trait.value) ? '2px solid #6366f1' : '1px solid #2a1f5f',
+                            background: form.personality.includes(trait.value) ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
+                            color: form.personality.includes(trait.value) ? '#8b5cf6' : '#5a5a72',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
                           }}
                         >
-                          {trait}
+                          {trait.label}
                         </button>
                       ))}
                     </div>
@@ -385,7 +409,7 @@ You are ${agentName}. Ready to assist.`;
 
                   <div>
                     <label htmlFor="tone" style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Primary Tone
+                      {copy.tokbuilding.labels.primaryTone}
                     </label>
                     <select
                       id="tone"
@@ -404,19 +428,16 @@ You are ${agentName}. Ready to assist.`;
                         cursor: 'pointer',
                       }}
                     >
-                      <option value="">Select a tone...</option>
-                      <option value="Formal and Professional">Formal and Professional</option>
-                      <option value="Casual and Friendly">Casual and Friendly</option>
-                      <option value="Warm and Supportive">Warm and Supportive</option>
-                      <option value="Direct and Efficient">Direct and Efficient</option>
-                      <option value="Playful and Creative">Playful and Creative</option>
-                      <option value="Educational and Explanatory">Educational and Explanatory</option>
+                      <option value="">{copy.tokbuilding.selectTone}</option>
+                      {toneOptions.map((tone) => (
+                        <option key={tone.value} value={tone.value}>{tone.label}</option>
+                      ))}
                     </select>
                   </div>
 
                   <div>
                     <label htmlFor="communicationStyle" style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Communication Style
+                      {copy.tokbuilding.labels.communicationStyle}
                     </label>
                     <select
                       id="communicationStyle"
@@ -435,12 +456,10 @@ You are ${agentName}. Ready to assist.`;
                         cursor: 'pointer',
                       }}
                     >
-                      <option value="">Select a style...</option>
-                      <option value="Concise and to-the-point">Concise and to-the-point</option>
-                      <option value="Detailed and thorough">Detailed and thorough</option>
-                      <option value="Conversational and natural">Conversational and natural</option>
-                      <option value="Structured with examples">Structured with examples</option>
-                      <option value="Narrative and storytelling">Narrative and storytelling</option>
+                      <option value="">{copy.tokbuilding.selectStyle}</option>
+                      {communicationStyleOptions.map((styleOption) => (
+                        <option key={styleOption.value} value={styleOption.value}>{styleOption.label}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -451,16 +470,16 @@ You are ${agentName}. Ready to assist.`;
             {step === 3 && (
               <div style={{ animation: 'fadeUp 0.3s ease both' }}>
                 <h2 style={{ fontFamily: '"Bebas Neue", serif', fontSize: '32px', letterSpacing: '3px', marginBottom: '24px', color: '#8b5cf6' }}>
-                  Specialization
+                  {copy.tokbuilding.stepTitles.specialization}
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Use Case / Primary Function
+                      {copy.tokbuilding.labels.useCase}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g., Customer Support, Content Creation, Data Analysis, Health Coaching, Coding Assistance"
+                      placeholder={copy.tokbuilding.placeholders.useCase}
                       value={form.useCase}
                       onChange={e => updateForm('useCase', e.target.value)}
                       style={{
@@ -483,25 +502,25 @@ You are ${agentName}. Ready to assist.`;
 
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '12px' }}>
-                      Knowledge Focus Areas
+                      {copy.tokbuilding.labels.knowledgeFocus}
                     </label>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                      {['Technical', 'Business', 'Creative', 'Health/Wellness', 'Education', 'Finance', 'Legal', 'Customer Service', 'Research', 'Strategy'].map(area => (
+                      {knowledgeOptions.map((area) => (
                         <button
-                          key={area}
-                          onClick={() => toggleArray('knowledgeFocus', area)}
+                          key={area.value}
+                          onClick={() => toggleArray('knowledgeFocus', area.value)}
                           style={{
                             padding: '8px 16px',
                             borderRadius: '20px',
                             fontSize: '12px',
-                            border: form.knowledgeFocus.includes(area) ? '2px solid #6366f1' : '1px solid #2a1f5f',
-                            background: form.knowledgeFocus.includes(area) ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
-                            color: form.knowledgeFocus.includes(area) ? '#8b5cf6' : '#5a5a72',
+                            border: form.knowledgeFocus.includes(area.value) ? '2px solid #6366f1' : '1px solid #2a1f5f',
+                            background: form.knowledgeFocus.includes(area.value) ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
+                            color: form.knowledgeFocus.includes(area.value) ? '#8b5cf6' : '#5a5a72',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
                           }}
                         >
-                          {area}
+                          {area.label}
                         </button>
                       ))}
                     </div>
@@ -509,11 +528,11 @@ You are ${agentName}. Ready to assist.`;
 
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Target Audience
+                      {copy.tokbuilding.labels.targetAudience}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g., Enterprise customers, Developers, General public, Small business owners"
+                      placeholder={copy.tokbuilding.placeholders.targetAudience}
                       value={form.targetAudience}
                       onChange={e => updateForm('targetAudience', e.target.value)}
                       style={{
@@ -541,16 +560,16 @@ You are ${agentName}. Ready to assist.`;
             {step === 4 && (
               <div style={{ animation: 'fadeUp 0.3s ease both' }}>
                 <h2 style={{ fontFamily: '"Bebas Neue", serif', fontSize: '32px', letterSpacing: '3px', marginBottom: '24px', color: '#8b5cf6' }}>
-                  Additional Details
+                  {copy.tokbuilding.stepTitles.details}
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Core Specialization
+                      {copy.tokbuilding.labels.specialization}
                     </label>
                     <input
                       type="text"
-                      placeholder="What is this agent uniquely designed to excel at?"
+                      placeholder={copy.tokbuilding.placeholders.specialization}
                       value={form.specialization}
                       onChange={e => updateForm('specialization', e.target.value)}
                       style={{
@@ -573,10 +592,10 @@ You are ${agentName}. Ready to assist.`;
 
                   <div>
                     <label style={{ fontSize: '12px', letterSpacing: '1px', color: '#5a5a72', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-                      Additional Instructions (Optional)
+                      {copy.tokbuilding.labels.additionalInstructions}
                     </label>
                     <textarea
-                      placeholder="Any special behaviors, constraints, or guidelines for this agent? (e.g., Always cite sources, Avoid technical jargon, etc.)"
+                      placeholder={copy.tokbuilding.placeholders.additionalInstructions}
                       value={form.additionalInstructions}
                       onChange={e => updateForm('additionalInstructions', e.target.value)}
                       style={{
@@ -606,7 +625,7 @@ You are ${agentName}. Ready to assist.`;
             {step === 5 && (
               <div style={{ animation: 'fadeUp 0.3s ease both' }}>
                 <h2 style={{ fontFamily: '"Bebas Neue", serif', fontSize: '32px', letterSpacing: '3px', marginBottom: '24px', color: '#8b5cf6' }}>
-                  Review & Export
+                  {copy.tokbuilding.stepTitles.review}
                 </h2>
 
                 {!form.agentName || !form.agentRole ? (
@@ -617,7 +636,7 @@ You are ${agentName}. Ready to assist.`;
                     borderRadius: '4px',
                     color: '#fca5a5',
                   }}>
-                    ⚠️ Please complete Agent Name and Role to generate your spec
+                    ⚠️ {copy.tokbuilding.reviewRequired}
                   </div>
                 ) : (
                   <>
@@ -639,7 +658,7 @@ You are ${agentName}. Ready to assist.`;
                         onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
                         onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                       >
-                        {showPreview ? '📋 Hide Preview' : '👁 Show Preview'}
+                        {showPreview ? `📋 ${copy.tokbuilding.previewHide}` : `👁 ${copy.tokbuilding.previewShow}`}
                       </button>
                       <button
                         onClick={copyToClipboard}
@@ -656,7 +675,7 @@ You are ${agentName}. Ready to assist.`;
                           transition: 'all 0.2s',
                         }}
                       >
-                        {copied ? '✓ Copied' : '📋 Copy JSON'}
+                        {copied ? `✓ ${copy.tokbuilding.copied}` : `📋 ${copy.tokbuilding.copyJson}`}
                       </button>
                       <button
                         onClick={downloadSpec}
@@ -679,7 +698,7 @@ You are ${agentName}. Ready to assist.`;
                           e.currentTarget.style.background = 'transparent';
                         }}
                       >
-                        ⬇ Download
+                        ⬇ {copy.tokbuilding.download}
                       </button>
                     </div>
 
@@ -712,35 +731,35 @@ You are ${agentName}. Ready to assist.`;
                       borderRadius: '4px',
                       marginBottom: '20px',
                     }}>
-                      <h3 style={{ fontSize: '14px', fontWeight: 600, color: '#8b5cf6', marginBottom: '12px' }}>Agent Summary</h3>
+                      <h3 style={{ fontSize: '14px', fontWeight: 600, color: '#8b5cf6', marginBottom: '12px' }}>{copy.tokbuilding.labels.agentSummary}</h3>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', fontSize: '12px' }}>
                         <div>
-                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>Name</div>
+                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>{copy.tokbuilding.labels.name}</div>
                           <div style={{ color: '#e8e8f0', fontWeight: 600 }}>{form.agentName}</div>
                         </div>
                         <div>
-                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>Role</div>
+                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>{copy.tokbuilding.labels.roleShort}</div>
                           <div style={{ color: '#e8e8f0', fontWeight: 600 }}>{form.agentRole}</div>
                         </div>
                         <div>
-                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>Tone</div>
-                          <div style={{ color: '#e8e8f0' }}>{form.tone || 'Not specified'}</div>
+                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>{copy.tokbuilding.labels.tone}</div>
+                          <div style={{ color: '#e8e8f0' }}>{form.tone ? optionLabel(form.tone, toneOptions) : copy.common.notSpecified}</div>
                         </div>
                         <div>
-                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>Use Case</div>
-                          <div style={{ color: '#e8e8f0' }}>{form.useCase || 'Not specified'}</div>
+                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>{copy.tokbuilding.labels.useCaseShort}</div>
+                          <div style={{ color: '#e8e8f0' }}>{form.useCase || copy.common.notSpecified}</div>
                         </div>
                         <div style={{ gridColumn: '1 / -1' }}>
-                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>Knowledge Focus</div>
+                          <div style={{ color: '#5a5a72', marginBottom: '4px' }}>{copy.tokbuilding.labels.knowledgeFocusShort}</div>
                           <div style={{ color: '#e8e8f0' }}>
-                            {form.knowledgeFocus.length > 0 ? form.knowledgeFocus.join(', ') : 'Not specified'}
+                            {form.knowledgeFocus.length > 0 ? form.knowledgeFocus.map((value) => optionLabel(value, knowledgeOptions)).join(', ') : copy.common.notSpecified}
                           </div>
                         </div>
                       </div>
                     </div>
 
                     <div style={{ padding: '16px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '4px', fontSize: '12px', color: '#93c5fd', lineHeight: '1.6' }}>
-                      ℹ️ This spec is ready for review. Share with your team or forward to A1 for production deployment. All agent configurations are automatically saved as drafts.
+                      ℹ️ {copy.tokbuilding.ready}
                     </div>
                   </>
                 )}
@@ -765,7 +784,7 @@ You are ${agentName}. Ready to assist.`;
                   transition: 'all 0.2s',
                 }}
               >
-                ← PREVIOUS
+                ← {copy.common.previous}
               </button>
 
               <button
@@ -790,7 +809,7 @@ You are ${agentName}. Ready to assist.`;
                   e.currentTarget.style.borderColor = '#5a3535';
                 }}
               >
-                🗑 Clear Draft
+                🗑 {copy.tokbuilding.clearDraft}
               </button>
 
               <button
@@ -812,7 +831,7 @@ You are ${agentName}. Ready to assist.`;
                 onMouseEnter={e => step < 5 && (e.currentTarget.style.transform = 'scale(1.05)')}
                 onMouseLeave={e => step < 5 && (e.currentTarget.style.transform = 'scale(1)')}
               >
-                NEXT →
+                {copy.common.next} →
               </button>
             </div>
           </div>

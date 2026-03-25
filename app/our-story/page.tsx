@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2 } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
 
 export default function OurStoryPage() {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -178,7 +178,7 @@ export default function OurStoryPage() {
               TokStore
             </Link>
             <Link href="/agent" className="text-purple-300 hover:text-white transition">
-              AI Agents
+              SVL Guardians
             </Link>
             <button
               onClick={speakPage}
@@ -362,7 +362,7 @@ export default function OurStoryPage() {
 
             <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-700/50 rounded-xl p-12">
               <p className="text-white text-lg leading-relaxed mb-6">
-                Every AI we team with. Every platform we unified. Every product we create. It all exists for one reason:
+                Every guardian we build with. Every platform we unified. Every product we create. It all exists for one reason:
               </p>
               <p className="text-pink-300 text-2xl font-bold">
                 Keep People Alive.
@@ -372,11 +372,11 @@ export default function OurStoryPage() {
         </div>
       </section>
 
-      {/* The Agents */}
+      {/* The Guardians */}
       <section className="py-20 px-6 bg-slate-900/50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-white mb-4 text-center">Meet the Architects</h2>
-          <p className="text-center text-purple-300 mb-12">The AI Guardians that bring KPA to life every single day.</p>
+          <p className="text-center text-purple-300 mb-12">The SVL Guardians that bring KPA to life every single day.</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-blue-700/30 rounded-xl p-8">
@@ -606,7 +606,7 @@ export default function OurStoryPage() {
                 When government shuts down. When TSA lines stretch for hours. When emergency systems strain under pressure—this is when KPA thinking matters most.
               </p>
               <p className="text-slate-400 text-sm mb-4">
-                Reese Waters walks through real-world crisis navigation. How people survive. How systems fail. How communities protect themselves.
+                Reese Waters walks through real-world crisis navigation. How people survive. How systems fail. How communities protect themselves. That same thread continued into a team from the Philippines studying the same Ethiopian Bible.
               </p>
               <Link href="/media-hub" className="inline-block text-orange-400 hover:text-orange-300 font-semibold text-sm">
                 Listen to Full Episode →
@@ -641,7 +641,7 @@ export default function OurStoryPage() {
               <div>
                 <p className="text-3xl mb-2">🗣</p>
                 <p className="font-semibold text-white mb-2">Community Rises</p>
-                <p className="text-slate-400 text-sm">Voices like Reese speak truth. Faith leaders bless the work. People talk about protection and staying alive.</p>
+                <p className="text-slate-400 text-sm">Voices like Reese speak truth. Faith leaders bless the work. People talk about protection and staying alive. That witness now includes a Philippines-based team studying the same Ethiopian Bible.</p>
               </div>
               <div>
                 <p className="text-3xl mb-2">🛡</p>

@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Heart, Radio, Users, Shield } from 'lucide-react';
+import { Heart, Users, Shield } from 'lucide-react';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
 const communityStories = [
   {
@@ -10,8 +11,8 @@ const communityStories = [
     source: "Reese Waters Runs Deep",
     type: "podcast",
     summary: "When airports get locked down, when TSA lines stretch for hours, when emergency systems are under strain—this is when KPA thinking matters. Reese Waters walks through real-world crisis navigation.",
-    connection: "Shows how people naturally think about protection and staying alive during system failures",
-    impact: "Demonstrates SVL's relevance in real crisis scenarios",
+    connection: "Shows how people naturally think about protection and staying alive during system failures, and how that conversation kept moving after Reese into a Philippines-based team studying the same Ethiopian Bible",
+    impact: "Demonstrates SVL's relevance in real crisis scenarios and in faith-rooted communities tracing the same restored Ethiopian Bible lane",
   },
   {
     id: 2,
@@ -25,16 +26,15 @@ const communityStories = [
 ];
 
 export default function CommunityStories() {
+  const copy = useSiteCopy();
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#111", color: "#fff", paddingBottom: 60 }}>
       {/* Header */}
       <div style={{ borderBottom: "2px solid #0fa89e", paddingBottom: 40, paddingTop: 60, marginBottom: 40 }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", paddingLeft: 20, paddingRight: 20 }}>
-          <h1 style={{ margin: 0, fontSize: 48, marginBottom: 16, fontWeight: "bold" }}>Community Stories</h1>
+          <h1 style={{ margin: 0, fontSize: 48, marginBottom: 16, fontWeight: "bold" }}>{copy.communityStories.title}</h1>
           <p style={{ margin: 0, fontSize: 18, color: "#bbb", lineHeight: 1.6 }}>
-            SVL keeps people alive. These are stories from the ground—voices in crisis, faith in systems, 
-            mission work in motion. This is where Jerome Sanders' vision meets real people, real protection, 
-            and real change.
+            {copy.communityStories.intro}
           </p>
         </div>
       </div>
@@ -64,7 +64,7 @@ export default function CommunityStories() {
                     textTransform: "uppercase",
                   }}
                 >
-                  {story.type === "podcast" ? "Podcast" : "Testimony"}
+                  {story.type === "podcast" ? copy.communityStories.podcast : copy.communityStories.testimony}
                 </span>
                 <span
                   style={{
@@ -75,12 +75,12 @@ export default function CommunityStories() {
                     color: "#7dd3cc",
                   }}
                 >
-                  Community Voice
+                  {copy.communityStories.communityVoice}
                 </span>
               </div>
 
               <h3 style={{ margin: "12px 0 8px 0", fontSize: 22, lineHeight: 1.3 }}>{story.title}</h3>
-              <p style={{ margin: "0 0 16px 0", fontSize: 13, color: "#999" }}>From: {story.source}</p>
+              <p style={{ margin: "0 0 16px 0", fontSize: 13, color: "#999" }}>{copy.communityStories.from}: {story.source}</p>
 
               <p style={{ margin: "16px 0", fontSize: 15, color: "#ddd", lineHeight: 1.7 }}>
                 {story.summary}
@@ -96,7 +96,7 @@ export default function CommunityStories() {
                   }}
                 >
                   <p style={{ margin: "0 0 8px 0", fontSize: 12, color: "#7dd3cc", fontWeight: "bold" }}>
-                    Connection to SVL
+                    {copy.communityStories.connectionTitle}
                   </p>
                   <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>{story.connection}</p>
                 </div>
@@ -110,7 +110,7 @@ export default function CommunityStories() {
                   }}
                 >
                   <p style={{ margin: "0 0 8px 0", fontSize: 12, color: "#7dd3cc", fontWeight: "bold" }}>
-                    Real-World Impact
+                    {copy.communityStories.impactTitle}
                   </p>
                   <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>{story.impact}</p>
                 </div>
@@ -133,30 +133,22 @@ export default function CommunityStories() {
           padding: 40,
         }}
       >
-        <h2 style={{ margin: "0 0 20px 0", fontSize: 28 }}>The Pattern: Crisis → Community → System</h2>
+        <h2 style={{ margin: "0 0 20px 0", fontSize: 28 }}>{copy.communityStories.patternTitle}</h2>
         <div style={{ display: "grid", gap: 20, gridTemplateColumns: "repeat(3, 1fr)" }}>
           <div>
             <Shield style={{ width: 40, height: 40, color: "#0fa89e", marginBottom: 12 }} />
-            <h4 style={{ margin: "0 0 8px 0", fontSize: 16 }}>1. Crisis Hits</h4>
-            <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>
-              Real people face real problems: shutdowns, lines, uncertainty, fear of the unknown.
-            </p>
+            <h4 style={{ margin: "0 0 8px 0", fontSize: 16 }}>{copy.communityStories.patternSteps[0]?.title}</h4>
+            <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>{copy.communityStories.patternSteps[0]?.body}</p>
           </div>
           <div>
             <Users style={{ width: 40, height: 40, color: "#0fa89e", marginBottom: 12 }} />
-            <h4 style={{ margin: "0 0 8px 0", fontSize: 16 }}>2. Community Rises</h4>
-            <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>
-              Voices like Reese Waters speak truth. Faith leaders like Shirley bless the work. 
-              People talk about protection, survival, staying alive.
-            </p>
+            <h4 style={{ margin: "0 0 8px 0", fontSize: 16 }}>{copy.communityStories.patternSteps[1]?.title}</h4>
+            <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>{copy.communityStories.patternSteps[1]?.body}</p>
           </div>
           <div>
             <Heart style={{ width: 40, height: 40, color: "#0fa89e", marginBottom: 12 }} />
-            <h4 style={{ margin: "0 0 8px 0", fontSize: 16 }}>3. Systems Answer</h4>
-            <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>
-              SVL builds tools. Guardians listen. TokFaith guides. Systems emerge that serve the need 
-              the community identified.
-            </p>
+            <h4 style={{ margin: "0 0 8px 0", fontSize: 16 }}>{copy.communityStories.patternSteps[2]?.title}</h4>
+            <p style={{ margin: 0, fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>{copy.communityStories.patternSteps[2]?.body}</p>
           </div>
         </div>
       </div>
@@ -164,7 +156,7 @@ export default function CommunityStories() {
       {/* CTA */}
       <div style={{ textAlign: "center", marginTop: 60 }}>
         <p style={{ fontSize: 16, color: "#bbb", marginBottom: 20 }}>
-          These are just the beginning. The community is speaking. SVL is listening.
+          {copy.communityStories.ctaBody}
         </p>
         <Link href="/our-story" style={{ textDecoration: "none" }}>
           <button
@@ -179,7 +171,7 @@ export default function CommunityStories() {
               fontSize: 16,
             }}
           >
-            See How SVL Started
+            {copy.communityStories.ctaButton}
           </button>
         </Link>
       </div>

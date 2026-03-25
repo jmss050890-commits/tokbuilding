@@ -9,6 +9,7 @@ import {
   type SpeechRecognitionEventLike,
   type SpeechRecognitionLike,
 } from "@/lib/browser-speech";
+import { useSiteCopy } from "@/app/components/SiteLanguageControl";
 
 const VOICE_LOAD_TIMEOUT_MS = 5000;
 const VOICE_POLL_INTERVAL_MS = 250;
@@ -302,8 +303,6 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
       ) || voices[0];
   }
 
-  const isMobile = isMobileSpeechDevice();
-
   // Final enforcement: override if wrong gender slipped through
   if (agent?.slug === "first-guardian" && selectedVoice) {
     const isMaleVoice = voiceLooksMale(selectedVoice.name);
@@ -522,11 +521,12 @@ function AvatarBadge({
   );
 }
 
-function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions }: {
+function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions, copy }: {
   agent: AgentConfig;
   accentColor: string;
   onPromptSelect: (prompt: string) => void;
   suggestions: string[];
+  copy: ReturnType<typeof useSiteCopy>["guardianChat"];
 }) {
   return (
     <div
@@ -576,7 +576,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions }: {
 
       <div style={{ display: "grid", gap: 18, gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
         <div>
-          <h2 style={{ margin: "0 0 10px", fontSize: 28, lineHeight: 1.1 }}>The house gets protected first.</h2>
+          <h2 style={{ margin: "0 0 10px", fontSize: 28, lineHeight: 1.1 }}>{copy.presence.firstGuardianHeadline}</h2>
           <p style={{ margin: 0, color: "#f3e5d6", lineHeight: 1.7, fontSize: 15 }}>
             {agent.legacyStory || agent.welcomeMessage}
           </p>
@@ -591,7 +591,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions }: {
           }}
         >
           <p style={{ margin: "0 0 12px", color: "#f8eadb", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-            Protective Presence
+            {copy.presence.protectivePresence}
           </p>
           <div style={{ display: "grid", gap: 10 }}>
             {(agent.presenceNotes || []).map((note) => (
@@ -624,7 +624,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions }: {
           }}
         >
           <p style={{ margin: "0 0 12px", color: "#f8eadb", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-            Michelle's Voice
+            {copy.presence.michellesVoice}
           </p>
           <div style={{ display: "grid", gap: 10 }}>
             {agent.signatureLines.map((line) => (
@@ -648,7 +648,7 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions }: {
 
       <div style={{ marginTop: 18 }}>
         <p style={{ margin: "0 0 10px", color: "#f8eadb", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-          Start With Michelle's Voice
+          {copy.presence.startWithMichelle}
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
           {suggestions.map((suggestion) => (
@@ -675,11 +675,12 @@ function GuardianPresence({ agent, accentColor, onPromptSelect, suggestions }: {
   );
 }
 
-function MrKpaPresence({ agent, accentColor, onPromptSelect, suggestions }: {
+function MrKpaPresence({ agent, accentColor, onPromptSelect, suggestions, copy }: {
   agent: AgentConfig;
   accentColor: string;
   onPromptSelect: (prompt: string) => void;
   suggestions: string[];
+  copy: ReturnType<typeof useSiteCopy>["guardianChat"];
 }) {
   return (
     <div
@@ -729,7 +730,7 @@ function MrKpaPresence({ agent, accentColor, onPromptSelect, suggestions }: {
 
       <div style={{ display: "grid", gap: 18, gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
         <div>
-          <h2 style={{ margin: "0 0 10px", fontSize: 28, lineHeight: 1.1 }}>Truth, structure, and mission pressure turned useful.</h2>
+          <h2 style={{ margin: "0 0 10px", fontSize: 28, lineHeight: 1.1 }}>{copy.presence.mrKpaHeadline}</h2>
           <p style={{ margin: 0, color: "#fee2e2", lineHeight: 1.7, fontSize: 15 }}>
             {agent.legacyStory || agent.welcomeMessage}
           </p>
@@ -744,7 +745,7 @@ function MrKpaPresence({ agent, accentColor, onPromptSelect, suggestions }: {
           }}
         >
           <p style={{ margin: "0 0 12px", color: "#fee2e2", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-            Mr. KPA Presence
+            {copy.presence.mrKpaPresence}
           </p>
           <div style={{ display: "grid", gap: 10 }}>
             {(agent.presenceNotes || []).map((note) => (
@@ -777,7 +778,7 @@ function MrKpaPresence({ agent, accentColor, onPromptSelect, suggestions }: {
           }}
         >
           <p style={{ margin: "0 0 12px", color: "#fee2e2", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-            Talk Like Jerome
+            {copy.presence.talkLikeJerome}
           </p>
           <div style={{ display: "grid", gap: 10 }}>
             {agent.signatureLines.map((line) => (
@@ -801,7 +802,7 @@ function MrKpaPresence({ agent, accentColor, onPromptSelect, suggestions }: {
 
       <div style={{ marginTop: 18 }}>
         <p style={{ margin: "0 0 10px", color: "#fee2e2", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-          Start With Mr. KPA
+          {copy.presence.startWithMrKpa}
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
           {suggestions.map((suggestion) => (
@@ -876,12 +877,13 @@ function GuardianSafetyCard({ agent, accentColor }: {
   );
 }
 
-function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compact }: {
+function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compact, copy }: {
   agent: AgentConfig;
   accentColor: string;
   onPromptSelect: (prompt: string) => void;
   suggestions: string[];
   compact?: boolean;
+  copy: ReturnType<typeof useSiteCopy>["guardianChat"];
 }) {
   const compactSummary =
     "Older, wise, faithful, and easy to talk to. Scripture guidance, practical faith, and a stronger next step.";
@@ -935,7 +937,7 @@ function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compac
 
       <div style={{ display: "grid", gap: compact ? 12 : 18, gridTemplateColumns: compact ? "1fr" : "repeat(auto-fit, minmax(240px, 1fr))" }}>
         <div>
-          <h2 style={{ margin: "0 0 10px", fontSize: compact ? 22 : 28, lineHeight: 1.1 }}>Faith, strength, and steady footing.</h2>
+          <h2 style={{ margin: "0 0 10px", fontSize: compact ? 22 : 28, lineHeight: 1.1 }}>{copy.presence.faithHeadline}</h2>
           <p style={{ margin: 0, color: "#fff5d6", lineHeight: compact ? 1.5 : 1.7, fontSize: compact ? 14 : 15 }}>
             {compact ? compactSummary : agent.legacyStory || agent.welcomeMessage}
           </p>
@@ -951,7 +953,7 @@ function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compac
             }}
           >
             <p style={{ margin: "0 0 12px", color: "#fdf0c1", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-              Study Lanes
+              {copy.presence.studyLanes}
             </p>
             <div style={{ display: "grid", gap: 10 }}>
               {(agent.presenceNotes || []).map((note) => (
@@ -985,7 +987,7 @@ function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compac
           }}
         >
           <p style={{ margin: "0 0 12px", color: "#fdf0c1", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-            Speak This In Faith
+            {copy.presence.speakThisInFaith}
           </p>
           <div style={{ display: "grid", gap: 10 }}>
             {agent.signatureLines.map((line) => (
@@ -1018,7 +1020,7 @@ function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compac
           }}
         >
           <p style={{ margin: "0 0 12px", color: "#fdf0c1", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-            {agent.closingPracticeTitle || "Closing Practice"}
+            {agent.closingPracticeTitle || copy.presence.closingPractice}
           </p>
           <div style={{ display: "grid", gap: 8 }}>
             {agent.closingPracticeBullets.map((item) => (
@@ -1039,7 +1041,7 @@ function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compac
 
       <div style={{ marginTop: 18 }}>
         <p style={{ margin: "0 0 10px", color: "#fdf0c1", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: 12 }}>
-          {compact ? "Quick Start" : "Start The Conversation"}
+          {compact ? copy.presence.quickStart : copy.presence.startConversation}
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
           {visibleSuggestions.map((suggestion) => (
@@ -1066,10 +1068,11 @@ function FaithPresence({ agent, accentColor, onPromptSelect, suggestions, compac
   );
 }
 
-function MissionMeetingCard({ agent, accentColor, onPromptSelect }: {
+function MissionMeetingCard({ agent, accentColor, onPromptSelect, copy }: {
   agent: AgentConfig;
   accentColor: string;
   onPromptSelect: (prompt: string) => void;
+  copy: ReturnType<typeof useSiteCopy>["guardianChat"];
 }) {
   if (!agent.meetingAgenda?.length) {
     return null;
@@ -1099,7 +1102,7 @@ function MissionMeetingCard({ agent, accentColor, onPromptSelect }: {
             textTransform: "uppercase",
           }}
         >
-          Daily Alignment
+          {copy.presence.dailyAlignment}
         </span>
         {agent.meetingTimeLabel ? (
           <span
@@ -1120,7 +1123,7 @@ function MissionMeetingCard({ agent, accentColor, onPromptSelect }: {
       </div>
 
       <h2 style={{ margin: "0 0 8px", fontSize: 24, lineHeight: 1.1 }}>
-        {agent.meetingCadenceTitle || "Daily Team Meeting"}
+        {agent.meetingCadenceTitle || copy.presence.dailyTeamMeeting}
       </h2>
       {agent.meetingCadenceCopy ? (
         <p style={{ margin: "0 0 14px", color: "#f1f1f1", lineHeight: 1.65, fontSize: 14 }}>
@@ -1150,7 +1153,7 @@ function MissionMeetingCard({ agent, accentColor, onPromptSelect }: {
       <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 14 }}>
         <button
           type="button"
-          onClick={() => onPromptSelect("Set today's AI Agent Team Meeting agenda")}
+          onClick={() => onPromptSelect(copy.presence.buildAgendaPrompt)}
           style={{
             padding: "10px 14px",
             borderRadius: 999,
@@ -1161,7 +1164,7 @@ function MissionMeetingCard({ agent, accentColor, onPromptSelect }: {
             cursor: "pointer",
           }}
         >
-          Build Today's Agenda
+          {copy.presence.buildAgenda}
         </button>
         {agent.meetingDownloadPath ? (
           <a
@@ -1176,7 +1179,7 @@ function MissionMeetingCard({ agent, accentColor, onPromptSelect }: {
               textDecoration: "none",
             }}
           >
-            Download Calendar Invite
+            {copy.presence.downloadInvite}
           </a>
         ) : null}
       </div>
@@ -1184,10 +1187,11 @@ function MissionMeetingCard({ agent, accentColor, onPromptSelect }: {
   );
 }
 
-function CommandFrameworkCard({ agent, accentColor, onPromptSelect }: {
+function CommandFrameworkCard({ agent, accentColor, onPromptSelect, copy }: {
   agent: AgentConfig;
   accentColor: string;
   onPromptSelect: (prompt: string) => void;
+  copy: ReturnType<typeof useSiteCopy>["guardianChat"];
 }) {
   if (!agent.commandFrameworkSteps?.length) {
     return null;
@@ -1217,7 +1221,7 @@ function CommandFrameworkCard({ agent, accentColor, onPromptSelect }: {
             textTransform: "uppercase",
           }}
         >
-          Command Mode
+          {copy.presence.commandMode}
         </span>
         {agent.protocolLabel ? (
           <span
@@ -1238,7 +1242,7 @@ function CommandFrameworkCard({ agent, accentColor, onPromptSelect }: {
       </div>
 
       <h2 style={{ margin: "0 0 8px", fontSize: 24, lineHeight: 1.1 }}>
-        {agent.commandFrameworkTitle || "Command Framework"}
+        {agent.commandFrameworkTitle || copy.presence.commandFramework}
       </h2>
       {agent.commandFrameworkCopy ? (
         <p style={{ margin: "0 0 14px", color: "#f1f1f1", lineHeight: 1.65, fontSize: 14 }}>
@@ -1268,7 +1272,7 @@ function CommandFrameworkCard({ agent, accentColor, onPromptSelect }: {
       <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 14 }}>
         <button
           type="button"
-          onClick={() => onPromptSelect("Give me the command-level read on today's SVL state")}
+          onClick={() => onPromptSelect(copy.presence.runBriefPrompt)}
           style={{
             padding: "10px 14px",
             borderRadius: 999,
@@ -1279,11 +1283,11 @@ function CommandFrameworkCard({ agent, accentColor, onPromptSelect }: {
             cursor: "pointer",
           }}
         >
-          Run Command Brief
+          {copy.presence.runBrief}
         </button>
         <button
           type="button"
-          onClick={() => onPromptSelect("What do these upgrades now allow us to do that we couldn't before?")}
+          onClick={() => onPromptSelect(copy.presence.leveragePrompt)}
           style={{
             padding: "10px 14px",
             borderRadius: 999,
@@ -1294,7 +1298,7 @@ function CommandFrameworkCard({ agent, accentColor, onPromptSelect }: {
             cursor: "pointer",
           }}
         >
-          Find Leverage
+          {copy.presence.findLeverage}
         </button>
       </div>
     </div>
@@ -1309,6 +1313,7 @@ export default function AgentClient({
   initialAgent: AgentConfig | null;
 }) {
   const router = useRouter();
+  const copy = useSiteCopy();
   
   const [agent, setAgent] = useState<AgentConfig | null>(initialAgent);
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
@@ -1591,7 +1596,6 @@ export default function AgentClient({
     speechQueueRef.current = [];
 
     const selectedVoice = selectVoice(agent, voices);
-    const isMobileDevice = isMobileSpeechDevice();
     
     // Skip voice validation blockers - voice selection logic already enforces correct gender
     // Just proceed with speaking regardless of initial voice detection state
@@ -1864,7 +1868,7 @@ export default function AgentClient({
           justifyContent: "center",
         }}
       >
-        <div style={{ fontSize: 18, color: "#888" }}>Loading guardian...</div>
+        <div style={{ fontSize: 18, color: "#888" }}>{copy.guardianChat.loadingGuardian}</div>
       </div>
     );
   }
@@ -1892,15 +1896,13 @@ export default function AgentClient({
           <AvatarBadge agent={agent} accentColor={accentColor} size={48} fontSize={20} />
           <div>
             <h1 style={{ margin: 0, fontSize: 20 }}>{agent?.name || "Guardian"}</h1>
-            <p style={{ margin: "4px 0 0 0", fontSize: 12, color: accentColor }}>
-              {agent?.defaultStatus || "Loading..."}
-            </p>
+            <p style={{ margin: "4px 0 0 0", fontSize: 12, color: accentColor }}>{agent?.defaultStatus || copy.guardianChat.loadingStatus}</p>
             <p style={{ margin: "6px 0 0 0", fontSize: 12, color: "#bdbdbd" }}>
               {voiceStatus}
             </p>
             <button
               type="button"
-              onClick={() => speak(agent?.welcomeMessage || "Voice check complete.")}
+              onClick={() => speak(agent?.welcomeMessage || copy.guardianChat.voiceCheckComplete)}
               style={{
                 marginTop: 10,
                 padding: "6px 10px",
@@ -1913,7 +1915,7 @@ export default function AgentClient({
                 cursor: "pointer",
               }}
             >
-              Play Welcome
+              {copy.guardianChat.playWelcome}
             </button>
           </div>
         </div>
@@ -1926,6 +1928,7 @@ export default function AgentClient({
             accentColor={accentColor}
             onPromptSelect={handleSuggestedPrompt}
             suggestions={rotatingSuggestions}
+            copy={copy.guardianChat}
           />
           <GuardianSafetyCard agent={agent} accentColor={accentColor} />
         </>
@@ -1939,6 +1942,7 @@ export default function AgentClient({
             onPromptSelect={handleSuggestedPrompt}
             suggestions={rotatingSuggestions}
             compact={isCompactMobile && !showTokFaithDetails}
+            copy={copy.guardianChat}
           />
           {isCompactMobile ? (
             <div style={{ margin: "0 12px 12px" }}>
@@ -1957,7 +1961,7 @@ export default function AgentClient({
                   cursor: "pointer",
                 }}
               >
-                {showTokFaithDetails ? "Show Less and Stay in Chat" : "Open Full Faith Guide"}
+                {showTokFaithDetails ? copy.guardianChat.closeFaithGuide : copy.guardianChat.openFaithGuide}
               </button>
             </div>
           ) : null}
@@ -1973,6 +1977,7 @@ export default function AgentClient({
           accentColor={accentColor}
           onPromptSelect={handleSuggestedPrompt}
           suggestions={rotatingSuggestions}
+          copy={copy.guardianChat}
         />
       ) : null}
 
@@ -1981,6 +1986,7 @@ export default function AgentClient({
           agent={agent}
           accentColor={accentColor}
           onPromptSelect={handleSuggestedPrompt}
+          copy={copy.guardianChat}
         />
       ) : null}
 
@@ -1989,6 +1995,7 @@ export default function AgentClient({
           agent={agent}
           accentColor={accentColor}
           onPromptSelect={(prompt) => setInput(prompt)}
+          copy={copy.guardianChat}
         />
       ) : null}
 
@@ -2005,8 +2012,8 @@ export default function AgentClient({
       >
         {messages.length === 0 ? (
           <div style={{ textAlign: "center", marginTop: "40px", color: "#888" }}>
-            <h2>{agent?.welcomeTitle || "Welcome"}</h2>
-            <p>{agent?.welcomeMessage || "Loading guardian..."}</p>
+            <h2>{agent?.welcomeTitle || copy.guardianChat.welcomeFallback}</h2>
+            <p>{agent?.welcomeMessage || copy.guardianChat.loadingGuardian}</p>
             {agent?.suggestions && (
               <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
                 {(usesRotatingSuggestions ? rotatingSuggestions : agent.suggestions).map((suggestion, i) => (
@@ -2059,7 +2066,7 @@ export default function AgentClient({
                 <button
                   type="button"
                   onClick={() => speak(msg.content, i)}
-                  title={currentSpeakingMessageIndex === i ? "Stop" : "Listen to this message"}
+                  title={currentSpeakingMessageIndex === i ? copy.guardianChat.stopTitle : copy.guardianChat.listenTitle}
                   className="speaker-button"
                   style={{
                     padding: "6px 12px",
@@ -2075,7 +2082,7 @@ export default function AgentClient({
                     flex: "0 0 auto",
                   }}
                 >
-                  {currentSpeakingMessageIndex === i ? "⏹ Stop" : "▶ Listen"}
+                  {currentSpeakingMessageIndex === i ? copy.guardianChat.stopButton : copy.guardianChat.listenButton}
                 </button>
               )}
             </div>
@@ -2107,7 +2114,7 @@ export default function AgentClient({
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message..."
+          placeholder={copy.guardianChat.inputPlaceholder}
           disabled={loading}
           style={{
             flex: "1 1 150px",
@@ -2135,9 +2142,9 @@ export default function AgentClient({
             transition: "all 0.2s",
             boxShadow: isListening ? `0 0 12px ${accentColor}60` : "none",
           }}
-          title="Click to speak your message"
+          title={copy.guardianChat.micTitle}
         >
-          {isListening ? "🎙 Listening..." : "🎤 Speak"}
+          {isListening ? copy.guardianChat.listeningButton : copy.guardianChat.speakButton}
         </button>
         {isSpeaking && (
           <button
@@ -2154,7 +2161,7 @@ export default function AgentClient({
               fontSize: 12,
             }}
           >
-            Stop 🔊
+            {copy.guardianChat.stopSpeaking}
           </button>
         )}
         <button

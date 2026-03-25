@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
 export default function TokBuildingLanding() {
   const [selectedPlan, setSelectedPlan] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const copy = useSiteCopy();
 
   const plans = [
     {
@@ -68,13 +70,13 @@ export default function TokBuildingLanding() {
           </div>
           <div className="flex gap-6">
             <a href="#features" className="hover:text-purple-400 transition">
-              Features
+              {copy.tokbuildingLanding.nav.features}
             </a>
             <a href="#usecases" className="hover:text-purple-400 transition">
-              Use Cases
+              {copy.tokbuildingLanding.nav.useCases}
             </a>
             <a href="#pricing" className="hover:text-purple-400 transition">
-              Pricing
+              {copy.tokbuildingLanding.nav.pricing}
             </a>
           </div>
         </div>
@@ -85,32 +87,32 @@ export default function TokBuildingLanding() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-block mb-4 px-4 py-2 rounded-full bg-purple-900/40 border border-purple-700/60">
-              <span className="text-sm text-purple-300">No-Code AI Agent Builder</span>
+              <span className="text-sm text-purple-300">{copy.tokbuildingLanding.badge}</span>
             </div>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Build Custom <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">AI Agents</span>
+              {copy.tokbuildingLanding.heroTitle}
             </h2>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-              Create powerful AI agents without coding. Define personality, knowledge focus, and target audience. TokBuilding generates deployment-ready JSON specifications aligned with KPA mission values. Keep People Alive through intelligent automation.
+              {copy.tokbuildingLanding.heroBody}
             </p>
             <div className="flex gap-4 mb-8">
               <button
                 onClick={() => setShowModal(true)}
                 className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 font-bold transition transform hover:scale-105"
               >
-                Build Now
+                {copy.tokbuildingLanding.primaryCta}
               </button>
               <a
                 href="#features"
                 className="px-8 py-3 rounded-lg border border-purple-600 hover:bg-purple-900/30 font-bold transition"
               >
-                Learn More
+                {copy.tokbuildingLanding.secondaryCta}
               </a>
             </div>
             <div className="flex gap-6 text-sm text-slate-400">
-              <div>⚡ 5-Step Wizard</div>
-              <div>📋 JSON Export</div>
-              <div>🎯 KPA Aligned</div>
+              <div>⚡ {copy.tokbuildingLanding.stats[0]}</div>
+              <div>📋 {copy.tokbuildingLanding.stats[1]}</div>
+              <div>🎯 {copy.tokbuildingLanding.stats[2]}</div>
             </div>
           </div>
 
@@ -145,9 +147,9 @@ export default function TokBuildingLanding() {
       {/* Features Section */}
       <section id="features" className="bg-purple-900/20 border-y border-purple-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">Powerful Agent Building Tools</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center">{copy.tokbuildingLanding.featuresTitle}</h2>
           <p className="text-center text-slate-300 mb-16 max-w-2xl mx-auto">
-            Everything you need to create, customize, and deploy AI agents. No coding required.
+            {copy.tokbuildingLanding.featuresBody}
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -242,9 +244,9 @@ export default function TokBuildingLanding() {
       {/* Use Cases Section */}
       <section id="usecases" className="bg-purple-900/20 border-y border-purple-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">Build Agents for Every Purpose</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center">{copy.tokbuildingLanding.useCasesTitle}</h2>
           <p className="text-center text-slate-300 mb-16 max-w-2xl mx-auto">
-            From customer support to education to safety—TokBuilding has templates and tools for any domain.
+            {copy.tokbuildingLanding.useCasesBody}
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -261,8 +263,8 @@ export default function TokBuildingLanding() {
       {/* Pricing Section */}
       <section id="pricing" className="bg-purple-900/20 border-y border-purple-800/30 py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">Simple Pricing</h2>
-          <p className="text-center text-slate-300 mb-16">Start free. Pro features available for power users.</p>
+          <h2 className="text-4xl font-bold mb-4 text-center">{copy.tokbuildingLanding.pricingTitle}</h2>
+          <p className="text-center text-slate-300 mb-16">{copy.tokbuildingLanding.pricingBody}</p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
             {plans.map((plan, idx) => (
@@ -302,7 +304,7 @@ export default function TokBuildingLanding() {
                       : 'bg-slate-700 hover:bg-slate-600'
                   }`}
                 >
-                  {idx === 0 ? 'Get Started Free' : 'Upgrade to Pro'}
+                  {idx === 0 ? copy.tokbuildingLanding.freePlanCta : copy.tokbuildingLanding.proPlanCta}
                 </button>
               </div>
             ))}
@@ -316,7 +318,7 @@ export default function TokBuildingLanding() {
 
       {/* Mission Section */}
       <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-4xl font-bold mb-6">Keep People Alive</h2>
+        <h2 className="text-4xl font-bold mb-6">{copy.tokbuildingLanding.missionTitle}</h2>
         <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-8">
           TokBuilding is created by Sanders Viopro Labs with a singular mission: <span className="text-purple-400 font-bold">Keep People Alive</span>. By making AI agent creation accessible to everyone, we enable safety-first automation that augments human decision-making. Build agents that inform, empower, and protect.
         </p>
@@ -324,7 +326,7 @@ export default function TokBuildingLanding() {
           href="/tokstore"
           className="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition"
         >
-          Explore Full SVL TokStore →
+          {copy.tokbuildingLanding.missionStoreCta}
         </Link>
       </section>
 
@@ -332,20 +334,20 @@ export default function TokBuildingLanding() {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-slate-900 rounded-lg p-8 max-w-md w-full border border-purple-700/30">
-            <h3 className="text-2xl font-bold mb-4">Ready to Build Your Agent?</h3>
-            <p className="text-slate-300 mb-6">Visit the TokStore to start building custom AI agents with the TokBuilding no-code wizard.</p>
+            <h3 className="text-2xl font-bold mb-4">{copy.tokbuildingLanding.modalTitle}</h3>
+            <p className="text-slate-300 mb-6">{copy.tokbuildingLanding.modalBody}</p>
             <div className="flex gap-4">
               <button
                 onClick={() => setShowModal(false)}
                 className="flex-1 py-2 rounded-lg border border-slate-600 hover:bg-slate-800 transition"
               >
-                Close
+                {copy.tokbuildingLanding.close}
               </button>
               <Link
                 href="/tokstore"
                 className="flex-1 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 font-bold text-center transition"
               >
-                Go to TokStore
+                {copy.tokbuildingLanding.goToTokStore}
               </Link>
             </div>
           </div>
