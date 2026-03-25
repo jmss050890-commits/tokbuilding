@@ -227,12 +227,18 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
         FEMALE_VOICE_PATTERNS.some((pattern) => voice.name.toLowerCase().includes(pattern)),
       );
     } else {
+      // For male voices: prefer male-sounding voices first
       selectedVoice = englishVoices.find((voice) => {
         const voiceName = voice.name.toLowerCase();
         const matchesMalePattern = MALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
         const soundsFemale = FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
         return matchesMalePattern && !soundsFemale;
       });
+      
+      // On mobile: if no explicit male voice found, still prefer non-female voices
+      if (!selectedVoice && isMobileDevice) {
+        selectedVoice = englishVoices.find((voice) => !voiceLooksFemale(voice.name));
+      }
     }
   }
 
@@ -240,8 +246,14 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     selectedVoice = getTokFaithLockedVoice(voices, TOKFAITH_FEMALE_VOICE_PATTERNS);
   }
 
-  if (!selectedVoice && agent?.slug === "mr-kpa" && !isMobileDevice) {
-    selectedVoice = getMrKpaLockedVoice(voices, agent.voicePreferences || MALE_VOICE_PATTERNS);
+  if (!selectedVoice && agent?.slug === "mr-kpa") {
+    if (!isMobileDevice) {
+      // Desktop: strict male voice lock
+      selectedVoice = getMrKpaLockedVoice(voices, agent.voicePreferences || MALE_VOICE_PATTERNS);
+    } else {
+      // Mobile: prefer male-sounding voices (flexible fallback)
+      selectedVoice = englishVoices.find((voice) => voiceLooksMale(voice.name));
+    }
   }
 
   if (!selectedVoice && agent?.voiceGender) {
@@ -362,7 +374,7 @@ function getSpeechSettings(agent: AgentConfig | null, selectedVoice?: SpeechSynt
     const shouldSoftenVoice = MRKPA_SOFT_MALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
 
     return {
-      pitch: shouldSoftenVoice ? Math.min(defaultPitch, 0.72) : Math.min(defaultPitch, 0.76),
+      pitch: Math.max(0.70, Math.min(defaultPitch, shouldSoftenVoice ? 0.72 : 0.74)),
       rate: shouldSoftenVoice ? Math.min(defaultRate, 0.78) : Math.min(defaultRate, 0.82),
     };
   }
