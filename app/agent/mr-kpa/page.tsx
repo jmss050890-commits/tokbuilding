@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Heart, Send, Loader2, Shield, Users } from 'lucide-react';
+import { Heart, Send, Loader2, Shield, Users, Play, Pause, Volume2 } from 'lucide-react';
 import Link from 'next/link';
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 
@@ -22,7 +22,10 @@ export default function MrKPAAgent() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [currentSpeakingMessageId, setCurrentSpeakingMessageId] = useState<string | null>(null);
+  const [isSpeakingMap, setIsSpeakingMap] = useState<Record<string, boolean>>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // Welcome audio on mount
   const welcomeMessage = 'I am Mr. KPA. Jerome built me around one mission: Keep People Alive. I see the whole system. I understand the strategy. And I speak the unfiltered truth about what it takes to survive, build, and lead.';
@@ -33,6 +36,25 @@ export default function MrKPAAgent() {
     voiceGender: 'male',
   });
 
+  // Load voices on mount and when voices change
+  useEffect(() => {
+    const loadVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      // Just trigger voice loading
+      if (voices.length === 0) {
+        window.speechSynthesis.getVoices();
+      }
+    };
+
+    loadVoices();
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+
+    return () => {
+      window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
   const quickPrompts = [
     "Give me the real talk about my situation",
     "How should I lead through this?",
@@ -42,6 +64,78 @@ export default function MrKPAAgent() {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const speakMessage = async (messageId: string, text: string) => {
+    // Cancel any current speech
+    window.speechSynthesis.cancel();
+    
+    if (currentSpeakingMessageId === messageId && isSpeakingMap[messageId]) {
+      // Stop if clicking the same message that's playing
+      setCurrentSpeakingMessageId(null);
+      setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+      return;
+    }
+
+    setCurrentSpeakingMessageId(messageId);
+    setIsSpeakingMap((prev) => ({ ...prev, [messageId]: true }));
+
+    try {
+      // Get available voices
+      let voices = window.speechSynthesis.getVoices();
+      if (voices.length === 0) {
+        // Wait for voices to load
+        await new Promise((resolve) => {
+          const handleVoicesChanged = () => {
+            voices = window.speechSynthesis.getVoices();
+            window.speechSynthesis.removeEventListener('voiceschanged', handleVoicesChanged);
+            resolve(null);
+          };
+          window.speechSynthesis.addEventListener('voiceschanged', handleVoicesChanged);
+          setTimeout(resolve, 1000);
+        });
+      }
+
+      // Select male voice for Mr. KPA (deep command presence)
+      const malePatterns = ['david', 'daniel', 'guy', 'aaron', 'roger', 'fred', 'alex', 'tom', 'mark', 'ryan', 'james'];
+      let selectedVoice = voices.find((voice) => {
+        const voiceName = voice.name.toLowerCase();
+        return malePatterns.some((pattern) => voiceName.includes(pattern)) && voice.lang?.toLowerCase().startsWith('en');
+      });
+
+      // Fallback to first English male voice if specific male voice not found
+      if (!selectedVoice) {
+        selectedVoice = voices.find((voice) => voice.lang?.toLowerCase().startsWith('en'));
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (selectedVoice) utterance.voice = selectedVoice;
+      utterance.pitch = 0.76; // Deep male voice for command presence
+      utterance.rate = 0.8; // Deliberate, decisive
+      utterance.volume = 0.9;
+
+      utterance.onstart = () => {
+        setIsSpeakingMap((prev) => ({ ...prev, [messageId]: true }));
+      };
+
+      utterance.onend = () => {
+        setCurrentSpeakingMessageId(null);
+        setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+      };
+
+      utterance.onerror = (event) => {
+        console.error('Speech synthesis error:', event.error);
+        setCurrentSpeakingMessageId(null);
+        setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+      };
+
+      speechSynthesisRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      console.error('Error speaking message:', error);
+      setCurrentSpeakingMessageId(null);
+      setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+    }
   };
 
   useEffect(() => {
@@ -138,16 +232,45 @@ export default function MrKPAAgent() {
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 max-w-4xl mx-auto w-full">
         {messages.map((message) => (
           <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div
-              className={`max-w-2xl rounded-2xl px-6 py-4 ${
-                message.type === 'user'
-                  ? 'bg-blue-600/30 border border-blue-600/60 text-blue-50'
-                  : message.type === 'assistant-error'
-                    ? 'bg-red-900/30 border border-red-600/60 text-red-100'
-                    : 'bg-slate-800/60 border border-blue-700/30 text-blue-50'
-              }`}
-            >
-              <p className="leading-relaxed whitespace-pre-wrap">{message.content}</p>
+            <div className={`max-w-2xl ${message.type === 'user' ? '' : 'group'}`}>
+              <div
+                className={`rounded-2xl px-6 py-4 ${
+                  message.type === 'user'
+                    ? 'bg-blue-600/30 border border-blue-600/60 text-blue-50'
+                    : message.type === 'assistant-error'
+                      ? 'bg-red-900/30 border border-red-600/60 text-red-100'
+                      : 'bg-slate-800/60 border border-blue-700/30 text-blue-50'
+                }`}
+              >
+                <p className="leading-relaxed whitespace-pre-wrap">{message.content}</p>
+              </div>
+
+              {/* Speaker Button for Assistant Messages */}
+              {message.type === 'assistant' && (
+                <div className="mt-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => speakMessage(message.id, message.content)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition ${
+                      isSpeakingMap[message.id]
+                        ? 'bg-blue-600/70 text-blue-50 border border-blue-500'
+                        : 'bg-slate-700/50 text-blue-200 border border-blue-700/30 hover:bg-slate-600/60 hover:border-blue-600/50'
+                    }`}
+                    title={isSpeakingMap[message.id] ? 'Stop' : 'Listen to this message (click to resume)'}
+                  >
+                    {isSpeakingMap[message.id] ? (
+                      <>
+                        <Pause className="w-3.5 h-3.5" />
+                        <span>Stop</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3.5 h-3.5" />
+                        <span>Listen</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ))}
