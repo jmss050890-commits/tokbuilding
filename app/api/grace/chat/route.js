@@ -6,6 +6,14 @@ import {
   detectSupportiveHandoffCase,
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import {
+  buildAgentDemoModeResponse,
+  buildAgentRetryResponse,
+} from "@/lib/agent-fallback-copy";
 
 export async function POST(req) {
   let userMessage = "";
@@ -13,6 +21,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     userMessage = body?.message?.trim();
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     const graceAgent = AGENTS.grace;
 
     if (!userMessage) {
@@ -27,7 +37,7 @@ export async function POST(req) {
     if (safetyCase.requiresEmergencyResponse) {
       return new Response(
         JSON.stringify({
-          response: buildSupportiveEmergencyResponse(safetyCase),
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
           safetyMode: true,
         }),
         { status: 200 }
@@ -39,8 +49,11 @@ export async function POST(req) {
     if (!openAiApiKey) {
       return new Response(
         JSON.stringify({
-          response:
+          response: buildAgentDemoModeResponse(
+            graceAgent.name,
+            language,
             "I'm Grace, and I'm here with you. I know the SVL story, the sandersvioprolabs.com upgrade, and how the mission keeps growing through God's grace. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening.",
+          ),
           safetyMode: safetyCase.requiresSupportiveTone,
         }),
         { status: 200 }
@@ -49,6 +62,9 @@ export async function POST(req) {
 
     const systemMessages = [
       { role: "system", content: graceAgent.systemPrompt },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Grace") }]
         : []),
@@ -79,7 +95,7 @@ export async function POST(req) {
 
       return (
         data?.choices?.[0]?.message?.content?.trim() ||
-        "I'm here with you. Tell me that again."
+        buildAgentRetryResponse(graceAgent.name, language, "I'm here with you. Tell me that again.")
       );
     };
 
@@ -97,8 +113,11 @@ export async function POST(req) {
     console.error("Grace route error:", error);
     return new Response(
       JSON.stringify({
-        response:
+        response: buildAgentRetryResponse(
+          "Grace",
+          language,
           "I hear you. TokBuilding is the part of SVL that helps people build something real for themselves. It gives people a way to turn ideas into agents, prompts, and useful tools, and the rest of SVL helps those tools get seen, supported, and connected to people who need them. You can start at sandersvioprolabs.com or go straight to TokBuilding from there.",
+        ),
         safetyMode,
         fallbackMode: true,
       }),

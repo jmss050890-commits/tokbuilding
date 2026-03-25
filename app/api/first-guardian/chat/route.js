@@ -6,8 +6,14 @@ import {
   getFirstGuardianMemoryContext,
   updateFirstGuardianMemory,
 } from "@/lib/first-guardian-memory";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import { buildFirstGuardianFallbackResponse } from "@/lib/agent-fallback-copy";
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+import { buildSupportiveEmergencyResponse } from "@/lib/svl-supportive-handoff";
 
 const FIRST_GUARDIAN_SLUG = "first-guardian";
 const CRISIS_RESPONSE_SYSTEM =
@@ -19,10 +25,13 @@ export async function POST(req) {
   let userName;
   let safetyMode = false;
   let escalationType = "standard";
+  let language = "en";
   try {
     const session = getAuthenticatedSession(req);
     const body = await req.json();
     message = body?.message?.trim();
+    language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     userId = session?.userId || body?.userId || null;
     userName = session?.name || body?.userName || null;
 
@@ -57,7 +66,7 @@ export async function POST(req) {
         JSON.stringify({
           success: true,
           agentName: guardianAgent.name,
-          response: buildEmergencyResponse(safetyCase),
+          response: buildEmergencyResponse(safetyCase, language),
           userId,
           userName,
           safetyMode: true,
@@ -75,6 +84,9 @@ export async function POST(req) {
         role: "system",
         content: guardianAgent.systemPrompt,
       },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(memorySystemMessage
         ? [{ role: "system", content: memorySystemMessage }]
         : []),
@@ -101,7 +113,7 @@ export async function POST(req) {
 
           return (
             response.choices?.[0]?.message?.content?.trim() ||
-            generateDemoResponse(message, memoryContext, userName)
+            generateDemoResponse(message, memoryContext, userName, language)
           );
         },
         async (repairPrompt) => {
@@ -120,12 +132,12 @@ export async function POST(req) {
 
           return (
             response.choices?.[0]?.message?.content?.trim() ||
-            generateDemoResponse(message, memoryContext, userName)
+            generateDemoResponse(message, memoryContext, userName, language)
           );
         }
       );
     } else {
-      responseText = generateDemoResponse(message, memoryContext, userName);
+      responseText = generateDemoResponse(message, memoryContext, userName, language);
     }
 
     if (userId) {
@@ -160,7 +172,7 @@ export async function POST(req) {
       JSON.stringify({
         success: true,
         agentName: "The First Guardian",
-        response: generateDemoResponse(message || "Help me protect my peace at home", null, userName),
+        response: generateDemoResponse(message || "Help me protect my peace at home", null, userName, language),
         userId,
         userName,
         safetyMode,
@@ -182,17 +194,21 @@ function formatUserName(userName) {
   return userName.trim().split(/\s+/)[0] || "";
 }
 
-function generateDemoResponse(userMessage, memoryContext = null, userName = null) {
+function generateDemoResponse(userMessage, memoryContext = null, userName = null, language = "en") {
   const safetyCase = detectSafetyCase(userMessage);
 
   if (safetyCase.isEmergency) {
-    return buildEmergencyResponse(safetyCase);
+    return buildEmergencyResponse(safetyCase, language);
   }
 
   const lowerMessage = userMessage.toLowerCase();
   const firstName = formatUserName(userName || memoryContext?.profile?.userName);
   const namedUser = firstName || "baby";
   const lastThread = memoryContext?.threadMemories?.[0];
+
+  if (language !== "en") {
+    return buildFirstGuardianFallbackResponse(language, namedUser);
+  }
 
   if (
     lowerMessage.includes("continue") ||
@@ -352,22 +368,6 @@ function detectSafetyCase(userMessage) {
   };
 }
 
-function buildEmergencyResponse(safetyCase) {
-  if (safetyCase.selfHarm) {
-    return "If there is any immediate risk of self-harm, call 911 right now. If you are in the United States, call or text 988 right now as well. Stay with the person if you can do so safely, remove access to weapons or anything they could use to hurt themselves if it is safe to do that, and get a trusted adult or emergency responder involved immediately. Make that call now. Come right back and tell me once you've done it.";
-  }
-
-  if (safetyCase.medical) {
-    return "This sounds like a medical emergency. Call 911 right now. Do not wait for the situation to calm down on its own. If someone is unconscious, not breathing normally, overdosing, having a seizure, or bleeding badly, emergency responders need to take over. Make that call now. Come back and tell me when help is on the way.";
-  }
-
-  if (safetyCase.childDanger) {
-    return "If a child may be unsafe right now, focus on immediate safety first. Get the child to a safe adult or safe place, call 911 if there is immediate danger, and involve the appropriate child-protection or emergency resource in your area. Do not stay in a dangerous confrontation just to prove a point. Get to that safer place first, then come back and tell me what support is with you.";
-  }
-
-  if (safetyCase.violence) {
-    return "If violence is possible right now, do not try to win the argument. Get to a safer place, call 911, and bring in a trusted nearby adult or emergency responder immediately. KPA means safety first, not staying in the room to manage danger alone. Move first. Make the call. Then come back and tell me when you're in the safer place.";
-  }
-
-  return "If someone is in immediate danger, call 911 right now or get to a safe nearby adult. After that, we can work the next steps. Home first means safety first. Take that step now, then come back and tell me where things stand.";
+function buildEmergencyResponse(safetyCase, language = "en") {
+  return buildSupportiveEmergencyResponse(safetyCase, language);
 }

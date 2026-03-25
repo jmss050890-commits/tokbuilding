@@ -8,6 +8,14 @@ import {
   detectSupportiveHandoffCase,
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import {
+  buildAgentDemoModeResponse,
+  buildAgentRetryResponse,
+} from "@/lib/agent-fallback-copy";
 
 export async function POST(req) {
   let userMessage = "";
@@ -17,6 +25,8 @@ export async function POST(req) {
   try {
     const body = await req.json();
     userMessage = body?.message?.trim();
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     const tokSeoAgent = AGENTS.tokseo;
 
     if (!userMessage) {
@@ -30,7 +40,7 @@ export async function POST(req) {
     safetyMode = safetyCase.requiresSupportiveTone;
     if (safetyCase.requiresEmergencyResponse) {
       return new Response(
-        JSON.stringify({ response: buildSupportiveEmergencyResponse(safetyCase), safetyMode: true }),
+        JSON.stringify({ response: buildSupportiveEmergencyResponse(safetyCase, language), safetyMode: true }),
         { status: 200 }
       );
     }
@@ -85,8 +95,11 @@ ${keywordResult.error || competitorResult.error
     if (!openAiApiKey) {
       return new Response(
         JSON.stringify({
-          response:
+          response: buildAgentDemoModeResponse(
+            tokSeoAgent.name,
+            language,
             "I'm TokSEO, your SEO and digital visibility strategist. I know the SVL story, the live site upgrade, and the current product map. I'm in demo mode right now, so any rankings, competitor snapshots, or opportunity analysis here should be treated as sample SVL data and strategy guidance unless live Search Atlas data is explicitly available.",
+          ),
           dataUsed: Boolean(contextData),
           dataSource,
           isLiveData,
@@ -105,6 +118,9 @@ ${keywordResult.error || competitorResult.error
         role: "system",
         content: tokSeoAgent.systemPrompt + contextData,
       },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("TokSEO") }]
         : []),
@@ -118,7 +134,7 @@ ${keywordResult.error || competitorResult.error
           messages: [...systemMessages, { role: "user", content: userMessage }],
         });
 
-        return response.choices[0]?.message?.content || "I'm here to help with SEO strategy.";
+        return response.choices[0]?.message?.content || buildAgentRetryResponse(tokSeoAgent.name, language, "I'm here to help with SEO strategy.");
       },
       async (repairPrompt) => {
         const response = await client.chat.completions.create({
@@ -133,7 +149,7 @@ ${keywordResult.error || competitorResult.error
           ],
         });
 
-        return response.choices[0]?.message?.content || "I'm here to help with SEO strategy.";
+        return response.choices[0]?.message?.content || buildAgentRetryResponse(tokSeoAgent.name, language, "I'm here to help with SEO strategy.");
       }
     );
 
@@ -154,8 +170,11 @@ ${keywordResult.error || competitorResult.error
     console.error("[TokSEO Chat] Error:", error);
     return new Response(
       JSON.stringify({
-        response:
+        response: buildAgentRetryResponse(
+          "TokSEO",
+          language,
           "Let's break that down simply. TokBuilding is the builder lane inside SVL. It helps people create agents, prompts, and business tools they can actually use. TokSEO then helps those tools get found, trusted, and connected to the people who need them. The practical next step is to start at sandersvioprolabs.com for the whole map or go straight to TokBuilding if you're ready to build.",
+        ),
         timestamp: new Date().toISOString(),
         dataUsed: false,
         dataSource,

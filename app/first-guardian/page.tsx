@@ -1,10 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { AGENTS } from "@/lib/lib/lib/agents";
 import { useSiteCopy } from "@/app/components/SiteLanguageControl";
-
-const agent = AGENTS["first-guardian"];
 
 export default function FirstGuardianPage() {
   const copy = useSiteCopy();
@@ -16,7 +13,7 @@ export default function FirstGuardianPage() {
         <div className="hero-grid">
           <div className="hero-card hero-card-primary">
             <div className="pill-row">
-              <span className="pill pill-soft">{agent.tagline}</span>
+              <span className="pill pill-soft">{pageCopy.tagline}</span>
               <span className="pill pill-outline">{pageCopy.systemPill}</span>
             </div>
 
@@ -40,7 +37,7 @@ export default function FirstGuardianPage() {
             </div>
 
             <div className="quick-grid">
-              {agent.suggestions.slice(0, 2).map((suggestion) => (
+              {pageCopy.quickLinks.map((suggestion) => (
                 <Link key={suggestion} href="/agent/first-guardian" className="quick-link">
                   {suggestion}
                 </Link>
@@ -69,7 +66,7 @@ export default function FirstGuardianPage() {
           <div className="lower-card voice-card">
             <p className="section-label">{pageCopy.voiceLabel}</p>
             <div className="quote-grid">
-              {(agent.signatureLines || []).map((line) => (
+              {pageCopy.signatureLines.map((line) => (
                 <div key={line} className="quote-card">
                   "{line}"
                 </div>
@@ -87,7 +84,7 @@ export default function FirstGuardianPage() {
             </div>
 
             <div className="presence-list">
-              {(agent.presenceNotes || []).map((note) => (
+              {pageCopy.presenceNotes.map((note) => (
                 <div key={note} className="presence-item">
                   {note}
                 </div>

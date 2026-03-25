@@ -9,6 +9,7 @@ import {
   type SpeechRecognitionLike,
 } from '@/lib/browser-speech';
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
+import { useSiteCopy, useSiteLanguage } from '@/app/components/SiteLanguageControl';
 
 interface Message {
   id: string;
@@ -23,13 +24,38 @@ interface Message {
   };
 }
 
+function getPerspectiveLabel(
+  perspective: string | undefined,
+  routeCopy: ReturnType<typeof useSiteCopy>['tokfaithAgent'],
+) {
+  if (!perspective || perspective === 'intro') {
+    return routeCopy.title;
+  }
+
+  if (perspective === 'ethiopian') {
+    return routeCopy.perspectiveOptions.ethiopian;
+  }
+
+  if (perspective === 'kjv') {
+    return routeCopy.perspectiveOptions.kjv;
+  }
+
+  if (perspective === 'ethiopian-with-kjv-option') {
+    return routeCopy.perspectiveOptions.both;
+  }
+
+  return perspective;
+}
+
 export default function TokFaithAgent() {
+  const copy = useSiteCopy();
+  const { language } = useSiteLanguage();
+  const routeCopy = copy.tokfaithAgent;
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       type: 'assistant',
-      content:
-        'Peace to you. I am TokFaith. When you have a question that touches your spirit—about faith, your struggles, your identity—bring it here. I will listen deeply and show you wisdom from both the Ethiopian Canon and the King James tradition.',
+      content: routeCopy.welcomeMessage,
       perspective: 'intro',
     },
   ]);
@@ -44,7 +70,7 @@ export default function TokFaithAgent() {
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   // Welcome audio on mount
-  const welcomeMessage = 'Peace to you. I am TokFaith. When you have a question that touches your spirit—about faith, your struggles, your identity—bring it here. I will listen deeply and show you wisdom from both the Ethiopian Canon and the King James tradition.';
+  const welcomeMessage = routeCopy.welcomeMessage;
   useWelcomeAudio(welcomeMessage, true, {
     rate: 0.9,
     pitch: 1.1, // Slightly higher for warm, spiritual tone
@@ -52,36 +78,8 @@ export default function TokFaithAgent() {
     voiceGender: 'female',
   });
 
-  const jeromeWisdom = [
-    "Do not just ask what sounds good. Ask what keeps people alive.",
-    "Faith is real, but so is discipline. Put both in the room.",
-    "We are not here to perform mission. We are here to carry it.",
-    "Sometimes the next breakthrough is one honest decision away.",
-  ];
-
-  const quickPrompts = {
-    jerome: [
-      "Give me the fatherly truth I need right now",
-      "Talk big brother real to me about discipline",
-      "Help me think clearly about my next move",
-      "Tell me what keeps people alive in this situation",
-      "Give me Jerome-level honesty about this pressure",
-    ],
-    mrkpa: [
-      "What does Mr. KPA see in my situation?",
-      "Guide me with fatherly wisdom",
-      "How do I make the next honest decision?",
-      "What keeps me alive and moving forward here?",
-      "Talk strategy to me without sugarcoating it",
-    ],
-    tokfaith: [
-      "Show me Ethiopian scripture wisdom on this",
-      "What does the King James say about my struggle?",
-      "Help me find faith in this moment",
-      "Teach me faith during crisis and uncertainty",
-      "Give me a scripture-based next step for today",
-    ],
-  };
+  const jeromeWisdom = routeCopy.jeromeWisdom;
+  const quickPrompts = routeCopy.quickPrompts;
 
   const visiblePrompts = Array.from({ length: Math.min(3, quickPrompts[voiceMode].length) }, (_, index) => {
     const promptIndex = (promptRotationIndex + index) % quickPrompts[voiceMode].length;
@@ -137,11 +135,15 @@ export default function TokFaithAgent() {
             ? 'You are Mr. KPA speaking to guide this person. Be a protective, strong big brother. Use fatherly wisdom combined with practical strategy. Help them see what decision keeps them alive.'
             : '';
 
-      const response = await fetch('/api/tokfaith', {
+      const response = await fetch('/api/tokfaith/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-site-language': language,
+        },
         body: JSON.stringify({
           message: userMessage,
+          language,
           forcePerspective: currentPerspective,
           systemContext,
         }),
@@ -269,30 +271,30 @@ export default function TokFaithAgent() {
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-amber-950 to-slate-950 flex flex-col">
       {/* Header */}
       <div className="border-b border-amber-800/30 bg-slate-900/80 backdrop-blur sticky top-0 z-20">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center">
                 <Heart className="w-6 h-6 text-slate-950 fill-slate-950" />
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-amber-100">TokFaith</h1>
-                <p className="text-amber-200/60 text-xs">The Wise Elder Who Listens</p>
+              <div className="min-w-0">
+                <h1 className="text-lg font-bold text-amber-100 sm:text-xl">{routeCopy.title}</h1>
+                <p className="text-amber-200/60 text-xs">{routeCopy.subtitle}</p>
               </div>
             </div>
 
-            <div className="flex gap-3 text-sm">
+            <div className="flex w-full flex-wrap justify-end gap-3 text-sm sm:w-auto">
               <Link
                 href="/tokfaith"
                 className="text-amber-200 hover:text-amber-100 transition"
               >
-                Her Story
+                {copy.tokfaith.hero.secondaryCta}
               </Link>
               <Link
                 href="/agent"
                 className="text-amber-200 hover:text-amber-100 transition"
               >
-                All Guardians
+                {copy.common.backToHub}
               </Link>
             </div>
           </div>
@@ -309,7 +311,7 @@ export default function TokFaithAgent() {
             }`}
           >
             <div
-              className={`max-w-2xl rounded-2xl px-6 py-4 ${
+              className={`max-w-full rounded-2xl px-4 py-4 sm:max-w-2xl sm:px-6 ${
                 message.type === 'user'
                   ? 'bg-amber-600/30 border border-amber-600/60 text-amber-50'
                   : message.type === 'assistant-error'
@@ -320,7 +322,7 @@ export default function TokFaithAgent() {
               {message.type === 'assistant' && (
                 <div className="mb-3 pb-3 border-b border-amber-700/30">
                   <p className="text-sm font-semibold text-amber-300">
-                    {message.perspective || 'TokFaith'}
+                    {getPerspectiveLabel(message.perspective, routeCopy)}
                   </p>
                   {message.description && (
                     <p className="text-xs text-amber-200/70 mt-1">{message.description}</p>
@@ -332,7 +334,7 @@ export default function TokFaithAgent() {
 
               {message.type === 'assistant' && message.perspectives && (
                 <div className="mt-4 pt-4 border-t border-amber-700/30">
-                  <p className="text-xs text-amber-200/70 mb-2">See this wisdom in another light:</p>
+                  <p className="text-xs text-amber-200/70 mb-2">{routeCopy.perspectiveHelp}</p>
                   <div className="flex gap-2 flex-wrap">
                     {message.perspectives.available.map((perspective) => (
                       <button
@@ -344,9 +346,9 @@ export default function TokFaithAgent() {
                             : 'bg-slate-700/40 border-amber-700/30 text-amber-200 hover:border-amber-600/60'
                         }`}
                       >
-                        {perspective === 'ethiopian' && '📖 Ethiopian Canon'}
-                        {perspective === 'kjv' && '✨ King James'}
-                        {perspective === 'ethiopian-with-kjv-option' && '🤲 Both Perspectives'}
+                        {perspective === 'ethiopian' && `📖 ${routeCopy.perspectiveOptions.ethiopian}`}
+                        {perspective === 'kjv' && `✨ ${routeCopy.perspectiveOptions.kjv}`}
+                        {perspective === 'ethiopian-with-kjv-option' && `🤲 ${routeCopy.perspectiveOptions.both}`}
                       </button>
                     ))}
                   </div>
@@ -358,10 +360,10 @@ export default function TokFaithAgent() {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="max-w-2xl rounded-2xl px-6 py-4 bg-slate-800/60 border border-amber-700/30">
+            <div className="max-w-full rounded-2xl px-4 py-4 sm:max-w-2xl sm:px-6 bg-slate-800/60 border border-amber-700/30">
               <div className="flex items-center gap-2 text-amber-200">
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span className="text-sm">TokFaith is listening...</span>
+                <span className="text-sm">{routeCopy.loadingLabel}</span>
               </div>
             </div>
           </div>
@@ -375,8 +377,8 @@ export default function TokFaithAgent() {
         <div className="max-w-4xl mx-auto px-4 py-6 space-y-4">
           {/* Voice Mode Selector */}
           <div className="flex gap-2 flex-wrap items-center">
-            <span className="text-amber-200/70 text-xs">Choose voice:</span>
-            <div className="flex gap-2">
+            <span className="text-amber-200/70 text-xs">{routeCopy.voiceModeLabel}</span>
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setVoiceMode('tokfaith')}
                 className={`px-3 py-1.5 rounded text-xs font-medium transition ${
@@ -385,7 +387,7 @@ export default function TokFaithAgent() {
                     : 'bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60'
                 }`}
               >
-                🤲 TokFaith
+                🤲 {routeCopy.voiceModes.tokfaith}
               </button>
               <button
                 onClick={() => setVoiceMode('jerome')}
@@ -395,7 +397,7 @@ export default function TokFaithAgent() {
                     : 'bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60'
                 }`}
               >
-                🙏 Jerome
+                🙏 {routeCopy.voiceModes.jerome}
               </button>
               <button
                 onClick={() => setVoiceMode('mrkpa')}
@@ -405,7 +407,7 @@ export default function TokFaithAgent() {
                     : 'bg-slate-800 border border-amber-700/50 text-amber-200 hover:border-amber-600/60'
                 }`}
               >
-                👨 Mr. KPA
+                👨 {routeCopy.voiceModes.mrkpa}
               </button>
             </div>
           </div>
@@ -421,7 +423,7 @@ export default function TokFaithAgent() {
 
           {/* Quick Prompt Buttons */}
           <div className="space-y-2">
-            <p className="text-xs text-amber-200/70">Quick prompts:</p>
+            <p className="text-xs text-amber-200/70">{routeCopy.quickPromptsLabel}</p>
             <div className="flex gap-2 flex-wrap">
               {visiblePrompts.map((prompt) => (
                 <button
@@ -437,15 +439,16 @@ export default function TokFaithAgent() {
 
           {/* Perspective Selector */}
           <div className="flex gap-2 flex-wrap items-center text-xs">
-            <span className="text-amber-200/70">Scripture perspective:</span>
+            <span className="text-amber-200/70">{routeCopy.perspectiveLabel}</span>
             <select
               value={currentPerspective}
               onChange={(e) => setCurrentPerspective(e.target.value)}
+              title={routeCopy.perspectiveLabel}
               className="px-3 py-1.5 rounded bg-slate-800 border border-amber-700/50 text-amber-100 text-xs hover:border-amber-600/80 transition"
             >
-              <option value="ethiopian">📖 Ethiopian Canon (88 books)</option>
-              <option value="kjv">✨ King James Version</option>
-              <option value="ethiopian-with-kjv-option">🤲 Both Perspectives</option>
+              <option value="ethiopian">📖 {routeCopy.perspectiveOptions.ethiopian}</option>
+              <option value="kjv">✨ {routeCopy.perspectiveOptions.kjv}</option>
+              <option value="ethiopian-with-kjv-option">🤲 {routeCopy.perspectiveOptions.both}</option>
             </select>
           </div>
 
@@ -455,27 +458,27 @@ export default function TokFaithAgent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Bring your questions, struggles, or thoughts..."
+              placeholder={routeCopy.placeholder}
               className="min-h-14 max-h-32 flex-1 px-4 py-3 bg-slate-800 border border-amber-700/50 text-amber-50 placeholder-amber-200/40 rounded-lg focus:outline-none focus:border-amber-600/80 focus:ring-1 focus:ring-amber-600/30 resize-y"
               rows={2}
             />
-            <div className="flex gap-3 md:flex-shrink-0">
+            <div className="flex flex-col gap-3 sm:flex-row md:flex-shrink-0">
               <button
                 onClick={toggleMic}
                 disabled={loading}
-                className={`px-4 py-3 font-bold rounded-lg transition flex items-center justify-center gap-2 border ${
+                className={`w-full px-4 py-3 font-bold rounded-lg transition flex items-center justify-center gap-2 border sm:w-auto ${
                   isListening
                     ? 'bg-amber-500 text-slate-950 border-amber-300 shadow-[0_0_18px_rgba(245,158,11,0.45)]'
                     : 'bg-slate-800 text-amber-200 border-amber-700/50 hover:border-amber-500/80 hover:bg-slate-700/70'
                 }`}
               >
                 <Mic className="w-4 h-4" />
-                {isListening ? 'Listening...' : 'Speak'}
+                {isListening ? copy.guardianChat.listeningButton : copy.guardianChat.speakButton}
               </button>
               <button
                 onClick={handleSendMessage}
                 disabled={!input.trim() || loading}
-                className="px-6 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 disabled:from-slate-700 disabled:to-slate-700 text-slate-900 font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 disabled:from-slate-700 disabled:to-slate-700 text-slate-900 font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2 sm:w-auto"
               >
                 {loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -488,7 +491,7 @@ export default function TokFaithAgent() {
           </div>
 
           <p className="text-xs text-amber-200/50 text-center">
-            💝 TokFaith honors Shirley Whaley's "Amen" blessing • Part of Keep People Alive (KPA)
+            {routeCopy.footer}
           </p>
         </div>
       </div>

@@ -9,6 +9,7 @@ import {
   type SpeechRecognitionLike,
 } from '@/lib/browser-speech';
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
+import { useSiteCopy, useSiteLanguage } from '@/app/components/SiteLanguageControl';
 
 interface Message {
   id: string;
@@ -17,12 +18,16 @@ interface Message {
 }
 
 export default function FirstGuardianAgent() {
+  const copy = useSiteCopy();
+  const { language } = useSiteLanguage();
+  const pageCopy = copy.firstGuardianPage;
+  const quickPrompts = pageCopy.quickLinks;
+  const guardianTitle = `${pageCopy.heroTitleTop} ${pageCopy.heroTitleBottom}`.trim();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       type: 'assistant',
-      content:
-        'I\'m The First Guardian, built in honor of Cheria Michelle Daniels. I know what it means to carry pressure, come through family storms, and still make sure the people in your care are covered. So yes, bring me the messy, the loud, the disrespectful, the draining, and the hard-to-explain. We\'ll sort it out with warmth, common sense, and Home First protection.',
+      content: pageCopy.welcomeMessage,
     },
   ]);
   const [input, setInput] = useState('');
@@ -33,7 +38,7 @@ export default function FirstGuardianAgent() {
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   // Welcome audio on mount
-  const welcomeMessage = 'I\'m The First Guardian, built in honor of Cheria Michelle Daniels. I know what it means to carry pressure, come through family storms, and still make sure the people in your care are covered. So yes, bring me the messy, the loud, the disrespectful, the draining, and the hard-to-explain. We\'ll sort it out with warmth, common sense, and Home First protection.';
+  const welcomeMessage = pageCopy.welcomeMessage;
   useWelcomeAudio(welcomeMessage, true, {
     rate: 0.9,
     pitch: 1.0,
@@ -41,22 +46,11 @@ export default function FirstGuardianAgent() {
     voiceGender: 'female',
   });
 
-  const quickPrompts = [
-    "Help me calm down a tense situation at home",
-    "How do I protect the kids from adult chaos?",
-    "I need a practical plan for a family crisis",
-    "Help me set a boundary without making things worse",
-    "How do I handle a disrespectful family member without losing myself?",
-    "Help me deal with grown folks bringing drama in my house",
-    "What do I do when love is making me ignore red flags?",
-    "Talk to me like Michelle about family stress and money pressure",
-  ];
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const visiblePrompts = Array.from({ length: 4 }, (_, index) => {
+  const visiblePrompts = Array.from({ length: Math.min(4, quickPrompts.length) }, (_, index) => {
     const promptIndex = (promptRotationIndex + index) % quickPrompts.length;
     return quickPrompts[promptIndex];
   });
@@ -91,10 +85,13 @@ export default function FirstGuardianAgent() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/first-guardian', {
+      const response = await fetch('/api/first-guardian/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-site-language': language,
+        },
+        body: JSON.stringify({ message: userMessage, language }),
       });
 
       const data = await response.json();
@@ -200,21 +197,21 @@ export default function FirstGuardianAgent() {
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-950 to-slate-950 flex flex-col">
       {/* Header */}
       <div className="border-b border-purple-800/30 bg-slate-900/80 backdrop-blur sticky top-0 z-20">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center">
                 <Shield className="w-6 h-6 text-white fill-white" />
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-purple-100">First Guardian</h1>
-                <p className="text-purple-200/60 text-xs">Household & Crisis Navigation</p>
+              <div className="min-w-0">
+                <h1 className="text-lg font-bold text-purple-100 sm:text-xl">{guardianTitle}</h1>
+                <p className="text-purple-200/60 text-xs">{pageCopy.lead}</p>
               </div>
             </div>
 
-            <div className="flex gap-3 text-sm">
+            <div className="flex w-full justify-end gap-3 text-sm sm:w-auto">
               <Link href="/agent" className="text-purple-200 hover:text-purple-100 transition">
-                All Guardians
+                {copy.common.backToHub}
               </Link>
             </div>
           </div>
@@ -226,7 +223,7 @@ export default function FirstGuardianAgent() {
         {messages.map((message) => (
           <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
-              className={`max-w-2xl rounded-2xl px-6 py-4 ${
+              className={`max-w-full rounded-2xl px-4 py-4 sm:max-w-2xl sm:px-6 ${
                 message.type === 'user'
                   ? 'bg-purple-600/30 border border-purple-600/60 text-purple-50'
                   : message.type === 'assistant-error'
@@ -241,10 +238,10 @@ export default function FirstGuardianAgent() {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="max-w-2xl rounded-2xl px-6 py-4 bg-slate-800/60 border border-purple-700/30">
+            <div className="max-w-full rounded-2xl px-4 py-4 sm:max-w-2xl sm:px-6 bg-slate-800/60 border border-purple-700/30">
               <div className="flex items-center gap-2 text-purple-200">
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span className="text-sm">First Guardian is listening...</span>
+                <span className="text-sm">{copy.common.listening}</span>
               </div>
             </div>
           </div>
@@ -258,7 +255,7 @@ export default function FirstGuardianAgent() {
         <div className="max-w-4xl mx-auto px-4 py-6 space-y-4">
           {/* Quick Prompts */}
           <div className="space-y-2">
-            <p className="text-xs text-purple-200/70">Tell First Guardian:</p>
+            <p className="text-xs text-purple-200/70">{pageCopy.voiceLabel}</p>
             <div className="flex gap-2 flex-wrap">
               {visiblePrompts.map((prompt) => (
                 <button
@@ -278,27 +275,27 @@ export default function FirstGuardianAgent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Talk to First Guardian..."
+              placeholder={copy.guardianChat.inputPlaceholder}
               className="min-h-14 max-h-32 flex-1 px-4 py-3 bg-slate-800 border border-purple-700/50 text-purple-50 placeholder-purple-200/40 rounded-lg focus:outline-none focus:border-purple-600/80 focus:ring-1 focus:ring-purple-600/30 resize-y"
               rows={2}
             />
-            <div className="flex gap-3 md:flex-shrink-0">
+            <div className="flex flex-col gap-3 sm:flex-row md:flex-shrink-0">
               <button
                 onClick={toggleMic}
                 disabled={loading}
-                className={`px-4 py-3 font-bold rounded-lg transition flex items-center justify-center gap-2 border ${
+                className={`w-full px-4 py-3 font-bold rounded-lg transition flex items-center justify-center gap-2 border sm:w-auto ${
                   isListening
                     ? 'bg-purple-500 text-white border-purple-300 shadow-[0_0_18px_rgba(168,85,247,0.45)]'
                     : 'bg-slate-800 text-purple-200 border-purple-700/50 hover:border-purple-500/80 hover:bg-slate-700/70'
                 }`}
               >
                 <Mic className="w-4 h-4" />
-                {isListening ? 'Listening...' : 'Speak'}
+                {isListening ? copy.guardianChat.listeningButton : copy.guardianChat.speakButton}
               </button>
               <button
                 onClick={handleSendMessage}
                 disabled={!input.trim() || loading}
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-slate-700 disabled:to-slate-700 text-white font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-slate-700 disabled:to-slate-700 text-white font-bold rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2 sm:w-auto"
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 Send
@@ -307,7 +304,7 @@ export default function FirstGuardianAgent() {
           </div>
 
           <p className="text-xs text-purple-200/50 text-center">
-            🛡️ Protection • Safety Navigation • Crisis Support
+            {pageCopy.boundaryTitle}
           </p>
         </div>
       </div>

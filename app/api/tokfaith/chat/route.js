@@ -14,21 +14,91 @@ import {
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
 import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
+import { buildTokFaithFallbackResponse } from "@/lib/agent-fallback-copy";
+import {
   findBook,
   getPassage,
   getAvailablePassagesSummary,
 } from "@/lib/ethiopian-bible-data";
+
+function detectTokFaithPerspective(message = "") {
+  const lowerMessage = message.toLowerCase();
+
+  if (
+    lowerMessage.includes("ethiopian") ||
+    lowerMessage.includes("88 book") ||
+    lowerMessage.includes("restored canon") ||
+    lowerMessage.includes("enoch") ||
+    lowerMessage.includes("jubilees") ||
+    lowerMessage.includes("meqabyan")
+  ) {
+    return "ethiopian";
+  }
+
+  if (
+    lowerMessage.includes("king james") ||
+    lowerMessage.includes("kjv") ||
+    lowerMessage.includes("authorized version") ||
+    lowerMessage.includes("classical bible")
+  ) {
+    return "kjv";
+  }
+
+  return "ethiopian-with-kjv-option";
+}
+
+function getTokFaithPerspectiveMeta(perspective) {
+  const normalizedPerspective = perspective || "ethiopian-with-kjv-option";
+
+  const perspectiveMap = {
+    ethiopian: {
+      label: "Ethiopian Lens",
+      description: "Drawing from the Restored Ethiopian Canon (88 books)",
+    },
+    kjv: {
+      label: "King James Lens",
+      description: "Through the language of the Authorized Version",
+    },
+    "ethiopian-with-kjv-option": {
+      label: "Complete Wisdom",
+      description: "Ethiopian perspective with King James cross-reference",
+    },
+  };
+
+  const selectedMeta = perspectiveMap[normalizedPerspective] || perspectiveMap["ethiopian-with-kjv-option"];
+
+  return {
+    current: normalizedPerspective,
+    perspective: selectedMeta.label,
+    description: selectedMeta.description,
+    perspectives: {
+      available: ["ethiopian", "kjv", "ethiopian-with-kjv-option"],
+      current: normalizedPerspective,
+      canSwitch: true,
+    },
+  };
+}
 
 export async function POST(req) {
   let message = "";
   let userId;
   let userName;
   let safetyMode = false;
+  let language = "en";
+  let selectedPerspective = "ethiopian-with-kjv-option";
+  let perspectiveMeta = getTokFaithPerspectiveMeta(selectedPerspective);
 
   try {
     const session = getAuthenticatedSession(req);
     const body = await req.json();
     message = body?.message?.trim();
+    language = getRequestSiteLanguage(req, body);
+    selectedPerspective = body?.forcePerspective || detectTokFaithPerspective(message || "");
+    perspectiveMeta = getTokFaithPerspectiveMeta(selectedPerspective);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
     userId = session?.userId || body?.userId || null;
     userName = session?.name || body?.userName || null;
 
@@ -47,7 +117,10 @@ export async function POST(req) {
         JSON.stringify({
           success: true,
           agentName: "TokFaith",
-          response: buildSupportiveEmergencyResponse(safetyCase),
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
+          perspective: perspectiveMeta.perspective,
+          description: perspectiveMeta.description,
+          perspectives: perspectiveMeta.perspectives,
           userId,
           safetyMode: true,
         }),
@@ -69,13 +142,16 @@ export async function POST(req) {
     // CHECK FOR BIBLE READING REQUESTS FIRST
     if (detectBibleRequest(message)) {
       const bookRequest = extractBookAndChapter(message);
-      const bibleResponse = buildBibleReadingResponse(bookRequest, userName);
+          const bibleResponse = buildBibleReadingResponse(bookRequest, userName, language);
       
       return new Response(
         JSON.stringify({
           success: true,
           agentName: "TokFaith",
           response: bibleResponse,
+          perspective: perspectiveMeta.perspective,
+          description: perspectiveMeta.description,
+          perspectives: perspectiveMeta.perspectives,
           userId,
           userName,
           safetyMode,
@@ -96,10 +172,16 @@ export async function POST(req) {
     const memorySystemMessage = buildTokFaithMemorySystemMessage(memoryContext);
 
     const messages = [
+      ...(body?.systemContext
+        ? [{ role: "system", content: `${body.systemContext}\n\nAlways draw on scripture and wisdom. Remember to keep people alive (KPA).` }]
+        : []),
       {
         role: "system",
         content: tokFaithAgent.systemPrompt,
       },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(memorySystemMessage
         ? [{ role: "system", content: memorySystemMessage }]
         : []),
@@ -126,7 +208,7 @@ export async function POST(req) {
 
           return (
             response.choices?.[0]?.message?.content?.trim() ||
-            buildDemoResponse(message, memoryContext, userName)
+            buildDemoResponse(message, memoryContext, userName, language)
           );
         },
         async (repairPrompt) => {
@@ -145,12 +227,12 @@ export async function POST(req) {
 
           return (
             response.choices?.[0]?.message?.content?.trim() ||
-            buildDemoResponse(message, memoryContext, userName)
+            buildDemoResponse(message, memoryContext, userName, language)
           );
         }
       );
     } else {
-      responseText = buildDemoResponse(message, memoryContext, userName);
+      responseText = buildDemoResponse(message, memoryContext, userName, language);
     }
 
     if (userId) {
@@ -168,6 +250,9 @@ export async function POST(req) {
         success: true,
         agentName: tokFaithAgent.name,
         response: responseText,
+        perspective: perspectiveMeta.perspective,
+        description: perspectiveMeta.description,
+        perspectives: perspectiveMeta.perspectives,
         userId,
         userName,
         safetyMode,
@@ -183,7 +268,10 @@ export async function POST(req) {
       JSON.stringify({
         success: true,
         agentName: "TokFaith",
-        response: buildDemoResponse(message || "Give me a word for today", null, userName),
+        response: buildDemoResponse(message || "Give me a word for today", null, userName, language),
+        perspective: perspectiveMeta.perspective,
+        description: perspectiveMeta.description,
+        perspectives: perspectiveMeta.perspectives,
         userId,
         safetyMode,
         fallbackMode: true,
@@ -203,11 +291,15 @@ function formatUserName(userName) {
   return userName.trim().split(/\s+/)[0] || "";
 }
 
-function buildDemoResponse(userMessage, memoryContext = null, userName = null) {
+function buildDemoResponse(userMessage, memoryContext = null, userName = null, language = "en") {
   const lowerMessage = userMessage.toLowerCase();
   const firstName = formatUserName(userName || memoryContext?.profile?.userName);
   const namedFriend = firstName || "my friend";
   const namedBeloved = firstName || "beloved";
+
+  if (language !== "en") {
+    return buildTokFaithFallbackResponse(language, namedBeloved);
+  }
 
   if (
     lowerMessage.includes("start a bible study") ||
@@ -415,8 +507,12 @@ function extractBookAndChapter(userMessage) {
   return { book: foundBook, chapter };
 }
 
-function buildBibleReadingResponse(bookRequest, userName) {
+function buildBibleReadingResponse(bookRequest, userName, language = "en") {
   const namedBeloved = userName || "beloved";
+
+  if (language !== "en") {
+    return buildTokFaithFallbackResponse(language, namedBeloved);
+  }
   
   if (!bookRequest) {
     return `I hear you, ${namedBeloved}. You can ask me to read from any of these books: Enoch, Jubilees, Meqabyan, Sirach, Wisdom, Baruch, Tobit, or Judith. Just say "Read from Enoch, Chapter 1" or "Show me Jubilees 5" and I will open that scripture for you, speak it aloud, and help you understand what God is saying through it.

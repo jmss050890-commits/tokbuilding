@@ -7,6 +7,10 @@ import {
   detectSupportiveHandoffCase,
   getSupportiveHandoffSystemMessage,
 } from "@/lib/svl-supportive-handoff";
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from "@/lib/agent-response-language";
 
 export async function POST(req) {
   let message = "";
@@ -16,6 +20,8 @@ export async function POST(req) {
     const body = await req.json();
     message = body?.message;
     userId = body?.userId;
+    const language = getRequestSiteLanguage(req, body);
+    const responseLanguageSystemMessage = getResponseLanguageSystemMessage(language);
 
     if (!message || message.trim().length === 0) {
       return new Response(
@@ -31,7 +37,7 @@ export async function POST(req) {
         JSON.stringify({
           success: true,
           agentName: "Mr. KPA",
-          response: buildSupportiveEmergencyResponse(safetyCase),
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
           userId,
           safetyMode: true,
         }),
@@ -60,6 +66,9 @@ export async function POST(req) {
         role: "system",
         content: mrKpaAgent.systemPrompt,
       },
+      ...(responseLanguageSystemMessage
+        ? [{ role: "system", content: responseLanguageSystemMessage }]
+        : []),
       ...(safetyCase.requiresSupportiveTone
         ? [{ role: "system", content: getSupportiveHandoffSystemMessage("Mr. KPA") }]
         : []),

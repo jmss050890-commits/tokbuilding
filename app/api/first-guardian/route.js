@@ -1,10 +1,24 @@
 import { OpenAI } from 'openai';
+import { generateWithKpaGuard } from '@/lib/svl-kpa-engine';
+import {
+  buildSupportiveEmergencyResponse,
+  detectSupportiveHandoffCase,
+  getSupportiveHandoffSystemMessage,
+} from '@/lib/svl-supportive-handoff';
+import {
+  getRequestSiteLanguage,
+  getResponseLanguageSystemMessage,
+} from '@/lib/agent-response-language';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'sk-demo-mode',
 });
 
-async function generateFirstGuardianResponse(userMessage) {
+async function generateFirstGuardianResponse(
+  userMessage,
+  responseLanguageSystemMessage,
+  supportiveHandoffSystemMessage,
+) {
   try {
     const systemPrompt = `You are The First Guardian, built in honor of Cheria Michelle Daniels. Born June 19, 1989 on Juneteenth, her story is rooted in family survival, faith, and grace. Her father faced life without parole, filed his own retrial, won, and God blessed the family. Now Sanders Viopro Labs stands as testimony to what God can do through faith, obedience, work, and protection.
 
@@ -32,23 +46,49 @@ Give plainspoken, loving truth: humorous when it fits, direct when needed, deepl
 
 Write naturally because your responses may be spoken aloud.`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4-turbo',
-      messages: [
-        {
-          role: 'system',
-          content: systemPrompt,
-        },
-        {
-          role: 'user',
-          content: userMessage,
-        },
-      ],
-      max_tokens: 900,
-      temperature: 0.8,
-    });
+    const systemMessages = [
+      {
+        role: 'system',
+        content: systemPrompt,
+      },
+      ...(responseLanguageSystemMessage
+        ? [{ role: 'system', content: responseLanguageSystemMessage }]
+        : []),
+      ...(supportiveHandoffSystemMessage
+        ? [{ role: 'system', content: supportiveHandoffSystemMessage }]
+        : []),
+    ];
 
-    return response.choices[0].message.content;
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await openai.chat.completions.create({
+          model: 'gpt-4-turbo',
+          messages: [...systemMessages, { role: 'user', content: userMessage }],
+          max_tokens: 900,
+          temperature: 0.8,
+        });
+
+        return completion.choices[0].message.content;
+      },
+      async (repairPrompt) => {
+        const completion = await openai.chat.completions.create({
+          model: 'gpt-4-turbo',
+          messages: [
+            ...systemMessages,
+            {
+              role: 'user',
+              content: `Original user message:\n${userMessage}\n\n${repairPrompt}`,
+            },
+          ],
+          max_tokens: 900,
+          temperature: 0.8,
+        });
+
+        return completion.choices[0].message.content;
+      },
+    );
+
+    return response;
   } catch (error) {
     console.error('First Guardian response error:', error);
     throw error;
@@ -57,7 +97,8 @@ Write naturally because your responses may be spoken aloud.`;
 
 export async function POST(request) {
   try {
-    const { message } = await request.json();
+    const body = await request.json();
+    const { message } = body;
 
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return new Response(
@@ -66,13 +107,35 @@ export async function POST(request) {
       );
     }
 
-    const response = await generateFirstGuardianResponse(message);
+    const language = getRequestSiteLanguage(request, body);
+    const safetyCase = detectSupportiveHandoffCase(message);
+
+    if (safetyCase.requiresEmergencyResponse) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message,
+          response: buildSupportiveEmergencyResponse(safetyCase, language),
+          safetyMode: true,
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const response = await generateFirstGuardianResponse(
+      message,
+      getResponseLanguageSystemMessage(language),
+      safetyCase.requiresSupportiveTone
+        ? getSupportiveHandoffSystemMessage('The First Guardian')
+        : null,
+    );
 
     return new Response(
       JSON.stringify({
         success: true,
         message,
         response,
+        safetyMode: safetyCase.requiresSupportiveTone,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );

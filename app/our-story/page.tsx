@@ -10,6 +10,35 @@ export default function OurStoryPage() {
   const pageContentRef = useRef<HTMLDivElement>(null);
   const copy = useSiteCopy();
   const pageCopy = copy.ourStory;
+  const communityStories = copy.communityStories.stories;
+  const guardianStyles = [
+    { border: 'border-blue-700/30', accent: 'text-blue-300', icon: '🧠' },
+    { border: 'border-teal-700/30', accent: 'text-teal-300', icon: '💙' },
+    { border: 'border-amber-700/30', accent: 'text-amber-300', icon: '⚡' },
+    { border: 'border-pink-700/30', accent: 'text-pink-300', icon: '🎯' },
+    { border: 'border-purple-700/30', accent: 'text-purple-300', icon: '🔍' },
+    { border: 'border-cyan-700/30', accent: 'text-cyan-300', icon: '🌍' },
+  ] as const;
+  const communityStoryCards = [
+    {
+      story: communityStories[0],
+      border: 'border-orange-700/30',
+      accent: 'text-orange-300',
+      linkAccent: 'text-orange-400 hover:text-orange-300',
+      icon: '📻',
+      href: '/media-hub',
+      cta: pageCopy.communityLinks.media,
+    },
+    {
+      story: communityStories[1],
+      border: 'border-yellow-700/30',
+      accent: 'text-yellow-300',
+      linkAccent: 'text-yellow-400 hover:text-yellow-300',
+      icon: '✨',
+      href: '/community-stories',
+      cta: pageCopy.communityLinks.stories,
+    },
+  ].filter((entry) => entry.story);
 
   const extractPageText = (): string => {
     if (!pageContentRef.current) return '';
@@ -124,44 +153,6 @@ export default function OurStoryPage() {
     };
   }, []);
 
-  const journeySteps = [
-    {
-      platform: 'Emergent',
-      year: '2-21-2026',
-      icon: '🌱',
-      title: 'TokHealth & TokThru Born',
-      description: 'The first safety tools emerged. Real solutions for real crises.'
-    },
-    {
-      platform: 'Shopify',
-      year: '2-21-2026',
-      icon: '🏪',
-      title: 'Sanders Viopro Labs Created',
-      description: 'The name. The vision. The store. A debt owed, an honor to repay.'
-    },
-    {
-      platform: 'Next.js',
-      year: '2026',
-      icon: '⚡',
-      title: 'The Lab Unified',
-      description: 'Everything converged. Sanders Viopro Labs became accessible, scalable, real.'
-    },
-    {
-      platform: 'Search Atlas',
-      year: '2026',
-      icon: '🔍',
-      title: 'The Message Travels',
-      description: 'SEO. Visibility. The word spreads. People find us when they need us most.'
-    },
-    {
-      platform: 'AI Unified',
-      year: '2026',
-      icon: '🤖',
-      title: 'The KPA Safety Shield',
-      description: 'Gemini. ChatGPT. ScholarGPT. Claude. All serving one mission: Keep People Alive.'
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900">
       {/* Navigation */}
@@ -248,10 +239,10 @@ export default function OurStoryPage() {
           <p className="text-center text-purple-300 mb-16">{pageCopy.journeySubtitle}</p>
 
           <div className="space-y-8">
-            {journeySteps.map((step, index) => (
+            {pageCopy.journeySteps.map((step, index) => (
               <div key={index} className="relative">
                 {/* Timeline connector */}
-                {index < journeySteps.length - 1 && (
+                {index < pageCopy.journeySteps.length - 1 && (
                   <div className="absolute left-8 top-24 w-1 h-12 bg-gradient-to-b from-purple-500 to-transparent"></div>
                 )}
 
@@ -294,22 +285,12 @@ export default function OurStoryPage() {
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-purple-700/30 rounded-xl p-8">
               <h3 className="text-xl font-bold text-purple-300 mb-6">{pageCopy.platformTitle}</h3>
               <ul className="space-y-4">
-                <li className="flex items-center gap-3">
-                  <span className="text-pink-500">→</span>
-                  <span className="text-white"><strong>Emergent</strong> · Birth of safety tools</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-pink-500">→</span>
-                  <span className="text-white"><strong>Shopify</strong> · The commerce foundation</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-pink-500">→</span>
-                  <span className="text-white"><strong>Next.js</strong> · The technical heart</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-pink-500">→</span>
-                  <span className="text-white"><strong>Search Atlas</strong> · The voice amplified</span>
-                </li>
+                {pageCopy.team.platformItems.map((item) => (
+                  <li key={item.name} className="flex items-center gap-3">
+                    <span className="text-pink-500">→</span>
+                    <span className="text-white"><strong>{item.name}</strong> · {item.description}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -317,22 +298,12 @@ export default function OurStoryPage() {
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-purple-700/30 rounded-xl p-8">
               <h3 className="text-xl font-bold text-purple-300 mb-6">{pageCopy.shieldTitle}</h3>
               <ul className="space-y-4">
-                <li className="flex items-center gap-3">
-                  <span className="text-purple-500">→</span>
-                  <span className="text-white"><strong>Gemini</strong> · Google's reasoning</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-purple-500">→</span>
-                  <span className="text-white"><strong>ChatGPT</strong> · OpenAI's clarity</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-purple-500">→</span>
-                  <span className="text-white"><strong>ScholarGPT</strong> · Academic depth</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-purple-500">→</span>
-                  <span className="text-white"><strong>Claude</strong> · Anthropic's precision</span>
-                </li>
+                {pageCopy.team.shieldItems.map((item) => (
+                  <li key={item.name} className="flex items-center gap-3">
+                    <span className="text-purple-500">→</span>
+                    <span className="text-white"><strong>{item.name}</strong> · {item.description}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -345,32 +316,16 @@ export default function OurStoryPage() {
           <h2 className="text-4xl font-bold text-white mb-8 text-center">{pageCopy.honestyTitle}</h2>
 
           <div className="space-y-8">
-            <div className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 border border-purple-700/50 rounded-xl p-12">
-              <p className="text-white text-lg leading-relaxed mb-6">
-                I have a debt on the Shopify store. I owe them money.
-              </p>
-              <p className="text-purple-200 text-lg leading-relaxed">
-                Most founders hide that. Most brands perform success. But that's not how KPA works. I'm not ashamed of owing a debt. I'm proud of paying homage to the platform that believed enough in my vision to let me build on it. I will repay it.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-700/50 rounded-xl p-12">
-              <p className="text-white text-lg leading-relaxed mb-6">
-                I almost didn't make it.
-              </p>
-              <p className="text-purple-200 text-lg leading-relaxed">
-                That's the real reason SVL exists. Not to build a brand. Not to make money. But because someone who knows what it feels like to be on the edge decided to build something so no one has to walk alone.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-700/50 rounded-xl p-12">
-              <p className="text-white text-lg leading-relaxed mb-6">
-                Every guardian we build with. Every platform we unified. Every product we create. It all exists for one reason:
-              </p>
-              <p className="text-pink-300 text-2xl font-bold">
-                Keep People Alive.
-              </p>
-            </div>
+            {pageCopy.honestyCards.map((card, index) => (
+              <div key={`${card.lead}-${index}`} className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-700/50 rounded-xl p-12">
+                <p className="text-white text-lg leading-relaxed mb-6">{card.lead}</p>
+                {card.body ? (
+                  <p className="text-purple-200 text-lg leading-relaxed">{card.body}</p>
+                ) : (
+                  <p className="text-pink-300 text-2xl font-bold">{card.highlight}</p>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -382,41 +337,17 @@ export default function OurStoryPage() {
           <p className="text-center text-purple-300 mb-12">{pageCopy.guardiansSubtitle}</p>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-blue-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">🧠</div>
-              <h3 className="text-xl font-bold text-blue-300 mb-2">Grace Guardian</h3>
-              <p className="text-slate-300">Health & wellness coaching with KPA mission at the core. Listens first, guides always.</p>
-            </div>
+            {pageCopy.guardians.cards.map((card, index) => {
+              const style = guardianStyles[index % guardianStyles.length];
 
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-teal-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">💙</div>
-              <h3 className="text-xl font-bold text-teal-300 mb-2">Wisdom Guardian</h3>
-              <p className="text-slate-300">Medical knowledge meets compassion. Every answer carries the weight of keeping you alive.</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-amber-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">⚡</div>
-              <h3 className="text-xl font-bold text-amber-300 mb-2">A1 Guardian</h3>
-              <p className="text-slate-300">Technical precision. No fluff. The architect behind TokBuilding. Specs your Guardian idea into reality.</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-pink-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">🎯</div>
-              <h3 className="text-xl font-bold text-pink-300 mb-2">Mr. KPA</h3>
-              <p className="text-slate-300">Jerome's voice. The founder's wisdom. Your guide through everything SVL. A human moment every time.</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-purple-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-purple-300 mb-2">Tok2Myia Guardian</h3>
-              <p className="text-slate-300">Search. Knowledge. Explanation. Everything you need to know, explained simply and truly.</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-cyan-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">🌍</div>
-              <h3 className="text-xl font-bold text-cyan-300 mb-2">HATÄTA Guardian</h3>
-              <p className="text-slate-300">Navigation. Every SVL product. All the answers. Your guide to everything we've built.</p>
-            </div>
+              return (
+                <div key={card.title} className={`bg-gradient-to-br from-slate-800 to-slate-900 border ${style.border} rounded-xl p-8`}>
+                  <div className="text-3xl mb-4">{style.icon}</div>
+                  <h3 className={`text-xl font-bold ${style.accent} mb-2`}>{card.title}</h3>
+                  <p className="text-slate-300">{card.body}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -428,9 +359,9 @@ export default function OurStoryPage() {
 
           <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 border-2 border-purple-600/50 rounded-2xl p-16 mb-12">
             <p className="text-3xl font-bold text-white mb-6 leading-tight">
-              "The only override any KPA product can perform on its user is to<br />
+              "{pageCopy.missionQuoteLead}<br />
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Keep People Alive.
+                {pageCopy.missionQuoteHighlight}
               </span>"
             </p>
             <p className="text-purple-200 text-lg">
@@ -455,87 +386,37 @@ export default function OurStoryPage() {
 
           {/* Original Stack */}
           <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-green-700/30 rounded-xl p-8 mb-8">
-            <h3 className="text-2xl font-bold text-green-300 mb-6">Original TokHealth Stack (Feb 21, 2026)</h3>
+            <h3 className="text-2xl font-bold text-green-300 mb-6">{pageCopy.techOrigins.stackTitle}</h3>
             <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
-                <p className="text-green-400 font-bold mb-2">Language</p>
-                <p className="text-slate-300">Python 3.8+ with Kivy framework</p>
-              </div>
-              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
-                <p className="text-green-400 font-bold mb-2">Mobile UI</p>
-                <p className="text-slate-300">KivyMD for responsive design</p>
-              </div>
-              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
-                <p className="text-green-400 font-bold mb-2">Voice Recognition</p>
-                <p className="text-slate-300">SpeechRecognition + Google Cloud</p>
-              </div>
-              <div className="bg-slate-900 rounded p-4 border border-green-700/20">
-                <p className="text-green-400 font-bold mb-2">AI Integration</p>
-                <p className="text-slate-300">OpenAI GPT-3.5-turbo</p>
-              </div>
+              {pageCopy.techOrigins.stackItems.map((item) => (
+                <div key={item.label} className="bg-slate-900 rounded p-4 border border-green-700/20">
+                  <p className="text-green-400 font-bold mb-2">{item.label}</p>
+                  <p className="text-slate-300">{item.value}</p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Founding Features */}
           <div className="bg-gradient-to-br from-purple-900/20 to-slate-900 border border-purple-700/30 rounded-xl p-8 mb-8">
-            <h3 className="text-2xl font-bold text-purple-300 mb-6">What Shipped on Day 1</h3>
+            <h3 className="text-2xl font-bold text-purple-300 mb-6">{pageCopy.techOrigins.shippedTitle}</h3>
             <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 font-bold">✓</span>
-                <div>
-                  <p className="text-white font-semibold">Voice-First Architecture</p>
-                  <p className="text-slate-400 text-sm">Every interaction designed for audio input — accessibility + authenticity from inception</p>
+              {pageCopy.techOrigins.shippedItems.map((item) => (
+                <div key={item.title} className="flex items-start gap-3">
+                  <span className="text-green-400 font-bold">✓</span>
+                  <div>
+                    <p className="text-white font-semibold">{item.title}</p>
+                    <p className="text-slate-400 text-sm">{item.body}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 font-bold">✓</span>
-                <div>
-                  <p className="text-white font-semibold">Health Profiling</p>
-                  <p className="text-slate-400 text-sm">Baseline biometrics (age, weight, height, sex) with data persistence</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 font-bold">✓</span>
-                <div>
-                  <p className="text-white font-semibold">3-Phase Meal Tracking</p>
-                  <p className="text-slate-400 text-sm">Breakfast/Lunch/Dinner logging with OpenAI nutritional parsing</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 font-bold">✓</span>
-                <div>
-                  <p className="text-white font-semibold">Emergency Contacts (KPA)</p>
-                  <p className="text-slate-400 text-sm">Red button literally labeled "EMERGENCY CONTACTS (KPA)" — mission explicit from day 1</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 font-bold">✓</span>
-                <div>
-                  <p className="text-white font-semibold">9-Pillar Health Matrix</p>
-                  <p className="text-slate-400 text-sm">Comprehensive wellness tracking across multiple dimensions</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 font-bold">✓</span>
-                <div>
-                  <p className="text-white font-semibold">Voice Wisdom Vault</p>
-                  <p className="text-slate-400 text-sm">Legacy voice recording feature — personal wisdom preservation</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 font-bold">✓</span>
-                <div>
-                  <p className="text-white font-semibold">Clinical Disclaimer</p>
-                  <p className="text-slate-400 text-sm">Legal grounding from inception — no false medical claims from day 1</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Code Artifact */}
           <div className="bg-gradient-to-br from-slate-950 to-slate-900 border border-cyan-700/30 rounded-xl p-8 mb-8">
-            <h3 className="text-2xl font-bold text-cyan-300 mb-6">Code Artifact: The KPA Mission Built In</h3>
-            <p className="text-slate-300 mb-4 text-sm">This is how the mission was encoded from day 1 — not added later as marketing:</p>
+            <h3 className="text-2xl font-bold text-cyan-300 mb-6">{pageCopy.techOrigins.codeArtifactTitle}</h3>
+            <p className="text-slate-300 mb-4 text-sm">{pageCopy.techOrigins.codeArtifactIntro}</p>
             <div className="bg-slate-900 rounded p-4 border border-cyan-700/20 overflow-x-auto">
               <pre className="text-cyan-300 text-xs font-mono">
 {`MDRaisedButton:
@@ -547,48 +428,22 @@ export default function OurStoryPage() {
 # Not just a feature. The mission made visible.`}
               </pre>
             </div>
-            <p className="text-slate-400 text-xs mt-4">KivyMD KV language — showing how the KPA mission was architecturally embedded, not post-hoc branded.</p>
+            <p className="text-slate-400 text-xs mt-4">{pageCopy.techOrigins.codeArtifactCaption}</p>
           </div>
 
           {/* Evolution Timeline */}
           <div className="bg-gradient-to-br from-amber-900/20 to-slate-900 border border-amber-700/30 rounded-xl p-8">
-            <h3 className="text-2xl font-bold text-amber-300 mb-6">Evolution Path: Python → Web → Production</h3>
+            <h3 className="text-2xl font-bold text-amber-300 mb-6">{pageCopy.techOrigins.evolutionTitle}</h3>
             <div className="space-y-4">
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">Feb 21, 6:24 PM</div>
-                <div>
-                  <p className="text-white font-semibold">Emergent Python App</p>
-                  <p className="text-slate-400 text-sm">First transaction. TokHealth mobile app live with voice-first feature set.</p>
+              {pageCopy.techOrigins.evolutionSteps.map((step) => (
+                <div key={`${step.time}-${step.title}`} className="flex gap-4">
+                  <div className="flex-shrink-0 w-24 text-amber-400 font-bold">{step.time}</div>
+                  <div>
+                    <p className="text-white font-semibold">{step.title}</p>
+                    <p className="text-slate-400 text-sm">{step.body}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">Feb 21, 9:37 AM+</div>
-                <div>
-                  <p className="text-white font-semibold">Multiple Top-Ups</p>
-                  <p className="text-slate-400 text-sm">Rapid iteration cycle. Refinement based on real usage patterns.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">~Feb 28</div>
-                <div>
-                  <p className="text-white font-semibold">Shopify Integration</p>
-                  <p className="text-slate-400 text-sm">Sanders Viopro Labs brand created. E-commerce foundation built.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">~Mar 1-20</div>
-                <div>
-                  <p className="text-white font-semibold">Next.js Migration</p>
-                  <p className="text-slate-400 text-sm">Web lab unified everything. PytonKivy app evolved into full-stack ecosystem.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-24 text-amber-400 font-bold">Mar 21</div>
-                <div>
-                  <p className="text-white font-semibold">Production Deployment</p>
-                  <p className="text-slate-400 text-sm">sandersvioprolabs.com live. All 6 products public. KPA mission at scale.</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -601,56 +456,30 @@ export default function OurStoryPage() {
           <p className="text-center text-purple-300 mb-12">{pageCopy.communitySubtitle}</p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-8">
-            {/* Reese Waters Story */}
-            <div className="bg-gradient-to-br from-orange-900/20 to-slate-900 border border-orange-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">📻</div>
-              <h3 className="text-2xl font-bold text-orange-300 mb-4">Reese Waters Runs Deep</h3>
-              <p className="text-slate-300 mb-4">
-                When government shuts down. When TSA lines stretch for hours. When emergency systems strain under pressure—this is when KPA thinking matters most.
-              </p>
-              <p className="text-slate-400 text-sm mb-4">
-                Reese Waters walks through real-world crisis navigation. How people survive. How systems fail. How communities protect themselves. That same thread continued into a team from the Philippines studying the same Ethiopian Bible.
-              </p>
-              <Link href="/media-hub" className="inline-block text-orange-400 hover:text-orange-300 font-semibold text-sm">
-                Listen to Full Episode →
-              </Link>
-            </div>
-
-            {/* TokFaith Testimony */}
-            <div className="bg-gradient-to-br from-yellow-900/20 to-slate-900 border border-yellow-700/30 rounded-xl p-8">
-              <div className="text-3xl mb-4">✨</div>
-              <h3 className="text-2xl font-bold text-yellow-300 mb-4">Shirley Whaley's "Amen"</h3>
-              <p className="text-slate-300 mb-4">
-                One word. One blessing. One elder's voice over TokFaith's creation changed everything.
-              </p>
-              <p className="text-slate-400 text-sm mb-4">
-                That moment proved what we believe: Faith, technology, and mission work together when built with love and respect for real people.
-              </p>
-              <Link href="/community-stories" className="inline-block text-yellow-400 hover:text-yellow-300 font-semibold text-sm">
-                Read Community Stories →
-              </Link>
-            </div>
+            {communityStoryCards.map(({ story, border, accent, linkAccent, icon, href, cta }) => (
+              <div key={story.title} className={`bg-gradient-to-br from-orange-900/20 to-slate-900 border ${border} rounded-xl p-8`}>
+                <div className="text-3xl mb-4">{icon}</div>
+                <h3 className={`text-2xl font-bold ${accent} mb-4`}>{story.source}</h3>
+                <p className="text-slate-300 mb-4">{story.summary}</p>
+                <p className="text-slate-400 text-sm mb-4">{story.connection}</p>
+                <Link href={href} className={`inline-block ${linkAccent} font-semibold text-sm`}>
+                  {cta} →
+                </Link>
+              </div>
+            ))}
           </div>
 
           {/* Pattern */}
           <div className="bg-gradient-to-br from-purple-900/20 to-slate-900 border border-purple-700/30 rounded-xl p-8 text-center">
             <h3 className="text-2xl font-bold text-purple-300 mb-4">{pageCopy.patternTitle}</h3>
             <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <p className="text-3xl mb-2">🔥</p>
-                <p className="font-semibold text-white mb-2">Crisis Hits</p>
-                <p className="text-slate-400 text-sm">People face real problems: systems fail, danger emerges, survival becomes the only thought.</p>
-              </div>
-              <div>
-                <p className="text-3xl mb-2">🗣</p>
-                <p className="font-semibold text-white mb-2">Community Rises</p>
-                <p className="text-slate-400 text-sm">Voices like Reese speak truth. Faith leaders bless the work. People talk about protection and staying alive. That witness now includes a Philippines-based team studying the same Ethiopian Bible.</p>
-              </div>
-              <div>
-                <p className="text-3xl mb-2">🛡</p>
-                <p className="font-semibold text-white mb-2">Systems Answer</p>
-                <p className="text-slate-400 text-sm">SVL builds tools. Guardians listen. Systems emerge that serve the need the community identified.</p>
-              </div>
+              {pageCopy.patternItems.map((item, index) => (
+                <div key={item.title}>
+                  <p className="text-3xl mb-2">{['🔥', '🗣', '🛡'][index] ?? '•'}</p>
+                  <p className="font-semibold text-white mb-2">{item.title}</p>
+                  <p className="text-slate-400 text-sm">{item.body}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -665,15 +494,11 @@ export default function OurStoryPage() {
           <p className="text-2xl text-white leading-relaxed mb-8">
             {pageCopy.exitLead}
           </p>
-          <p className="text-lg text-purple-200 mb-12 leading-relaxed">
-            I didn't build SVL to sell you something. I built it because I almost didn't make it.
-            <br />
-            <br />
-            Whatever brought you here today — I'm glad you came.
-            <br />
-            <br />
-            You don't have to walk alone. That's why this exists.
-          </p>
+          <div className="mb-12 space-y-6 text-lg text-purple-200 leading-relaxed">
+            {pageCopy.exitBody.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </div>
           <p className="text-purple-300 text-lg font-bold">
             — Jerome Sanders · Mr. KPA · est. 2-21-2026
           </p>
@@ -697,9 +522,9 @@ export default function OurStoryPage() {
           <div>
             <h4 className="text-white font-bold mb-4">{pageCopy.footer.resources}</h4>
             <ul className="space-y-2 text-purple-300 text-sm">
-              <li><Link href="/our-story" className="hover:text-white transition">Our Story</Link></li>
-              <li><Link href="/svl-progress" className="hover:text-white transition">SVL Progress</Link></li>
-              <li><Link href="/sanders-viopro-labs" className="hover:text-white transition">Home</Link></li>
+              <li><Link href="/our-story" className="hover:text-white transition">{pageCopy.footer.resourceLinks.story}</Link></li>
+              <li><Link href="/svl-progress" className="hover:text-white transition">{pageCopy.footer.resourceLinks.progress}</Link></li>
+              <li><Link href="/sanders-viopro-labs" className="hover:text-white transition">{pageCopy.footer.resourceLinks.home}</Link></li>
             </ul>
           </div>
           <div>

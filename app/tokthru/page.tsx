@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useSiteLanguage } from '@/app/components/SiteLanguageControl';
 
 interface EmergencyContact {
   id: string;
@@ -133,6 +134,7 @@ const SAFE_SPOTS_EXAMPLES: SafeSpot[] = [
 ];
 
 export default function TokThru() {
+  const { language } = useSiteLanguage();
   const [currentView, setCurrentView] = useState<'hub' | 'chat' | 'sos' | 'timer' | 'safespots' | 'scripts' | 'guides' | 'contacts' | 'settings' | 'hatata' | 'fakecall' | 'hotline-call'>('hub');
   const [testMode, setTestMode] = useState(false);
   const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContact[]>([]);
@@ -364,8 +366,11 @@ export default function TokThru() {
     try {
       const response = await fetch('/api/grace', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-site-language': language,
+        },
+        body: JSON.stringify({ message: input, language }),
       });
 
       const data = await response.json();
