@@ -184,11 +184,13 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     return !voiceName.includes("robot") && !voiceName.includes("default");
   });
 
-  if (agent?.slug === "tokfaith" && agent.voicePreferences?.length) {
+  const isMobileDevice = isMobileSpeechDevice();
+
+  if (agent?.slug === "tokfaith" && agent.voicePreferences?.length && !isMobileDevice) {
     selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences);
   }
 
-  if (!selectedVoice && agent?.slug === "mr-kpa" && agent.voicePreferences?.length) {
+  if (!selectedVoice && agent?.slug === "mr-kpa" && agent.voicePreferences?.length && !isMobileDevice) {
     selectedVoice = getMrKpaLockedVoice(voices, agent.voicePreferences);
   }
 
@@ -234,11 +236,11 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     }
   }
 
-  if (!selectedVoice && agent?.slug === "tokfaith") {
+  if (!selectedVoice && agent?.slug === "tokfaith" && !isMobileDevice) {
     selectedVoice = getTokFaithLockedVoice(voices, TOKFAITH_FEMALE_VOICE_PATTERNS);
   }
 
-  if (!selectedVoice && agent?.slug === "mr-kpa") {
+  if (!selectedVoice && agent?.slug === "mr-kpa" && !isMobileDevice) {
     selectedVoice = getMrKpaLockedVoice(voices, agent.voicePreferences || MALE_VOICE_PATTERNS);
   }
 
