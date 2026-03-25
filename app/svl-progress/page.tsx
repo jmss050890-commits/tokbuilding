@@ -9,7 +9,7 @@ const progressLayers = [
       'SVL now operates as one connected KPA system centered on keeping people alive, protecting families, and building tools that stay grounded in real responsibility.',
     bullets: [
       'Shared KPA mission across the platform',
-      'Story-aware agents aligned to the same reality',
+      'Story-aware SVL Guardians aligned to the same reality',
       'Safety and testimony carried together without losing clarity',
     ],
   },
@@ -18,15 +18,15 @@ const progressLayers = [
     summary:
       'Mr. KPA leads mission direction and daily alignment. HATATA serves as strategic right hand for Jerome Sanders and Mr. KPA.',
     bullets: [
-      'Daily AI Agent Team Meeting structure',
+      'Daily AI SVL Guardian Team Meeting structure',
       'Shared operating map for products, roles, and upgrades',
       'Mission leadership, strategy, and execution linked together',
     ],
   },
   {
-    title: 'Agent Identity Layer',
+    title: 'SVL Guardian Identity Layer',
     summary:
-      'Each active agent now carries a clear role in the ecosystem instead of feeling like an isolated bot.',
+      'Each active SVL Guardian now carries a clear role in the ecosystem instead of feeling like an isolated bot.',
     bullets: [
       'Grace for emotional and spiritual support',
       'A1 for systems, builds, and implementation',
@@ -73,7 +73,7 @@ const activeAgents = [
 
 const platformRoutes = [
   { label: 'SVL Home', value: 'sandersvioprolabs.com', href: '/sanders-viopro-labs' },
-  { label: 'SVL Agents', value: 'sandersvioprolabs.com/agent', href: '/agent' },
+  { label: 'SVL Guardians', value: 'sandersvioprolabs.com/agent', href: '/agent' },
   { label: 'First Guardian', value: 'sandersvioprolabs.com/agent/first-guardian', href: '/agent/first-guardian' },
   { label: 'TokHealth Experience', value: 'tokhealth.sandersvioprolabs.com', href: '/tokhealth' },
   { label: 'SVL Story', value: 'sandersvioprolabs.com/our-story', href: '/our-story' },
