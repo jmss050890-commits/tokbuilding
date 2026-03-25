@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Heart, Send, Loader2, Shield, Users, Play, Pause, Volume2 } from 'lucide-react';
 import Link from 'next/link';
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
+import SpeakerBox from '@/app/components/SpeakerBox';
 
 interface Message {
   id: string;
@@ -24,6 +25,8 @@ export default function MrKPAAgent() {
   const [loading, setLoading] = useState(false);
   const [currentSpeakingMessageId, setCurrentSpeakingMessageId] = useState<string | null>(null);
   const [isSpeakingMap, setIsSpeakingMap] = useState<Record<string, boolean>>({});
+  const [currentSpeakingIndex, setCurrentSpeakingIndex] = useState<number | null>(null);
+  const [showSpeakerBox, setShowSpeakerBox] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
 
@@ -73,12 +76,18 @@ export default function MrKPAAgent() {
     if (currentSpeakingMessageId === messageId && isSpeakingMap[messageId]) {
       // Stop if clicking the same message that's playing
       setCurrentSpeakingMessageId(null);
+      setShowSpeakerBox(false);
       setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
       return;
     }
 
     setCurrentSpeakingMessageId(messageId);
+    setShowSpeakerBox(true);
     setIsSpeakingMap((prev) => ({ ...prev, [messageId]: true }));
+
+    // Find the index of this message for speaker box
+    const index = messages.findIndex((m) => m.id === messageId);
+    setCurrentSpeakingIndex(index);
 
     try {
       // Get available voices
@@ -120,12 +129,14 @@ export default function MrKPAAgent() {
 
       utterance.onend = () => {
         setCurrentSpeakingMessageId(null);
+        setShowSpeakerBox(false);
         setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
       };
 
       utterance.onerror = (event) => {
         console.error('Speech synthesis error:', event.error);
         setCurrentSpeakingMessageId(null);
+        setShowSpeakerBox(false);
         setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
       };
 
@@ -134,7 +145,15 @@ export default function MrKPAAgent() {
     } catch (error) {
       console.error('Error speaking message:', error);
       setCurrentSpeakingMessageId(null);
+      setShowSpeakerBox(false);
       setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+    }
+  };
+
+  const playMessageByIndex = async (index: number) => {
+    const messageToPlay = messages[index];
+    if (messageToPlay.type === 'assistant' || messageToPlay.type === 'intro') {
+      speakMessage(messageToPlay.id, messageToPlay.content);
     }
   };
 
@@ -387,6 +406,27 @@ export default function MrKPAAgent() {
           </p>
         </div>
       </div>
+
+      {/* Speaker Box for Audio Control */}
+      {showSpeakerBox && currentSpeakingIndex !== null && (
+        <SpeakerBox
+          messages={messages}
+          currentMessageIndex={currentSpeakingIndex}
+          isPlaying={currentSpeakingMessageId !== null && Object.values(isSpeakingMap).some((v) => v)}
+          onPlayMessage={playMessageByIndex}
+          onStop={() => {
+            window.speechSynthesis.cancel();
+            setCurrentSpeakingMessageId(null);
+            setIsSpeakingMap({});
+          }}
+          onDismiss={() => {
+            window.speechSynthesis.cancel();
+            setCurrentSpeakingMessageId(null);
+            setShowSpeakerBox(false);
+            setIsSpeakingMap({});
+          }}
+        />
+      )}
     </div>
   );
 }
