@@ -21,7 +21,6 @@ import { buildTokFaithFallbackResponse } from "@/lib/agent-fallback-copy";
 import {
   findBook,
   getPassage,
-  getAvailablePassagesSummary,
 } from "@/lib/ethiopian-bible-data";
 
 function detectTokFaithPerspective(message = "") {

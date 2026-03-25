@@ -62,7 +62,7 @@ export default function TokFaithAgent() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentPerspective, setCurrentPerspective] = useState('ethiopian-with-kjv-option');
-  const [perspectiveHistory, setPerspectiveHistory] = useState({});
+  const [, setPerspectiveHistory] = useState<Record<string, Message['perspectives'] | undefined>>({});
   const [voiceMode, setVoiceMode] = useState<'tokfaith' | 'jerome' | 'mrkpa'>('tokfaith');
   const [isListening, setIsListening] = useState(false);
   const [promptRotationIndex, setPromptRotationIndex] = useState(0);
@@ -106,7 +106,7 @@ export default function TokFaithAgent() {
     }, 3600);
 
     return () => window.clearInterval(rotationTimer);
-  }, [voiceMode]);
+  }, [quickPrompts, voiceMode]);
 
   const handleSendMessage = async () => {
     if (!input.trim() || loading) return;

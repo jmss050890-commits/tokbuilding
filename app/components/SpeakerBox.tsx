@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Play, Pause, Volume2, ChevronUp, ChevronDown, X } from 'lucide-react';
 
 interface Message {
@@ -27,7 +27,6 @@ export default function SpeakerBox({
   onDismiss,
 }: SpeakerBoxProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [progress, setProgress] = useState(0);
 
   const currentMessage = messages[currentMessageIndex];
   const isLastMessage = currentMessageIndex === messages.length - 1;
@@ -44,24 +43,6 @@ export default function SpeakerBox({
       onPlayMessage(currentMessageIndex + 1);
     }
   };
-
-  useEffect(() => {
-    if (isPlaying) {
-      const interval = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + 0.5;
-        });
-      }, 100);
-
-      return () => clearInterval(interval);
-    } else {
-      setProgress(0);
-    }
-  }, [isPlaying]);
 
   if (!currentMessage || currentMessage.type === 'user') {
     return null;
@@ -120,7 +101,11 @@ export default function SpeakerBox({
         <div className="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-100"
-            style={{ width: `${isPlaying ? progress : 0}%` }}
+            style={{
+              width: isPlaying ? '100%' : '0%',
+              transitionDuration: isPlaying ? '20s' : '150ms',
+              transitionTimingFunction: 'linear',
+            }}
           ></div>
         </div>
       </div>

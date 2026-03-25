@@ -535,7 +535,7 @@ export function findBook(bookName: string): BiblicalBook | undefined {
   }
   
   // Search by name or alternate name
-  for (const [key, book] of Object.entries(EthiopianBibleBooks)) {
+  for (const [, book] of Object.entries(EthiopianBibleBooks)) {
     if (
       book.name.toLowerCase().includes(normalizedName) ||
       book.alternateNames?.some(alt => alt.toLowerCase().includes(normalizedName))
