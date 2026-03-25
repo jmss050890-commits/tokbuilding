@@ -1,8 +1,126 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react';
+import { Play, Pause, Volume2 } from 'lucide-react';
 
 export default function OurStoryPage() {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const pageContentRef = useRef<HTMLDivElement>(null);
+
+  const extractPageText = (): string => {
+    if (!pageContentRef.current) return '';
+
+    // Get all text nodes and join them with space
+    const walker = document.createTreeWalker(
+      pageContentRef.current,
+      NodeFilter.SHOW_TEXT,
+      null
+    );
+
+    const textParts: string[] = [];
+    let node;
+    while ((node = walker.nextNode())) {
+      const text = (node as Text).textContent?.trim();
+      if (text && text.length > 0) {
+        textParts.push(text);
+      }
+    }
+
+    return textParts.join(' ');
+  };
+
+  const speakPage = async () => {
+    // Cancel any current speech
+    window.speechSynthesis.cancel();
+
+    if (isSpeaking) {
+      setIsSpeaking(false);
+      return;
+    }
+
+    setIsSpeaking(true);
+
+    try {
+      // Get available voices
+      let voices = window.speechSynthesis.getVoices();
+      if (voices.length === 0) {
+        await new Promise((resolve) => {
+          const handleVoicesChanged = () => {
+            voices = window.speechSynthesis.getVoices();
+            window.speechSynthesis.removeEventListener('voiceschanged', handleVoicesChanged);
+            resolve(null);
+          };
+          window.speechSynthesis.addEventListener('voiceschanged', handleVoicesChanged);
+          setTimeout(resolve, 1000);
+        });
+      }
+
+      // Extract page text
+      const pageText = extractPageText();
+
+      if (!pageText) {
+        console.error('No text found to speak');
+        setIsSpeaking(false);
+        return;
+      }
+
+      // Select a pleasant female voice for the story narrative
+      const femalePatterns = ['zira', 'samantha', 'victoria', 'moira', 'karen', 'fiona', 'anna', 'emma'];
+      let selectedVoice = voices.find((voice) => {
+        const voiceName = voice.name.toLowerCase();
+        return femalePatterns.some((pattern) => voiceName.includes(pattern)) && voice.lang?.toLowerCase().startsWith('en');
+      });
+
+      // Fallback to first English voice
+      if (!selectedVoice) {
+        selectedVoice = voices.find((voice) => voice.lang?.toLowerCase().startsWith('en'));
+      }
+
+      const utterance = new SpeechSynthesisUtterance(pageText);
+      if (selectedVoice) utterance.voice = selectedVoice;
+      utterance.pitch = 1.1; // Pleasant, warm tone for storytelling
+      utterance.rate = 0.9; // Slightly slower for engagement
+      utterance.volume = 1;
+
+      utterance.onstart = () => {
+        setIsSpeaking(true);
+      };
+
+      utterance.onend = () => {
+        setIsSpeaking(false);
+      };
+
+      utterance.onerror = (event) => {
+        console.error('Speech synthesis error:', event.error);
+        setIsSpeaking(false);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      console.error('Error speaking page:', error);
+      setIsSpeaking(false);
+    }
+  };
+
+  useEffect(() => {
+    // Load voices on mount
+    const loadVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length === 0) {
+        window.speechSynthesis.getVoices();
+      }
+    };
+
+    loadVoices();
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+
+    return () => {
+      window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
   const journeySteps = [
     {
       platform: 'Emergent',
@@ -62,12 +180,33 @@ export default function OurStoryPage() {
             <Link href="/agent" className="text-purple-300 hover:text-white transition">
               AI Agents
             </Link>
+            <button
+              onClick={speakPage}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+                isSpeaking
+                  ? 'bg-purple-600/70 text-white'
+                  : 'bg-slate-700/50 text-purple-300 hover:bg-slate-600 hover:text-white'
+              }`}
+              title={isSpeaking ? 'Stop reading' : 'Listen to this story'}
+            >
+              {isSpeaking ? (
+                <>
+                  <Pause className="w-4 h-4" />
+                  <span className="text-sm">Stop</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-4 h-4" />
+                  <span className="text-sm">Listen</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6">
+      <section ref={pageContentRef} className="pt-32 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <span className="text-6xl">📖</span>
