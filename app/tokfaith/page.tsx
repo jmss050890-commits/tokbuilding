@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Heart, BookOpen, Lightbulb, MessageCircle } from 'lucide-react';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
+export const dynamic = 'force-dynamic';
+
 export default function TokFaithPage() {
   const copy = useSiteCopy();
 
