@@ -158,6 +158,86 @@ export interface FirstGuardianThreadMemory {
 }
 
 /**
+ * Memorial Storage (uses TokStore Subscription for membership tracking)
+ * Free tier: appId 'memorial-free'
+ * Silver tier: appId 'memorial-silver' 
+ * Gold tier: appId 'memorial-gold'
+ * Platinum tier: appId 'memorial-platinum'
+ */
+
+// Secure stored memorial (member-owned, tracked by TokStore Subscription)
+export interface SecureMemorial {
+  _id?: string;
+  userId: string; // Owner - check their Subscription for tier limits
+  name: string;
+  relationship: string;
+  dates: string;
+  story: string;
+  svlConnection: string;
+  verse: string;
+  isPublic: boolean; // Can be shared with community or kept private
+  sharedWith?: string[]; // For Gold/Platinum: users who can view (emails or user IDs)
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Platinum member: users invited to contribute memorials under main member's subscription
+export interface MemorialInvitation {
+  _id?: string;
+  invitingUserId: string; // Platinum member
+  invitedEmail: string;
+  invitedUserId?: string; // Filled once they accept invite
+  slotLimit: number; // Always 5 for invited users
+  status: 'pending' | 'accepted' | 'declined';
+  inviteToken: string; // For email validation
+  createdAt: Date;
+  acceptedAt?: Date;
+  expiresAt: Date;
+}
+
+/**
+ * Memorial Guardian - AI agent representing the lost person
+ * Powered by member stories and conversations
+ */
+export interface MemorialGuardian {
+  _id?: string;
+  memorialId: string; // Links to SecureMemorial
+  userId: string; // Owner
+  name: string; // Same as memorial person's name + " Guardian" or customizable
+  personality: string; // Built from memorial data + conversations
+  faithBasis: string; // Scripture, teachings, values mentioned
+  memories: string[]; // Synthesized insights from conversations
+  conversationCount: number;
+  lastInteraction: Date;
+  systemPromptTemplate?: string; // Custom prompt for this Guardian
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Memorial Guardian Conversations
+ * Stores interactions to build Guardian's knowledge
+ */
+export interface GuardianConversation {
+  _id?: string;
+  memorialId: string;
+  userId: string; // Member
+  guardianId: string;
+  messages: Array<{
+    role: 'user' | 'assistant';
+    content: string;
+    timestamp: Date;
+  }>;
+  memoryExtractions?: Array<{
+    key: string; // 'lesson', 'value', 'faith', 'moment'
+    content: string;
+    mentioned: boolean; // If this was extracted and synthesized into Guardian
+  }>;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
  * MongoDB Connection Helper
  */
 import { MongoClient } from 'mongodb';
