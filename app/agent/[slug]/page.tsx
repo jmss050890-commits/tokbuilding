@@ -7,6 +7,9 @@ import { getSiteCopy } from "@/lib/site-copy";
 import { resolveSiteLanguage, SITE_LANGUAGE_COOKIE_KEY, SITE_LANGUAGE_REQUEST_HEADER } from "@/lib/site-language";
 import AgentClient from "./agent-client";
 
+// Always serve fresh content, never use cache
+export const revalidate = 0;
+
 export default async function AgentPage({
   params,
 }: {

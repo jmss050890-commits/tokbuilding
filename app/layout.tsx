@@ -6,6 +6,7 @@ import PwaRegistration from "./PwaRegistration";
 import { SiteFrame, SiteLanguageProvider } from "./components/SiteLanguageControl";
 import {
   resolveSiteLanguage,
+  DEFAULT_SITE_LANGUAGE,
   SITE_LANGUAGE_COOKIE_KEY,
   SITE_LANGUAGE_REQUEST_HEADER,
 } from "@/lib/site-language";
@@ -45,9 +46,20 @@ export default async function RootLayout({
 }) {
   const requestHeaders = await headers();
   const cookieStore = await cookies();
-  const initialLanguage = resolveSiteLanguage(
-    requestHeaders.get(SITE_LANGUAGE_REQUEST_HEADER) ?? cookieStore.get(SITE_LANGUAGE_COOKIE_KEY)?.value,
-  );
+  
+  // Always start with the default language, then override only if there's a language header
+  // (set by middleware based on the URL pathname)
+  let initialLanguage = DEFAULT_SITE_LANGUAGE;
+  const headerLanguage = requestHeaders.get(SITE_LANGUAGE_REQUEST_HEADER);
+  const cookieLanguage = cookieStore.get(SITE_LANGUAGE_COOKIE_KEY)?.value;
+  
+  if (headerLanguage) {
+    // If we have an explicit language header from middleware (URL path had language), use it
+    initialLanguage = resolveSiteLanguage(headerLanguage);
+  } else if (cookieLanguage && cookieLanguage !== DEFAULT_SITE_LANGUAGE) {
+    // Only use cookie if it's NOT the default language (preserves user preference for non-default languages)
+    initialLanguage = resolveSiteLanguage(cookieLanguage);
+  }
 
   return (
     <html lang={initialLanguage}>

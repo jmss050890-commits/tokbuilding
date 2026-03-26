@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { AGENTS, type AgentConfig } from "../../lib/lib/lib/agents";
 
+// Always serve fresh content, never use cache
+export const dynamic = "force-dynamic";
+
 export default function GuardiansHub() {
   const agents: AgentConfig[] = Object.values(AGENTS);
 
