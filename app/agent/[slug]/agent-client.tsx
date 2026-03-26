@@ -43,60 +43,24 @@ function voiceLooksFemale(voiceName: string) {
 
 function getTokFaithLockedVoice(voices: SpeechSynthesisVoice[], preferredPatterns: string[] = []) {
   const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
-  const humanEnglishVoices = englishVoices.filter((voice) => {
-    const voiceName = voice.name.toLowerCase();
-    return !voiceName.includes("robot") && !voiceName.includes("default");
-  });
-
-  // First: try preferred female patterns from agent config
-  const preferredFemaleHumanVoice = humanEnglishVoices.find((voice) => {
-    const voiceName = voice.name.toLowerCase();
-    const matchesPreference = preferredPatterns.some((pattern) => voiceName.includes(pattern.toLowerCase()));
-    return matchesPreference && voiceLooksFemale(voiceName);
-  });
-
-  if (preferredFemaleHumanVoice) {
-    return preferredFemaleHumanVoice;
+  
+  // Use exactly the preferred patterns list - TOKFAITH MUST use one of these voices
+  const patterns = preferredPatterns.length > 0 ? preferredPatterns : TOKFAITH_FEMALE_VOICE_PATTERNS;
+  
+  // Try each pattern in order - strict matching
+  for (const pattern of patterns) {
+    const found = englishVoices.find((voice) => {
+      const voiceName = voice.name.toLowerCase();
+      return voiceName.includes(pattern.toLowerCase());
+    });
+    if (found && voiceLooksFemale(found.name)) {
+      return found;
+    }
   }
 
-  const preferredFemaleVoice = englishVoices.find((voice) => {
-    const voiceName = voice.name.toLowerCase();
-    const matchesPreference = preferredPatterns.some((pattern) => voiceName.includes(pattern.toLowerCase()));
-    return matchesPreference && voiceLooksFemale(voiceName);
-  });
-
-  if (preferredFemaleVoice) {
-    return preferredFemaleVoice;
-  }
-
-  // Second: look for explicitly female-labeled voices
-  const labeledFemaleHumanVoice = humanEnglishVoices.find((voice) => voiceLooksFemale(voice.name));
-  if (labeledFemaleHumanVoice) {
-    return labeledFemaleHumanVoice;
-  }
-
-  // Third: look for known female voice names (Windows Zira, etc)
-  const knownFemaleVoice = englishVoices.find((voice) => {
-    const voiceName = voice.name.toLowerCase();
-    return voiceName.includes("zira") || voiceName.includes("samantha") || voiceName.includes("moira");
-  });
-  if (knownFemaleVoice) {
-    return knownFemaleVoice;
-  }
-
-  // Fourth: any safe non-male human voice
-  const safeHumanVoice = humanEnglishVoices.find((voice) => !voiceLooksMale(voice.name));
-  if (safeHumanVoice) {
-    return safeHumanVoice;
-  }
-
-  // Fifth: any safe non-male English voice
-  const labeledFemaleVoice = englishVoices.find((voice) => voiceLooksFemale(voice.name));
-  if (labeledFemaleVoice) {
-    return labeledFemaleVoice;
-  }
-
-  return englishVoices.find((voice) => !voiceLooksMale(voice.name));
+  // If none of the preference patterns matched, find ANY female voice as last resort
+  const anyFemale = englishVoices.find((voice) => voiceLooksFemale(voice.name));
+  return anyFemale || englishVoices[0];
 }
 
 function getMrKpaLockedVoice(voices: SpeechSynthesisVoice[], preferredPatterns: string[] = []) {
@@ -202,8 +166,14 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
 
   const isMobileDevice = isMobileSpeechDevice();
 
-  if (agent?.slug === "tokfaith" && agent.voicePreferences?.length && !isMobileDevice) {
-    selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences);
+  // TOKFAITH OVERRIDE: Always get female voice first, before any other logic
+  if (agent?.slug === "tokfaith") {
+    selectedVoice = getTokFaithLockedVoice(voices, agent.voicePreferences || TOKFAITH_FEMALE_VOICE_PATTERNS);
+    if (selectedVoice && voiceLooksFemale(selectedVoice.name)) {
+      // Successfully got a female voice - return it immediately
+      return selectedVoice;
+    }
+    // If we got a voice but it's male somehow, fall through to continue trying
   }
 
   if (!selectedVoice && agent?.slug === "mr-kpa" && agent.voicePreferences?.length && !isMobileDevice) {
@@ -333,6 +303,35 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     }
   }
 
+  // Final enforcement: ensure TokFaith NEVER gets a male voice
+  if (agent?.slug === "tokfaith") {
+    const isMaleVoice = voiceLooksMale(selectedVoice?.name || "");
+    if (isMaleVoice || !selectedVoice) {
+      // TokFaith: force female voice with multi-layered fallback
+      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+      
+      // Strategy 1: First English voice (often female on most systems)
+      const firstEnglishVoice = englishVoices[0];
+      
+      // Strategy 2: Explicitly look for "female" in voice name
+      const explicitFemaleVoice = englishVoices.find((v) => v.name.toLowerCase().includes("female"));
+      
+      // Strategy 3: Known female voice names by pattern
+      const knownFemaleVoice = englishVoices.find((v) => {
+        const n = v.name.toLowerCase();
+        return n.includes("zira") || n.includes("samantha") || n.includes("moira") ||
+               n.includes("aria") || n.includes("ava") || n.includes("jenny") ||
+               n.includes("victoria") || n.includes("fiona");
+      });
+      
+      // Pick the best available, preferring explicit female > known female > first default
+      const fallbackVoice = explicitFemaleVoice || knownFemaleVoice || firstEnglishVoice;
+      if (fallbackVoice) {
+        selectedVoice = fallbackVoice;
+      }
+    }
+  }
+
   if (agent?.slug === "mr-kpa" && selectedVoice) {
     const isFemaleVoice = voiceLooksFemale(selectedVoice.name);
     if (isFemaleVoice) {
@@ -417,34 +416,6 @@ function selectVoice(agent: AgentConfig | null, voices: SpeechSynthesisVoice[]) 
     }
   }
 
-  if (agent?.slug === "tokfaith" && selectedVoice) {
-    const isMaleVoice = voiceLooksMale(selectedVoice.name);
-    if (isMaleVoice) {
-      // Wrong gender — force female with expanded pattern matching for Windows
-      const englishVoices = voices.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
-      
-      // First try standard female patterns
-      let femaleVoice = englishVoices.find((voice) => {
-        const voiceName = voice.name.toLowerCase();
-        return TOKFAITH_FEMALE_VOICE_PATTERNS.some((pattern) => voiceName.includes(pattern));
-      });
-      
-      // If not found, try any voice that contains "female" or is labeled female
-      if (!femaleVoice) {
-        femaleVoice = englishVoices.find((voice) => {
-          const voiceName = voice.name.toLowerCase();
-          return voiceName.includes("female") || (voiceLooksFemale(voiceName) && !voiceLooksMale(voiceName));
-        });
-      }
-      
-      // Last resort: use first non-male English voice
-      if (!femaleVoice) {
-        femaleVoice = englishVoices.find((voice) => !voiceLooksMale(voice.name));
-      }
-      
-      if (femaleVoice) selectedVoice = femaleVoice;
-    }
-  }
 
   return selectedVoice;
 }
