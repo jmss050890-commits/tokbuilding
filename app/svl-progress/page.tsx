@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 
 const progressLayers = [
   {

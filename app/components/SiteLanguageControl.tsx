@@ -13,7 +13,7 @@ import {
   SITE_LANGUAGE_STORAGE_KEY,
   type SiteLanguageCode,
 } from "@/lib/site-language";
-import { getSiteCopy } from "@/lib/site-copy";
+import { getSiteCopy, type SiteCopy } from "@/lib/site-copy";
 
 type SiteLanguageContextValue = {
   language: SiteLanguageCode;
@@ -32,14 +32,46 @@ export function SiteLanguageProvider({
   const pathname = usePathname();
   const pathnameLanguage = getPathSiteLanguage(pathname);
   const [preferredLanguage, setPreferredLanguage] = useState<SiteLanguageCode | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
+  
+  // On client mount, handle language state
+  useEffect(() => {
+    // If URL has no language prefix, ignore any non-default initialLanguage (forces English)
+    if (!pathnameLanguage && initialLanguage !== DEFAULT_SITE_LANGUAGE) {
+      // The URL is default (no language), so we should use default language
+      // This fixes the issue where cookie persists from previous session
+      setPreferredLanguage(DEFAULT_SITE_LANGUAGE);
+    } else if (!pathnameLanguage) {
+      // If URL has no language prefix, only restore from localStorage if it was explicitly set
+      const storedLanguage = window.localStorage.getItem(SITE_LANGUAGE_STORAGE_KEY);
+      if (storedLanguage && storedLanguage !== initialLanguage) {
+        setPreferredLanguage(storedLanguage as SiteLanguageCode);
+      }
+    } else {
+      // If URL has language in pathname, clear any stored preference to respect the URL
+      window.localStorage.removeItem(SITE_LANGUAGE_STORAGE_KEY);
+    }
+    setIsHydrated(true);
+  }, [pathnameLanguage, initialLanguage]);
+
   const language = pathnameLanguage ?? preferredLanguage ?? initialLanguage;
 
   useEffect(() => {
+    if (!isHydrated) return;
+    
     document.documentElement.lang = language;
     document.documentElement.setAttribute("data-site-language", language);
-    window.localStorage.setItem(SITE_LANGUAGE_STORAGE_KEY, language);
-    document.cookie = `${SITE_LANGUAGE_COOKIE_KEY}=${language}; path=/; max-age=31536000; samesite=lax`;
-  }, [language]);
+    
+    // Only store non-default languages in localStorage and cookies
+    if (language !== DEFAULT_SITE_LANGUAGE) {
+      window.localStorage.setItem(SITE_LANGUAGE_STORAGE_KEY, language);
+      document.cookie = `${SITE_LANGUAGE_COOKIE_KEY}=${language}; path=/; max-age=31536000; samesite=lax`;
+    } else {
+      // Clear storage when returning to default language
+      window.localStorage.removeItem(SITE_LANGUAGE_STORAGE_KEY);
+      document.cookie = `${SITE_LANGUAGE_COOKIE_KEY}=; path=/; max-age=0`;
+    }
+  }, [language, isHydrated]);
 
   const contextValue = useMemo(
     () => ({
@@ -62,7 +94,7 @@ export function useSiteLanguage() {
   return context;
 }
 
-export function useSiteCopy() {
+export function useSiteCopy(): SiteCopy {
   const { language } = useSiteLanguage();
 
   return getSiteCopy(language);
