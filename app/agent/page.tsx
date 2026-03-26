@@ -139,6 +139,42 @@ export default function GuardiansHub() {
           })}
         </div>
 
+        <div style={{ marginTop: 40 }}>
+          <Link
+            href="/memorials"
+            style={{
+              display: "block",
+              padding: 24,
+              border: "2px solid #d97706",
+              borderRadius: 12,
+              textDecoration: "none",
+              color: "inherit",
+              background: "linear-gradient(135deg, #1f2937 0%, #d9770608 100%)",
+              transition: "all 0.3s ease",
+              cursor: "pointer",
+              textAlign: "center",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = "#d9770615";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px #d9770640";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "none";
+            }}
+          >
+            <h2 style={{ margin: "0 0 8px 0", fontSize: 24, color: "#fff" }}>💝 In Loving Memory</h2>
+            <p style={{ margin: "0 0 8px 0", color: "#d97706", fontSize: 12, fontWeight: 500 }}>
+              Those we remember, forever in our hearts
+            </p>
+            <p style={{ margin: 0, color: "#ccc", fontSize: 14 }}>
+              Remembering love helps heal. Healing brings peace. And that helps Keep People Alive.
+            </p>
+          </Link>
+        </div>
+
         <div style={{ 
           marginTop: 60, 
           padding: 24,
