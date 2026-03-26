@@ -1428,6 +1428,14 @@ const englishCopy = {
         svlConnection: "Every life matters in the mission",
         verse: "John 15:13 - Greater love has no one than this.",
       },
+      {
+        name: "Caizer Ross",
+        description: "Nephew - Teacher of Urgency",
+        dates: "Cherished Memory",
+        story: "Taught a lesson that changed everything: don't wait for second chances. Life is now. His wisdom speaks through the love we show today.",
+        svlConnection: "Why we act now to keep people alive, not tomorrow",
+        verse: "Ecclesiastes 9:4 - Anyone who is among the living has hope.",
+      },
     ],
   },
 };
