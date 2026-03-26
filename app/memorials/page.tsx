@@ -172,7 +172,7 @@ export default function MemorialsPage() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Heart className="w-6 h-6 text-amber-600" />
-            <h1 className="text-xl font-bold text-amber-100">Memorials</h1>
+            <h1 className="text-xl font-bold text-amber-100">SVL Legacy Vault</h1>
           </div>
           <Link
             href="/agent"
@@ -187,7 +187,7 @@ export default function MemorialsPage() {
       <div className="pt-32 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-5xl md:text-6xl font-bold text-amber-100 mb-6">
-            Those We Remember
+            SVL Legacy Vault
           </h2>
           <p className="text-lg text-amber-50/80 mb-4">
             Remembering love helps heal. Healing brings peace.
@@ -264,7 +264,30 @@ export default function MemorialsPage() {
         </div>
 
         {/* Add Memorial Section */}
-        <div className="mt-12 border-t border-amber-700/30 pt-12">
+        <div className="mt-12 border-t border-amber-700/30 pt-12 space-y-8">
+          <div className="text-center">
+            <h3 className="text-2xl font-bold text-amber-100 mb-4">
+              Create Your Own Secure Space
+            </h3>
+            <p className="text-amber-50/60 mb-6">
+              Join other families keeping their memories safe and meaningful
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/memorials/dashboard"
+                className="px-6 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-slate-900 rounded-lg font-bold transition inline-block"
+              >
+                Start Your Free Memorial
+              </Link>
+              <Link
+                href="/memorials/membership"
+                className="px-6 py-3 border border-amber-600 text-amber-100 hover:bg-amber-900/30 rounded-lg font-semibold transition inline-block"
+              >
+                See Upgrade Options
+              </Link>
+            </div>
+          </div>
+
           {!showForm ? (
             <button
               onClick={() => setShowForm(true)}

@@ -165,12 +165,12 @@ export default function GuardiansHub() {
               (e.currentTarget as HTMLElement).style.boxShadow = "none";
             }}
           >
-            <h2 style={{ margin: "0 0 8px 0", fontSize: 24, color: "#fff" }}>💝 In Loving Memory</h2>
+            <h2 style={{ margin: "0 0 8px 0", fontSize: 24, color: "#fff" }}>🏛️ SVL Legacy Vault</h2>
             <p style={{ margin: "0 0 8px 0", color: "#d97706", fontSize: 12, fontWeight: 500 }}>
-              Those we remember, forever in our hearts
+              Sacred space for those who shaped our hearts
             </p>
             <p style={{ margin: 0, color: "#ccc", fontSize: 14 }}>
-              Remembering love helps heal. Healing brings peace. And that helps Keep People Alive.
+              Remember. Reflect. Grow. Keep them alive in your heart.
             </p>
           </Link>
         </div>
