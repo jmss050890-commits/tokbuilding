@@ -1960,6 +1960,7 @@ export default function AgentClient({
       a1: "#6366f1",
       hatata: "#e05c1a",
       wisdom: "#0fa89e",
+      "portable-hydroponic-plant": "#34d399",
       "coach-daniels": "#2ecc71",
       tokseo: "#f59e0b",
       tok2myia: "#1e40af",

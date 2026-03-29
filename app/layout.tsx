@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { cookies, headers } from "next/headers";
 import PwaRegistration from "./PwaRegistration";
 import { SiteFrame, SiteLanguageProvider } from "./components/SiteLanguageControl";
+import { ArchitectSeal } from "./components/ArchitectSeal";
 import {
   resolveSiteLanguage,
   DEFAULT_SITE_LANGUAGE,
@@ -78,6 +79,7 @@ export default async function RootLayout({
         <SiteLanguageProvider initialLanguage={initialLanguage}>
           <PwaRegistration />
           <SiteFrame>{children}</SiteFrame>
+          <ArchitectSeal />
         </SiteLanguageProvider>
       </body>
     </html>

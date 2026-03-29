@@ -4,9 +4,22 @@ import type { NextConfig } from "next";
 
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
+
 const nextConfig: NextConfig = {
   turbopack: {
     root: projectRoot,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/tokfaith',
+        destination: '/agent/tokfaith',
+      },
+      {
+        source: '/toksmart',
+        destination: '/agent/toksmart',
+      },
+    ];
   },
   headers: async () => {
     return [

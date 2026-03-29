@@ -206,7 +206,15 @@ export default function TokSmartChat() {
     setShowRouting(false);
 
     try {
-      const response = await fetch('/api/toksmart', {
+      // Add fetch timeout (e.g., 20 seconds)
+      const fetchWithTimeout = (url: string, options: RequestInit, timeout = 20000) => {
+        return Promise.race([
+          fetch(url, options),
+          new Promise<Response>((_, reject) => setTimeout(() => reject(new Error('Request timed out')), timeout)),
+        ]);
+      };
+
+      const response = await fetchWithTimeout('/api/toksmart', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -237,7 +245,9 @@ export default function TokSmartChat() {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Sorry, there was an error processing your question. Please try again.',
+        content: error instanceof Error && error.message === 'Request timed out'
+          ? 'Sorry, the server took too long to respond. Please try again.'
+          : 'Sorry, there was an error processing your question. Please try again.',
         aiModel: detectedAI,
         timestamp: new Date(),
       };

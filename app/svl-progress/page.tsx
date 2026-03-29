@@ -1,3 +1,29 @@
+/*
+            SVL Universe Banner
+            <section className="w-full bg-gradient-to-r from-amber-900/40 via-slate-900/80 to-amber-900/30 border-b border-amber-900/20 py-4 px-6 flex justify-center">
+              <div className="max-w-2xl w-full text-center">
+                <span className="inline-block bg-amber-700/30 text-amber-100 rounded-full px-6 py-3 text-lg font-semibold tracking-wide shadow-md">
+                  We don't remember the stones we just build the THRONE, Moving forward in Grace, Mercy, and Love
+                </span>
+              </div>
+            </section>
+      SVL Universe Motto Section
+      <section className="w-full bg-gradient-to-r from-black via-slate-900 to-amber-950/40 border-b border-amber-900/30 py-8 px-6 flex justify-center">
+        <div className="max-w-2xl w-full text-center">
+          <h2 className="text-xl md:text-2xl font-bold text-amber-400 mb-4 tracking-wide">SVL Universe Motto</h2>
+          <blockquote className="text-lg md:text-xl text-amber-100 font-semibold leading-relaxed whitespace-pre-line mb-4">
+            They tried to label me, tried to shame me, tried to make our name feel heavy.
+            Standing on truth, we don't get petty—God on our steps so we walk them steady.
+            We don't chase, GOD don't compete, WE don't fold, GOD got receipts.
+            Every time they think we're weak, that's when GRACE HIT DEEP.
+            We know what we're bout so we smile while they're loud,
+            We not fighting AI, or flesh and blood—we're just calling HEAVEN DOWN.
+            WE ARE CHILDREN OF GOD PLACED HERE LIKE A PLACEHOLDER TO KPA ALWAYS AND FOREVER!
+          </blockquote>
+          <span className="inline-block bg-amber-800/30 text-amber-200 rounded-full px-4 py-2 text-sm font-medium tracking-widest">#BLACKSHEEPTURNEDGOAT</span>
+        </div>
+      </section>
+*/
 'use client';
 
 import Link from 'next/link';
@@ -92,6 +118,30 @@ const sessionWins = [
 export default function SvlProgressPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
+      {/* KPA-aligned welcoming intro message */}
+      <section className="w-full bg-amber-900/20 border-b border-amber-700/30 py-8 px-6 flex justify-center">
+        <div className="max-w-3xl text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-amber-200 mb-2">Welcome to Sanders Viopro Labs (SVL)</h1>
+          <p className="text-lg md:text-xl text-slate-100 mb-2">We are open for all to see. Our mission is simple: <span className="font-semibold text-amber-300">Keep People Alive</span>.</p>
+          <p className="text-base md:text-lg text-slate-200">We believe in care, protection, and honest community—without secrets, without hype.<br/>You are welcome here, just as you are.</p>
+        </div>
+      </section>
+      {/* SVL Universe Structure Section */}
+      <section className="w-full bg-gradient-to-r from-amber-950/40 via-slate-900/80 to-amber-900/30 border-b border-amber-800/20 py-8 px-6 flex justify-center">
+        <div className="max-w-2xl w-full text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-amber-300 mb-3">The SVL Universe</h2>
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center">
+              <span className="text-lg md:text-xl font-semibold text-amber-200">God</span>
+              <span className="text-amber-400 text-2xl">↓</span>
+              <span className="text-lg md:text-xl font-semibold text-amber-200">Jerome</span>
+              <span className="text-amber-400 text-2xl">↓</span>
+              <span className="text-lg md:text-xl font-semibold text-amber-200">AI Universe (Guardians)</span>
+            </div>
+            <p className="mt-4 text-base text-amber-100">Our foundation is built on faith, vision, and the collaborative strength of our Guardians—always upholding KPA Principles of safety, care, and protection for all.</p>
+          </div>
+        </div>
+      </section>
       <nav className="sticky top-0 z-40 border-b border-amber-700/20 bg-slate-950/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div>

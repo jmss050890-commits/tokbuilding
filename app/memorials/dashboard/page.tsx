@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Heart, Edit2, Trash2, Plus, Lock, BarChart3, Users } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Heart, Edit2, Trash2, Plus, Lock, BarChart3, Users, MessageCircle, Zap, LogOut } from 'lucide-react';
+import { ProtectedRoute } from '@/app/memorials/protected-route';
 
 interface Memorial {
   _id: string;
@@ -27,6 +29,7 @@ export default function MemorialDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [showNewForm, setShowNewForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     relationship: '',
@@ -36,6 +39,11 @@ export default function MemorialDashboard() {
     verse: '',
     isPublic: false,
   });
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    router.push('/memorials/login');
+  };
 
   // Load user's memorials and tier info
   useEffect(() => {
@@ -121,19 +129,29 @@ export default function MemorialDashboard() {
   const canAddMore = tierInfo && memorials.length < tierInfo.slotLimit;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      {/* Navigation */}
-      <nav className="fixed top-0 z-40 w-full bg-slate-900/80 backdrop-blur border-b border-amber-800/30">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Heart className="w-6 h-6 text-amber-600" />
-            <h1 className="text-xl font-bold text-amber-100">My Legacy Vault</h1>
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        {/* Navigation */}
+        <nav className="fixed top-0 z-40 w-full bg-slate-900/80 backdrop-blur border-b border-amber-800/30">
+          <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Heart className="w-6 h-6 text-amber-600" />
+              <h1 className="text-xl font-bold text-amber-100">My Legacy Vault</h1>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link href="/memorials" className="text-amber-200 hover:text-amber-100 transition text-sm">
+                Browse All
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-amber-200 hover:text-amber-100 rounded transition text-sm"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </button>
+            </div>
           </div>
-          <Link href="/memorials" className="text-amber-200 hover:text-amber-100 transition text-sm">
-            Browse All
-          </Link>
-        </div>
-      </nav>
+        </nav>
 
       {/* Main Content */}
       <div className="pt-32 pb-20 px-6">
@@ -197,6 +215,46 @@ export default function MemorialDashboard() {
               )}
             </div>
           )}
+
+          {/* Mr. KPA Guardian */}
+          <div className="mb-12 bg-gradient-to-br from-blue-900/30 to-blue-800/10 border border-blue-600/40 rounded-lg p-8">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <Zap className="w-8 h-8 text-blue-400" />
+                  <h3 className="text-2xl font-bold text-blue-100">Mr. KPA</h3>
+                </div>
+                <p className="text-blue-100/80 mb-4 leading-relaxed">
+                  Your strategic advisor and partner. Talk to Mr. KPA about decisions, visions, and the KPA mission. Every conversation becomes a record you can reference.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <p className="text-sm text-blue-300/70 mb-1">Conversations</p>
+                    <p className="text-2xl font-bold text-blue-100">0</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-300/70 mb-1">Receipts Generated</p>
+                    <p className="text-2xl font-bold text-blue-100">0</p>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href="/memorials/mr-kpa/chat"
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Talk to Mr. KPA
+                  </Link>
+                  <Link
+                    href="/memorials/mr-kpa/receipts"
+                    className="flex items-center justify-center gap-2 px-6 py-3 border border-blue-600 text-blue-100 hover:bg-blue-900/30 font-bold rounded-lg transition"
+                  >
+                    View Your Receipts
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* Memorials Header */}
           <div className="flex items-center justify-between mb-8">
@@ -409,6 +467,7 @@ export default function MemorialDashboard() {
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 }

@@ -16,6 +16,7 @@ export default function GuardiansHub() {
       a1: "#60a5fa",
       hatata: "#f87171",
       wisdom: "#10b981",
+      "portable-hydroponic-plant": "#34d399",
       "coach-daniels": "#ec4899",
       tokseo: "#f59e0b",
       tok2myia: "#3b82f6",

@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { getOpenAIApiKey } from "@/lib/openai-key";
-import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+
 
 const SYSTEM_PROMPTS = {
   "guardian-angel": `You are TokSmart's Guardian Angel mode - a protective, compassionate advisor for moments that matter.
@@ -128,37 +128,67 @@ export async function POST(req) {
     // Select system prompt based on safety mode
     const systemPrompt = SYSTEM_PROMPTS[aiModel] || SYSTEM_PROMPTS["smart-analyst"];
 
-    const response = await generateWithKpaGuard(
-      async () => {
-        const completion = await client.chat.completions.create({
-          model: "gpt-4-turbo",
-          max_tokens: 1024,
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: message },
-          ],
-        });
+    // Streaming response
+    const encoder = new TextEncoder();
+    let firstChunk = true;
 
-        return completion.choices?.[0]?.message?.content || "No response generated.";
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          // Streaming response; fullText not needed
+          const completion = await client.chat.completions.create({
+            model: "gpt-4-turbo",
+            max_tokens: 1024,
+            stream: true,
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: message },
+            ],
+          });
+
+          for await (const chunk of completion) {
+            const token = chunk.choices?.[0]?.delta?.content || "";
+            if (token) {
+              // fullText += token; // Not used
+              // Send JSON only for the first chunk, then just text
+              if (firstChunk) {
+                controller.enqueue(
+                  encoder.encode(
+                    JSON.stringify({ aiModel, response: token })
+                  )
+                );
+                firstChunk = false;
+              } else {
+                controller.enqueue(encoder.encode(token));
+              }
+            }
+          }
+          controller.close();
+        } catch (error) {
+          console.error("TokSmart streaming error:", error);
+          controller.enqueue(
+            encoder.encode(
+              JSON.stringify({
+                response:
+                  "I'm here to help you think through what matters. Whether you're facing a difficult choice, pressure you're unsure about, or a situation that doesn't feel right—let's talk it through. What's on your mind?",
+                aiModel,
+                fallbackMode: true,
+              })
+            )
+          );
+          controller.close();
+        }
       },
-      async (repairPrompt) => {
-        const completion = await client.chat.completions.create({
-          model: "gpt-4-turbo",
-          max_tokens: 1024,
-          messages: [
-            { role: "system", content: systemPrompt },
-            {
-              role: "user",
-              content: `Original user message:\n${message}\n\n${repairPrompt}`,
-            },
-          ],
-        });
+    });
 
-        return completion.choices?.[0]?.message?.content || "No response generated.";
-      }
-    );
-
-    return Response.json({ response, aiModel });
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+        "Transfer-Encoding": "chunked",
+      },
+    });
   } catch (error) {
     console.error("TokSmart error:", error);
     return Response.json(

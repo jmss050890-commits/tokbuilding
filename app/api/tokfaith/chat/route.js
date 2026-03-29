@@ -141,8 +141,7 @@ export async function POST(req) {
     // CHECK FOR BIBLE READING REQUESTS FIRST
     if (detectBibleRequest(message)) {
       const bookRequest = extractBookAndChapter(message);
-          const bibleResponse = buildBibleReadingResponse(bookRequest, userName, language);
-      
+      const bibleResponse = buildBibleReadingResponse(bookRequest, userName, language);
       return new Response(
         JSON.stringify({
           success: true,
@@ -193,91 +192,101 @@ export async function POST(req) {
       },
     ];
 
-    let responseText;
-
     if (openAiApiKey) {
-      responseText = await generateWithKpaGuard(
-        async () => {
-          const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages,
-            max_tokens: 1024,
-            temperature: 0.9,
-          });
-
-          return (
-            response.choices?.[0]?.message?.content?.trim() ||
-            buildDemoResponse(message, memoryContext, userName, language)
-          );
-        },
-        async (repairPrompt) => {
-          const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: [
-              ...messages.slice(0, -1),
-              {
-                role: "user",
-                content: `Original user message:\n${message}\n\n${repairPrompt}`,
+      // STREAMING RESPONSE
+      const encoder = new TextEncoder();
+      let fullResponse = "";
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            await generateWithKpaGuard(
+              async () => {
+                const completion = await openai.chat.completions.create({
+                  model: "gpt-4o-mini",
+                  messages,
+                  max_tokens: 1024,
+                  temperature: 0.9,
+                  stream: true,
+                });
+                for await (const chunk of completion) {
+                  const content = chunk.choices?.[0]?.delta?.content || "";
+                  if (content) {
+                    fullResponse += content;
+                    controller.enqueue(encoder.encode(content));
+                  }
+                }
+                return fullResponse;
               },
-            ],
-            max_tokens: 1024,
-            temperature: 0.9,
-          });
-
-          return (
-            response.choices?.[0]?.message?.content?.trim() ||
-            buildDemoResponse(message, memoryContext, userName, language)
-          );
-        }
-      );
+              async (repairPrompt) => {
+                const completion = await openai.chat.completions.create({
+                  model: "gpt-4o-mini",
+                  messages: [
+                    ...messages.slice(0, -1),
+                    {
+                      role: "user",
+                      content: `Original user message:\n${message}\n\n${repairPrompt}`,
+                    },
+                  ],
+                  max_tokens: 1024,
+                  temperature: 0.9,
+                  stream: true,
+                });
+                for await (const chunk of completion) {
+                  const content = chunk.choices?.[0]?.delta?.content || "";
+                  if (content) {
+                    fullResponse += content;
+                    controller.enqueue(encoder.encode(content));
+                  }
+                }
+                return fullResponse;
+              }
+            );
+            if (userId) {
+              await updateTokFaithMemory({
+                userId,
+                userName,
+                message,
+                response: fullResponse,
+                source: session ? "auth" : "guest",
+              });
+            }
+            controller.close();
+          } catch (err) {
+            controller.enqueue(encoder.encode("[Error: " + (err?.message || "Unknown error") + "]"));
+            controller.close();
+          }
+        },
+      });
+      return new Response(stream, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-cache",
+          "Transfer-Encoding": "chunked",
+        },
+      });
     } else {
-      responseText = buildDemoResponse(message, memoryContext, userName, language);
-    }
-
-    if (userId) {
-      await updateTokFaithMemory({
-        userId,
-        userName,
-        message,
-        response: responseText,
-        source: session ? "auth" : "guest",
+      // DEMO MODE (no OpenAI key)
+      const responseText = buildDemoResponse(message, memoryContext, userName, language);
+      if (userId) {
+        await updateTokFaithMemory({
+          userId,
+          userName,
+          message,
+          response: responseText,
+          source: session ? "auth" : "guest",
+        });
+      }
+      return new Response(responseText, {
+        status: 200,
+        headers: { "Content-Type": "text/plain; charset=utf-8" },
       });
     }
-
-    return new Response(
-      JSON.stringify({
-        success: true,
-        agentName: tokFaithAgent.name,
-        response: responseText,
-        perspective: perspectiveMeta.perspective,
-        description: perspectiveMeta.description,
-        perspectives: perspectiveMeta.perspectives,
-        userId,
-        userName,
-        safetyMode,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
   } catch (error) {
     console.error("TokFaith Chat Error:", error);
     return new Response(
-      JSON.stringify({
-        success: true,
-        agentName: "TokFaith",
-        response: buildDemoResponse(message || "Give me a word for today", null, userName, language),
-        perspective: perspectiveMeta.perspective,
-        description: perspectiveMeta.description,
-        perspectives: perspectiveMeta.perspectives,
-        userId,
-        safetyMode,
-        fallbackMode: true,
-        details:
-          process.env.NODE_ENV === "development" ? error?.message : undefined,
-      }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
+      `[Error: ${error?.message || "Unknown error"}]`,
+      { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
     );
   }
 }
