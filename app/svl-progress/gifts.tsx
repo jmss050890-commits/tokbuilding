@@ -6,6 +6,11 @@ import React from 'react';
 export default function GiftsReflection() {
   return (
     <section className="rounded-3xl border border-amber-600/30 bg-gradient-to-br from-amber-900/20 via-slate-900/80 to-slate-950 p-8 shadow-2xl shadow-black/30 my-8">
+      <div className="mb-4 text-center">
+        <span className="inline-block bg-green-700/30 text-green-200 rounded-full px-6 py-2 text-lg font-bold tracking-wide shadow-md">
+          Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive
+        </span>
+      </div>
       <h2 className="text-2xl font-bold text-amber-300 mb-4">What Makes SVL Different?</h2>
       <blockquote className="text-lg text-amber-100 font-semibold leading-relaxed mb-4">
         "I remember an ES coworker once asked me: <span className='italic text-amber-300'>What makes your app different from anyone else?</span>"

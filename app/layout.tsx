@@ -86,6 +86,9 @@ export default async function RootLayout({
               <strong>Sanders Viopro Labs Growth 2026:</strong> Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness.
             </div>
             <div style={{marginTop: 8}}>
+              <span style={{display: 'block', fontWeight: 'bold', color: '#7ee787', marginBottom: 4}}>
+                Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive
+              </span>
               <a href="/legal-disclaimer.md" style={{color: '#7ee787', textDecoration: 'underline'}}>
                 Legal & Disclaimers
               </a>

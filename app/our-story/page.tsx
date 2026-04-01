@@ -512,7 +512,7 @@ export default function OurStoryPage() {
             ))}
           </div>
           <p className="text-purple-300 text-lg font-bold">
-            — Jerome Sanders · Mr. KPA · est. 2-21-2026
+              — Jerome Sanders · Mr. KPA · est. 1-31-2026
           </p>
         </div>
       </section>
