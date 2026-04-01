@@ -5,6 +5,7 @@ import { cookies, headers } from "next/headers";
 import PwaRegistration from "./PwaRegistration";
 import { SiteFrame, SiteLanguageProvider } from "./components/SiteLanguageControl";
 import { ArchitectSeal } from "./components/ArchitectSeal";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   resolveSiteLanguage,
   DEFAULT_SITE_LANGUAGE,
@@ -80,6 +81,17 @@ export default async function RootLayout({
           <PwaRegistration />
           <SiteFrame>{children}</SiteFrame>
           <ArchitectSeal />
+          <footer style={{marginTop: 32, textAlign: 'center', color: '#bbb', fontSize: 14}}>
+            <div>
+              <strong>Sanders Viopro Labs Growth 2026:</strong> Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness.
+            </div>
+            <div style={{marginTop: 8}}>
+              <a href="/legal-disclaimer.md" style={{color: '#7ee787', textDecoration: 'underline'}}>
+                Legal & Disclaimers
+              </a>
+            </div>
+          </footer>
+          <SpeedInsights />
         </SiteLanguageProvider>
       </body>
     </html>
