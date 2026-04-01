@@ -13,7 +13,7 @@ export default function GiftsReflection() {
       </div>
       <h2 className="text-2xl font-bold text-amber-300 mb-4">What Makes SVL Different?</h2>
       <blockquote className="text-lg text-amber-100 font-semibold leading-relaxed mb-4">
-        "I remember a former ES coworker once asked me: <span className='italic text-amber-300'>What makes your app different from anyone else?</span>"
+        "I remember a former coworker once asked me: <span className='italic text-amber-300'>What makes your app different from anyone else?</span>"
       </blockquote>
       <p className="text-base text-slate-200 mb-2">
         SVL is not just an app—it's a living, breathing ecosystem built on the foundation of keeping people alive (KPA), real responsibility, and authentic care. Unlike typical platforms, SVL integrates faith, testimony, and a mission-driven approach into every layer, from the Guardians to the tools and community.
