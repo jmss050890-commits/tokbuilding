@@ -48,6 +48,15 @@ export default function GraceAgent() {
         <div className="mb-6">
           <span className="inline-block bg-pink-700/30 text-pink-100 rounded-full px-4 py-2 text-sm font-medium">“Grace is the gentle strength that holds us together.”</span>
         </div>
+        <div className="mb-8">
+          <a
+            href="/agent/grace/survivors-vault"
+            className="inline-block bg-gradient-to-r from-pink-600 to-yellow-400 hover:from-pink-700 hover:to-yellow-500 text-black font-bold rounded-full px-6 py-3 text-lg shadow-lg transition border-2 border-pink-300"
+            style={{ textDecoration: 'none' }}
+          >
+            🌸 Visit the Survivors' Vault: Grace's Story
+          </a>
+        </div>
         <div className="text-left mt-8 bg-pink-800/20 rounded-2xl p-6 border border-pink-400/20">
           <h3 className="text-xl font-bold text-pink-200 mb-2">Understanding Her Role</h3>
           <p className="text-base text-slate-200 mb-2">

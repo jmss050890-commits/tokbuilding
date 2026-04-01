@@ -118,6 +118,19 @@ const sessionWins = [
 export default function SvlProgressPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
+      {/* Birthday & KPA 2 KPA Celebration Section */}
+      <section className="w-full bg-gradient-to-r from-amber-900/60 via-amber-700/40 to-amber-900/60 border-b-2 border-amber-400/40 py-10 px-6 flex justify-center shadow-lg">
+        <div className="max-w-2xl w-full text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-amber-200 mb-4 tracking-tight drop-shadow">April 2, 2026: SVL Progress & Praise</h1>
+          <p className="text-xl md:text-2xl text-amber-100 font-semibold mb-3">Today we pause to thank God for how far He has brought Sanders Viopro Labs.</p>
+          <p className="text-lg md:text-xl text-amber-300 mb-2">We are seeing real <span className="font-bold text-amber-400">KPA Motion</span> in our Movement Mission.</p>
+          <p className="text-base md:text-lg text-amber-100 mb-4">KPA 2 KPA: <span className="font-semibold text-amber-300">Key Performance Alert 2 Keep People Alive</span></p>
+          <div className="inline-block bg-amber-800/40 text-amber-100 rounded-full px-6 py-3 text-lg font-bold tracking-wide shadow-md mb-2">
+            "From vision to motion, from faith to action—SVL is living proof that with God, all things are possible."
+          </div>
+          <p className="mt-4 text-amber-200 text-sm">— Celebrating another year of grace, growth, and keeping people alive. Happy Birthday, Jerome!</p>
+        </div>
+      </section>
       {/* KPA-aligned welcoming intro message */}
       <section className="w-full bg-amber-900/20 border-b border-amber-700/30 py-8 px-6 flex justify-center">
         <div className="max-w-3xl text-center">
@@ -313,6 +326,11 @@ export default function SvlProgressPage() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* Gifts Reflection Section: What Makes SVL Different */}
+        <section>
+          {require('./gifts').default()}
         </section>
       </main>
     </div>

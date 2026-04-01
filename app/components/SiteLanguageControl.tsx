@@ -167,6 +167,11 @@ export function SiteFrame({ children }: { children: ReactNode }) {
             {copy.layout.footerTagline}
           </p>
           <p style={{ margin: "1rem 0 0.5rem 0" }}>{copy.layout.footerMedical}</p>
+          <p style={{ margin: "1.5rem 0 0 0" }}>
+            <a href="/legal-disclaimer" style={{ color: "#7ee787", fontWeight: 700, textDecoration: "underline" }}>
+              Legal & Disclaimers
+            </a>
+          </p>
         </div>
       </footer>
     </>
