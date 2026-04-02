@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Time Academy - SVL Football</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a00 50%, #0a0a0a 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        .container { max-width: 1280px; margin: 0 auto; }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 20px 0 18px;
+            border-bottom: 3px solid #e8a000;
+            margin-bottom: 22px;
+        }
+        header h1 {
+            font-size: 2.6rem;
+            color: #e8a000;
+            text-shadow: 0 0 30px rgba(232,160,0,0.4);
+            letter-spacing: 2px;
+        }
+        header p { color: #9ca3af; font-size: 0.9rem; letter-spacing: 1px; margin-top: 4px; }
+
+        /* LAYOUT */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr 260px;
+            gap: 18px;
+        }
+
+        /* PANELS */
+        .panel {
+            background: rgba(10,10,10,0.85);
+            border: 1px solid #e8a000;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .panel-title {
+            color: #e8a000;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid #e8a000;
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+        }
+
+        /* STAT ROWS */
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 9px;
+            font-size: 0.88rem;
+        }
+        .stat-label { color: #d1d5db; }
+        .stat-value { color: #e8a000; font-weight: bold; }
+
+        .bar { width: 100%; height: 7px; background: rgba(232,160,0,0.15); border-radius: 4px; overflow: hidden; margin-top: 3px; margin-bottom: 10px; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #e8a000, #fbbf24); border-radius: 4px; transition: width 0.4s ease; }
+
+        /* FIELD */
+        .field-wrap { position: relative; width: 100%; padding-top: 50%; margin-bottom: 16px; border-radius: 6px; overflow: hidden; border: 3px solid #e8a000; }
+        .field {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, #1a5c2a 0%, #0f3d1c 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: #fff; text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            flex-direction: column; gap: 8px;
+        }
+        /* yard lines */
+        .field::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0%, transparent 9.5%,
+                rgba(255,255,255,0.12) 9.5%, rgba(255,255,255,0.12) 10%
+            );
+        }
+        /* end zones */
+        .field::after {
+            content: '';
+            position: absolute; top: 0; left: 0; bottom: 0; width: 10%;
+            background: rgba(232,160,0,0.15);
+            box-shadow: inset -1px 0 0 rgba(255,255,255,0.2);
+        }
+        .end-zone-right {
+            position: absolute; top: 0; right: 0; bottom: 0; width: 10%;
+            background: rgba(232,160,0,0.15);
+            box-shadow: inset 1px 0 0 rgba(255,255,255,0.2);
+        }
+        .ball-marker {
+            position: absolute;
+            width: 14px; height: 14px;
+            background: #d97706; border-radius: 50%;
+            box-shadow: 0 0 10px #fbbf24;
+            transition: left 0.5s ease;
+            top: 50%; transform: translateY(-50%);
+        }
+
+        /* SCOREBOARD */
+        .scoreboard {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px; margin-bottom: 16px;
+        }
+        .team-card {
+            background: rgba(232,160,0,0.08);
+            border: 1px solid #e8a000;
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        .team-name { color: #e8a000; font-weight: bold; font-size: 0.85rem; margin-bottom: 4px; }
+        .team-score { font-size: 2.4rem; font-weight: bold; color: #fff; }
+        .team-info { font-size: 0.72rem; color: #9ca3af; margin-top: 4px; }
+
+        /* GAME INFO BAR */
+        .game-bar {
+            display: flex; justify-content: space-around;
+            background: rgba(232,160,0,0.1); border: 1px solid #e8a000;
+            border-radius: 6px; padding: 8px 12px; margin-bottom: 16px;
+            font-size: 0.82rem; color: #d1d5db;
+        }
+        .game-bar span { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .game-bar strong { color: #e8a000; font-size: 1rem; }
+
+        /* PLAYCALL */
+        .play-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+
+        button {
+            padding: 11px 16px;
+            background: linear-gradient(135deg, #e8a000, #d97706);
+            color: #0a0a0a;
+            border: none; border-radius: 5px;
+            font-weight: bold; cursor: pointer;
+            font-size: 0.82rem; text-transform: uppercase;
+            letter-spacing: 0.5px; transition: all 0.25s ease;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(232,160,0,0.4); }
+        button:active { transform: translateY(0); }
+        button:disabled { background: #374151; color: #6b7280; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-wide { grid-column: 1 / -1; }
+        .btn-red { background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; }
+        .btn-red:hover { box-shadow: 0 6px 16px rgba(220,38,38,0.4); }
+        .btn-gray { background: #374151; color: #d1d5db; }
+        .btn-gray:hover { background: #4b5563; box-shadow: 0 6px 16px rgba(75,85,99,0.4); }
+
+        /* COMMENTARY */
+        .commentary {
+            background: rgba(232,160,0,0.08);
+            border-left: 3px solid #e8a000;
+            border-radius: 4px; padding: 12px;
+            font-size: 0.88rem; line-height: 1.6;
+            color: #d1d5db; min-height: 60px;
+            margin-bottom: 12px;
+        }
+        .commentary.prime { border-left-color: #fbbf24; background: rgba(251,191,36,0.08); }
+
+        /* ROSTER */
+        .player-item {
+            background: rgba(232,160,0,0.06);
+            border: 1px solid rgba(232,160,0,0.3);
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .player-item:hover { background: rgba(232,160,0,0.15); border-color: #e8a000; }
+        .player-item.active { border-color: #fbbf24; background: rgba(251,191,36,0.1); }
+        .player-pos { color: #e8a000; font-weight: bold; display: inline-block; width: 32px; font-size: 0.75rem; }
+        .player-name { color: #f3f4f6; font-weight: bold; }
+        .player-ovr { float: right; color: #fbbf24; font-weight: bold; }
+
+        /* DEION CARD */
+        .deion-card {
+            background: linear-gradient(135deg, rgba(232,160,0,0.15), rgba(0,0,0,0.5));
+            border: 2px solid #e8a000;
+            border-radius: 8px; padding: 14px;
+            margin-bottom: 16px; text-align: center;
+        }
+        .deion-name { color: #fbbf24; font-size: 1rem; font-weight: bold; letter-spacing: 1px; }
+        .deion-title { color: #9ca3af; font-size: 0.75rem; margin-bottom: 8px; }
+        .deion-badge { display: inline-block; background: #e8a000; color: #0a0a0a; font-size: 0.7rem; font-weight: bold; padding: 2px 8px; border-radius: 10px; margin: 2px; }
+
+        /* OPPONENT CARD */
+        .opponent-card {
+            background: rgba(220,38,38,0.08);
+            border: 1px solid #dc2626;
+            border-radius: 5px; padding: 10px;
+            margin-bottom: 8px; cursor: pointer;
+            transition: all 0.2s; font-size: 0.83rem;
+        }
+        .opponent-card:hover { background: rgba(220,38,38,0.18); }
+        .opponent-card.selected { border-color: #fbbf24; background: rgba(251,191,36,0.1); }
+        .opp-name { color: #fca5a5; font-weight: bold; }
+        .opp-stats { color: #9ca3af; font-size: 0.75rem; margin-top: 3px; }
+
+        /* MESSAGES */
+        .msg { padding: 14px; border-radius: 6px; margin-bottom: 12px; text-align: center; font-size: 0.9rem; }
+        .msg-win { background: rgba(16,185,129,0.15); border: 1px solid #10b981; color: #6ee7b7; }
+        .msg-loss { background: rgba(220,38,38,0.15); border: 1px solid #dc2626; color: #fca5a5; }
+        .msg-td { background: rgba(232,160,0,0.2); border: 1px solid #e8a000; color: #fbbf24; font-size: 1rem; }
+
+        /* XP bar */
+        .xp-bar { width: 100%; height: 10px; background: rgba(232,160,0,0.15); border-radius: 5px; overflow: hidden; margin-top: 4px; }
+        .xp-fill { height: 100%; background: linear-gradient(90deg, #e8a000, #fbbf24); border-radius: 5px; transition: width 0.4s ease; }
+
+        /* VIEW STATES */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>🏈 PRIME TIME ACADEMY</h1>
+        <p>SVL-KPA Football Career | Coached by "Prime Time" Deion Sanders</p>
+    </header>
+
+    <div class="main-layout">
+
+        <!-- LEFT: Player + Roster -->
+        <div class="panel">
+            <div class="panel-title">Your Team</div>
+
+            <div class="stat-row">
+                <span class="stat-label">Team Name</span>
+                <span class="stat-value" id="teamName">SVL Raiders</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Season Record</span>
+                <span class="stat-value"><span id="wins">0</span>W – <span id="losses">0</span>L</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Points Scored</span>
+                <span class="stat-value" id="totalPts">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Championship</span>
+                <span class="stat-value" id="champStatus">Not Yet</span>
+            </div>
+
+            <div style="margin: 14px 0 6px; font-size: 0.78rem; color:#9ca3af; text-transform:uppercase; letter-spacing:1px;">Team XP</div>
+            <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+            <div style="font-size:0.75rem; color:#6b7280; margin-top:4px;"><span id="xpCurrent">0</span> / <span id="xpNext">100</span> XP</div>
+
+            <div style="margin: 18px 0 10px;" class="panel-title">Roster</div>
+
+            <div id="roster"></div>
+
+            <div style="margin-top:12px;">
+                <button class="btn-gray" style="width:100%; font-size:0.78rem;" onclick="rotateRoster()">Rotate Starters</button>
+            </div>
+        </div>
+
+        <!-- CENTER: Field + Gameplay -->
+        <div class="panel">
+
+            <!-- MENU VIEW -->
+            <div id="menuView" class="view active">
+                <div class="panel-title">Select Game Mode</div>
+                <div class="field-wrap">
+                    <div class="field">
+                        <div>🏈 PRIME TIME ACADEMY</div>
+                        <div style="font-size:0.9rem; color:#d1d5db;">Built by SVL · Powered by Vision</div>
+                    </div>
+                </div>
+                <div class="play-grid" style="margin-top:12px;">
+                    <button class="btn-wide" onclick="startGame('career')">🏆 Career Mode</button>
+                    <button onclick="startGame('quick')">⚡ Quick Match</button>
+                    <button onclick="startGame('challenge')">💥 Deion Challenge</button>
+                </div>
+                <div class="commentary prime" id="menuCommentary">
+                    "Primetime doesn't wait. Pick a mode and let's BALL." — Coach Deion Sanders
+                </div>
+                <div style="margin-top:10px; font-size:0.78rem; color:#6b7280; text-align:center;">
+                    Select an opponent on the right, then choose your game mode.
+                </div>
+            </div>
+
+            <!-- MATCH VIEW -->
+            <div id="matchView" class="view">
+                <div class="panel-title" id="matchTitle">Quarter 1 — In Progress</div>
+
+                <div class="field-wrap">
+                    <div class="field">
+                        <div class="end-zone-right"></div>
+                        <div class="ball-marker" id="ballMarker" style="left:50%"></div>
+                        <div id="fieldMsg" style="font-size:1rem; z-index:2;">Ready</div>
+                    </div>
+                </div>
+
+                <div class="scoreboard">
+                    <div class="team-card">
+                        <div class="team-name" id="playerTeamLabel">SVL Raiders</div>
+                        <div class="team-score" id="playerScore">0</div>
+                        <div class="team-info" id="playerDriveInfo">1st &amp; 10 · Own 25</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name" id="oppTeamLabel">Opponent</div>
+                        <div class="team-score" id="oppScore">0</div>
+                        <div class="team-info">AI Controlled</div>
+                    </div>
+                </div>
+
+                <div class="game-bar">
+                    <span><strong id="quarter">Q1</strong><small>Quarter</small></span>
+                    <span><strong id="downDisplay">1st</strong><small>Down</small></span>
+                    <span><strong id="yardsToGo">10</strong><small>Yds to Go</small></span>
+                    <span><strong id="yardLine">25</strong><small>Yard Line</small></span>
+                    <span><strong id="timeLeft">15:00</strong><small>Time</small></span>
+                </div>
+
+                <div id="tdBanner" class="msg msg-td" style="display:none;">🏈 TOUCHDOWN! +7 Points!</div>
+
+                <div class="panel-title" style="margin-bottom:10px;">Call a Play</div>
+                <div class="play-grid" id="playButtons">
+                    <button onclick="callPlay('run-left')">🏃 Run Left</button>
+                    <button onclick="callPlay('run-right')">🏃 Run Right</button>
+                    <button onclick="callPlay('short-pass')">🎯 Short Pass</button>
+                    <button onclick="callPlay('deep-pass')">🚀 Deep Pass</button>
+                    <button onclick="callPlay('scramble')">💨 QB Scramble</button>
+                    <button onclick="callPlay('field-goal')">🥅 Field Goal</button>
+                </div>
+
+                <div class="commentary prime" id="matchCommentary" style="margin-top:12px;">
+                    Pick your play and move those chains!
+                </div>
+
+                <button class="btn-gray btn-wide" style="margin-top:10px;" onclick="goToMenu()">← Forfeit</button>
+            </div>
+
+            <!-- RESULTS VIEW -->
+            <div id="resultsView" class="view">
+                <div class="panel-title" id="resultTitle">Final Score</div>
+                <div id="resultBanner" class="msg"></div>
+                <div class="scoreboard">
+                    <div class="team-card">
+                        <div class="team-name">SVL Raiders</div>
+                        <div class="team-score" id="finalPlayerScore">0</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name" id="finalOppName">Opponent</div>
+                        <div class="team-score" id="finalOppScore">0</div>
+                    </div>
+                </div>
+                <div class="commentary prime" id="resultCommentary" style="margin-bottom:16px;"></div>
+                <div class="play-grid">
+                    <button onclick="rematch()">Rematch</button>
+                    <button class="btn-gray" onclick="goToMenu()">Menu</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT: Deion + Opponents -->
+        <div class="panel">
+
+            <!-- DEION CARD -->
+            <div class="deion-card">
+                <div class="deion-name">Deion "Prime Time" Sanders</div>
+                <div class="deion-title">Your Head Coach · Hall of Famer · Family Legend</div>
+                <div>
+                    <span class="deion-badge">2x SB Champ</span>
+                    <span class="deion-badge">8x Pro Bowl</span>
+                    <span class="deion-badge">HOF 2011</span>
+                </div>
+            </div>
+
+            <div class="panel-title">Coach's Corner</div>
+            <div class="commentary prime" id="deionSays" style="margin-bottom:16px;">
+                "Look good, feel good, play good. That's the Prime Time way. Now let's build something."
+            </div>
+
+            <div class="panel-title">Choose Opponent</div>
+            <div id="opponentList"></div>
+
+            <div class="panel-title" style="margin-top:16px;">Season Standings</div>
+            <div id="standings" style="font-size:0.8rem; color:#9ca3af; line-height:1.8;"></div>
+
+            <button class="btn-red" style="width:100%; margin-top:20px;" onclick="resetGame()">Reset Season</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// GAME DATA
+// ─────────────────────────────────────────────
+
+const ROSTER = [
+    { pos: 'QB',  name: 'J. Sanders',   ovr: 82 },
+    { pos: 'RB',  name: 'M. Williams',  ovr: 79 },
+    { pos: 'WR',  name: 'D. Jackson',   ovr: 84 },
+    { pos: 'WR',  name: 'T. Green',     ovr: 77 },
+    { pos: 'TE',  name: 'K. Brooks',    ovr: 75 },
+    { pos: 'OL',  name: 'Line Unit',    ovr: 76 },
+    { pos: 'LB',  name: 'R. Pierce',    ovr: 80 },
+    { pos: 'CB',  name: 'A. Prime',     ovr: 88 },
+    { pos: 'S',   name: 'L. Carter',    ovr: 78 },
+    { pos: 'K',   name: 'E. Flores',    ovr: 74 },
+];
+
+const OPPONENTS = [
+    { id: 'bulls',    name: 'KC Bulls',        ovr: 72, color: '#dc2626', record: '0-0' },
+    { id: 'hawks',    name: 'ATL Hawks FC',    ovr: 78, color: '#f97316', record: '0-0' },
+    { id: 'thunder',  name: 'TX Thunder',      ovr: 84, color: '#7c3aed', record: '0-0' },
+    { id: 'dynasty',  name: 'Prime Dynasty',   ovr: 95, color: '#e8a000', record: '0-0', isDeion: true },
+];
+
+const DEION_QUOTES = [
+    '"It takes talent to win but character to be a champion."',
+    '"Look good, feel good, play good. That\'s the Prime Time way."',
+    '"Football is a team sport — but greatness is very individual."',
+    '"Confidence ain\'t arrogance. Know the difference."',
+    '"Work like it depends on you. Pray like it depends on God."',
+    '"Primetime doesn\'t wait. We move with purpose."',
+    '"If you line up across from me, you better be ready."',
+    '"Champions are built in the moments when they want to quit."',
+];
+
+const DOWN_NAMES = ['1st', '2nd', '3rd', '4th'];
+
+const PLAY_OUTCOMES = {
+    'run-left':   { avgGain: 4,  variance: 5,  comment: ['Strong push off the left edge!', 'Gets stopped at the line.', 'Cut back for solid yards!'] },
+    'run-right':  { avgGain: 4,  variance: 5,  comment: ['Breaks a tackle, GAINS!', 'Stuffed in the backfield!', 'Powerful run right!'] },
+    'short-pass': { avgGain: 7,  variance: 6,  comment: ['Crisp throw, caught for the first down!', 'Incomplete — defender breaks it up.', 'Slant route opens up, good gain!'] },
+    'deep-pass':  { avgGain: 14, variance: 18, comment: ['Deep ball CONNECTED! Big play!', 'Overthrown — falls incomplete.', 'Touchdown ALERT on the streak route!'] },
+    'scramble':   { avgGain: 8,  variance: 10, comment: ['QB scrambles, picks up big yards!', 'Flushed out, throws it away.', 'Breaks two tackles! First down!'] },
+    'field-goal': { avgGain: 0,  variance: 0,  comment: ['Field goal is GOOD! +3 points!', 'Kicked wide right. No points.', 'FIELD GOAL GOOD! 3 more!'] },
+};
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+
+const state = {
+    wins: 0,
+    losses: 0,
+    totalPts: 0,
+    xp: 0,
+    xpLevel: 0,
+    champWon: false,
+    selectedOpponent: null,
+    mode: 'career',
+    match: null,
+};
+
+function freshMatch(opponentId) {
+    return {
+        opponentId,
+        playerScore: 0,
+        oppScore: 0,
+        quarter: 1,
+        down: 0,          // index into DOWN_NAMES
+        yardsToGo: 10,
+        yardLine: 25,
+        time: '15:00',
+        timeSeconds: 900,
+        playCount: 0,
+        maxPlays: 12,     // plays per simulated game
+        done: false,
+    };
+}
+
+// ─────────────────────────────────────────────
+// RENDER HELPERS
+// ─────────────────────────────────────────────
+
+function renderRoster() {
+    const el = document.getElementById('roster');
+    el.innerHTML = ROSTER.map((p, i) =>
+        `<div class="player-item ${i < 6 ? 'active' : ''}" title="${p.name} OVR ${p.ovr}">
+            <span class="player-pos">${p.pos}</span>
+            <span class="player-name">${p.name}</span>
+            <span class="player-ovr">${p.ovr}</span>
+        </div>`
+    ).join('');
+}
+
+function renderOpponents() {
+    const el = document.getElementById('opponentList');
+    el.innerHTML = OPPONENTS.map(o =>
+        `<div class="opponent-card ${state.selectedOpponent === o.id ? 'selected' : ''}"
+              id="opp-${o.id}" onclick="selectOpponent('${o.id}')">
+            <div class="opp-name">${o.isDeion ? '👑 ' : ''}${o.name}${o.isDeion ? ' (Final Boss)' : ''}</div>
+            <div class="opp-stats">OVR ${o.ovr} · Record: ${o.record}</div>
+        </div>`
+    ).join('');
+}
+
+function renderStandings() {
+    document.getElementById('standings').innerHTML = OPPONENTS.map(o =>
+        `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(232,160,0,0.1);">
+            <span>${o.name}</span><span style="color:#e8a000;">${o.record}</span>
+        </div>`
+    ).join('');
+}
+
+function updateHUD() {
+    document.getElementById('wins').textContent = state.wins;
+    document.getElementById('losses').textContent = state.losses;
+    document.getElementById('totalPts').textContent = state.totalPts;
+    document.getElementById('champStatus').textContent = state.champWon ? '🏆 Champion!' : 'Not Yet';
+
+    const xpToNext = (state.xpLevel + 1) * 100;
+    const xpPct = Math.min((state.xp / xpToNext) * 100, 100);
+    document.getElementById('xpFill').style.width = xpPct + '%';
+    document.getElementById('xpCurrent').textContent = state.xp;
+    document.getElementById('xpNext').textContent = xpToNext;
+}
+
+function setDeionQuote() {
+    const q = DEION_QUOTES[Math.floor(Math.random() * DEION_QUOTES.length)];
+    document.getElementById('deionSays').textContent = q;
+}
+
+// ─────────────────────────────────────────────
+// VIEWS
+// ─────────────────────────────────────────────
+
+function showView(id) {
+    ['menuView','matchView','resultsView'].forEach(v => {
+        document.getElementById(v).classList.toggle('active', v === id);
+    });
+}
+
+function goToMenu() {
+    setDeionQuote();
+    showView('menuView');
+}
+
+// ─────────────────────────────────────────────
+// OPPONENT SELECT
+// ─────────────────────────────────────────────
+
+function selectOpponent(id) {
+    state.selectedOpponent = id;
+    renderOpponents();
+    const opp = OPPONENTS.find(o => o.id === id);
+    document.getElementById('deionSays').textContent =
+        opp.isDeion
+        ? '"You want a piece of me?! I MADE this game. Come on then — Primetime is ready!"'
+        : `"Study ${opp.name}. Know their tendencies. Then GO OUT THERE AND DOMINATE."`;
+}
+
+// ─────────────────────────────────────────────
+// GAME START
+// ─────────────────────────────────────────────
+
+function startGame(mode) {
+    if (!state.selectedOpponent) {
+        document.getElementById('menuCommentary').textContent =
+            '⚠️ Select an opponent on the right first!';
+        return;
+    }
+    state.mode = mode;
+    state.match = freshMatch(state.selectedOpponent);
+
+    const opp = OPPONENTS.find(o => o.id === state.selectedOpponent);
+
+    document.getElementById('playerTeamLabel').textContent = 'SVL Raiders';
+    document.getElementById('oppTeamLabel').textContent = opp.name;
+    document.getElementById('playerScore').textContent = '0';
+    document.getElementById('oppScore').textContent = '0';
+    document.getElementById('matchTitle').textContent =
+        (mode === 'challenge' ? '💥 DEION CHALLENGE — ' : mode === 'quick' ? '⚡ Quick Match — ' : '🏆 Career — ') + `vs ${opp.name}`;
+
+    updateMatchHUD();
+    showView('matchView');
+    document.getElementById('matchCommentary').textContent =
+        `"Alright, ${opp.name} is on the field. Let's see what you've got. CALL YOUR PLAY." — Coach Prime`;
+}
+
+// ─────────────────────────────────────────────
+// PLAY ENGINE
+// ─────────────────────────────────────────────
+
+function teamOvr() {
+    return ROSTER.slice(0, 6).reduce((s, p) => s + p.ovr, 0) / 6;
+}
+
+function callPlay(type) {
+    const m = state.match;
+    if (!m || m.done) return;
+
+    const opp = OPPONENTS.find(o => o.id === m.opponentId);
+    const playerOvr = teamOvr();
+    const advantage = (playerOvr - opp.ovr) / 100; // typically -0.19 to +0.1
+
+    const playData = PLAY_OUTCOMES[type];
+    let gain = Math.round(playData.avgGain + (Math.random() - 0.5) * playData.variance);
+
+    // apply team OVR modifier
+    gain = Math.round(gain * (1 + advantage * 0.5));
+
+    // field goal special handling
+    if (type === 'field-goal') {
+        const fgChance = 0.65 + advantage * 0.5;
+        if (Math.random() < fgChance) {
+            m.playerScore += 3;
+            updateScore();
+            flashTD('⚽ FIELD GOAL — +3!');
+            document.getElementById('matchCommentary').textContent = playData.comment[0] + ' — Coach Prime: "Take your points!"';
+        } else {
+            document.getElementById('matchCommentary').textContent = playData.comment[1] + ' — Coach Prime: "Gotta work on that."';
+        }
+        advanceTime();
+        aiDrive();
+        return;
+    }
+
+    // touchdown on huge gain from near end zone or deep pass
+    const nearEndzone = m.yardLine > 80;
+    const isTD = type === 'deep-pass' && gain > 18 && Math.random() < 0.45;
+    const isTDRun = (type === 'run-left' || type === 'run-right') && nearEndzone && gain > 5 && Math.random() < 0.55;
+
+    if (isTD || isTDRun) {
+        m.playerScore += 7;
+        m.yardLine = 25;
+        m.down = 0;
+        m.yardsToGo = 10;
+        updateScore();
+        flashTD('🏈 TOUCHDOWN! +7!');
+        document.getElementById('matchCommentary').textContent =
+            '"THAT IS PRIMETIME FOOTBALL RIGHT THERE! TOUCHDOWN!!" — Coach Prime';
+        advanceTime();
+        aiDrive();
+        return;
+    }
+
+    // normal gain
+    gain = Math.max(-5, Math.min(gain, 25));
+    m.yardLine += gain;
+    m.yardsToGo -= gain;
+
+    const comment = playData.comment[Math.floor(Math.random() * playData.comment.length)];
+    const primeReaction = gain >= 8
+        ? '"THAT\'S what I\'m talking about! Keep rolling!"'
+        : gain >= 4
+        ? '"Good gain. Stay patient out there."'
+        : gain < 0
+        ? '"You\'re gonna have to do better than that. FOCUS."'
+        : '"We still got it. Make the next play count."';
+
+    document.getElementById('matchCommentary').textContent = comment + ' — Coach Prime: ' + primeReaction;
+
+    // first down?
+    if (m.yardsToGo <= 0 || m.yardLine >= 100) {
+        if (m.yardLine >= 100) {
+            m.playerScore += 7;
+            m.yardLine = 25;
+            m.down = 0;
+            m.yardsToGo = 10;
+            updateScore();
+            flashTD('🏈 TOUCHDOWN! +7!');
+            document.getElementById('matchCommentary').textContent = '"PUNCHED IT IN! THAT\'S PRIMETIME FOOTBALL!" — Coach Prime';
+        } else {
+            m.down = 0;
+            m.yardsToGo = 10;
+        }
+    } else {
+        m.down++;
+        if (m.down >= 4) {
+            // turnover on downs
+            m.down = 0;
+            m.yardsToGo = 10;
+            m.yardLine = 100 - m.yardLine; // flip field
+            document.getElementById('matchCommentary').textContent =
+                '"Turnover on downs. Defense, HOLD THEM." — Coach Prime';
+        }
+    }
+
+    advanceTime();
+    aiDrive();
+}
+
+function aiDrive() {
+    const m = state.match;
+    const opp = OPPONENTS.find(o => o.id === m.opponentId);
+    const advantage = (opp.ovr - teamOvr()) / 100;
+    const baseScoreChance = 0.25 + advantage * 0.4;
+    const roll = Math.random();
+
+    if (roll < baseScoreChance) {
+        const isTD = Math.random() < 0.75;
+        if (isTD) { m.oppScore += 7; }
+        else       { m.oppScore += 3; }
+        updateScore();
+    }
+
+    m.playCount++;
+    updateMatchHUD();
+
+    if (m.playCount >= m.maxPlays) {
+        endMatch();
+    }
+}
+
+function advanceTime() {
+    const m = state.match;
+    m.timeSeconds -= Math.floor(Math.random() * 45 + 20);
+    if (m.timeSeconds <= 0) {
+        m.quarter++;
+        m.timeSeconds = 900;
+    }
+    const mins = Math.floor(Math.max(0, m.timeSeconds) / 60);
+    const secs = Math.max(0, m.timeSeconds) % 60;
+    m.time = `${mins}:${secs.toString().padStart(2,'0')}`;
+    if (m.quarter > 4) { endMatch(); }
+    else { document.getElementById('quarter').textContent = 'Q' + m.quarter; }
+}
+
+function updateMatchHUD() {
+    const m = state.match;
+    document.getElementById('downDisplay').textContent = DOWN_NAMES[Math.min(m.down, 3)];
+    document.getElementById('yardsToGo').textContent = m.yardsToGo;
+    document.getElementById('yardLine').textContent = m.yardLine;
+    document.getElementById('timeLeft').textContent = m.time;
+    document.getElementById('quarter').textContent = 'Q' + m.quarter;
+    document.getElementById('playerDriveInfo').textContent =
+        `${DOWN_NAMES[Math.min(m.down, 3)]} & ${m.yardsToGo} · Ball at ${m.yardLine}`;
+
+    // move ball on field visual (10% end zone buffer on each side)
+    const pct = 10 + (m.yardLine / 100) * 80;
+    document.getElementById('ballMarker').style.left = pct + '%';
+}
+
+function updateScore() {
+    const m = state.match;
+    document.getElementById('playerScore').textContent = m.playerScore;
+    document.getElementById('oppScore').textContent = m.oppScore;
+}
+
+function flashTD(msg) {
+    const el = document.getElementById('tdBanner');
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 2800);
+}
+
+// ─────────────────────────────────────────────
+// END MATCH
+// ─────────────────────────────────────────────
+
+function endMatch() {
+    const m = state.match;
+    if (m.done) return;
+    m.done = true;
+
+    const opp = OPPONENTS.find(o => o.id === m.opponentId);
+    const playerWon = m.playerScore > m.oppScore;
+    const tie = m.playerScore === m.oppScore;
+
+    if (playerWon) {
+        state.wins++;
+        state.totalPts += m.playerScore;
+        state.xp += 25 + (opp.ovr > 85 ? 50 : 0);
+        if (m.opponentId === 'dynasty') { state.champWon = true; }
+        // update opp record
+        opp.record = updateRecord(opp.record, true);
+    } else if (!tie) {
+        state.losses++;
+        state.xp += 10;
+        opp.record = updateRecord(opp.record, false);
+    }
+
+    // XP level up
+    const xpToNext = (state.xpLevel + 1) * 100;
+    if (state.xp >= xpToNext) { state.xpLevel++; }
+
+    // boost team OVR slightly on wins
+    if (playerWon) {
+        const idx = Math.floor(Math.random() * ROSTER.length);
+        ROSTER[idx].ovr = Math.min(99, ROSTER[idx].ovr + 1);
+        renderRoster();
+    }
+
+    updateHUD();
+    renderOpponents();
+    renderStandings();
+
+    document.getElementById('finalPlayerScore').textContent = m.playerScore;
+    document.getElementById('finalOppScore').textContent = m.oppScore;
+    document.getElementById('finalOppName').textContent = opp.name;
+    document.getElementById('resultTitle').textContent = playerWon ? '🏆 VICTORY!' : tie ? '🤝 TIE GAME!' : '💀 DEFEAT';
+
+    const banner = document.getElementById('resultBanner');
+    if (tie) {
+        banner.className = 'msg';
+        banner.textContent = `${m.playerScore} – ${m.oppScore} | Hard-fought tie!`;
+    } else if (playerWon) {
+        banner.className = 'msg msg-win';
+        banner.textContent = `${m.playerScore} – ${m.oppScore} | SVL Raiders WIN!${opp.id === 'dynasty' ? ' 🏆 CHAMPION!' : ''}`;
+    } else {
+        banner.className = 'msg msg-loss';
+        banner.textContent = `${m.playerScore} – ${m.oppScore} | Come back stronger.`;
+    }
+
+    const primeQuotes = {
+        win:  '"THAT\'S PRIMETIME FOOTBALL! I trained you right. Season\'s just getting started."',
+        loss: '"You lost today — but don\'t you DARE quit. Real champions get back up every single time."',
+        tie:  '"A tie? Primetime doesn\'t accept ties — come back tomorrow and finish the job."',
+        champ:'"YOU ARE THE CHAMPION! SVL raised you, KPA sharpened you — and you went OUT THERE AND GOT IT DONE!"',
+    };
+
+    document.getElementById('resultCommentary').textContent =
+        state.champWon && m.opponentId === 'dynasty' && playerWon
+            ? primeQuotes.champ
+            : playerWon ? primeQuotes.win
+            : tie ? primeQuotes.tie
+            : primeQuotes.loss;
+
+    showView('resultsView');
+}
+
+function updateRecord(record, won) {
+    const [w, l] = record.split('-').map(Number);
+    return won ? `${w+1}-${l}` : `${w}-${l+1}`;
+}
+
+function rematch() {
+    state.match = freshMatch(state.selectedOpponent);
+    const opp = OPPONENTS.find(o => o.id === state.selectedOpponent);
+    document.getElementById('oppTeamLabel').textContent = opp.name;
+    document.getElementById('playerScore').textContent = '0';
+    document.getElementById('oppScore').textContent = '0';
+    updateMatchHUD();
+    showView('matchView');
+    document.getElementById('matchCommentary').textContent =
+        `"Rematch. Now GO SHOW \'EM WHO YOU ARE." — Coach Prime`;
+}
+
+function rotateRoster() {
+    ROSTER.sort(() => Math.random() - 0.5);
+    renderRoster();
+    setDeionQuote();
+}
+
+function resetGame() {
+    if (!confirm('Reset the entire season? All progress will be lost.')) return;
+    state.wins = 0; state.losses = 0; state.totalPts = 0;
+    state.xp = 0; state.xpLevel = 0; state.champWon = false;
+    state.selectedOpponent = null; state.match = null;
+    OPPONENTS.forEach(o => { o.record = '0-0'; });
+    updateHUD(); renderOpponents(); renderStandings(); renderRoster();
+    goToMenu();
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+renderRoster();
+renderOpponents();
+renderStandings();
+updateHUD();
+setDeionQuote();
+</script>
+</body>
+</html>
