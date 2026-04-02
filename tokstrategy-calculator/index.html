@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TokStrategy Market Value Calculator</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2e;
+      --panel-2: #16223d;
+      --text: #e8eefc;
+      --muted: #9bb0dc;
+      --accent: #2dd4bf;
+      --accent-2: #f59e0b;
+      --line: #27406f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #182846 0%, var(--bg) 50%);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #15213b 0%, #0f1930 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 8px 0; font-size: 30px; }
+    .sub { margin: 0; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: 1.1fr 1fr; }
+    }
+    .card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    input {
+      width: 100%;
+      border: 1px solid #35507f;
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    .btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: 1px solid #2f4f86;
+      background: #163158;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.primary {
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      border-color: #14b8a6;
+    }
+    .results {
+      display: grid;
+      gap: 10px;
+    }
+    .scenario {
+      border: 1px solid #314d7d;
+      border-radius: 12px;
+      padding: 14px;
+      background: #12213d;
+    }
+    .scenario h3 { margin: 0 0 6px 0; font-size: 18px; }
+    .kpi { margin: 2px 0; color: #c5d6fa; font-size: 14px; }
+    .value { color: var(--accent); font-size: 22px; font-weight: 700; margin-top: 8px; }
+    .foot {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>TokStrategy Market Value Calculator</h1>
+      <p class="sub">Sanders Viopro Labs LLC • KPA - Keep People Alive</p>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Inputs</h2>
+        <div class="row">
+          <div>
+            <label for="arr">ARR (USD)</label>
+            <input id="arr" type="number" value="1200000" min="0" step="10000" />
+          </div>
+          <div>
+            <label for="hardware">Hardware Revenue (USD)</label>
+            <input id="hardware" type="number" value="800000" min="0" step="10000" />
+          </div>
+        </div>
+
+        <h3>Conservative</h3>
+        <div class="row">
+          <div>
+            <label for="swCons">Software Multiple</label>
+            <input id="swCons" type="number" value="4" min="0" step="0.1" />
+          </div>
+          <div>
+            <label for="hwCons">Hardware Multiple</label>
+            <input id="hwCons" type="number" value="1" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="spCons">Strategic Premium (decimal)</label>
+            <input id="spCons" type="number" value="0.1" min="0" step="0.01" />
+          </div>
+        </div>
+
+        <h3>Base</h3>
+        <div class="row">
+          <div>
+            <label for="swBase">Software Multiple</label>
+            <input id="swBase" type="number" value="6" min="0" step="0.1" />
+          </div>
+          <div>
+            <label for="hwBase">Hardware Multiple</label>
+            <input id="hwBase" type="number" value="2" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="spBase">Strategic Premium (decimal)</label>
+            <input id="spBase" type="number" value="0.2" min="0" step="0.01" />
+          </div>
+        </div>
+
+        <h3>Aggressive</h3>
+        <div class="row">
+          <div>
+            <label for="swAgg">Software Multiple</label>
+            <input id="swAgg" type="number" value="10" min="0" step="0.1" />
+          </div>
+          <div>
+            <label for="hwAgg">Hardware Multiple</label>
+            <input id="hwAgg" type="number" value="3" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="spAgg">Strategic Premium (decimal)</label>
+            <input id="spAgg" type="number" value="0.4" min="0" step="0.01" />
+          </div>
+        </div>
+
+        <div class="btns">
+          <button class="primary" id="calcBtn">Calculate</button>
+          <button id="resetBtn">Reset Defaults</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Valuation Output</h2>
+        <div class="results" id="results"></div>
+      </section>
+    </div>
+
+    <p class="foot">Formula: ((ARR x Software Multiple) + (Hardware Revenue x Hardware Multiple)) x (1 + Strategic Premium)</p>
+  </div>
+
+  <script>
+    const defaults = {
+      arr: 1200000,
+      hardware: 800000,
+      swCons: 4,
+      hwCons: 1,
+      spCons: 0.1,
+      swBase: 6,
+      hwBase: 2,
+      spBase: 0.2,
+      swAgg: 10,
+      hwAgg: 3,
+      spAgg: 0.4,
+    };
+
+    function usd(n) {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+    }
+
+    function val(id) {
+      return Number(document.getElementById(id).value || 0);
+    }
+
+    function compute(arr, hw, sw, hm, sp) {
+      const recurring = arr * sw;
+      const hardware = hw * hm;
+      const subtotal = recurring + hardware;
+      const premiumAmt = subtotal * sp;
+      const total = subtotal + premiumAmt;
+      return { recurring, hardware, subtotal, premiumAmt, total };
+    }
+
+    function renderScenario(title, r) {
+      return `
+        <article class="scenario">
+          <h3>${title}</h3>
+          <p class="kpi">Recurring value: ${usd(r.recurring)}</p>
+          <p class="kpi">Hardware value: ${usd(r.hardware)}</p>
+          <p class="kpi">Subtotal: ${usd(r.subtotal)}</p>
+          <p class="kpi">Strategic premium: ${usd(r.premiumAmt)}</p>
+          <p class="value">Estimated market value: ${usd(r.total)}</p>
+        </article>
+      `;
+    }
+
+    function calculate() {
+      const arr = val("arr");
+      const hardware = val("hardware");
+
+      const cons = compute(arr, hardware, val("swCons"), val("hwCons"), val("spCons"));
+      const base = compute(arr, hardware, val("swBase"), val("hwBase"), val("spBase"));
+      const agg = compute(arr, hardware, val("swAgg"), val("hwAgg"), val("spAgg"));
+
+      document.getElementById("results").innerHTML =
+        renderScenario("Conservative", cons) +
+        renderScenario("Base", base) +
+        renderScenario("Aggressive", agg);
+    }
+
+    function reset() {
+      Object.entries(defaults).forEach(([k, v]) => {
+        document.getElementById(k).value = v;
+      });
+      calculate();
+    }
+
+    document.getElementById("calcBtn").addEventListener("click", calculate);
+    document.getElementById("resetBtn").addEventListener("click", reset);
+    reset();
+  </script>
+</body>
+</html>
