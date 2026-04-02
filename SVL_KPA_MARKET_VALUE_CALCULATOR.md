@@ -34,6 +34,24 @@ Run this from the project root:
 node scripts/svl-market-value-calculator.js
 ```
 
+Run with custom ARR and hardware inputs:
+
+```bash
+node scripts/svl-market-value-calculator.js --arr 2500000 --hardware 1500000
+```
+
+Optional scenario tuning flags:
+
+- Software multiples: --sw-cons, --sw-base, --sw-agg
+- Hardware multiples: --hw-cons, --hw-base, --hw-agg
+- Strategic premium (decimal): --sp-cons, --sp-base, --sp-agg
+
+Example with custom scenario tuning:
+
+```bash
+node scripts/svl-market-value-calculator.js --arr 2500000 --hardware 1500000 --sw-base 7 --hw-base 2.5 --sp-base 0.25
+```
+
 ## Notes
 
 - This is a directional valuation model for planning and negotiations.

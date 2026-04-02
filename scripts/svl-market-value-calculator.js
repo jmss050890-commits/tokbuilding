@@ -18,6 +18,23 @@ const DEFAULTS = {
   },
 };
 
+function getArgValue(flag) {
+  const idx = process.argv.indexOf(flag);
+  if (idx === -1 || idx + 1 >= process.argv.length) {
+    return undefined;
+  }
+  return process.argv[idx + 1];
+}
+
+function parseNumberArg(flag, fallback) {
+  const raw = getArgValue(flag);
+  if (raw === undefined) {
+    return fallback;
+  }
+  const num = Number(raw);
+  return Number.isFinite(num) ? num : fallback;
+}
+
 function parseCurrency(value) {
   return Number(value.toFixed(2));
 }
@@ -55,34 +72,55 @@ function printScenario(name, result) {
 }
 
 function run() {
+  const arr = parseNumberArg("--arr", DEFAULTS.arr);
+  const hardwareRevenue = parseNumberArg("--hardware", DEFAULTS.hardwareRevenue);
+
+  const softwareMultiple = {
+    conservative: parseNumberArg("--sw-cons", DEFAULTS.softwareMultiple.conservative),
+    base: parseNumberArg("--sw-base", DEFAULTS.softwareMultiple.base),
+    aggressive: parseNumberArg("--sw-agg", DEFAULTS.softwareMultiple.aggressive),
+  };
+
+  const hardwareMultiple = {
+    conservative: parseNumberArg("--hw-cons", DEFAULTS.hardwareMultiple.conservative),
+    base: parseNumberArg("--hw-base", DEFAULTS.hardwareMultiple.base),
+    aggressive: parseNumberArg("--hw-agg", DEFAULTS.hardwareMultiple.aggressive),
+  };
+
+  const strategicPremium = {
+    conservative: parseNumberArg("--sp-cons", DEFAULTS.strategicPremium.conservative),
+    base: parseNumberArg("--sp-base", DEFAULTS.strategicPremium.base),
+    aggressive: parseNumberArg("--sp-agg", DEFAULTS.strategicPremium.aggressive),
+  };
+
   const conservative = computeValuation({
-    arr: DEFAULTS.arr,
-    hardwareRevenue: DEFAULTS.hardwareRevenue,
-    softwareMultiple: DEFAULTS.softwareMultiple.conservative,
-    hardwareMultiple: DEFAULTS.hardwareMultiple.conservative,
-    strategicPremium: DEFAULTS.strategicPremium.conservative,
+    arr,
+    hardwareRevenue,
+    softwareMultiple: softwareMultiple.conservative,
+    hardwareMultiple: hardwareMultiple.conservative,
+    strategicPremium: strategicPremium.conservative,
   });
 
   const base = computeValuation({
-    arr: DEFAULTS.arr,
-    hardwareRevenue: DEFAULTS.hardwareRevenue,
-    softwareMultiple: DEFAULTS.softwareMultiple.base,
-    hardwareMultiple: DEFAULTS.hardwareMultiple.base,
-    strategicPremium: DEFAULTS.strategicPremium.base,
+    arr,
+    hardwareRevenue,
+    softwareMultiple: softwareMultiple.base,
+    hardwareMultiple: hardwareMultiple.base,
+    strategicPremium: strategicPremium.base,
   });
 
   const aggressive = computeValuation({
-    arr: DEFAULTS.arr,
-    hardwareRevenue: DEFAULTS.hardwareRevenue,
-    softwareMultiple: DEFAULTS.softwareMultiple.aggressive,
-    hardwareMultiple: DEFAULTS.hardwareMultiple.aggressive,
-    strategicPremium: DEFAULTS.strategicPremium.aggressive,
+    arr,
+    hardwareRevenue,
+    softwareMultiple: softwareMultiple.aggressive,
+    hardwareMultiple: hardwareMultiple.aggressive,
+    strategicPremium: strategicPremium.aggressive,
   });
 
   console.log("SVL-KPA Market Value Calculator");
   console.log("Inputs:");
-  console.log(`- ARR: ${formatUSD(DEFAULTS.arr)}`);
-  console.log(`- Hardware revenue: ${formatUSD(DEFAULTS.hardwareRevenue)}`);
+  console.log(`- ARR: ${formatUSD(arr)}`);
+  console.log(`- Hardware revenue: ${formatUSD(hardwareRevenue)}`);
 
   printScenario("Conservative", conservative);
   printScenario("Base", base);
