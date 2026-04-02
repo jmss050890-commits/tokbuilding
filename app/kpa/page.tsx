@@ -94,6 +94,7 @@ export default function KPA() {
       <div className="bg-slate-900 border-t border-slate-800 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">{pageCopy.footer}</p>
+          <p className="text-slate-300">Sanders Viopro Labs LLC</p>
         </div>
       </div>
     </div>

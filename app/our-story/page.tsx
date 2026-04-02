@@ -546,6 +546,7 @@ export default function OurStoryPage() {
         </div>
         <div className="border-t border-purple-800/30 mt-8 pt-8 text-center text-purple-400 text-sm">
           <p>{pageCopy.footer.copyright}</p>
+          <p className="mt-2">Sanders Viopro Labs LLC</p>
         </div>
       </footer>
     </div>

@@ -372,6 +372,7 @@ export default function MemorialMembershipPage() {
           <p className="text-amber-50/60">
             Start free, upgrade anytime. Remembering love helps heal.
           </p>
+          <p className="text-amber-100/80">Sanders Viopro Labs LLC</p>
           <div className="flex gap-4 justify-center">
             <Link
               href="/memorials"

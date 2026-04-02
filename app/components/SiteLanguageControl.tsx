@@ -166,6 +166,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
           <p style={{ margin: "1rem 0 0.5rem 0", color: "#d7d7d7", fontWeight: 700, letterSpacing: "0.03em" }}>
             {copy.layout.footerTagline}
           </p>
+          <p style={{ margin: "0.5rem 0", color: "#d7d7d7", fontWeight: 700 }}>Sanders Viopro Labs LLC</p>
           <p style={{ margin: "1rem 0 0.5rem 0" }}>{copy.layout.footerMedical}</p>
           <p style={{ margin: "1.5rem 0 0 0" }}>
             <a href="/legal-disclaimer" style={{ color: "#7ee787", fontWeight: 700, textDecoration: "underline" }}>

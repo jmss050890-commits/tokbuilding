@@ -363,6 +363,7 @@ export default function TokSmartLanding() {
             <p className="text-center text-slate-400 text-sm">
               © 2026 TokSmart. Your AI Safety Coach. Part of the KPA Mission.
             </p>
+            <p className="text-center text-slate-400 text-sm mt-2">Sanders Viopro Labs LLC</p>
           </div>
         </div>
       </footer>

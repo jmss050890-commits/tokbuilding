@@ -167,6 +167,7 @@ export default function MemorialsLandingPage() {
           <p>
             SVL Legacy Vault is powered by Keep People Alive mission
           </p>
+          <p className="mt-2 text-slate-300">Sanders Viopro Labs LLC</p>
         </div>
       </div>
     </div>

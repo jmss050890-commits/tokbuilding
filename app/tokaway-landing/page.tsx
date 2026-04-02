@@ -794,6 +794,7 @@ export default function TokAwayLanding() {
             <p className="text-center text-slate-400 text-sm">
               © 2026 TokAway. Part of the KPA Mission - Keep People Alive.
             </p>
+            <p className="text-center text-slate-400 text-sm mt-2">Sanders Viopro Labs LLC</p>
           </div>
         </div>
       </footer>
@@ -1002,6 +1003,7 @@ export default function TokAwayLanding() {
 
           <div className="border-t border-slate-700 pt-6 text-center text-slate-500 text-sm">
             <p>&copy; 2024 Tok Building Ecosystem. All rights reserved.</p>
+            <p className="mt-2">Sanders Viopro Labs LLC</p>
           </div>
         </div>
       </footer>

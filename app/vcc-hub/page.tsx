@@ -362,7 +362,7 @@ export default function VCCHub() {
           zIndex: 1,
         }}
       >
-        <p>Sanders Viopro Labs · Mr. KPA · Verified Signature Authority · The Lab</p>
+        <p>Sanders Viopro Labs LLC · Mr. KPA · Verified Signature Authority · The Lab</p>
         <p style={{ marginTop: 12 }}>Protect Lives. Empower Communities. Build the Future.</p>
       </footer>
     </div>

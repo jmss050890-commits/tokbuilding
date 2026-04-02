@@ -138,6 +138,7 @@ export default function CommunityMemorialsPage() {
             <p className="text-xs text-amber-600/70 italic">
               {SITE_COPY.memorials.footerVerse}
             </p>
+            <p className="text-sm text-slate-300 mt-2">Sanders Viopro Labs LLC</p>
           </div>
         </div>
       </div>

@@ -423,6 +423,7 @@ export default function TokFaithPage() {
         <p className="mt-4">
           {copy.tokfaith.footer.disclaimer}
         </p>
+        <p className="mt-4">Sanders Viopro Labs LLC</p>
       </footer>
     </div>
     </>

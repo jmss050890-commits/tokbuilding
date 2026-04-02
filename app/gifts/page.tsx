@@ -106,7 +106,8 @@ export default function GiftsPage() {
 
       <footer className="mt-12 text-center text-gray-500 text-sm">
         With gratitude to all who share their gifts. Hare Krishna. <br />
-        — Giridhari Das
+        — Giridhari Das <br />
+        Sanders Viopro Labs LLC
       </footer>
         {/* SVL Strategic Archive Visual Gifts - April 1, 2026 */}
         <section className="mt-16 border rounded-lg p-6 bg-white/90 shadow-lg">

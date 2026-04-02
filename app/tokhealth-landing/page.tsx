@@ -277,6 +277,7 @@ export default function TokHealthLanding() {
             <p className="text-center text-slate-400 text-sm">
               {landingCopy.footerCopyright}
             </p>
+            <p className="text-center text-slate-400 text-sm mt-2">Sanders Viopro Labs LLC</p>
           </div>
         </div>
       </footer>

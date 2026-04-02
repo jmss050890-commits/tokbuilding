@@ -4,6 +4,7 @@
 
 import Link from 'next/link';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+import FacebookPostEmbed from '@/app/components/FacebookPostEmbed';
 
 export default function SandersVioProLabs() {
   const copy = useSiteCopy();
@@ -176,12 +177,26 @@ export default function SandersVioProLabs() {
             <p className="text-slate-400">{pageCopy.initiatives.thinkSpeakWork}</p>
           </Link>
         </div>
+
+        {/* Facebook Post Embed */}
+        <div className="mb-16 bg-slate-900/60 rounded-xl border border-purple-700/30 p-6 md:p-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Latest TokHealth KPA Post</h2>
+          <p className="text-slate-300 mb-6">Community updates from our official Facebook page.</p>
+          <FacebookPostEmbed
+            postUrl="https://www.facebook.com/photo/?fbid=122106758763230551&set=a.122094869259230551"
+            permalinkUrl="https://www.facebook.com/permalink.php?story_fbid=122106758763230551&id=61586916537316&substory_index=1412421604251535"
+            pageUrl="https://www.facebook.com/people/TokHealth-KPA/61586916537316/"
+            pageName="TokHealth KPA"
+            postedLabel="Wednesday, April 1, 2026"
+          />
+        </div>
       </div>
 
       {/* Footer */}
       <div className="bg-slate-900 border-t border-slate-800 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">{pageCopy.footerLine1}</p>
+          <p className="text-slate-300 mb-4">Sanders Viopro Labs LLC</p>
           <p className="text-sm text-slate-300 mb-4">The result of Next.JS meeting God's Vision Through SVL to KPA</p>
           <p className="text-xs text-slate-500">#Sandersvioprolabs | #KPA-Keeppeoplealive | #thinkspeakworkandwatchGodwork4U</p>
         </div>
