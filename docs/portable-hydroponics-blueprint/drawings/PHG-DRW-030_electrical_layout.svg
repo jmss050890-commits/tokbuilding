@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#111827"/>
+  <text x="40" y="52" fill="#e5e7eb" font-size="28" font-family="Arial">PHG-DRW-030 Electrical Layout (Rev A)</text>
+  <text x="40" y="80" fill="#9ca3af" font-size="16" font-family="Arial">Base SKU: 12V DC pump path with inline fuse and switch</text>
+
+  <rect x="120" y="230" width="200" height="90" rx="8" fill="#1f2937" stroke="#93c5fd" stroke-width="2"/>
+  <text x="145" y="285" fill="#dbeafe" font-size="16" font-family="Arial">AC Adapter 12V 1.5A</text>
+
+  <line x1="320" y1="275" x2="470" y2="275" stroke="#f59e0b" stroke-width="4"/>
+  <rect x="470" y="245" width="120" height="60" rx="8" fill="#1f2937" stroke="#f59e0b" stroke-width="2"/>
+  <text x="498" y="282" fill="#fde68a" font-size="16" font-family="Arial">Fuse 2A</text>
+
+  <line x1="590" y1="275" x2="730" y2="275" stroke="#f59e0b" stroke-width="4"/>
+  <rect x="730" y="245" width="120" height="60" rx="8" fill="#1f2937" stroke="#34d399" stroke-width="2"/>
+  <text x="760" y="282" fill="#d1fae5" font-size="16" font-family="Arial">Switch</text>
+
+  <line x1="850" y1="275" x2="1020" y2="275" stroke="#f59e0b" stroke-width="4"/>
+  <rect x="1020" y="230" width="130" height="90" rx="8" fill="#1f2937" stroke="#22d3ee" stroke-width="2"/>
+  <text x="1044" y="285" fill="#a5f3fc" font-size="16" font-family="Arial">Air Pump</text>
+
+  <line x1="1085" y1="320" x2="1085" y2="430" stroke="#64748b" stroke-width="3"/>
+  <line x1="1085" y1="430" x2="220" y2="430" stroke="#64748b" stroke-width="3"/>
+  <line x1="220" y1="430" x2="220" y2="320" stroke="#64748b" stroke-width="3"/>
+  <text x="240" y="420" fill="#94a3b8" font-size="14" font-family="Arial">Ground return path</text>
+
+  <text x="120" y="560" fill="#d1d5db" font-size="16" font-family="Arial">Safety notes: DC low-voltage only, UL/ETL listed adapter, strain relief at pump entry.</text>
+</svg>

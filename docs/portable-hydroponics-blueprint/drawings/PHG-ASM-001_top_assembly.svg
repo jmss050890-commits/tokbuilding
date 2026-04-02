@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#0b1020"/>
+  <text x="40" y="50" fill="#e2e8f0" font-size="28" font-family="Arial">PHG-ASM-001 Top Assembly (Rev A)</text>
+  <text x="40" y="82" fill="#94a3b8" font-size="16" font-family="Arial">SVL Portable Hydroponic Garden System - Reference Assembly Layout</text>
+
+  <rect x="140" y="170" width="920" height="430" rx="24" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+  <text x="470" y="645" fill="#bae6fd" font-size="18" font-family="Arial">Reservoir Body 420 x 300 x 280 mm (10L)</text>
+
+  <rect x="180" y="200" width="840" height="120" rx="16" fill="#334155" stroke="#22d3ee" stroke-width="2"/>
+  <text x="510" y="190" fill="#a5f3fc" font-size="16" font-family="Arial">Grow Deck Lid</text>
+
+  <g fill="#94a3b8" stroke="#22d3ee" stroke-width="2">
+    <circle cx="280" cy="260" r="32"/><circle cx="420" cy="260" r="32"/><circle cx="560" cy="260" r="32"/>
+    <circle cx="700" cy="260" r="32"/><circle cx="840" cy="260" r="32"/><circle cx="980" cy="260" r="32"/>
+  </g>
+  <text x="240" y="315" fill="#67e8f9" font-size="14" font-family="Arial">6 x Net Pot Sites (2in)</text>
+
+  <rect x="240" y="410" width="130" height="70" rx="8" fill="#0f172a" stroke="#fbbf24" stroke-width="2"/>
+  <text x="252" y="452" fill="#fde68a" font-size="14" font-family="Arial">12V Air Pump</text>
+  <line x1="370" y1="445" x2="540" y2="445" stroke="#f59e0b" stroke-width="3"/>
+  <circle cx="560" cy="445" r="10" fill="#1f2937" stroke="#f59e0b" stroke-width="2"/>
+  <text x="572" y="450" fill="#fde68a" font-size="12" font-family="Arial">Check Valve</text>
+  <line x1="570" y1="445" x2="760" y2="470" stroke="#f59e0b" stroke-width="3"/>
+  <circle cx="780" cy="474" r="18" fill="#334155" stroke="#f59e0b" stroke-width="2"/>
+  <text x="804" y="480" fill="#fde68a" font-size="12" font-family="Arial">Airstone</text>
+
+  <line x1="180" y1="700" x2="1020" y2="700" stroke="#64748b" stroke-width="1"/>
+  <text x="180" y="730" fill="#cbd5e1" font-size="14" font-family="Arial">Draft engineering reference only. Final fabrication requires tolerance stack review.</text>
+</svg>

@@ -1,0 +1,13 @@
+item_no,part_number,description,material,supplier,supplier_part_no,unit_cost_usd,qty_per_unit,lead_time_days,alternate_supplier,alternate_part_no,compliance_notes
+1,SVL-PHG-001,Reservoir body 10L,Food-grade PP,Uline,S-22781,12.50,1,5,McMaster-Carr,8659K44,Food-contact declaration required
+2,SVL-PHG-002,Grow deck lid 6-site,Food-grade PP,TAP Plastics,CUT-PP-420x300,9.80,1,7,Professional Plastics,PP-SHEET-1/8,Food-contact declaration required
+3,SVL-PHG-003,Net pot set 2in x6,HDPE,HydroFarm,HGNP2BK,3.60,1,4,General Hydroponics,GH-NP-2,Food-contact compliant
+4,SVL-PHG-004,12V micro air pump 3.5W,ABS shell,Active Aqua,AAPA15L,14.90,1,6,VIVOSUN,AP-15L,Electrical safety cert required
+5,SVL-PHG-005,Air tubing 6mm x 2m,Silicone,HydroFarm,HG6MMTUBE,2.20,1,4,VIVOSUN,TUBE-6MM,Food-safe tubing
+6,SVL-PHG-006,Inline check valve,PP,HydroFarm,HGCV6,1.10,1,4,AquaMiracle,CV-6MM,Water-safe
+7,SVL-PHG-007,Ceramic airstone 2in,Ceramic,HydroFarm,HGAS2,1.90,1,4,VIVOSUN,AS-2IN,N/A
+8,SVL-PHG-008,Power adapter 12V 1.5A,Electrical,Mean Well,GST18A12-P1J,8.40,1,8,CUI SDI Technologies,SDI18-12-U-P5,UL/ETL listed only
+9,SVL-PHG-009,Lid gasket strip,Silicone 50A,Trim-Lok,X145BT,2.95,1,10,McMaster-Carr,12335A54,Food-safe silicone
+10,SVL-PHG-010,Fastener kit M3/M4,Stainless steel 18-8,McMaster-Carr,91290A110,1.75,1,3,Fastenal,M3-M4-SS-KIT,Corrosion resistant
+11,SVL-PHG-011,pH test strips 80ct,Paper reagent,General Hydroponics,GH-PH-TEST,4.25,1,5,API,STRIP-PH-80,Training accessory
+12,SVL-PHG-012,Nutrient starter A/B 250ml,Liquid nutrient,General Hydroponics,FLORA-MICRO-GRO-BLOOM,7.80,1,6,FoxFarm,HYDRO-TRIO-SET,Not for direct consumption
