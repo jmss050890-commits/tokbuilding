@@ -777,16 +777,16 @@ export default function TokAwayLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="mailto:support@tokaway.app" className="hover:text-blue-400">Email Support</a></li>
+                <li><a href="mailto:support@sandersvioprolabs.com" className="hover:text-blue-400">Email Support</a></li>
                 <li><a href="/tokaway-landing" className="hover:text-blue-400">FAQ</a></li>
-                <li><a href="https://tokaway.app/privacy" className="hover:text-blue-400">Privacy</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-blue-400">Privacy</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Legal</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="https://tokaway.app/privacy" className="hover:text-blue-400">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-blue-400">Terms of Service</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-blue-400">Privacy Policy</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-blue-400">Terms of Service</a></li>
               </ul>
             </div>
           </div>
@@ -950,15 +950,15 @@ export default function TokAwayLanding() {
             <div>
               <h4 className="text-white font-bold mb-4">Our Brands</h4>
               <nav className="space-y-2">
-                <Link href="/Sanders-Viopro-Labs" className="text-slate-400 hover:text-blue-400 transition">
+                <Link href="/sanders-viopro-labs" className="text-slate-400 hover:text-blue-400 transition">
                   Sanders Viopro Labs
                 </Link>
                 <br />
-                <Link href="/KPA" className="text-slate-400 hover:text-blue-400 transition">
+                <Link href="/kpa" className="text-slate-400 hover:text-blue-400 transition">
                   KPA
                 </Link>
                 <br />
-                <Link href="/Think-Speak-Work" className="text-slate-400 hover:text-blue-400 transition">
+                <Link href="/think-speak-work" className="text-slate-400 hover:text-blue-400 transition">
                   Think Speak Work
                 </Link>
               </nav>
@@ -986,15 +986,15 @@ export default function TokAwayLanding() {
             <div>
               <h4 className="text-white font-bold mb-4">Legal</h4>
               <nav className="space-y-2">
-                <Link href="/privacy" className="text-slate-400 hover:text-blue-400 transition">
+                <Link href="/legal-disclaimer.md" className="text-slate-400 hover:text-blue-400 transition">
                   Privacy Policy
                 </Link>
                 <br />
-                <Link href="/terms" className="text-slate-400 hover:text-blue-400 transition">
+                <Link href="/legal-disclaimer.md" className="text-slate-400 hover:text-blue-400 transition">
                   Terms of Service
                 </Link>
                 <br />
-                <Link href="/contact" className="text-slate-400 hover:text-blue-400 transition">
+                <Link href="/sanders-viopro-labs" className="text-slate-400 hover:text-blue-400 transition">
                   Contact
                 </Link>
               </nav>

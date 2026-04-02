@@ -353,15 +353,15 @@ export default function TokThruLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="mailto:support@tokthru.app" className="hover:text-purple-400">Email Support</a></li>
-                <li><a href="https://tokthru.app/privacy" className="hover:text-purple-400">Privacy</a></li>
+                <li><a href="mailto:support@sandersvioprolabs.com" className="hover:text-purple-400">Email Support</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-purple-400">Privacy</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Legal</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="https://tokthru.app/privacy" className="hover:text-purple-400">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-purple-400">Terms</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-purple-400">Privacy Policy</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-purple-400">Terms</a></li>
               </ul>
             </div>
           </div>

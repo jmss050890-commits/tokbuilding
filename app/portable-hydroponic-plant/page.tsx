@@ -18,7 +18,7 @@ export default function PortableHydroponicPlant() {
         <div className="mt-8 text-green-300 font-semibold">
           Ready to transform your space and your health?
           <br />
-          <a href="/contact" className="underline text-green-400 hover:text-green-300">Contact SVL to Keep People Alive</a>
+          <a href="/sanders-viopro-labs" className="underline text-green-400 hover:text-green-300">Contact SVL to Keep People Alive</a>
         </div>
       </div>
     </main>

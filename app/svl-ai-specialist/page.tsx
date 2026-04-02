@@ -20,7 +20,7 @@ export default function SVLAISpecialist() {
       <p className="mt-8 text-green-300 font-semibold">
         Want to learn more or partner with SVL?
         <br />
-        <a href="/contact" className="underline text-green-400 hover:text-green-300">Contact SVL to Keep People Alive</a>
+        <a href="/sanders-viopro-labs" className="underline text-green-400 hover:text-green-300">Contact SVL to Keep People Alive</a>
       </p>
     </main>
   );

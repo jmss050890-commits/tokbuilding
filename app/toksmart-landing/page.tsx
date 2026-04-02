@@ -347,15 +347,15 @@ export default function TokSmartLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="mailto:support@toksmart.app" className="hover:text-orange-400">Email Support</a></li>
-                <li><a href="https://toksmart.app/privacy" className="hover:text-orange-400">Privacy</a></li>
+                <li><a href="mailto:support@sandersvioprolabs.com" className="hover:text-orange-400">Email Support</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-orange-400">Privacy</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Legal</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="https://toksmart.app/privacy" className="hover:text-orange-400">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-orange-400">Terms</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-orange-400">Privacy Policy</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-orange-400">Terms</a></li>
               </ul>
             </div>
           </div>
