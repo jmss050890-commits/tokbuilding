@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Court Legends - Tennis Career Game</title>
+    <title>SVL-KPA Court Legends - Wade Tennis Career Game</title>
     <style>
         * {
             margin: 0;
@@ -42,6 +42,25 @@
             font-size: 0.95rem;
             color: #9ca3af;
             letter-spacing: 1px;
+        }
+
+        .audio-controls {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .audio-btn {
+            background: rgba(20, 184, 166, 0.15);
+            color: #d1d5db;
+            border: 1px solid rgba(20, 184, 166, 0.55);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
         }
 
         .main-layout {
@@ -367,8 +386,12 @@
 <body>
     <div class="container">
         <header>
-            <h1>⚾ COURT LEGENDS</h1>
-            <p>Tennis Career Game | Challenge the Williams Sisters</p>
+            <h1>⚾ SVL-KPA COURT LEGENDS</h1>
+            <p>Wade Tennis Career Game | Challenge the Williams Sisters</p>
+            <div class="audio-controls">
+                <button class="audio-btn" id="muteBtn" type="button">Mute: Off</button>
+                <button class="audio-btn" id="replayIntroBtn" type="button">Replay Briefing</button>
+            </div>
         </header>
 
         <div class="main-layout">
@@ -443,7 +466,7 @@
                     <div id="menuView" class="game-state">
                         <div class="state-title">Career Mode</div>
                         <div class="court" style="height: 300px; font-size: 1.8rem; flex-direction: column; gap: 20px;">
-                            <div>🎾 Welcome to Court Legends 🎾</div>
+                            <div>🎾 Welcome to SVL-KPA Court Legends 🎾</div>
                             <div style="font-size: 1rem; color: #9ca3af;">Build your tennis career and challenge the legends</div>
                         </div>
                         <div class="action-buttons" style="margin-top: 20px;">
@@ -524,7 +547,7 @@
                 </div>
 
                 <div class="message-box" id="commentaryBox">
-                    "Build your game. Master the fundamentals. Then challenge the greatest." - Court Legends
+                    "Build your game. Master the fundamentals. Then challenge the greatest." - SVL-KPA Court Legends
                 </div>
 
                 <button class="reset-button" onclick="resetCareer()">Reset Career</button>
@@ -549,7 +572,10 @@
             selectedOpponent: null,
             matchScore: { player: 0, opponent: 0, playerGames: 0, opponentGames: 0 },
             serenaWins: 0,
-            venusWins: 0
+            venusWins: 0,
+            introSpoken: false,
+            isMuted: false,
+            audioCtx: null
         };
 
         const opponents = {
@@ -568,6 +594,108 @@
                 stats: '7 Grand Slams'
             }
         };
+
+        function ensureAudioCtx() {
+            if (!gameState.audioCtx) {
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                if (Ctx) {
+                    gameState.audioCtx = new Ctx();
+                }
+            }
+            return gameState.audioCtx;
+        }
+
+        function playTone(type) {
+            if (gameState.isMuted) {
+                return;
+            }
+            const ctx = ensureAudioCtx();
+            if (!ctx) {
+                return;
+            }
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            if (type === 'pointWin') {
+                osc.frequency.setValueAtTime(620, now);
+                osc.frequency.linearRampToValueAtTime(760, now + 0.08);
+            } else if (type === 'pointLose') {
+                osc.frequency.setValueAtTime(420, now);
+                osc.frequency.linearRampToValueAtTime(300, now + 0.1);
+            } else if (type === 'victory') {
+                osc.frequency.setValueAtTime(520, now);
+                osc.frequency.linearRampToValueAtTime(860, now + 0.18);
+            } else if (type === 'defeat') {
+                osc.frequency.setValueAtTime(360, now);
+                osc.frequency.linearRampToValueAtTime(220, now + 0.2);
+            }
+
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+            osc.type = type === 'victory' ? 'triangle' : 'sine';
+            osc.start(now);
+            osc.stop(now + 0.24);
+        }
+
+        function getBriefingLine() {
+            if (gameState.selectedOpponent === 'serena') {
+                return 'Serena is selected. Stay aggressive early and protect your serve.';
+            }
+            if (gameState.selectedOpponent === 'venus') {
+                return 'Venus is selected. Use quick returns and force long rallies.';
+            }
+            return 'Select your opponent, play with confidence, and control the match tempo.';
+        }
+
+        function speakIntro(forceReplay) {
+            if (gameState.isMuted) {
+                return;
+            }
+            if (!forceReplay && gameState.introSpoken) {
+                return;
+            }
+
+            gameState.introSpoken = true;
+            const synth = window.speechSynthesis;
+            if (!synth) {
+                return;
+            }
+
+            const utter = new SpeechSynthesisUtterance(
+                'Player ' + gameState.playerName + ', welcome to SVL-KPA Court Legends. ' + getBriefingLine()
+            );
+            utter.rate = 1;
+            utter.pitch = 1.03;
+            synth.cancel();
+            synth.speak(utter);
+        }
+
+        function unlockAudioIntro() {
+            ensureAudioCtx();
+            speakIntro(false);
+        }
+
+        function updateMuteButton() {
+            document.getElementById('muteBtn').textContent = gameState.isMuted ? 'Mute: On' : 'Mute: Off';
+        }
+
+        function toggleMute() {
+            gameState.isMuted = !gameState.isMuted;
+            updateMuteButton();
+            if (gameState.isMuted && window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function replayBriefing() {
+            unlockAudioIntro();
+            speakIntro(true);
+        }
 
         function updateUI() {
             document.getElementById('playerName').textContent = gameState.playerName;
@@ -605,6 +733,7 @@
         }
 
         function startPractice() {
+            unlockAudioIntro();
             // Practice launches immediately against a default opponent.
             gameState.selectedOpponent = 'venus';
             document.getElementById('commentaryBox').textContent =
@@ -614,6 +743,7 @@
         }
 
         function selectOpponent(opponent) {
+            unlockAudioIntro();
             gameState.selectedOpponent = opponent;
             document.getElementById('commentaryBox').textContent = 
                 `You've selected ${opponents[opponent].name}. Ready to play?`;
@@ -621,6 +751,7 @@
         }
 
         function startCareer() {
+            unlockAudioIntro();
             if (!gameState.selectedOpponent) {
                 gameState.selectedOpponent = 'serena';
                 document.getElementById('commentaryBox').textContent =
@@ -671,10 +802,12 @@
                 gameState.matchScore.player++;
                 document.getElementById('playerScore').textContent = gameState.matchScore.player;
                 document.getElementById('courtStatus').textContent = '✓ Point Won!';
+                playTone('pointWin');
             } else {
                 gameState.matchScore.opponent++;
                 document.getElementById('opponentScore').textContent = gameState.matchScore.opponent;
                 document.getElementById('courtStatus').textContent = '✗ Point Lost';
+                playTone('pointLose');
             }
 
             // Check for game win (first to 4 points, win by 2)
@@ -726,6 +859,7 @@
                 document.getElementById('commentaryBox').innerHTML = 
                     `"Excellent match! You're improving." - ${opponents[opponent].name}`;
                 document.getElementById('commentaryBox').className = 'message-box victory';
+                playTone('victory');
             } else {
                 gameState.losses++;
                 document.getElementById('resultMessage').innerHTML = 
@@ -739,6 +873,7 @@
                 document.getElementById('commentaryBox').innerHTML = 
                     `"Good effort. You're getting closer." - ${opponents[opponent].name}`;
                 document.getElementById('commentaryBox').className = 'message-box defeat';
+                playTone('defeat');
             }
 
             updateUI();
@@ -761,13 +896,16 @@
                 updateUI();
                 toggleView('menu');
                 document.getElementById('commentaryBox').textContent = 
-                    '"Career reset. New challenges await." - Court Legends';
+                    '"Career reset. New challenges await." - SVL-KPA Court Legends';
                 document.getElementById('commentaryBox').className = 'message-box';
             }
         }
 
         // Initialize
         gameState.playerName = getPlayerNameFromUrl();
+        document.getElementById('muteBtn').addEventListener('click', toggleMute);
+        document.getElementById('replayIntroBtn').addEventListener('click', replayBriefing);
+        updateMuteButton();
         updateUI();
         toggleView('menu');
     </script>

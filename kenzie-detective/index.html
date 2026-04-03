@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVL-KPA Detective Files - Kenzie</title>
+    <style>
+        :root {
+            --ink: #0e1a2b;
+            --steel: #1f3b57;
+            --fog: #d8dee9;
+            --gold: #f2b544;
+            --signal: #39c0ba;
+            --danger: #ff6b6b;
+            --ok: #7bd389;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+            color: var(--fog);
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(242, 181, 68, 0.15), transparent 30%),
+                radial-gradient(circle at 80% 90%, rgba(57, 192, 186, 0.12), transparent 30%),
+                linear-gradient(140deg, #070d16 0%, #101d30 45%, #1b2d45 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            border: 1px solid rgba(242, 181, 68, 0.5);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 18px;
+            background: rgba(8, 15, 25, 0.6);
+        }
+
+        h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--gold);
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .sub {
+            margin-top: 6px;
+            color: #b7c3d5;
+        }
+
+        .audio-controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, #2b425f, #1a2f48);
+            color: #dfe9f7;
+            border: 1px solid rgba(57, 192, 186, 0.45);
+            font-size: 0.82rem;
+            padding: 8px 12px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.2fr 2fr 1.2fr;
+            gap: 16px;
+        }
+
+        .panel {
+            background: rgba(8, 15, 25, 0.68);
+            border: 1px solid rgba(57, 192, 186, 0.5);
+            border-radius: 10px;
+            padding: 14px;
+            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px);
+        }
+
+        .panel h2 {
+            color: var(--signal);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(57, 192, 186, 0.4);
+        }
+
+        .status-list {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(242, 181, 68, 0.15);
+            border: 1px solid rgba(242, 181, 68, 0.5);
+            color: var(--gold);
+            border-radius: 999px;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            margin-left: 6px;
+        }
+
+        .case-board {
+            min-height: 420px;
+        }
+
+        .case-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #f7f8fb;
+        }
+
+        .case-brief {
+            background: rgba(31, 59, 87, 0.28);
+            border: 1px solid rgba(31, 59, 87, 0.8);
+            border-radius: 8px;
+            padding: 10px;
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+
+        .clue-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .clue-btn {
+            background: linear-gradient(135deg, #2e4e72, #1d3957);
+            color: #dfe7f2;
+            border: 1px solid rgba(123, 211, 137, 0.45);
+            text-align: left;
+        }
+
+        .clue-btn.found {
+            border-color: var(--ok);
+            color: var(--ok);
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-main {
+            flex: 1;
+            background: linear-gradient(135deg, #f2b544, #db9a1a);
+            color: #1d1401;
+        }
+
+        .action-reset {
+            background: linear-gradient(135deg, #39c0ba, #1f8f8a);
+            color: #041a1a;
+        }
+
+        .suspect-card {
+            border: 1px solid rgba(216, 222, 233, 0.3);
+            border-radius: 8px;
+            padding: 9px;
+            margin-bottom: 8px;
+            background: rgba(9, 18, 30, 0.7);
+        }
+
+        .suspect-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 8px;
+        }
+
+        .suspect-name {
+            font-weight: 700;
+            color: #f1f4fa;
+        }
+
+        .suspect-btn {
+            background: #f0f4fb;
+            color: #1a2a3c;
+            padding: 6px 9px;
+            font-size: 0.8rem;
+        }
+
+        .transcript {
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: #c6d4e8;
+        }
+
+        .log {
+            margin-top: 12px;
+            background: rgba(2, 10, 19, 0.8);
+            border: 1px solid rgba(57, 192, 186, 0.35);
+            border-radius: 8px;
+            padding: 10px;
+            min-height: 92px;
+            line-height: 1.45;
+        }
+
+        .log strong {
+            color: var(--signal);
+        }
+
+        .result-ok {
+            color: var(--ok);
+            font-weight: 700;
+        }
+
+        .result-bad {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        .tiny {
+            color: #93a6c2;
+            font-size: 0.8rem;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 1024px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+            .clue-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SVL-KPA Detective Files</h1>
+            <div class="sub">Lead Investigator: Kenzie | Mission: Solve the mystery before leads run cold.</div>
+            <div class="audio-controls">
+                <button class="audio-btn" id="muteBtn" type="button">Mute: Off</button>
+                <button class="audio-btn" id="replayIntroBtn" type="button">Replay Briefing</button>
+            </div>
+        </header>
+
+        <div class="layout">
+            <section class="panel">
+                <h2>Investigator Status</h2>
+                <div class="status-list">
+                    <div>Investigator <span class="badge" id="investigatorName">Kenzie</span></div>
+                    <div>Leads Remaining: <strong id="leadsLeft">6</strong></div>
+                    <div>Clues Found: <strong id="cluesFound">0</strong>/4</div>
+                    <div>Case Score: <strong id="score">0</strong></div>
+                </div>
+
+                <h2>Suspects</h2>
+                <div id="suspectList"></div>
+            </section>
+
+            <section class="panel case-board">
+                <h2>Case Board</h2>
+                <div class="case-title" id="caseTitle"></div>
+                <div class="case-brief" id="caseBrief"></div>
+
+                <div class="clue-grid" id="clueGrid"></div>
+
+                <div class="action-row">
+                    <button class="action-main" id="accuseBtn">Make Final Accusation</button>
+                    <button class="action-reset" id="newCaseBtn">New Case</button>
+                </div>
+
+                <div class="log" id="logBox">
+                    <strong>Dispatch:</strong> Welcome, detective. Pick a lead or interview a suspect to start.
+                </div>
+                <div class="tiny">Tip: You usually need at least 3 clues before making your final accusation.</div>
+            </section>
+
+            <section class="panel">
+                <h2>Field Notes</h2>
+                <div class="transcript" id="notesBox">
+                    No interviews yet.
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const CASES = [
+            {
+                title: "The Missing Blueprint",
+                brief: "A prototype smart-hydroponics blueprint vanished from SVL Lab hours before pitch night.",
+                suspects: [
+                    { name: "Rico Vale", role: "Intern", tell: "Over-explains where he was." },
+                    { name: "Dana Marsh", role: "Logistics", tell: "Keeps checking the clock." },
+                    { name: "Avery Knox", role: "Contractor", tell: "Avoids direct eye contact." }
+                ],
+                clues: [
+                    { label: "Server Logs", text: "A USB transfer happened at 8:42 PM from Avery's terminal.", points: 25 },
+                    { label: "Hallway Camera", text: "Dana appears near the blueprint room but never enters.", points: 10 },
+                    { label: "Printer Queue", text: "Rico printed decoy pages, not the real blueprint.", points: 15 },
+                    { label: "Keycard Record", text: "Avery's keycard accessed the vault after hours.", points: 30 }
+                ],
+                culprit: "Avery Knox",
+                interviewNotes: {
+                    "Rico Vale": "Rico says he was preparing backup packets for the pitch team.",
+                    "Dana Marsh": "Dana admits she passed by, but she was heading to shipping.",
+                    "Avery Knox": "Avery says his keycard was cloned, but cannot explain the USB transfer."
+                }
+            },
+            {
+                title: "The Phantom Donation",
+                brief: "A six-figure donation to the youth fund disappeared before settlement.",
+                suspects: [
+                    { name: "Mila Ortiz", role: "Treasury", tell: "Answers quickly, too perfectly." },
+                    { name: "Theo Grant", role: "Advisor", tell: "Changes story details." },
+                    { name: "Iris Cole", role: "Volunteer Lead", tell: "Nervous around finance records." }
+                ],
+                clues: [
+                    { label: "Ledger Delta", text: "A hidden adjustment script was run under Theo's credentials.", points: 30 },
+                    { label: "Bank Callback", text: "Mila confirmed transfer intent but no final cancel request.", points: 10 },
+                    { label: "Meeting Audio", text: "Iris questioned why Theo needed emergency admin rights.", points: 20 },
+                    { label: "VPN Access", text: "Theo logged in from an unapproved device near midnight.", points: 25 }
+                ],
+                culprit: "Theo Grant",
+                interviewNotes: {
+                    "Mila Ortiz": "Mila says treasury steps were followed by policy and approved.",
+                    "Theo Grant": "Theo blames outdated systems but avoids discussing midnight access.",
+                    "Iris Cole": "Iris says Theo pushed hard to bypass normal sign-off flow."
+                }
+            },
+            {
+                title: "The Stolen Championship Playbook",
+                brief: "A key playbook for Wade's finals game disappeared from the strategy locker.",
+                suspects: [
+                    { name: "Jace Rowe", role: "Assistant Coach", tell: "Talks around specifics." },
+                    { name: "Nia Brooks", role: "Equipment", tell: "Keeps re-folding her notes." },
+                    { name: "Cole Mercer", role: "Media Liaison", tell: "Over-focused on rumors." }
+                ],
+                clues: [
+                    { label: "Locker Dust", text: "A glove print matches Jace's sideline gloves.", points: 25 },
+                    { label: "Text Thread", text: "Cole asked rivals if they heard a 'big leak' rumor.", points: 10 },
+                    { label: "Tunnel Camera", text: "Nia carried sealed gear only, no binder-sized item.", points: 15 },
+                    { label: "Trash Bin Audit", text: "Shredded practice notes from Jace's office match missing plays.", points: 30 }
+                ],
+                culprit: "Jace Rowe",
+                interviewNotes: {
+                    "Jace Rowe": "Jace says he was revising film late and never touched the locker.",
+                    "Nia Brooks": "Nia confirms she delivered uniforms and left immediately.",
+                    "Cole Mercer": "Cole admits gossip-chasing but denies entering team areas."
+                }
+            }
+        ];
+
+        const state = {
+            caseData: null,
+            cluesOpened: new Set(),
+            leadsLeft: 6,
+            score: 0,
+            solved: false,
+            selectedSuspect: null,
+            introSpoken: false,
+            audioCtx: null,
+            isMuted: false
+        };
+
+        function qs(id) {
+            return document.getElementById(id);
+        }
+
+        function ensureAudioCtx() {
+            if (!state.audioCtx) {
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                if (Ctx) {
+                    state.audioCtx = new Ctx();
+                }
+            }
+            return state.audioCtx;
+        }
+
+        function playTone(type) {
+            if (state.isMuted) {
+                return;
+            }
+            const ctx = ensureAudioCtx();
+            if (!ctx) {
+                return;
+            }
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            if (type === "clue") {
+                osc.frequency.setValueAtTime(640, now);
+                osc.frequency.linearRampToValueAtTime(820, now + 0.12);
+            } else if (type === "interview") {
+                osc.frequency.setValueAtTime(420, now);
+                osc.frequency.linearRampToValueAtTime(520, now + 0.08);
+            } else if (type === "success") {
+                osc.frequency.setValueAtTime(520, now);
+                osc.frequency.linearRampToValueAtTime(780, now + 0.12);
+            } else if (type === "fail") {
+                osc.frequency.setValueAtTime(380, now);
+                osc.frequency.linearRampToValueAtTime(260, now + 0.18);
+            }
+
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+
+            osc.type = type === "success" ? "triangle" : "sine";
+            osc.start(now);
+            osc.stop(now + 0.22);
+        }
+
+        function getCaseBriefingLine() {
+            if (!state.caseData) {
+                return "Follow the clues, trust your instincts, and close the case.";
+            }
+
+            const title = state.caseData.title;
+            if (title === "The Missing Blueprint") {
+                return "Blueprint theft case loaded. Check access records first, then pressure-test alibis.";
+            }
+            if (title === "The Phantom Donation") {
+                return "Donation fraud case loaded. Track the money trail and expose the midnight login.";
+            }
+            if (title === "The Stolen Championship Playbook") {
+                return "Playbook theft case loaded. Separate locker-room rumor from hard evidence.";
+            }
+            return "New mystery loaded. Build the pattern before making your accusation.";
+        }
+
+        function speakKenzieIntro() {
+            if (state.introSpoken) {
+                return;
+            }
+
+            state.introSpoken = true;
+            const synth = window.speechSynthesis;
+            if (!synth || state.isMuted) {
+                return;
+            }
+
+            const investigator = investigatorFromUrl();
+            const utter = new SpeechSynthesisUtterance(
+                "Detective " + investigator + ", this is your SVL-KPA mystery briefing. " + getCaseBriefingLine()
+            );
+            utter.rate = 1;
+            utter.pitch = 1.05;
+            synth.cancel();
+            synth.speak(utter);
+        }
+
+        function unlockAudioIntro() {
+            ensureAudioCtx();
+            speakKenzieIntro();
+        }
+
+        function updateMuteButton() {
+            qs("muteBtn").textContent = state.isMuted ? "Mute: On" : "Mute: Off";
+        }
+
+        function toggleMute() {
+            state.isMuted = !state.isMuted;
+            updateMuteButton();
+            if (state.isMuted && window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function replayBriefing() {
+            ensureAudioCtx();
+            state.introSpoken = false;
+            speakKenzieIntro();
+        }
+
+        function investigatorFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const raw = (params.get("player") || "").trim();
+            if (!raw) {
+                return "Kenzie";
+            }
+            return raw.slice(0, 24);
+        }
+
+        function pickCase() {
+            const idx = Math.floor(Math.random() * CASES.length);
+            return JSON.parse(JSON.stringify(CASES[idx]));
+        }
+
+        function renderCase() {
+            const c = state.caseData;
+            qs("caseTitle").textContent = c.title;
+            qs("caseBrief").textContent = c.brief;
+            qs("leadsLeft").textContent = state.leadsLeft;
+            qs("cluesFound").textContent = state.cluesOpened.size;
+            qs("score").textContent = state.score;
+            qs("investigatorName").textContent = investigatorFromUrl();
+
+            renderClues();
+            renderSuspects();
+        }
+
+        function renderClues() {
+            const wrap = qs("clueGrid");
+            wrap.innerHTML = "";
+            state.caseData.clues.forEach((clue, index) => {
+                const btn = document.createElement("button");
+                btn.className = "clue-btn" + (state.cluesOpened.has(index) ? " found" : "");
+                btn.disabled = state.solved || state.cluesOpened.has(index) || state.leadsLeft <= 0;
+                btn.textContent = state.cluesOpened.has(index)
+                    ? "Clue Found: " + clue.label
+                    : "Investigate: " + clue.label;
+                btn.onclick = () => openClue(index);
+                wrap.appendChild(btn);
+            });
+        }
+
+        function renderSuspects() {
+            const wrap = qs("suspectList");
+            wrap.innerHTML = "";
+
+            state.caseData.suspects.forEach((suspect) => {
+                const card = document.createElement("div");
+                card.className = "suspect-card";
+
+                const head = document.createElement("div");
+                head.className = "suspect-head";
+
+                const title = document.createElement("div");
+                title.className = "suspect-name";
+                title.textContent = suspect.name + " - " + suspect.role;
+
+                const btn = document.createElement("button");
+                btn.className = "suspect-btn";
+                btn.textContent = "Interview";
+                btn.disabled = state.solved || state.leadsLeft <= 0;
+                btn.onclick = () => interviewSuspect(suspect.name, suspect.tell);
+
+                head.appendChild(title);
+                head.appendChild(btn);
+                card.appendChild(head);
+
+                const tell = document.createElement("div");
+                tell.className = "tiny";
+                tell.textContent = "Behavior clue: " + suspect.tell;
+                card.appendChild(tell);
+
+                wrap.appendChild(card);
+            });
+        }
+
+        function spendLead() {
+            state.leadsLeft = Math.max(0, state.leadsLeft - 1);
+            qs("leadsLeft").textContent = state.leadsLeft;
+            renderClues();
+            renderSuspects();
+
+            if (state.leadsLeft === 0 && !state.solved) {
+                logMessage("All leads are exhausted. Make your final accusation now.");
+            }
+        }
+
+        function openClue(index) {
+            if (state.cluesOpened.has(index) || state.solved || state.leadsLeft <= 0) {
+                return;
+            }
+            unlockAudioIntro();
+            const clue = state.caseData.clues[index];
+            state.cluesOpened.add(index);
+            state.score += clue.points;
+
+            qs("cluesFound").textContent = state.cluesOpened.size;
+            qs("score").textContent = state.score;
+
+            logMessage("Clue secured: " + clue.text);
+            playTone("clue");
+            spendLead();
+        }
+
+        function interviewSuspect(name) {
+            if (state.solved || state.leadsLeft <= 0) {
+                return;
+            }
+            unlockAudioIntro();
+
+            const note = state.caseData.interviewNotes[name] || (name + " gave no useful statement.");
+            const notesBox = qs("notesBox");
+            notesBox.innerHTML = "<strong>Interview - " + name + "</strong><br>" + note;
+            state.selectedSuspect = name;
+            state.score += 8;
+            qs("score").textContent = state.score;
+            logMessage("Interview complete with " + name + ".");
+            playTone("interview");
+            spendLead();
+        }
+
+        function logMessage(msg) {
+            qs("logBox").innerHTML = "<strong>Dispatch:</strong> " + msg;
+        }
+
+        function accuseFlow() {
+            if (state.solved) {
+                return;
+            }
+            unlockAudioIntro();
+
+            const names = state.caseData.suspects.map((s) => s.name).join(", ");
+            const guess = prompt("Who did it? Enter full suspect name:\n" + names);
+            if (!guess) {
+                return;
+            }
+
+            const normalized = guess.trim().toLowerCase();
+            const culprit = state.caseData.culprit.toLowerCase();
+            state.solved = true;
+
+            if (normalized === culprit) {
+                state.score += 60;
+                qs("score").textContent = state.score;
+                logMessage("<span class='result-ok'>Case Solved.</span> Correct: " + state.caseData.culprit + ". Kenzie closes the file with precision.");
+                playTone("success");
+            } else {
+                state.score = Math.max(0, state.score - 20);
+                qs("score").textContent = state.score;
+                logMessage("<span class='result-bad'>Wrong accusation.</span> The culprit was " + state.caseData.culprit + ". Review your clues and start a new case.");
+                playTone("fail");
+            }
+
+            renderClues();
+            renderSuspects();
+        }
+
+        function startNewCase() {
+            state.caseData = pickCase();
+            state.cluesOpened = new Set();
+            state.leadsLeft = 6;
+            state.score = 0;
+            state.solved = false;
+            state.selectedSuspect = null;
+            state.introSpoken = false;
+            qs("notesBox").textContent = "No interviews yet.";
+            logMessage("New case opened. Start with the strongest lead.");
+            renderCase();
+        }
+
+        qs("accuseBtn").addEventListener("click", accuseFlow);
+        qs("newCaseBtn").addEventListener("click", startNewCase);
+        qs("muteBtn").addEventListener("click", toggleMute);
+        qs("replayIntroBtn").addEventListener("click", replayBriefing);
+        updateMuteButton();
+
+        startNewCase();
+    </script>
+</body>
+</html>
