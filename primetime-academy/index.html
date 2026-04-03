@@ -227,6 +227,27 @@
         @media (max-width: 1024px) {
             .main-layout { grid-template-columns: 1fr; }
         }
+
+        .audio-controls {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .audio-btn {
+            border: 1px solid rgba(232, 160, 0, 0.45);
+            background: rgba(232, 160, 0, 0.15);
+            color: #f5f7fa;
+            border-radius: 7px;
+            padding: 7px 12px;
+            font-size: 0.78rem;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -234,6 +255,10 @@
     <header>
         <h1>🏈 PRIME TIME ACADEMY</h1>
         <p>SVL-KPA Football Career | Coached by "Prime Time" Deion Sanders</p>
+        <div class="audio-controls">
+            <button class="audio-btn" id="muteBtn" type="button">Mute: Off</button>
+            <button class="audio-btn" id="replayIntroBtn" type="button">Replay Briefing</button>
+        </div>
     </header>
 
     <div class="main-layout">
@@ -465,8 +490,106 @@ const state = {
     mode: 'career',
     playerDisplayName: 'Wade',
     teamName: 'SVL Raiders',
+    introSpoken: false,
+    isMuted: false,
+    audioCtx: null,
     match: null,
 };
+
+function ensureAudioCtx() {
+    if (!state.audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) {
+            state.audioCtx = new Ctx();
+        }
+    }
+    return state.audioCtx;
+}
+
+function playTone(type) {
+    if (state.isMuted) return;
+    const ctx = ensureAudioCtx();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (type === 'play-good') {
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.linearRampToValueAtTime(700, now + 0.08);
+    } else if (type === 'play-bad') {
+        osc.frequency.setValueAtTime(340, now);
+        osc.frequency.linearRampToValueAtTime(250, now + 0.1);
+    } else if (type === 'score') {
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.linearRampToValueAtTime(900, now + 0.18);
+    } else if (type === 'lose') {
+        osc.frequency.setValueAtTime(320, now);
+        osc.frequency.linearRampToValueAtTime(210, now + 0.2);
+    }
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+    osc.type = type === 'score' ? 'triangle' : 'sine';
+    osc.start(now);
+    osc.stop(now + 0.25);
+}
+
+function getPrimeBriefingLine() {
+    const opp = OPPONENTS.find((o) => o.id === state.selectedOpponent);
+    const oppName = opp ? opp.name : 'your next opponent';
+
+    if (state.mode === 'challenge') {
+        return 'Challenge mode loaded against ' + oppName + '. No hesitation. Attack the big plays.';
+    }
+    if (state.mode === 'quick') {
+        return 'Quick match loaded against ' + oppName + '. Start fast and own first down.';
+    }
+    return 'Career mode loaded against ' + oppName + '. Build momentum one drive at a time.';
+}
+
+function speakPrimeBriefing(forceReplay) {
+    if (state.isMuted) return;
+    if (!forceReplay && state.introSpoken) return;
+
+    state.introSpoken = true;
+    const synth = window.speechSynthesis;
+    if (!synth) return;
+
+    const utter = new SpeechSynthesisUtterance(
+        state.playerDisplayName + ', welcome to Prime Time Academy. ' + getPrimeBriefingLine()
+    );
+    utter.rate = 1;
+    utter.pitch = 1.02;
+    synth.cancel();
+    synth.speak(utter);
+}
+
+function unlockAudioIntro() {
+    ensureAudioCtx();
+    speakPrimeBriefing(false);
+}
+
+function updateMuteButton() {
+    document.getElementById('muteBtn').textContent = state.isMuted ? 'Mute: On' : 'Mute: Off';
+}
+
+function toggleMute() {
+    state.isMuted = !state.isMuted;
+    updateMuteButton();
+    if (state.isMuted && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+    }
+}
+
+function replayBriefing() {
+    unlockAudioIntro();
+    speakPrimeBriefing(true);
+}
 
 function getPlayerProfileFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -612,6 +735,7 @@ function selectOpponent(id) {
 // ─────────────────────────────────────────────
 
 function startGame(mode) {
+    unlockAudioIntro();
     if (!state.selectedOpponent) {
         state.selectedOpponent = 'bulls';
         renderOpponents();
@@ -645,6 +769,7 @@ function teamOvr() {
 }
 
 function callPlay(type) {
+    unlockAudioIntro();
     const m = state.match;
     if (!m || m.done) return;
 
@@ -666,8 +791,10 @@ function callPlay(type) {
             updateScore();
             flashTD('⚽ FIELD GOAL — +3!');
             document.getElementById('matchCommentary').textContent = playData.comment[0] + ' — Coach Prime: "Take your points!"';
+            playTone('score');
         } else {
             document.getElementById('matchCommentary').textContent = playData.comment[1] + ' — Coach Prime: "Gotta work on that."';
+            playTone('play-bad');
         }
         advanceTime();
         aiDrive();
@@ -688,6 +815,7 @@ function callPlay(type) {
         flashTD('🏈 TOUCHDOWN! +7!');
         document.getElementById('matchCommentary').textContent =
             '"THAT IS PRIMETIME FOOTBALL RIGHT THERE! TOUCHDOWN!!" — Coach Prime';
+        playTone('score');
         advanceTime();
         aiDrive();
         return;
@@ -708,6 +836,11 @@ function callPlay(type) {
         : '"We still got it. Make the next play count."';
 
     document.getElementById('matchCommentary').textContent = comment + ' — Coach Prime: ' + primeReaction;
+    if (gain >= 4) {
+        playTone('play-good');
+    } else {
+        playTone('play-bad');
+    }
 
     // first down?
     if (m.yardsToGo <= 0 || m.yardLine >= 100) {
@@ -719,6 +852,7 @@ function callPlay(type) {
             updateScore();
             flashTD('🏈 TOUCHDOWN! +7!');
             document.getElementById('matchCommentary').textContent = '"PUNCHED IT IN! THAT\'S PRIMETIME FOOTBALL!" — Coach Prime';
+            playTone('score');
         } else {
             m.down = 0;
             m.yardsToGo = 10;
@@ -875,6 +1009,12 @@ function endMatch() {
             : tie ? primeQuotes.tie
             : primeQuotes.loss;
 
+    if (playerWon) {
+        playTone('score');
+    } else if (!tie) {
+        playTone('lose');
+    }
+
     showView('resultsView');
 }
 
@@ -928,6 +1068,9 @@ renderOpponents();
 renderStandings();
 updateHUD();
 setDeionQuote();
+document.getElementById('muteBtn').addEventListener('click', toggleMute);
+document.getElementById('replayIntroBtn').addEventListener('click', replayBriefing);
+updateMuteButton();
 
 const modeFromUrl = getStartModeFromUrl();
 if (modeFromUrl) {
