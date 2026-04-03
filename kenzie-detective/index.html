@@ -465,6 +465,25 @@
             return "New mystery loaded. Build the pattern before making your accusation.";
         }
 
+        function selectPreferredVoice(synth, preferredNames) {
+            const voices = synth.getVoices ? synth.getVoices() : [];
+            if (!voices || voices.length === 0) {
+                return null;
+            }
+
+            const preferred = voices.find((v) => preferredNames.some((name) => v.name.includes(name)));
+            if (preferred) {
+                return preferred;
+            }
+
+            const naturalEnUs = voices.find((v) => {
+                const n = v.name.toLowerCase();
+                return (v.lang || '').toLowerCase().startsWith("en-us") && !n.includes("robot") && !n.includes("default");
+            });
+
+            return naturalEnUs || null;
+        }
+
         function speakKenzieIntro() {
             if (state.introSpoken) {
                 return;
@@ -482,6 +501,10 @@
             );
             utter.rate = 1;
             utter.pitch = 1.05;
+            const selectedVoice = selectPreferredVoice(synth, ["Samantha", "Victoria", "Moira", "Karen", "Fiona", "Zira"]);
+            if (selectedVoice) {
+                utter.voice = selectedVoice;
+            }
             synth.cancel();
             synth.speak(utter);
         }
