@@ -652,6 +652,25 @@
             return 'Select your opponent, play with confidence, and control the match tempo.';
         }
 
+        function selectPreferredVoice(synth, preferredNames) {
+            const voices = synth.getVoices ? synth.getVoices() : [];
+            if (!voices || voices.length === 0) {
+                return null;
+            }
+
+            const preferred = voices.find((v) => preferredNames.some((name) => v.name.includes(name)));
+            if (preferred) {
+                return preferred;
+            }
+
+            const naturalEnUs = voices.find((v) => {
+                const n = v.name.toLowerCase();
+                return (v.lang || '').toLowerCase().startsWith('en-us') && !n.includes('robot') && !n.includes('default');
+            });
+
+            return naturalEnUs || null;
+        }
+
         function speakIntro(forceReplay) {
             if (gameState.isMuted) {
                 return;
@@ -671,6 +690,10 @@
             );
             utter.rate = 1;
             utter.pitch = 1.03;
+            const selectedVoice = selectPreferredVoice(synth, ['Aaron', 'Daniel', 'David', 'Alex', 'Tom']);
+            if (selectedVoice) {
+                utter.voice = selectedVoice;
+            }
             synth.cancel();
             synth.speak(utter);
         }
