@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { cookies, headers } from "next/headers";
 import PwaRegistration from "./PwaRegistration";
+import BirthdayBanner from "./components/BirthdayBanner";
 import { SiteFrame, SiteLanguageProvider } from "./components/SiteLanguageControl";
+import { ArchitectSeal } from "./components/ArchitectSeal";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   resolveSiteLanguage,
   DEFAULT_SITE_LANGUAGE,
@@ -13,7 +17,8 @@ import {
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3001");
+  "https://sandersvioprolabs.com";
+const facebookAppId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID ?? "APP_ID";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -75,9 +80,34 @@ export default async function RootLayout({
           fontFamily: "Arial, sans-serif",
         }}
       >
+        <div id="fb-root" />
+        <Script
+          async
+          defer
+          crossOrigin="anonymous"
+          src={`https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v25.0&appId=${facebookAppId}`}
+          strategy="afterInteractive"
+        />
         <SiteLanguageProvider initialLanguage={initialLanguage}>
+          <BirthdayBanner />
           <PwaRegistration />
           <SiteFrame>{children}</SiteFrame>
+          <ArchitectSeal />
+          <footer style={{marginTop: 32, textAlign: 'center', color: '#bbb', fontSize: 14}}>
+            <div>
+              <strong>Sanders Viopro Labs Growth 2026:</strong> Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness.
+            </div>
+            <div style={{marginTop: 8}}>Sanders Viopro Labs LLC</div>
+            <div style={{marginTop: 8}}>
+              <span style={{display: 'block', fontWeight: 'bold', color: '#7ee787', marginBottom: 4}}>
+                Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive
+              </span>
+              <a href="/legal-disclaimer.md" style={{color: '#7ee787', textDecoration: 'underline'}}>
+                Legal & Disclaimers
+              </a>
+            </div>
+          </footer>
+          <SpeedInsights />
         </SiteLanguageProvider>
       </body>
     </html>
