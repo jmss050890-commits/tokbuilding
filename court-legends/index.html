@@ -448,7 +448,7 @@
                         </div>
                         <div class="action-buttons" style="margin-top: 20px;">
                             <button class="wide-button" onclick="startCareer()">Start Tournament</button>
-                            <button class="wide-button" onclick="toggleView('practice')">Practice Mode</button>
+                            <button class="wide-button" onclick="startPractice()">Practice Mode</button>
                         </div>
                     </div>
 
@@ -581,9 +581,36 @@
         }
 
         function toggleView(view) {
+            if (view !== 'menu' && view !== 'match' && view !== 'results') {
+                view = 'menu';
+            }
             document.getElementById('menuView').style.display = view === 'menu' ? 'block' : 'none';
             document.getElementById('matchView').style.display = view === 'match' ? 'block' : 'none';
             document.getElementById('resultsView').style.display = view === 'results' ? 'block' : 'none';
+        }
+
+        function getPlayerNameFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const rawPlayer = (params.get('player') || '').trim().toLowerCase();
+
+            if (rawPlayer === 'jj' || rawPlayer === 'jerome') {
+                return 'JJ';
+            }
+
+            if (rawPlayer === 'wade') {
+                return 'Wade';
+            }
+
+            return 'Wade';
+        }
+
+        function startPractice() {
+            // Practice launches immediately against a default opponent.
+            gameState.selectedOpponent = 'venus';
+            document.getElementById('commentaryBox').textContent =
+                'Practice match started vs Venus Williams. Focus on timing and consistency.';
+            document.getElementById('commentaryBox').className = 'message-box';
+            startMatch();
         }
 
         function selectOpponent(opponent) {
@@ -595,9 +622,10 @@
 
         function startCareer() {
             if (!gameState.selectedOpponent) {
-                document.getElementById('commentaryBox').textContent = '⚠️ Select an opponent first!';
+                gameState.selectedOpponent = 'serena';
+                document.getElementById('commentaryBox').textContent =
+                    'No opponent selected. Starting you against Serena Williams.';
                 document.getElementById('commentaryBox').className = 'message-box';
-                return;
             }
             startMatch();
         }
@@ -739,6 +767,7 @@
         }
 
         // Initialize
+        gameState.playerName = getPlayerNameFromUrl();
         updateUI();
         toggleView('menu');
     </script>

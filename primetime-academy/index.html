@@ -463,8 +463,50 @@ const state = {
     champWon: false,
     selectedOpponent: null,
     mode: 'career',
+    playerDisplayName: 'Wade',
+    teamName: 'SVL Raiders',
     match: null,
 };
+
+function getPlayerProfileFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const rawPlayer = (params.get('player') || '').trim().toLowerCase();
+
+    if (rawPlayer === 'jj' || rawPlayer === 'jerome') {
+        return {
+            playerDisplayName: 'JJ',
+            teamName: 'JJ Prime Raiders'
+        };
+    }
+
+    if (rawPlayer === 'wade') {
+        return {
+            playerDisplayName: 'Wade',
+            teamName: 'Wade Prime Raiders'
+        };
+    }
+
+    return {
+        playerDisplayName: 'Wade',
+        teamName: 'SVL Raiders'
+    };
+}
+
+function getStartModeFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const rawMode = (params.get('mode') || '').trim().toLowerCase();
+    if (rawMode === 'quick' || rawMode === 'challenge' || rawMode === 'career') {
+        return rawMode;
+    }
+    return null;
+}
+
+function getOpponentFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const rawOpp = (params.get('opponent') || '').trim().toLowerCase();
+    const valid = OPPONENTS.find((o) => o.id === rawOpp);
+    return valid ? valid.id : null;
+}
 
 function freshMatch(opponentId) {
     return {
@@ -522,6 +564,7 @@ function updateHUD() {
     document.getElementById('losses').textContent = state.losses;
     document.getElementById('totalPts').textContent = state.totalPts;
     document.getElementById('champStatus').textContent = state.champWon ? '🏆 Champion!' : 'Not Yet';
+    document.getElementById('teamName').textContent = state.teamName;
 
     const xpToNext = (state.xpLevel + 1) * 100;
     const xpPct = Math.min((state.xp / xpToNext) * 100, 100);
@@ -570,16 +613,17 @@ function selectOpponent(id) {
 
 function startGame(mode) {
     if (!state.selectedOpponent) {
+        state.selectedOpponent = 'bulls';
+        renderOpponents();
         document.getElementById('menuCommentary').textContent =
-            '⚠️ Select an opponent on the right first!';
-        return;
+            'No opponent selected. Starting vs KC Bulls.';
     }
     state.mode = mode;
     state.match = freshMatch(state.selectedOpponent);
 
     const opp = OPPONENTS.find(o => o.id === state.selectedOpponent);
 
-    document.getElementById('playerTeamLabel').textContent = 'SVL Raiders';
+    document.getElementById('playerTeamLabel').textContent = state.teamName;
     document.getElementById('oppTeamLabel').textContent = opp.name;
     document.getElementById('playerScore').textContent = '0';
     document.getElementById('oppScore').textContent = '0';
@@ -589,7 +633,7 @@ function startGame(mode) {
     updateMatchHUD();
     showView('matchView');
     document.getElementById('matchCommentary').textContent =
-        `"Alright, ${opp.name} is on the field. Let's see what you've got. CALL YOUR PLAY." — Coach Prime`;
+        `"${state.playerDisplayName}, ${opp.name} is on the field. Let's see what you've got. CALL YOUR PLAY." — Coach Prime`;
 }
 
 // ─────────────────────────────────────────────
@@ -871,10 +915,24 @@ function resetGame() {
 // INIT
 // ─────────────────────────────────────────────
 renderRoster();
+const playerProfile = getPlayerProfileFromUrl();
+state.playerDisplayName = playerProfile.playerDisplayName;
+state.teamName = playerProfile.teamName;
+
+const urlOpponent = getOpponentFromUrl();
+if (urlOpponent) {
+    state.selectedOpponent = urlOpponent;
+}
+
 renderOpponents();
 renderStandings();
 updateHUD();
 setDeionQuote();
+
+const modeFromUrl = getStartModeFromUrl();
+if (modeFromUrl) {
+    startGame(modeFromUrl);
+}
 </script>
 </body>
 </html>
