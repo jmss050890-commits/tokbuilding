@@ -26,6 +26,13 @@ interface OrderConfirmationData {
   downloadLink?: string;
 }
 
+interface OutreachEmailData {
+  brand?: string;
+  to: string;
+  subject: string;
+  body: string;
+}
+
 function getErrorMessage(error: unknown) {
   return error instanceof Error ? error.message : 'Unknown error';
 }
@@ -166,14 +173,14 @@ function generateLicenseEmailHTML(data: LicenseEmailData & { brandColor?: string
             <ul>
               <li><a href="https://docs.tokbuilding.com/install">Installation Guide</a></li>
               <li><a href="https://docs.tokbuilding.com/activate">License Activation</a></li>
-              <li>Email: support@sandersvioprolabs.com</li>
+              <li>Email: support@sandersvioprolabsllc.com</li>
             </ul>
 
             ${data.expiryDate ? `<p style="color: #6b7280; font-size: 13px; border-top: 1px solid #e5e7eb; padding-top: 15px; margin-top: 15px;"><strong>License Valid Until:</strong> ${data.expiryDate}</p>` : ''}
           </div>
 
           <div class="footer">
-            <p>© 2026 Sanders Viopro Labs. Mission: Keeping People Alive.</p>
+            <p>© 2026 Sanders Viopro Labs LLC. Mission: Keeping People Alive.</p>
             <p>This is a transaction email. Please do not reply to this message.</p>
           </div>
         </div>
@@ -230,7 +237,7 @@ function generateWelcomeEmailHTML(data: {
           </div>
 
           <div class="footer">
-            <p>© 2026 Sanders Viopro Labs. Mission: Keeping People Alive.</p>
+            <p>© 2026 Sanders Viopro Labs LLC. Mission: Keeping People Alive.</p>
             <p>This is a transactional email. <a href="#">Manage preferences</a></p>
           </div>
         </div>
@@ -298,6 +305,55 @@ export async function sendOrderConfirmationEmail(
     console.error('[Email Service] Error sending confirmation:', error);
     throw error;
   }
+}
+
+function escapeHtml(input: string): string {
+  return input
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function generateOutreachEmailHTML(body: string): string {
+  const safeBody = escapeHtml(body).replaceAll('\n', '<br />');
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; color: #111827; background: #f3f4f6; }
+          .container { max-width: 640px; margin: 0 auto; padding: 24px; }
+          .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; }
+          .meta { color: #6b7280; font-size: 12px; margin-top: 18px; border-top: 1px solid #e5e7eb; padding-top: 12px; }
+          .body { font-size: 15px; line-height: 1.7; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="card">
+            <div class="body">${safeBody}</div>
+            <div class="meta">Sent via Sanders Viopro Labs Outreach Command</div>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+}
+
+export async function sendOutreachEmail(data: OutreachEmailData) {
+  const brand = data.brand || 'svl';
+  const brandConfig = getBrandEmailConfig(brand);
+  const html = generateOutreachEmailHTML(data.body);
+
+  return sendEmailViaSendGrid(
+    data.to,
+    brandConfig.senderEmail,
+    brandConfig.senderName,
+    data.subject,
+    html
+  );
 }
 
 function generateOrderConfirmationHTML(data: OrderConfirmationData & {
@@ -380,13 +436,13 @@ function generateOrderConfirmationHTML(data: OrderConfirmationData & {
             <h3>Need Help?</h3>
             <p>If you have any questions about your order or need support, reach out to us:</p>
             <ul>
-              <li>Email: ${data.supportEmail || 'support@sandersvioprolabs.com'}</li>
+              <li>Email: ${data.supportEmail || 'support@sandersvioprolabsllc.com'}</li>
               <li><a href="https://docs.tokbuilding.com">Documentation</a></li>
             </ul>
           </div>
 
           <div class="footer">
-            <p>© 2026 Sanders Viopro Labs. Mission: Keeping People Alive.</p>
+            <p>© 2026 Sanders Viopro Labs LLC. Mission: Keeping People Alive.</p>
             <p>This is a transactional email. <a href="#">Manage preferences</a></p>
           </div>
         </div>

@@ -157,6 +157,18 @@ export interface FirstGuardianThreadMemory {
   messageCount: number;
 }
 
+export interface MiiaOutreachLog {
+  _id?: string;
+  to: string;
+  subject: string;
+  source: string;
+  status: 'validation_failed' | 'dry_run' | 'send_failed' | 'sent';
+  mode: 'human_loop' | 'direct_api';
+  reason?: string;
+  messageId?: string;
+  createdAt: Date;
+}
+
 /**
  * Memorial Storage (uses TokStore Subscription for membership tracking)
  * Free tier: appId 'memorial-free'
@@ -391,6 +403,18 @@ export async function getFirstGuardianThreadMemoriesCollection() {
 
   await collection.createIndex({ userId: 1, lastDiscussedAt: -1 });
   await collection.createIndex({ userId: 1, threadKey: 1 }, { unique: true });
+
+  return collection;
+}
+
+export async function getMiiaOutreachLogsCollection() {
+  const db = await getDatabase();
+  const collection = db.collection<MiiaOutreachLog>('miiaOutreachLogs');
+
+  await collection.createIndex({ createdAt: -1 });
+  await collection.createIndex({ source: 1, createdAt: -1 });
+  await collection.createIndex({ status: 1, createdAt: -1 });
+  await collection.createIndex({ to: 1, createdAt: -1 });
 
   return collection;
 }
