@@ -54,6 +54,13 @@ const globalImpactMoves = [
   "Position SVL Lab as the execution hub that turns mission ideas into deployable systems.",
 ];
 
+const weeklyCampaignChecklist = [
+  "Run a dry-run first and verify both channel previews.",
+  "Confirm the weekly recipient email and Facebook Page ID env values are current.",
+  "Keep approval key handling limited to trusted operators only.",
+  "Review logs after every send for failed channels or policy issues.",
+];
+
 const miiaOutreachSteps = [
   "Start with one warm intro contact and one direct organizational email.",
   "Attach one proof screenshot and one short model summary from TokStrategy.",
@@ -79,6 +86,12 @@ const miiaTemplates = [
     body:
       "Subject: Letter of intent - scalable hydroponic and community resilience pilot\n\nTo the Grants Team,\n\nPlease accept this letter of intent from MIIA and Sanders Viopro Labs (SVL) for a pilot focused on emergency food and clean-water resilience. Our model combines practical deployment, local partnership, and transparent progress reporting.\n\nWe welcome the opportunity to submit a full proposal aligned to your criteria.\n\nSincerely,\n[Name]\n[Title]\n[Organization]",
   },
+  {
+    title: "Template D - Global Wisdom Alignment",
+    defaultTo: "alliances@example.org",
+    body:
+      "Subject: Global wisdom-centered partnership alignment\n\nHello [Name],\n\nMIIA and Sanders Viopro Labs (SVL) are building a global Keep People Alive initiative that combines practical deployment with a wisdom-centered support model.\n\nOur program integrates emergency food and clean-water resilience with daily encouragement through Proverbs-based reflections and soul health content.\n\nIf your team supports humanitarian action, grants, or pilot partnerships, we would value a 15-minute alignment call.\n\nRespectfully,\n[Name]\n[Title]\n[Phone]",
+  },
 ];
 
 const facebookPostTemplates = [
@@ -92,7 +105,34 @@ const facebookPostTemplates = [
     body:
       "Funding and Partnership Call:\n\nMIIA and Sanders Viopro Labs are preparing pilot deployments focused on food and clean-water access. We are now speaking with aligned donors, foundations, and grant teams.\n\nMessage us to review pilot scope and measurable outcomes.\n\n#KeepPeopleAlive #FoodSecurity #WaterAccess #PilotProgram",
   },
+  {
+    title: "Template F3 - Global Wisdom Feed",
+    body:
+      "Global Wisdom Feed Launch:\n\nSVL-KPA is integrating Proverbs-based daily wisdom with practical health and resilience action through MIIA and TokHealth.\n\nWe are building globally with heart, strategy, and measurable impact.\n\nIf your organization wants to collaborate, send us ALIGN.\n\n#SVL #MIIA #TokHealth #GlobalImpact #KeepPeopleAlive",
+  },
 ];
+
+const globalWisdomEmailBlock =
+  "Wisdom Signal:\nProverbs 3:5-6 reminds us to lead with trust, clarity, and right action.\nOur Proverbs In R&B wellness layer is now integrated to support soul health while we scale global humanitarian outcomes.\n\nReply ALIGN to schedule a 15-minute mission call.";
+
+const globalWisdomFacebookBlock =
+  "Wisdom Signal:\nProverbs 3:5-6 is part of our daily rhythm as we build practical solutions with soul.\nReply ALIGN for collaboration.\n\n#ProverbsInRNB #WisdomFeed #SVLKPA";
+
+function addGlobalWisdomToEmail(rawBody: string, enabled: boolean) {
+  if (!enabled || rawBody.includes("Wisdom Signal:")) {
+    return rawBody;
+  }
+
+  return `${rawBody}\n\n${globalWisdomEmailBlock}`;
+}
+
+function addGlobalWisdomToFacebook(rawBody: string, enabled: boolean) {
+  if (!enabled || rawBody.includes("Wisdom Signal:")) {
+    return rawBody;
+  }
+
+  return `${rawBody}\n\n${globalWisdomFacebookBlock}`;
+}
 
 export default function TokShowEpisodeOnePage() {
   const [copiedTemplate, setCopiedTemplate] = useState<string | null>(null);
@@ -107,6 +147,9 @@ export default function TokShowEpisodeOnePage() {
   const [facebookStatus, setFacebookStatus] = useState("");
   const [campaignStatus, setCampaignStatus] = useState("");
   const [campaignDryRun, setCampaignDryRun] = useState(true);
+  const [campaignGlobalWisdom, setCampaignGlobalWisdom] = useState(true);
+  const [weeklyCampaignDryRun, setWeeklyCampaignDryRun] = useState(true);
+  const [weeklyCampaignStatus, setWeeklyCampaignStatus] = useState("");
 
   async function copyTemplate(body: string, title: string) {
     try {
@@ -240,7 +283,14 @@ export default function TokShowEpisodeOnePage() {
       return;
     }
 
-    setCampaignStatus(campaignDryRun ? "Running dry-run for Email + Facebook..." : "Sending Email + Facebook now...");
+    setCampaignStatus(
+      campaignDryRun
+        ? "Running dry-run for Email + Facebook..."
+        : "Sending Email + Facebook now..."
+    );
+
+    const routedEmailBody = addGlobalWisdomToEmail(selectedTemplate.body, campaignGlobalWisdom);
+    const routedFacebookBody = addGlobalWisdomToFacebook(facebookDraft, campaignGlobalWisdom);
 
     try {
       const [emailResponse, facebookResponse] = await Promise.all([
@@ -252,7 +302,7 @@ export default function TokShowEpisodeOnePage() {
           },
           body: JSON.stringify({
             to: recipient,
-            rawBody: selectedTemplate.body,
+            rawBody: routedEmailBody,
             source: "tokshow-episode-1-router-email",
             dryRun: campaignDryRun,
           }),
@@ -265,7 +315,7 @@ export default function TokShowEpisodeOnePage() {
           },
           body: JSON.stringify({
             pageId: facebookPageId,
-            message: facebookDraft,
+            message: routedFacebookBody,
             source: "tokshow-episode-1-router-facebook",
             dryRun: campaignDryRun,
           }),
@@ -281,6 +331,35 @@ export default function TokShowEpisodeOnePage() {
       setCampaignStatus(`${emailResult} | ${facebookResult}`);
     } catch {
       setCampaignStatus("Network error while sending multi-channel campaign.");
+    }
+  }
+
+  async function runWeeklyCampaign() {
+    setWeeklyCampaignStatus(weeklyCampaignDryRun ? "Running weekly dry-run..." : "Running weekly campaign...");
+
+    try {
+      const response = await fetch("/api/miia/weekly-campaign", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-miia-approval-key": approvalKey,
+        },
+        body: JSON.stringify({ dryRun: weeklyCampaignDryRun }),
+      });
+
+      const data = (await response.json()) as { success?: boolean; error?: string; mode?: string };
+      if (!response.ok || !data.success) {
+        setWeeklyCampaignStatus(data.error || "Weekly campaign failed.");
+        return;
+      }
+
+      setWeeklyCampaignStatus(
+        weeklyCampaignDryRun
+          ? "Weekly dry-run completed successfully."
+          : "Weekly campaign sent successfully."
+      );
+    } catch {
+      setWeeklyCampaignStatus("Network error while running weekly campaign.");
     }
   }
 
@@ -501,6 +580,9 @@ export default function TokShowEpisodeOnePage() {
             <p className="mt-3 text-lg leading-8 text-amber-100">
               Send one coordinated campaign to both channels: outreach email plus Facebook Business Page post.
             </p>
+            <p className="mt-2 text-sm leading-7 text-amber-100/90">
+              Global Mode: optionally inject the Proverbs In R&B Wisdom Signal into both outbound channels.
+            </p>
 
             <label className="mt-4 block text-xs font-semibold uppercase tracking-[0.14em] text-amber-100/90">
               Email Template For Router
@@ -529,6 +611,17 @@ export default function TokShowEpisodeOnePage() {
               Dry Run Mode (validate both channels without sending live)
             </label>
 
+            <label className="mt-2 inline-flex items-center gap-2 text-sm text-amber-100">
+              <input
+                type="checkbox"
+                checked={campaignGlobalWisdom}
+                onChange={(event) => setCampaignGlobalWisdom(event.target.checked)}
+                aria-label="Include Global Wisdom signal in channel router"
+                className="h-4 w-4 rounded border-amber-300/60 bg-slate-950/60"
+              />
+              Include Global Wisdom Signal (Proverbs In R&B)
+            </label>
+
             <button
               type="button"
               onClick={sendCampaignAllChannels}
@@ -537,6 +630,43 @@ export default function TokShowEpisodeOnePage() {
               {campaignDryRun ? "Run Dry-Run For Email + Facebook" : "Send Email + Facebook Now"}
             </button>
             {campaignStatus ? <p className="mt-2 text-sm text-slate-300">{campaignStatus}</p> : null}
+          </article>
+
+          <article className="rounded-2xl border border-cyan-300/30 bg-gradient-to-br from-cyan-500/10 to-transparent p-6">
+            <h2 className="text-2xl font-black text-white">Weekly Campaign Planner</h2>
+            <p className="mt-3 text-lg leading-8 text-cyan-100">
+              Safe weekly automation for MIIA across email and Facebook, with manual dry-run testing before live sends.
+            </p>
+            <p className="mt-2 text-sm leading-7 text-cyan-100/90">
+              Automation schedule: once per week via Vercel cron after env configuration is enabled.
+            </p>
+
+            <ul className="mt-4 list-disc space-y-2 pl-6 text-sm leading-7 text-slate-100">
+              {weeklyCampaignChecklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+
+            <label className="mt-4 inline-flex items-center gap-2 text-sm text-cyan-100">
+              <input
+                type="checkbox"
+                checked={weeklyCampaignDryRun}
+                onChange={(event) => setWeeklyCampaignDryRun(event.target.checked)}
+                aria-label="Enable dry run for weekly campaign"
+                className="h-4 w-4 rounded border-cyan-300/60 bg-slate-950/60"
+              />
+              Dry Run Weekly Campaign First
+            </label>
+
+            <button
+              type="button"
+              onClick={runWeeklyCampaign}
+              className="mt-4 rounded-full border border-cyan-300/40 bg-cyan-400/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100 transition hover:bg-cyan-400/20"
+            >
+              {weeklyCampaignDryRun ? "Run Weekly Dry-Run" : "Run Weekly Campaign Now"}
+            </button>
+
+            {weeklyCampaignStatus ? <p className="mt-2 text-sm text-slate-300">{weeklyCampaignStatus}</p> : null}
           </article>
 
           <article className="rounded-2xl border border-emerald-300/25 bg-gradient-to-br from-emerald-500/10 to-transparent p-6">

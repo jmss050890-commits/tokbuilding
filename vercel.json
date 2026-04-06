@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/miia/weekly-campaign",
+      "schedule": "0 14 * * 1"
+    }
+  ]
+}
