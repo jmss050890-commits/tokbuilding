@@ -7,9 +7,29 @@ type FacebookPayload = {
   dryRun?: boolean;
 };
 
-export async function POST(req: Request) {
+async function safeInsertOutreachLog(entry: {
+  to: string;
+  subject: string;
+  source: string;
+  status: 'validation_failed' | 'dry_run' | 'send_failed' | 'sent';
+  mode: 'human_loop' | 'direct_api';
+  reason?: string;
+  messageId?: string;
+}) {
   try {
     const logsCollection = await getMiiaOutreachLogsCollection();
+    await logsCollection.insertOne({
+      ...entry,
+      createdAt: new Date(),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown logging error';
+    console.warn('[MIIA Facebook] Logging skipped:', message);
+  }
+}
+
+export async function POST(req: Request) {
+  try {
     const payload = (await req.json()) as FacebookPayload;
 
     const pageId = payload.pageId?.trim() || '';
@@ -24,10 +44,9 @@ export async function POST(req: Request) {
       reason?: string;
       messageId?: string;
     }) => {
-      await logsCollection.insertOne({
+      await safeInsertOutreachLog({
         ...entry,
         source,
-        createdAt: new Date(),
       });
     };
 

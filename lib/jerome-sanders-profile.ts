@@ -26,7 +26,7 @@ export const JEROME_SANDERS_CREDENTIALS: Credential[] = [
   },
   {
     type: "Achievement",
-    title: "Sanders Viopro Labs Founder",
+    title: "Sanders Viopro Labs LLC Founder",
     issuer: "Self-Directed",
     date: "2024-Present",
     description:
@@ -35,7 +35,7 @@ export const JEROME_SANDERS_CREDENTIALS: Credential[] = [
   {
     type: "Achievement",
     title: "TokBuilding Platform Creator",
-    issuer: "Sanders Viopro Labs",
+    issuer: "Sanders Viopro Labs LLC",
     date: "2024-Present",
     description:
       "Designed and built TokBuilding, a no-code AI agent builder that empowers non-technical users to create custom AI agents with system prompts, personality, tone, and specialization.",
@@ -43,7 +43,7 @@ export const JEROME_SANDERS_CREDENTIALS: Credential[] = [
   {
     type: "Achievement",
     title: "Ethiopian Bible Integration for TokFaith",
-    issuer: "Sanders Viopro Labs",
+    issuer: "Sanders Viopro Labs LLC",
     date: "2026",
     description:
       "Architected comprehensive Ethiopian Orthodox Bible database with 8 canonical books (Enoch, Jubilees, Meqabyan, Sirach, Wisdom, Baruch, Tobit, Judith) containing 30+ passages for scripture reading, teaching, and spiritual guidance.",
@@ -71,7 +71,7 @@ export interface JeromeSandersProfile {
 export const JEROME_SANDERS_PROFILE: JeromeSandersProfile = {
   name: "Jerome Sanders",
   title: "Founder & Chief Architect",
-  organization: "Sanders Viopro Labs",
+  organization: "Sanders Viopro Labs LLC",
   mission:
     "Keep People Alive through technology that protects life, improves health, and empowers creators with AI.",
   expertise: [

@@ -43,7 +43,7 @@ const products = [
       'Emergency contact management',
       'Family account access',
     ],
-    landingUrl: 'https://tokhealth.sandersvioprolabs.com',
+    landingUrl: 'https://tokhealth.sandersvioprolabsllc.com',
     experienceNote: 'This opens the original TokHealth mobile build on the SVL TokHealth subdomain.',
     testimonial: {
       quote: 'The original TokHealth build feels alive because it blends wellness, safety, and daily challenges instead of acting like a flat tracker.',
@@ -193,7 +193,7 @@ export default function TokStoreShowcase() {
         <h2 className="text-2xl font-bold text-emerald-300 mb-2">TokHealth + TokThru V1 are Now Free for All</h2>
         <p className="text-emerald-100 text-lg mb-2">
           Access the original <strong>TokHealth</strong> and <strong>TokThru</strong> V1 experience at
-          <a href="https://tokhealth.sandersvioprolabs.com" className="underline text-emerald-200 hover:text-white ml-1" target="_blank" rel="noopener noreferrer">tokhealth.sandersvioprolabs.com</a>
+          <a href="https://tokhealth.sandersvioprolabsllc.com" className="underline text-emerald-200 hover:text-white ml-1" target="_blank" rel="noopener noreferrer">tokhealth.sandersvioprolabsllc.com</a>
         </p>
         <p className="text-emerald-200 text-sm">
           No subscription, no payment, no catch—just real wellness, safety, and check-ins for the community. This is the original V1 build that started it all. Share this with anyone who needs it!

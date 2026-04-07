@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { Play, MessageCircle, Share2, Radio } from 'lucide-react';
@@ -202,7 +202,7 @@ export default function MediaHub() {
           {copy.mediaHub.ctaBody}
         </p>
         <a
-          href="mailto:jerome@sandersvioprolabs.com"
+          href="mailto:jerome@sandersvioprolabsllc.com"
           style={{
             display: "inline-block",
             padding: "12px 24px",
@@ -220,3 +220,4 @@ export default function MediaHub() {
     </div>
   );
 }
+

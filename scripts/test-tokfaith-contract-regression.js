@@ -10,8 +10,21 @@ async function postJson(path, payload, language) {
     body: JSON.stringify(payload),
   });
 
-  const json = await response.json();
-  return { ok: response.ok, status: response.status, json };
+  const contentType = response.headers.get("content-type") || "";
+  const headerMeta = {
+    perspective: response.headers.get("x-tokfaith-perspective") || "",
+    description: response.headers.get("x-tokfaith-description") || "",
+    current: response.headers.get("x-tokfaith-current-perspective") || "",
+    canSwitch: response.headers.get("x-tokfaith-perspectives-can-switch") || "",
+  };
+
+  if (contentType.includes("application/json")) {
+    const json = await response.json();
+    return { ok: response.ok, status: response.status, json, text: "", headerMeta };
+  }
+
+  const text = await response.text();
+  return { ok: response.ok, status: response.status, json: null, text, headerMeta };
 }
 
 function hasPerspectiveSet(value) {
@@ -34,7 +47,9 @@ async function run() {
   );
 
   const body = result.json || {};
-  const pass = result.ok
+  const isJsonMode = Boolean(result.json);
+
+  const passJsonMode = result.ok
     && typeof body.response === "string"
     && body.response.length > 0
     && body.perspective === "King James Lens"
@@ -43,11 +58,22 @@ async function run() {
     && body.perspectives?.canSwitch === true
     && hasPerspectiveSet(body.perspectives?.available);
 
+  const passTextMode = result.ok
+    && typeof result.text === "string"
+    && result.text.length > 0
+    && result.headerMeta.perspective === "King James Lens"
+    && result.headerMeta.description === "Through the language of the Authorized Version"
+    && result.headerMeta.current === "kjv"
+    && result.headerMeta.canSwitch === "true";
+
+  const pass = isJsonMode ? passJsonMode : passTextMode;
+
   console.log(`${pass ? "PASS" : "FAIL"} tokfaith guarded contract`);
 
   if (!pass) {
     console.log(`  status: ${result.status}`);
-    console.log(`  response: ${JSON.stringify(body, null, 2)}`);
+    console.log(`  response: ${isJsonMode ? JSON.stringify(body, null, 2) : result.text}`);
+    console.log(`  headerMeta: ${JSON.stringify(result.headerMeta, null, 2)}`);
     process.exitCode = 1;
     return;
   }

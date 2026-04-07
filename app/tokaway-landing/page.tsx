@@ -777,7 +777,7 @@ export default function TokAwayLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="mailto:support@sandersvioprolabs.com" className="hover:text-blue-400">Email Support</a></li>
+                <li><a href="mailto:support@sandersvioprolabsllc.com" className="hover:text-blue-400">Email Support</a></li>
                 <li><a href="/tokaway-landing" className="hover:text-blue-400">FAQ</a></li>
                 <li><a href="/legal-disclaimer.md" className="hover:text-blue-400">Privacy</a></li>
               </ul>
@@ -951,7 +951,7 @@ export default function TokAwayLanding() {
               <h4 className="text-white font-bold mb-4">Our Brands</h4>
               <nav className="space-y-2">
                 <Link href="/sanders-viopro-labs" className="text-slate-400 hover:text-blue-400 transition">
-                  Sanders Viopro Labs
+                  Sanders Viopro Labs LLC
                 </Link>
                 <br />
                 <Link href="/kpa" className="text-slate-400 hover:text-blue-400 transition">

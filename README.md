@@ -37,4 +37,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Operations Notes
 
+- AI originality and copyright safety rules: [AI_COPYRIGHT_GUARDRAILS.md](AI_COPYRIGHT_GUARDRAILS.md)
 - SOSDirect session record (2026-04-02): [SOSDIRECT_SESSION_2026-04-02.md](SOSDIRECT_SESSION_2026-04-02.md)

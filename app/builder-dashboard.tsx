@@ -30,12 +30,12 @@ const guardians = [
 ];
 
 const platformRoutes = [
-  { label: 'SVL Home', value: 'sandersvioprolabs.com', href: '/sanders-viopro-labs' },
-  { label: 'SVL Guardians', value: 'sandersvioprolabs.com/agent', href: '/agent' },
-  { label: 'First Guardian', value: 'sandersvioprolabs.com/agent/first-guardian', href: '/agent/first-guardian' },
-  { label: 'TokHealth Experience', value: 'tokhealth.sandersvioprolabs.com', href: '/tokhealth' },
-  { label: 'SVL Story', value: 'sandersvioprolabs.com/our-story', href: '/our-story' },
-  { label: 'Succession & Legacy', value: 'sandersvioprolabs.com/succession', href: '/succession/legacy-heir-cards' },
+  { label: 'SVL Home', value: 'sandersvioprolabsllc.com', href: '/sanders-viopro-labs' },
+  { label: 'SVL Guardians', value: 'sandersvioprolabsllc.com/agent', href: '/agent' },
+  { label: 'First Guardian', value: 'sandersvioprolabsllc.com/agent/first-guardian', href: '/agent/first-guardian' },
+  { label: 'TokHealth Experience', value: 'tokhealth.sandersvioprolabsllc.com', href: '/tokhealth' },
+  { label: 'SVL Story', value: 'sandersvioprolabsllc.com/our-story', href: '/our-story' },
+  { label: 'Succession & Legacy', value: 'sandersvioprolabsllc.com/succession', href: '/succession/legacy-heir-cards' },
 ];
 
 const sessionWins = [

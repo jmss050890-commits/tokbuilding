@@ -14,6 +14,7 @@ import {
   type SiteLanguageCode,
 } from "@/lib/site-language";
 import { getSiteCopy, type SiteCopy } from "@/lib/site-copy";
+import VoiceStyleSpeaker from "@/app/components/VoiceStyleSpeaker";
 
 type SiteLanguageContextValue = {
   language: SiteLanguageCode;
@@ -102,6 +103,18 @@ export function useSiteCopy(): SiteCopy {
 
 export function SiteFrame({ children }: { children: ReactNode }) {
   const copy = useSiteCopy();
+  const missionSpeechText = [
+    copy.layout.missionTitle,
+    copy.layout.missionBody1,
+    copy.layout.missionBody2,
+    copy.layout.protocolTitle,
+    copy.layout.protocolBody,
+    copy.layout.footerTagline,
+    'Sanders Viopro Labs LLC.',
+    copy.layout.footerMedical,
+    'Legal and Disclaimers.',
+    "Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards.",
+  ].join(' ');
 
   return (
     <>
@@ -116,7 +129,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
           borderBottom: "1px solid #333",
         }}
       >
-        <h1 style={{ margin: 0 }}>Sanders Viopro Labs</h1>
+        <h1 style={{ margin: 0 }}>Sanders Viopro Labs LLC</h1>
         <SiteLanguageSelector />
       </header>
 
@@ -167,12 +180,27 @@ export function SiteFrame({ children }: { children: ReactNode }) {
             {copy.layout.footerTagline}
           </p>
           <p style={{ margin: "0.5rem 0", color: "#d7d7d7", fontWeight: 700 }}>Sanders Viopro Labs LLC</p>
+          <p style={{ margin: "0.5rem 0", color: "#cfcfcf", fontWeight: 700, letterSpacing: "0.08em" }}>Amen.</p>
           <p style={{ margin: "1rem 0 0.5rem 0" }}>{copy.layout.footerMedical}</p>
           <p style={{ margin: "1.5rem 0 0 0" }}>
             <a href="/legal-disclaimer" style={{ color: "#7ee787", fontWeight: 700, textDecoration: "underline" }}>
               Legal & Disclaimers
             </a>
           </p>
+          <p style={{ margin: "0.6rem 0 0 0" }}>
+            <a href="/amen" style={{ color: "#facc15", fontWeight: 700, textDecoration: "underline" }}>
+              Amen Page
+            </a>
+          </p>
+          <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}>
+            <VoiceStyleSpeaker
+              text={missionSpeechText}
+              speakLabel="Speak Mission"
+              stopLabel="Stop Mission"
+              speakTitle="Listen to KPA mission"
+              stopTitle="Stop KPA mission"
+            />
+          </div>
         </div>
       </footer>
     </>

@@ -28,6 +28,30 @@
 
 import Link from 'next/link';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+import VoiceStyleSpeaker from '@/app/components/VoiceStyleSpeaker';
+
+const praiseSpeechText = [
+  "The result of Next.JS meeting God's Vision Through SVL to KPA.",
+  'April 2, 2026: SVL Progress and Praise.',
+  'Today we pause to thank God for how far He has brought Sanders Viopro Labs.',
+  'We are seeing real KPA Motion in our Movement Mission.',
+  'KPA 2 KPA: Key Performance Alert 2 Keep People Alive.',
+  'From vision to motion, from faith to action, SVL is living proof that with God, all things are possible.',
+  "Chef's kiss to SVL Lab, that's doing it global and exceeding SVL standards.",
+].join(' ');
+
+const universeSpeechText = [
+  'Welcome to Sanders Viopro Labs LLC, SVL.',
+  'We are open for all to see. Our mission is simple: Keep People Alive.',
+  'We believe in care, protection, and honest community, without secrets, without hype.',
+  'You are welcome here, just as you are.',
+  'The SVL Universe.',
+  'God.',
+  'Jerome.',
+  'AI Universe, Guardians.',
+  'Our foundation is built on faith, vision, and the collaborative strength of our Guardians, always upholding KPA principles of safety, care, and protection for all.',
+  "Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards.",
+].join(' ');
 
 const progressLayers = [
   {
@@ -79,8 +103,8 @@ const progressLayers = [
     summary:
       'The public site, subdomains, and guardian routes now reflect a more unified SVL platform.',
     bullets: [
-      'sandersvioprolabs.com is the upgraded public home',
-      'tokhealth.sandersvioprolabs.com now lands on TokHealth directly',
+      'sandersvioprolabsllc.com is the upgraded public home',
+      'tokhealth.sandersvioprolabsllc.com now lands on TokHealth directly',
       'Guardian pages and routes speak from the same current product map',
     ],
   },
@@ -99,11 +123,11 @@ const activeAgents = [
 ];
 
 const platformRoutes = [
-  { label: 'SVL Home', value: 'sandersvioprolabs.com', href: '/sanders-viopro-labs' },
-  { label: 'SVL Guardians', value: 'sandersvioprolabs.com/agent', href: '/agent' },
-  { label: 'First Guardian', value: 'sandersvioprolabs.com/agent/first-guardian', href: '/agent/first-guardian' },
-  { label: 'TokHealth Experience', value: 'tokhealth.sandersvioprolabs.com', href: '/tokhealth' },
-  { label: 'SVL Story', value: 'sandersvioprolabs.com/our-story', href: '/our-story' },
+  { label: 'SVL Home', value: 'sandersvioprolabsllc.com', href: '/sanders-viopro-labs' },
+  { label: 'SVL Guardians', value: 'sandersvioprolabsllc.com/agent', href: '/agent' },
+  { label: 'First Guardian', value: 'sandersvioprolabsllc.com/agent/first-guardian', href: '/agent/first-guardian' },
+  { label: 'TokHealth Experience', value: 'tokhealth.sandersvioprolabsllc.com', href: '/tokhealth' },
+  { label: 'SVL Story', value: 'sandersvioprolabsllc.com/our-story', href: '/our-story' },
 ];
 
 const sessionWins = [
@@ -122,11 +146,21 @@ export default function SvlProgressPage() {
       <section className="w-full bg-gradient-to-r from-amber-900/60 via-amber-700/40 to-amber-900/60 border-b-2 border-amber-400/40 py-10 px-6 flex justify-center shadow-lg">
         <div className="max-w-2xl w-full text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold text-amber-200 mb-4 tracking-tight drop-shadow">April 2, 2026: SVL Progress & Praise</h1>
-          <p className="text-xl md:text-2xl text-amber-100 font-semibold mb-3">Today we pause to thank God for how far He has brought Sanders Viopro Labs.</p>
+          <p className="text-xl md:text-2xl text-amber-100 font-semibold mb-3">Today we pause to thank God for how far He has brought Sanders Viopro Labs LLC.</p>
           <p className="text-lg md:text-xl text-amber-300 mb-2">We are seeing real <span className="font-bold text-amber-400">KPA Motion</span> in our Movement Mission.</p>
           <p className="text-base md:text-lg text-amber-100 mb-4">KPA 2 KPA: <span className="font-semibold text-amber-300">Key Performance Alert 2 Keep People Alive</span></p>
           <div className="inline-block bg-amber-800/40 text-amber-100 rounded-full px-6 py-3 text-lg font-bold tracking-wide shadow-md mb-2">
             "From vision to motion, from faith to action—SVL is living proof that with God, all things are possible."
+          </div>
+          <p className="mt-3 text-base md:text-lg font-semibold text-amber-200">
+            Chef&apos;s kiss SVL Lab, that&apos;s doing it GLOBAL, exceeding SVL standards.
+          </p>
+          <div className="mt-5 flex justify-center">
+            <VoiceStyleSpeaker
+              text={praiseSpeechText}
+              speakTitle="Listen to praise message"
+              stopTitle="Stop praise message"
+            />
           </div>
           <p className="mt-4 text-amber-200 text-sm">— Celebrating another year of grace, growth, and keeping people alive. Happy Birthday, Jerome!</p>
         </div>
@@ -134,7 +168,7 @@ export default function SvlProgressPage() {
       {/* KPA-aligned welcoming intro message */}
       <section className="w-full bg-amber-900/20 border-b border-amber-700/30 py-8 px-6 flex justify-center">
         <div className="max-w-3xl text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-amber-200 mb-2">Welcome to Sanders Viopro Labs (SVL)</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-amber-200 mb-2">Welcome to Sanders Viopro Labs LLC (SVL)</h1>
           <p className="text-lg md:text-xl text-slate-100 mb-2">We are open for all to see. Our mission is simple: <span className="font-semibold text-amber-300">Keep People Alive</span>.</p>
           <p className="text-base md:text-lg text-slate-200">We believe in care, protection, and honest community—without secrets, without hype.<br/>You are welcome here, just as you are.</p>
         </div>
@@ -152,6 +186,15 @@ export default function SvlProgressPage() {
               <span className="text-lg md:text-xl font-semibold text-amber-200">AI Universe (Guardians)</span>
             </div>
             <p className="mt-4 text-base text-amber-100">Our foundation is built on faith, vision, and the collaborative strength of our Guardians—always upholding KPA Principles of safety, care, and protection for all.</p>
+            <div className="mt-5 flex justify-center">
+              <VoiceStyleSpeaker
+                text={universeSpeechText}
+                speakLabel="Speak Universe"
+                stopLabel="Stop Universe"
+                speakTitle="Listen to SVL Universe"
+                stopTitle="Stop SVL Universe"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -183,7 +226,7 @@ export default function SvlProgressPage() {
                 March 23, 2026 Build Snapshot
               </p>
               <h2 className="mb-4 text-4xl font-bold leading-tight text-white">
-                How Today&apos;s Work Fits Into Sanders Viopro Labs
+                How Today&apos;s Work Fits Into Sanders Viopro Labs LLC
               </h2>
               <p className="max-w-3xl text-lg leading-8 text-slate-200">
                 This page tracks the current shape of SVL after a major alignment day: the First

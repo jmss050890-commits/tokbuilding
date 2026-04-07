@@ -69,7 +69,7 @@ Cluster C: Family/Community Trust
 - prevention-first support systems
 
 Cluster D: Brand Leadership
-- Sanders Viopro Labs
+- Sanders Viopro Labs LLC
 - SVL KPA standards
 - ethical AI safety framework
 

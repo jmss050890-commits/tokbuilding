@@ -62,12 +62,17 @@ async function logWeeklyEvent(entry: {
   reason?: string;
   messageId?: string;
 }) {
-  const collection = await getMiiaOutreachLogsCollection();
-  await collection.insertOne({
-    ...entry,
-    source: 'miia-weekly-campaign',
-    createdAt: new Date(),
-  });
+  try {
+    const collection = await getMiiaOutreachLogsCollection();
+    await collection.insertOne({
+      ...entry,
+      source: 'miia-weekly-campaign',
+      createdAt: new Date(),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown logging error';
+    console.warn('[MIIA Weekly Campaign] Logging skipped:', message);
+  }
 }
 
 async function postToFacebook(pageId: string, message: string) {

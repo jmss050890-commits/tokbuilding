@@ -347,7 +347,7 @@ export default function TokSmartLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="mailto:support@sandersvioprolabs.com" className="hover:text-orange-400">Email Support</a></li>
+                <li><a href="mailto:support@sandersvioprolabsllc.com" className="hover:text-orange-400">Email Support</a></li>
                 <li><a href="/legal-disclaimer.md" className="hover:text-orange-400">Privacy</a></li>
               </ul>
             </div>

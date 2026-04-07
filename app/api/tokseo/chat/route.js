@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+﻿import OpenAI from "openai";
 import { AGENTS } from "@/lib/lib/lib/agents";
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { searchAtlas } from "@/lib/services/search-atlas";
@@ -173,7 +173,7 @@ ${keywordResult.error || competitorResult.error
         response: buildAgentRetryResponse(
           "TokSEO",
           language,
-          "Let's break that down simply. TokBuilding is the builder lane inside SVL. It helps people create agents, prompts, and business tools they can actually use. TokSEO then helps those tools get found, trusted, and connected to the people who need them. The practical next step is to start at sandersvioprolabs.com for the whole map or go straight to TokBuilding if you're ready to build.",
+          "Let's break that down simply. TokBuilding is the builder lane inside SVL. It helps people create agents, prompts, and business tools they can actually use. TokSEO then helps those tools get found, trusted, and connected to the people who need them. The practical next step is to start at sandersvioprolabsllc.com for the whole map or go straight to TokBuilding if you're ready to build.",
         ),
         timestamp: new Date().toISOString(),
         dataUsed: false,
@@ -186,3 +186,4 @@ ${keywordResult.error || competitorResult.error
     );
   }
 }
+

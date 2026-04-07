@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+﻿import OpenAI from "openai";
 import { AGENTS } from "@/lib/lib/lib/agents";
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
@@ -116,7 +116,7 @@ export async function POST(req) {
         response: buildAgentRetryResponse(
           "Coach Daniels",
           language,
-          "I hear you. TokBuilding is the part of SVL that helps people build AI agents and practical tools for real life. On its own, it helps someone create something useful. In the full SVL system, it works with TokSEO for visibility, TokStore for access, and the SVL agents for guidance so people can move from an idea to real support. You can start at sandersvioprolabs.com or open TokBuilding directly.",
+          "I hear you. TokBuilding is the part of SVL that helps people build AI agents and practical tools for real life. On its own, it helps someone create something useful. In the full SVL system, it works with TokSEO for visibility, TokStore for access, and the SVL agents for guidance so people can move from an idea to real support. You can start at sandersvioprolabsllc.com or open TokBuilding directly.",
         ),
         safetyMode,
         fallbackMode: true,
@@ -125,3 +125,4 @@ export async function POST(req) {
     );
   }
 }
+

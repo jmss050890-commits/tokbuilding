@@ -81,6 +81,26 @@ function getTokFaithPerspectiveMeta(perspective) {
   };
 }
 
+function toPublicTokFaithError(error, language = "en") {
+  const rawMessage = String(error?.message || "");
+  const lower = rawMessage.toLowerCase();
+
+  if (
+    lower.includes("incorrect api key") ||
+    lower.includes("invalid api key") ||
+    lower.includes("401") ||
+    lower.includes("authentication")
+  ) {
+    if (language !== "en") {
+      return buildTokFaithFallbackResponse(language, "beloved");
+    }
+
+    return "TokFaith is temporarily running in fallback mode while the AI key is being refreshed. Please try again in a moment.";
+  }
+
+  return "TokFaith encountered a temporary issue. Please try again in a moment.";
+}
+
 export async function POST(req) {
   let message = "";
   let userId;
@@ -252,7 +272,9 @@ export async function POST(req) {
             }
             controller.close();
           } catch (err) {
-            controller.enqueue(encoder.encode("[Error: " + (err?.message || "Unknown error") + "]"));
+            console.error("TokFaith streaming error:", err);
+            const fallbackText = buildDemoResponse(message, memoryContext, userName, language);
+            controller.enqueue(encoder.encode(fallbackText));
             controller.close();
           }
         },
@@ -263,6 +285,10 @@ export async function POST(req) {
           "Content-Type": "text/plain; charset=utf-8",
           "Cache-Control": "no-cache",
           "Transfer-Encoding": "chunked",
+          "x-tokfaith-perspective": perspectiveMeta.perspective,
+          "x-tokfaith-description": perspectiveMeta.description,
+          "x-tokfaith-current-perspective": perspectiveMeta.current,
+          "x-tokfaith-perspectives-can-switch": String(perspectiveMeta.perspectives?.canSwitch === true),
         },
       });
     } else {
@@ -279,14 +305,29 @@ export async function POST(req) {
       }
       return new Response(responseText, {
         status: 200,
-        headers: { "Content-Type": "text/plain; charset=utf-8" },
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "x-tokfaith-perspective": perspectiveMeta.perspective,
+          "x-tokfaith-description": perspectiveMeta.description,
+          "x-tokfaith-current-perspective": perspectiveMeta.current,
+          "x-tokfaith-perspectives-can-switch": String(perspectiveMeta.perspectives?.canSwitch === true),
+        },
       });
     }
   } catch (error) {
     console.error("TokFaith Chat Error:", error);
     return new Response(
-      `[Error: ${error?.message || "Unknown error"}]`,
-      { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+      buildDemoResponse(message || "", null, userName, language),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "x-tokfaith-perspective": perspectiveMeta.perspective,
+          "x-tokfaith-description": perspectiveMeta.description,
+          "x-tokfaith-current-perspective": perspectiveMeta.current,
+          "x-tokfaith-perspectives-can-switch": String(perspectiveMeta.perspectives?.canSwitch === true),
+        },
+      }
     );
   }
 }

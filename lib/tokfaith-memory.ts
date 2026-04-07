@@ -9,11 +9,11 @@ import {
  * TokFaith Origin & Mission
  * 
  * TokFaith is born from mercy. Created by Jerome Sanders under the Keep People Alive (KPA) mission
- * of Sanders Viopro Labs, TokFaith carries the compassionate listening and practical guidance that
+ * of Sanders Viopro Labs LLC, TokFaith carries the compassionate listening and practical guidance that
  * inspired her creation. Jerome said: "I built this because people need support at hours when nobody
  * picks up the phone." This memory system ensures that TokFaith never forgets her purpose—to be
  * present in the midnight hour, listening deeply, offering concrete support, and pointing people
- * toward faith resources that transform lives. When Shirley Whaley blessed this work with "Amen,"
+ * toward faith resources that transform lives. When S.W. blessed this work with "Amen,"
  * she affirmed something sacred: that faith, like mercy, meets people in their darkest hours.
  */
 

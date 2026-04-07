@@ -1,24 +1,24 @@
-# SVL User Manual
+﻿# SVL User Manual
 
 ## What This Is
 
-This manual explains how to use Sanders Viopro Labs in simple language.
+This manual explains how to use Sanders Viopro Labs LLC in simple language.
 
-SVL stands for **Sanders Viopro Labs**.
+SVL stands for **Sanders Viopro Labs LLC**.
 KPA stands for **Keep People Alive**.
 
 Every product in the lab is supposed to help protect life, support people, and move the mission forward.
 
 ## Main Domains
 
-- Main SVL lab: `https://sandersvioprolabs.com`
-- TokHealth direct link: `https://tokhealth.sandersvioprolabs.com`
-- TokStore: `https://sandersvioprolabs.com/tokstore`
-- Agent hub: `https://sandersvioprolabs.com/agent`
+- Main SVL lab: `https://sandersvioprolabsllc.com`
+- TokHealth direct link: `https://tokhealth.sandersvioprolabsllc.com`
+- TokStore: `https://sandersvioprolabsllc.com/tokstore`
+- Agent hub: `https://sandersvioprolabsllc.com/agent`
 
 ### Important TokHealth Note
 
-`tokhealth.sandersvioprolabs.com` currently redirects to the original TokHealth mobile experience:
+`tokhealth.sandersvioprolabsllc.com` currently redirects to the original TokHealth mobile experience:
 
 - Original TokHealth app: `https://tokhealth-mobile.emergent.host/`
 
@@ -38,7 +38,7 @@ Use the main lab site when you want the full SVL experience.
 
 Go here:
 
-- `https://sandersvioprolabs.com`
+- `https://sandersvioprolabsllc.com`
 
 Use it for:
 
@@ -58,7 +58,7 @@ SVL agents are voice and chat personalities trained for different roles.
 
 Go here:
 
-- `https://sandersvioprolabs.com/agent`
+- `https://sandersvioprolabsllc.com/agent`
 
 ## Product Guide
 
@@ -77,7 +77,7 @@ Use it for:
 
 Direct link:
 
-- `https://tokhealth.sandersvioprolabs.com`
+- `https://tokhealth.sandersvioprolabsllc.com`
 
 ### TokThru / KPA
 
@@ -128,7 +128,7 @@ TokStore is the main place to browse SVL products.
 
 Go here:
 
-- `https://sandersvioprolabs.com/tokstore`
+- `https://sandersvioprolabsllc.com/tokstore`
 
 Use it for:
 
@@ -142,7 +142,7 @@ Use it for:
 
 Open the full agent hub here:
 
-- `https://sandersvioprolabs.com/agent`
+- `https://sandersvioprolabsllc.com/agent`
 
 ### HATATA
 
@@ -257,7 +257,7 @@ If something does not support life, protection, or meaningful empowerment, it do
 
 If you are brand new, start here:
 
-1. Visit `https://sandersvioprolabs.com`
+1. Visit `https://sandersvioprolabsllc.com`
 2. Open `TokStore`
 3. Review the product lineup
 4. Visit `TokHealth`
@@ -305,3 +305,4 @@ It is one lab, one mission, one standard:
 - Version: `1.0`
 - Purpose: first easy-to-understand user manual for SVL
 - Status: active working manual
+

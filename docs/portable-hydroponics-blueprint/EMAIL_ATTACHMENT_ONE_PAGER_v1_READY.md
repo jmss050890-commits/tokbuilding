@@ -1,4 +1,4 @@
-# TokStrategy One-Pager: SVL Portable Hydroponic Garden System
+﻿# TokStrategy One-Pager: SVL Portable Hydroponic Garden System
 
 Prepared by: Jerome M. Sanders  
 Organization: Sanders Viopro Labs LLC  
@@ -48,4 +48,5 @@ SVL is launching a portable hydroponic system designed for practical food resili
 
 Jerome M. Sanders  
 Founder, Sanders Viopro Labs LLC  
-Website: sandersvioprolabs.com
+Website: sandersvioprolabsllc.com
+

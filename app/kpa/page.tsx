@@ -72,7 +72,7 @@ export default function KPA() {
         {/* Related Initiatives */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <Link href="/sanders-viopro-labs" className="bg-gradient-to-br from-purple-900/30 to-slate-800/30 rounded-lg p-8 border border-purple-700/30 hover:border-purple-500/60 transition">
-            <h3 className="text-2xl font-bold mb-2">Sanders Viopro Labs</h3>
+            <h3 className="text-2xl font-bold mb-2">Sanders Viopro Labs LLC</h3>
             <p className="text-slate-400">{pageCopy.relatedInitiatives}</p>
           </Link>
 

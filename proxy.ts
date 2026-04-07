@@ -1,4 +1,4 @@
-import type { NextRequest } from "next/server";
+﻿import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import {
   addSiteLanguagePrefix,
@@ -11,8 +11,13 @@ import {
 } from "@/lib/site-language";
 
 const SUBDOMAIN_REDIRECT_MAP: Record<string, string> = {
-  "tokhealth.sandersvioprolabs.com": "https://tokhealth-mobile.emergent.host",
+  "tokhealth.sandersvioprolabsllc.com": "https://tokhealth-mobile.emergent.host",
 };
+
+const TRAINING_SUBDOMAINS = new Set([
+  "training.sandersvioprolabs.com",
+  "training.sandersvioprolabsllc.com",
+]);
 
 const AGENT_SLUGS = new Set([
   "a1",
@@ -119,6 +124,17 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 308);
   }
 
+  // Handle training subdomain - rewrite to training-center page
+  if (host && TRAINING_SUBDOMAINS.has(host) && nextUrl.pathname === "/") {
+    const rewriteUrl = nextUrl.clone();
+    rewriteUrl.pathname = "/training-center";
+    return NextResponse.rewrite(rewriteUrl, {
+      request: {
+        headers: withLanguageRequestHeader(request, DEFAULT_SITE_LANGUAGE),
+      },
+    });
+  }
+
   const pathname = nextUrl.pathname;
   const pathnameLanguage = getPathSiteLanguage(pathname);
   const localeBypassed = shouldBypassLocaleRouting(pathname);
@@ -194,3 +210,4 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/:path*"],
 };
+

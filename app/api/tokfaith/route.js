@@ -11,10 +11,14 @@ import {
   getRequestSiteLanguage,
   getResponseLanguageSystemMessage,
 } from '@/lib/agent-response-language';
+import { getOpenAIApiKey } from '@/lib/openai-key';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'sk-demo-mode',
-});
+const openAiApiKey = getOpenAIApiKey();
+const openai = openAiApiKey
+  ? new OpenAI({
+      apiKey: openAiApiKey,
+    })
+  : null;
 
 /**
  * TokFaith Multi-Perspective Agent
@@ -63,6 +67,14 @@ async function generateTokFaithResponse(
   responseLanguageSystemMessage,
   supportiveHandoffSystemMessage,
 ) {
+  if (!openai) {
+    return {
+      perspective: 'Demo Mode',
+      description: 'OpenAI key unavailable or invalid',
+      response: 'TokFaith is running in fallback mode right now. Please set a valid OPENAI_API_KEY to enable full responses.',
+    };
+  }
+
   const perspectivePrompts = {
     ethiopian: {
       name: 'Ethiopian Lens',

@@ -1,6 +1,6 @@
 const DEFAULTS = {
-  arr: 1200000,
-  hardwareRevenue: 800000,
+  arr: 2500000,
+  hardwareRevenue: 1500000,
   softwareMultiple: {
     conservative: 4,
     base: 6,

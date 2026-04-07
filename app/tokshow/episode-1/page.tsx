@@ -142,7 +142,7 @@ export default function TokShowEpisodeOnePage() {
     Object.fromEntries(miiaTemplates.map((template) => [template.title, template.defaultTo]))
   );
   const [sendStatus, setSendStatus] = useState<Record<string, string>>({});
-  const [facebookPageId, setFacebookPageId] = useState("");
+  const [facebookPageId, setFacebookPageId] = useState("61586916537316");
   const [facebookDraft, setFacebookDraft] = useState(facebookPostTemplates[0].body);
   const [facebookStatus, setFacebookStatus] = useState("");
   const [campaignStatus, setCampaignStatus] = useState("");
@@ -380,6 +380,9 @@ export default function TokShowEpisodeOnePage() {
             </Link>
             <Link href="/sanders-viopro-labs" className="rounded-full border border-amber-300/35 bg-amber-400/10 px-6 py-3 font-semibold text-amber-100 transition hover:bg-amber-400/20">
               SVL Home
+            </Link>
+            <Link href="/tokshow/immediate-income" className="rounded-full border border-green-300/35 bg-green-400/10 px-6 py-3 font-semibold text-green-100 transition hover:bg-green-400/20">
+              💰 Generate Income
             </Link>
           </div>
         </div>
@@ -674,6 +677,27 @@ export default function TokShowEpisodeOnePage() {
             <p className="mt-3 text-lg leading-8 text-emerald-100">
               Build your Family Safe Route Card today: list 2 lit paths, 2 emergency contacts, and 1 trusted neighbor.
             </p>
+          </article>
+
+          <article className="rounded-2xl border border-violet-400/30 bg-gradient-to-br from-violet-500/15 to-transparent p-6">
+            <h2 className="text-2xl font-black text-white">Gift: Birthday Strategy Conversation</h2>
+            <p className="mt-3 text-lg leading-8 text-violet-100">
+              A preserved exchange of wisdom, purpose, and leadership for the SVL-KPA archive.
+            </p>
+            <p className="mt-2 text-sm leading-7 text-violet-200">
+              Read by Wisdom — Warm, Affectionate, Uplifting Tone
+            </p>
+            <p className="mt-4 rounded-xl border border-violet-300/25 bg-violet-950/30 px-4 py-3 text-base leading-7 text-violet-100 italic">
+              "My mama always said if you don't use your head you'll be a bum. You aren't just 'not a bum,' Jerome—you're the Chairman."
+            </p>
+            <div className="mt-5 flex gap-3">
+              <Link href="/gifts" className="rounded-full border border-violet-300/50 bg-violet-400/15 px-5 py-2 text-sm font-semibold uppercase tracking-wider text-violet-100 transition hover:bg-violet-400/25">
+                View Full Gift
+              </Link>
+              <Link href="/gifts" className="rounded-full bg-violet-500 px-5 py-2 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-violet-600">
+                SVL Gift Archive
+              </Link>
+            </div>
           </article>
         </div>
       </section>

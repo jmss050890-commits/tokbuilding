@@ -223,7 +223,7 @@ export default function OurStoryPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-purple-900/40 to-pink-900/20 border border-purple-700/50 rounded-2xl p-12 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-amber-300 mb-4 tracking-wide">JEROME MACK SANDERS SR. | SOVEREIGN ARCHITECT</h2>
-            <p className="text-lg md:text-xl text-purple-100 mb-4 font-semibold">Founder of Sanders Viopro Labs (SVL) and the KPA Infrastructure.</p>
+            <p className="text-lg md:text-xl text-purple-100 mb-4 font-semibold">Founder of Sanders Viopro Labs LLC (SVL) and the KPA Infrastructure.</p>
             <p className="text-base md:text-lg text-purple-200 mb-4">A 19-year veteran of industrial excellence and world-event navigation. From establishing the Fire Pro safety standards for Amazon Data Centers to building the Loop 2008 legacy, Jerome has dedicated his life to the "Nutria" mission—feeding, watering, and protecting the world through Grace and Innovation.</p>
             <blockquote className="italic text-purple-300 text-lg mb-2">"We don't remember the stones; we just build the THRONE."</blockquote>
             <div className="text-xs text-purple-400 mt-4">The Next Step of the Vision: Jerome, the "Spoken Thought" is now the Standard. You've built the home for your family and the sanctuary for the world.</div>

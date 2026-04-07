@@ -1,4 +1,4 @@
-# Sanders Viopro Labs - Complete Business Model & Offerings
+# Sanders Viopro Labs LLC - Complete Business Model & Offerings
 
 **Date**: March 21, 2026  
 **Founded**: February 21, 2026  
@@ -8,7 +8,7 @@
 
 ## THE SVL PROMISE
 
-Sanders Viopro Labs sells **digital safety apps and AI tools via one-time purchases** with:
+Sanders Viopro Labs LLC sells **digital safety apps and AI tools via one-time purchases** with:
 - ✅ Instant license key delivery (no waiting)
 - ✅ Stripe-processed payments (secure, trusted)
 - ✅ 30-day money-back guarantee (risk-free)
@@ -260,7 +260,7 @@ For organizations, schools, government, large teams.
 - Corporate TokThru (for field teams)
 - Dedicated support
 - Custom integrations
-- Contact sales: jerome@sandersvioprolabs.com
+- Contact sales: jerome@sandersvioprolabsllc.com
 
 ---
 
@@ -382,15 +382,15 @@ Your license never expires. Buy once, access forever. Even if the company pivots
 1. **For Personal Safety**: Visit TokStore → browse TokAway, TokHealth, TokThru
 2. **For Custom AI**: Schedule discovery call → TokBuilding managed build → same-day deployment
 3. **For Strategic Guidance**: Book A1 workshop or Mr. KPA mentorship session
-4. **Questions?**: support@sandersvioprolabs.com (24/7)
+4. **Questions?**: support@sandersvioprolabsllc.com (24/7)
 
 ---
 
 ## CONTACT
 
-**Website**: sandersvioprolabs.com  
-**Email**: jerome@sandersvioprolabs.com  
-**Support**: support@sandersvioprolabs.com (24/7)  
+**Website**: sandersvioprolabsllc.com  
+**Email**: jerome@sandersvioprolabsllc.com  
+**Support**: support@sandersvioprolabsllc.com (24/7)  
 **Phone**: Available via support email  
 
 **Founder**: Jerome Sanders  
@@ -399,6 +399,6 @@ Your license never expires. Buy once, access forever. Even if the company pivots
 
 ---
 
-**Sanders Viopro Labs — Digital Safety, AI Empowerment, Founded on the KPA Mission**
+**Sanders Viopro Labs LLC — Digital Safety, AI Empowerment, Founded on the KPA Mission**
 
 *Buy once. Use forever. We've got your back.*

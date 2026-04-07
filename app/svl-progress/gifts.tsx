@@ -2,6 +2,21 @@
 // This file documents key reflections and differentiators for the SVL app, as part of the living archive.
 
 import React from 'react';
+import VoiceStyleSpeaker from '../components/VoiceStyleSpeaker';
+
+const giftsReflectionSpeechText = [
+  'Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive.',
+  'What Makes SVL Different?',
+  'I remember a former coworker once asked me: What makes your app different from anyone else?',
+  "SVL is not just an app. It's a living, breathing ecosystem built on the foundation of keeping people alive, real responsibility, and authentic care.",
+  'Unlike typical platforms, SVL integrates faith, testimony, and a mission-driven approach into every layer, from the Guardians to the tools and community.',
+  'Mission-first: Every feature is aligned with the Keep People Alive mantra.',
+  'Story-aware Guardians: AI and human agents work together, grounded in shared testimony and real-world needs.',
+  'Safety and escalation: Built-in crisis support and handoff behaviors, not just afterthoughts.',
+  'Faith and legacy: The platform is a living archive for the Sanders family and all who join the mission.',
+  'Open, honest, and welcoming: No secrets, no hype, just real community and protection.',
+  "This is what sets SVL apart. It's not just about technology. It's about legacy, faith, and keeping people alive, together.",
+].join(' ');
 
 export default function GiftsReflection() {
   return (
@@ -12,6 +27,15 @@ export default function GiftsReflection() {
         </span>
       </div>
       <h2 className="text-2xl font-bold text-amber-300 mb-4">What Makes SVL Different?</h2>
+      <div className="mb-5">
+        <VoiceStyleSpeaker
+          text={giftsReflectionSpeechText}
+          speakLabel="Winner Voice Reader"
+          stopLabel="Stop Winner Voice Reader"
+          speakTitle="Play the Winner Voice Reader for this SVL reflection"
+          stopTitle="Stop the Winner Voice Reader"
+        />
+      </div>
       <blockquote className="text-lg text-amber-100 font-semibold leading-relaxed mb-4">
         "I remember a former coworker once asked me: <span className='italic text-amber-300'>What makes your app different from anyone else?</span>"
       </blockquote>

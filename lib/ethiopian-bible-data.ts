@@ -11,7 +11,7 @@
  * creates a complete spiritual picture.
  * 
  * THE SVL MISSING LINK - Keep People Alive:
- * Just as Ethiopian books complete Scripture's protection wisdom, Sanders Viopro Labs
+ * Just as Ethiopian books complete Scripture's protection wisdom, Sanders Viopro Labs LLC
  * completes health + faith protection through TokHealth, TokFaith, TokThru, and KPA services.
  * 
  * This database enables TokFaith to teach with both canons and show how they work together.

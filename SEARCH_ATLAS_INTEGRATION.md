@@ -29,7 +29,7 @@ User Chat Interface
 In Search Atlas, create your Brand Vault with:
 
 #### A. Brand Profile
-- **Brand Name**: Sanders Viopro Labs (SVL)
+- **Brand Name**: Sanders Viopro Labs LLC (SVL)
 - **Primary Domain**: tokbuilding.com (or your domain)
 - **Industry Keywords**: Health tech, crisis support, wellness, AI agents
 - **Target Audience**: Health-conscious individuals, businesses needing safety tools

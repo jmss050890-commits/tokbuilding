@@ -34,7 +34,7 @@
 ### 1. SVL Branding & Positioning
 - ✅ Home page redirects to `/sanders-viopro-labs`
 - ✅ Site metadata updated (KPA mission-focused)
-- ✅ TokStore branded as "Sanders Viopro Labs Store"
+- ✅ TokStore branded as "Sanders Viopro Labs LLC Store"
 - ✅ All products positioned under SVL ecosystem
 - ✅ KPA mission visible across all pages
 

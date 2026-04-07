@@ -10,12 +10,18 @@ async function postJson(path, payload, language) {
     body: JSON.stringify(payload),
   });
 
-  const json = await response.json();
-  return { ok: response.ok, status: response.status, json };
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const json = await response.json();
+    return { ok: response.ok, status: response.status, json, text: "" };
+  }
+
+  const text = await response.text();
+  return { ok: response.ok, status: response.status, json: null, text };
 }
 
 function getResponseText(result) {
-  return result?.json?.response || result?.json?.reply || "";
+  return result?.json?.response || result?.json?.reply || result?.text || "";
 }
 
 async function run() {

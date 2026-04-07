@@ -8,8 +8,8 @@ Market Value = ((ARR x Software Multiple) + (Hardware Revenue x Hardware Multipl
 
 ## Default Inputs (editable)
 
-- ARR: $1,200,000
-- Hardware revenue: $800,000
+- ARR: $2,500,000
+- Hardware revenue: $1,500,000
 
 ## Multiples by Scenario
 
@@ -37,7 +37,7 @@ node scripts/svl-market-value-calculator.js
 Run with custom ARR and hardware inputs:
 
 ```bash
-node scripts/svl-market-value-calculator.js --arr 2500000 --hardware 1500000
+node scripts/svl-market-value-calculator.js --arr 3200000 --hardware 1800000
 ```
 
 Optional scenario tuning flags:
@@ -49,7 +49,7 @@ Optional scenario tuning flags:
 Example with custom scenario tuning:
 
 ```bash
-node scripts/svl-market-value-calculator.js --arr 2500000 --hardware 1500000 --sw-base 7 --hw-base 2.5 --sp-base 0.25
+node scripts/svl-market-value-calculator.js --arr 3200000 --hardware 1800000 --sw-base 7 --hw-base 2.5 --sp-base 0.25
 ```
 
 ## Notes

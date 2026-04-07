@@ -1,4 +1,4 @@
-import { AGENTS } from "@/lib/lib/lib/agents";
+﻿import { AGENTS } from "@/lib/lib/lib/agents";
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
 import {
@@ -59,7 +59,7 @@ export async function POST(req) {
           reply: buildAgentDemoModeResponse(
             graceAgent.name,
             language,
-            "I'm Grace, and I'm here with you. I know the SVL story, the sandersvioprolabs.com upgrade, and how the mission keeps growing through God's grace. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening.",
+            "I'm Grace, and I'm here with you. I know the SVL story, the sandersvioprolabsllc.com upgrade, and how the mission keeps growing through God's grace. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening.",
           ),
           safetyMode: safetyCase.requiresSupportiveTone,
         },
@@ -110,7 +110,7 @@ export async function POST(req) {
         reply: buildAgentRetryResponse(
           "Grace",
           language,
-          "I hear you. TokBuilding is where SVL helps people build tools, prompts, and agents for real life. It works on its own as a builder, and it works with the rest of SVL by feeding into visibility, guidance, and support across the whole system. You can start at sandersvioprolabs.com or head straight to TokBuilding.",
+          "I hear you. TokBuilding is where SVL helps people build tools, prompts, and agents for real life. It works on its own as a builder, and it works with the rest of SVL by feeding into visibility, guidance, and support across the whole system. You can start at sandersvioprolabsllc.com or head straight to TokBuilding.",
         ),
         safetyMode,
         fallbackMode: true,
@@ -119,3 +119,4 @@ export async function POST(req) {
     );
   }
 }
+

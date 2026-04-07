@@ -343,7 +343,7 @@ export default function SVLGuardian() {
 
       <div className="svl-shell">
         <div className="svl-topbar">
-          <div className="svl-chip">Sanders Viopro Labs • KPA • Keep People Alive</div>
+          <div className="svl-chip">Sanders Viopro Labs LLC • KPA • Keep People Alive</div>
           <div className="svl-stamp">SVL Guardian Active</div>
         </div>
 
@@ -355,7 +355,7 @@ export default function SVLGuardian() {
               built to guide, protect, and activate
             </h2>
             <p className="svl-copy">
-              Sanders Viopro Labs KPA (Keep People Alive) brings together A1, HATÄTA, Wisdom, plus voice-command centers: TokHealth, TokThru, and TokBuilding—all integrated inside an intelligent support system designed for guidance, oversight, and action.
+              Sanders Viopro Labs LLC KPA (Keep People Alive) brings together A1, HATÄTA, Wisdom, plus voice-command centers: TokHealth, TokThru, and TokBuilding—all integrated inside an intelligent support system designed for guidance, oversight, and action.
             </p>
 
             <div className="svl-actions">
@@ -388,7 +388,7 @@ export default function SVLGuardian() {
               <div className="svl-photo-frame">
                 <Image 
                   src="/jerome-founder.png" 
-                  alt="Jerome Sanders, founder of Sanders Viopro Labs"
+                  alt="Jerome Sanders, founder of Sanders Viopro Labs LLC"
                   width={320}
                   height={400}
                   onError={(e) => {
@@ -401,7 +401,7 @@ export default function SVLGuardian() {
               <div>
                 <h3 className="svl-side-title">Creator & Founder</h3>
                 <p className="svl-side-copy">
-                  Jerome Sanders founded Sanders Viopro Labs with a singular mission: Keep People Alive. This ecosystem embodies his vision of intelligent systems that protect, guide, and activate real solutions for real people.
+                  Jerome Sanders founded Sanders Viopro Labs LLC with a singular mission: Keep People Alive. This ecosystem embodies his vision of intelligent systems that protect, guide, and activate real solutions for real people.
                 </p>
               </div>
             </div>

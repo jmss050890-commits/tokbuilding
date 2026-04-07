@@ -13,7 +13,7 @@ lib/
 ```
 
 **Supported Brands:**
-- `svl` — Sanders Viopro Labs (parent)
+- `svl` — Sanders Viopro Labs LLC (parent)
 - `tokaway` — TokAway Safety App
 - `tokhealth` — TokHealth Wellness
 - `toksmart` — TokSmart Business
@@ -70,7 +70,7 @@ await sendLicenseEmail({
 
 Output:
 ```
-From: TokAway Safety <noreply-tokaway@sandersvioprolabs.com>
+From: TokAway Safety <noreply-tokaway@sandersvioprolabsllc.com>
 Subject: Your TokAway License Key
 (Brand-colored HTML email with license key, download button, support links)
 ```
@@ -96,7 +96,7 @@ await sendOrderConfirmationEmail({
 
 Output:
 ```
-From: TokSmart Business <noreply-toksmart@sandersvioprolabs.com>
+From: TokSmart Business <noreply-toksmart@sandersvioprolabsllc.com>
 Subject: Order Confirmation: TokSmart Business Suite
 (Brand-colored order summary with amount, product details, next steps)
 ```
@@ -116,7 +116,7 @@ await sendWelcomeEmail(
 
 Output:
 ```
-From: TokHealth Wellness <noreply-tokhealth@sandersvioprolabs.com>
+From: TokHealth Wellness <noreply-tokhealth@sandersvioprolabsllc.com>
 Subject: Welcome to TokHealth
 (Brand-colored welcome with call-to-action, documentation links)
 ```
@@ -210,7 +210,7 @@ tokaway: {
 newbrand: {
   brand: "Your Brand",
   productName: "Your Product",
-  senderEmail: process.env.NEWBRAND_EMAIL || "noreply-newbrand@sandersvioprolabs.com",
+  senderEmail: process.env.NEWBRAND_EMAIL || "noreply-newbrand@sandersvioprolabsllc.com",
   senderName: "Your Brand",
   brandColor: "#FF00FF",
   supportEmail: "Loop2008tokhealth@outlook.com",
@@ -220,7 +220,7 @@ newbrand: {
 
 2. Add env var to `.env.local.example`:
 ```
-NEWBRAND_EMAIL=noreply-newbrand@sandersvioprolabs.com
+NEWBRAND_EMAIL=noreply-newbrand@sandersvioprolabsllc.com
 ```
 
 3. Use in code:

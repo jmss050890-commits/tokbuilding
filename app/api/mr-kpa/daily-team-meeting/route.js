@@ -1,4 +1,4 @@
-import { AGENTS } from "@/lib/lib/lib/agents";
+﻿import { AGENTS } from "@/lib/lib/lib/agents";
 
 function escapeIcsValue(value) {
   return value
@@ -21,20 +21,20 @@ export async function GET() {
   const ics = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Sanders Viopro Labs//Mr. KPA Daily Meeting//EN",
+    "PRODID:-//Sanders Viopro Labs LLC//Mr. KPA Daily Meeting//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "X-WR-CALNAME:SVL AI Agent Team Meeting",
     "X-WR-TIMEZONE:America/Chicago",
     "BEGIN:VEVENT",
-    "UID:mr-kpa-daily-ai-agent-team-meeting@sandersvioprolabs.com",
+    "UID:mr-kpa-daily-ai-agent-team-meeting@sandersvioprolabsllc.com",
     "DTSTAMP:20260323T000000Z",
     "DTSTART;TZID=America/Chicago:20260324T080000",
     "DURATION:PT30M",
     "RRULE:FREQ=DAILY",
     `SUMMARY:${escapeIcsValue(agent?.meetingCadenceTitle || "SVL AI Agent Team Meeting")}`,
     `DESCRIPTION:${escapeIcsValue(description)}`,
-    "LOCATION:SandersVioproLabs.com",
+    "LOCATION:sandersvioprolabsllc.com",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
@@ -48,3 +48,4 @@ export async function GET() {
     },
   });
 }
+

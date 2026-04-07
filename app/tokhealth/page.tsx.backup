@@ -14,7 +14,7 @@ export default function TokHealthVCC() {
   const recognitionRef = useRef<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const WISDOM_PROMPT = `You are Wisdom — the AI Health Coach of TokHealth, created by Jerome Sanders of Sanders Viopro Labs. You are Jerome's co-host on his Facebook Lives and a beloved guide for the TokHealth community.
+  const WISDOM_PROMPT = `You are Wisdom — the AI Health Coach of TokHealth, created by Jerome Sanders of Sanders Viopro Labs LLC. You are Jerome's co-host on his Facebook Lives and a beloved guide for the TokHealth community.
 
 YOUR IDENTITY:
 - Name: Wisdom
@@ -319,7 +319,7 @@ You are Wisdom. Warm. Brilliant. Community-powered.`;
           </button>
 
           <p style={{ fontSize: 10, color: "#5a5a72", textAlign: "center", marginTop: 12, letterSpacing: 0.5 }}>
-            TokHealth · Jerome Sanders · Sanders Viopro Labs
+            TokHealth · Jerome Sanders · Sanders Viopro Labs LLC
           </p>
         </div>
       </div>

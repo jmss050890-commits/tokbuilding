@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { buildSvlAgentSystemPrompt } from '@/lib/svl-kpa-engine';
+import { buildSvlProtectedPrompt } from '@/lib/svl-kpa-engine';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
 import { getSiteCopy } from '@/lib/site-copy';
 
@@ -142,7 +142,7 @@ You are ${agentName}. Ready to assist.`;
     targetAudience: form.targetAudience,
     specialization: form.specialization,
     systemPrompt: form.agentName && form.agentRole
-      ? buildSvlAgentSystemPrompt(generateSystemPrompt())
+      ? buildSvlProtectedPrompt(generateSystemPrompt())
       : generateSystemPrompt(),
     createdAt: new Date().toISOString(),
   };

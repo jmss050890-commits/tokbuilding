@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import type { ReactNode } from "react";
 import Script from "next/script";
@@ -7,6 +7,7 @@ import PwaRegistration from "./PwaRegistration";
 import BirthdayBanner from "./components/BirthdayBanner";
 import { SiteFrame, SiteLanguageProvider } from "./components/SiteLanguageControl";
 import { ArchitectSeal } from "./components/ArchitectSeal";
+import VoiceStyleSpeaker from "./components/VoiceStyleSpeaker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   resolveSiteLanguage,
@@ -17,19 +18,19 @@ import {
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://sandersvioprolabs.com";
+  "https://sandersvioprolabsllc.com";
 const facebookAppId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID ?? "APP_ID";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Sanders Viopro Labs - Keep People Alive (KPA)",
-  description: "SVL: Sanders Viopro Labs, built by Jerome Sanders. A shared Next.js project for Jerome, you, and the Keep People Alive mission. TokAway, TokHealth, TokSmart, TokThru, and more.",
-  applicationName: "Sanders Viopro Labs",
+  title: "Sanders Viopro Labs LLC - Keep People Alive (KPA)",
+  description: "SVL: Sanders Viopro Labs LLC, built by Jerome Sanders. A shared Next.js project for Jerome, you, and the Keep People Alive mission. TokAway, TokHealth, TokSmart, TokThru, and more.",
+  applicationName: "Sanders Viopro Labs LLC",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Sanders Viopro Labs",
+    title: "Sanders Viopro Labs LLC",
   },
   icons: {
     icon: "/icon",
@@ -95,16 +96,25 @@ export default async function RootLayout({
           <ArchitectSeal />
           <footer style={{marginTop: 32, textAlign: 'center', color: '#bbb', fontSize: 14}}>
             <div>
-              <strong>Sanders Viopro Labs Growth 2026:</strong> Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness.
+              <strong>Sanders Viopro Labs LLC Growth 2026:</strong> Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness.
             </div>
             <div style={{marginTop: 8}}>Sanders Viopro Labs LLC</div>
             <div style={{marginTop: 8}}>
               <span style={{display: 'block', fontWeight: 'bold', color: '#7ee787', marginBottom: 4}}>
                 Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive
               </span>
-              <a href="/legal-disclaimer.md" style={{color: '#7ee787', textDecoration: 'underline'}}>
+              <a href="/legal-disclaimer" style={{color: '#7ee787', textDecoration: 'underline'}}>
                 Legal & Disclaimers
               </a>
+            </div>
+            <div style={{marginTop: 16, display: 'flex', justifyContent: 'center'}}>
+              <VoiceStyleSpeaker
+                text="Seal of the Architect. Sanders Viopro Labs LLC Growth 2026: Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness. Sanders Viopro Labs LLC. Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive. Legal and Disclaimers. Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards."
+                speakLabel="Speak Footer"
+                stopLabel="Stop Footer"
+                speakTitle="Listen to SVL footer"
+                stopTitle="Stop SVL footer"
+              />
             </div>
           </footer>
           <SpeedInsights />
@@ -113,3 +123,4 @@ export default async function RootLayout({
     </html>
   );
 }
+

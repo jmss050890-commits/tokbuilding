@@ -201,6 +201,24 @@ export default function SandersVioProLabs() {
         </div>
 
         <div className="mb-16">
+          <Link href="/spl" className="block bg-gradient-to-br from-emerald-950/70 via-slate-950 to-amber-950/45 rounded-xl border-2 border-emerald-300/35 hover:border-emerald-100/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">🕊️</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SPL Green Room</h2>
+              <p className="text-xl text-emerald-100 mb-6 max-w-3xl mx-auto">
+                Approval-gated launch prep for the SVL-KPA-SPL message. Banner locked, lanes staged, and operator sequence ready when you want to move.
+              </p>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-200 mb-6">
+                Created 2026-04-07 05:31:30 AM -05:00
+              </p>
+              <span className="inline-block px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg transition">
+                Open SPL Staging
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
           <Link href="/tokfam" className="block bg-gradient-to-br from-pink-950/70 via-rose-950/40 to-slate-900 rounded-xl border-2 border-pink-400/35 hover:border-pink-200/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
             <div className="text-center">
               <div className="text-5xl mb-6">🧸</div>
@@ -240,6 +258,21 @@ export default function SandersVioProLabs() {
               </p>
               <span className="inline-block px-6 py-3 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold rounded-lg transition">
                 Open Executive Brief
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
+          <Link href="/svl-kpa-positioning" className="block bg-gradient-to-br from-indigo-950/70 via-slate-900 to-cyan-950/50 rounded-xl border-2 border-indigo-300/30 hover:border-indigo-100/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">🔬</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SVL-KPA Research-Backed Positioning</h2>
+              <p className="text-xl text-indigo-100 mb-6 max-w-3xl mx-auto">
+                Science-grounded investor and client positioning. Pressure-tested against DuPont, HOP, and Safety II. Ready for boardroom conversations.
+              </p>
+              <span className="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition">
+                Open Positioning
               </span>
             </div>
           </Link>
