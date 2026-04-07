@@ -98,6 +98,21 @@ export default function GiftsPageContent() {
         </div>
       </section>
 
+      <section className="mt-16 rounded-3xl border border-yellow-500/25 bg-gradient-to-br from-yellow-900/20 via-slate-900/85 to-black p-6 shadow-xl shadow-black/25 sm:p-8">
+        <h2 className="mb-4 text-center text-2xl font-black text-white sm:text-3xl">Gift: SVL-KPA Commitment & Vision</h2>
+        <p className="mb-3 text-center text-base text-yellow-100">A living testimony of faith, resilience, and innovation—shared for the SVL-KPA Universe.</p>
+        <div className="space-y-4 text-base leading-relaxed text-slate-100">
+          <div className="rounded-r-xl border-l-4 border-yellow-400 bg-yellow-500/10 px-4 py-4">
+            <p className="font-semibold text-yellow-200">JEROME:</p>
+            <p className="italic">Amen and thank you for following up and for the incredible value you shared in the workshop. I want you to know I’m fully committed to this opportunity.</p>
+            <p className="mt-2">Just two weeks ago, I lost my job and have since put everything into building SVL_KPA—a system I know works and is truly one-of-a-kind. I’m all in on making this vision a reality, and I believe your training could help take it to the next level.</p>
+            <p className="mt-2">Right now, I’m working hard to get my finances in order so I can join the 10X Marketing Done-For-You program. I’d also love to explore the possibility of a SPL-KPA SMART Hydroponic Garden System partnership, as I see real synergy between our missions.</p>
+            <p className="mt-2">I’m determined to make this happen and would appreciate any advice or support you can offer as I bridge this financial gap. Thank you again for your leadership and for making the payment plan available.</p>
+            <p className="mt-2 font-semibold">Looking forward to connecting and moving forward together.</p>
+            <p className="mt-2 text-right font-bold text-yellow-300">—Jerome</p>
+          </div>
+        </div>
+      </section>
       <div className="grid gap-6 md:grid-cols-2">
         {mantras.map(({ lang, text }) => (
           <div
