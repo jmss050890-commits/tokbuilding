@@ -110,6 +110,11 @@ const facebookPostTemplates = [
     body:
       "Global Wisdom Feed Launch:\n\nSVL-KPA is integrating Proverbs-based daily wisdom with practical health and resilience action through MIIA and TokHealth.\n\nWe are building globally with heart, strategy, and measurable impact.\n\nIf your organization wants to collaborate, send us ALIGN.\n\n#SVL #MIIA #TokHealth #GlobalImpact #KeepPeopleAlive",
   },
+  {
+    title: "Template F4 - Training Roadmap",
+    body:
+      "SVL Training Roadmap Update:\n\nWe are converting workshop training into execution this week:\n- Set Year 1 / Year 3 / Year 5 revenue targets\n- Keep offers simple for faster decision-making\n- Automate lead follow-up for consistency\n- Prioritize weekly focus: traffic -> leads -> sales\n- Run scorecards for leads, calls, and closes\n\nMission: Keep People Alive through practical systems and measurable action.\n\n#SVL #KPA #BusinessTraining #LeadGeneration #Execution",
+  },
 ];
 
 const globalWisdomEmailBlock =
