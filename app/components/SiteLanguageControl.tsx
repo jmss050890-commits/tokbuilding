@@ -14,7 +14,10 @@ import {
   type SiteLanguageCode,
 } from "@/lib/site-language";
 import { getSiteCopy, type SiteCopy } from "@/lib/site-copy";
+<<<<<<< HEAD
 import VoiceStyleSpeaker from "@/app/components/VoiceStyleSpeaker";
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 type SiteLanguageContextValue = {
   language: SiteLanguageCode;
@@ -103,6 +106,7 @@ export function useSiteCopy(): SiteCopy {
 
 export function SiteFrame({ children }: { children: ReactNode }) {
   const copy = useSiteCopy();
+<<<<<<< HEAD
   const missionSpeechText = [
     copy.layout.missionTitle,
     copy.layout.missionBody1,
@@ -115,6 +119,8 @@ export function SiteFrame({ children }: { children: ReactNode }) {
     'Legal and Disclaimers.',
     "Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards.",
   ].join(' ');
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
   return (
     <>
@@ -129,7 +135,11 @@ export function SiteFrame({ children }: { children: ReactNode }) {
           borderBottom: "1px solid #333",
         }}
       >
+<<<<<<< HEAD
         <h1 style={{ margin: 0 }}>Sanders Viopro Labs LLC</h1>
+=======
+        <h1 style={{ margin: 0 }}>Sanders Viopro Labs</h1>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         <SiteLanguageSelector />
       </header>
 
@@ -179,6 +189,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
           <p style={{ margin: "1rem 0 0.5rem 0", color: "#d7d7d7", fontWeight: 700, letterSpacing: "0.03em" }}>
             {copy.layout.footerTagline}
           </p>
+<<<<<<< HEAD
           <p style={{ margin: "0.5rem 0", color: "#d7d7d7", fontWeight: 700 }}>Sanders Viopro Labs LLC</p>
           <p style={{ margin: "0.5rem 0", color: "#cfcfcf", fontWeight: 700, letterSpacing: "0.08em" }}>Amen.</p>
           <p style={{ margin: "1rem 0 0.5rem 0" }}>{copy.layout.footerMedical}</p>
@@ -201,6 +212,9 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               stopTitle="Stop KPA mission"
             />
           </div>
+=======
+          <p style={{ margin: "1rem 0 0.5rem 0" }}>{copy.layout.footerMedical}</p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
       </footer>
     </>

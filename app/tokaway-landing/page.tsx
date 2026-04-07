@@ -777,16 +777,27 @@ export default function TokAwayLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
+<<<<<<< HEAD
                 <li><a href="mailto:support@sandersvioprolabsllc.com" className="hover:text-blue-400">Email Support</a></li>
                 <li><a href="/tokaway-landing" className="hover:text-blue-400">FAQ</a></li>
                 <li><a href="/legal-disclaimer.md" className="hover:text-blue-400">Privacy</a></li>
+=======
+                <li><a href="mailto:support@tokaway.app" className="hover:text-blue-400">Email Support</a></li>
+                <li><a href="/tokaway-landing" className="hover:text-blue-400">FAQ</a></li>
+                <li><a href="https://tokaway.app/privacy" className="hover:text-blue-400">Privacy</a></li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Legal</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
+<<<<<<< HEAD
                 <li><a href="/legal-disclaimer.md" className="hover:text-blue-400">Privacy Policy</a></li>
                 <li><a href="/legal-disclaimer.md" className="hover:text-blue-400">Terms of Service</a></li>
+=======
+                <li><a href="https://tokaway.app/privacy" className="hover:text-blue-400">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-blue-400">Terms of Service</a></li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </ul>
             </div>
           </div>
@@ -794,7 +805,10 @@ export default function TokAwayLanding() {
             <p className="text-center text-slate-400 text-sm">
               © 2026 TokAway. Part of the KPA Mission - Keep People Alive.
             </p>
+<<<<<<< HEAD
             <p className="text-center text-slate-400 text-sm mt-2">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </div>
         </div>
       </footer>
@@ -950,6 +964,7 @@ export default function TokAwayLanding() {
             <div>
               <h4 className="text-white font-bold mb-4">Our Brands</h4>
               <nav className="space-y-2">
+<<<<<<< HEAD
                 <Link href="/sanders-viopro-labs" className="text-slate-400 hover:text-blue-400 transition">
                   Sanders Viopro Labs LLC
                 </Link>
@@ -959,6 +974,17 @@ export default function TokAwayLanding() {
                 </Link>
                 <br />
                 <Link href="/think-speak-work" className="text-slate-400 hover:text-blue-400 transition">
+=======
+                <Link href="/Sanders-Viopro-Labs" className="text-slate-400 hover:text-blue-400 transition">
+                  Sanders Viopro Labs
+                </Link>
+                <br />
+                <Link href="/KPA" className="text-slate-400 hover:text-blue-400 transition">
+                  KPA
+                </Link>
+                <br />
+                <Link href="/Think-Speak-Work" className="text-slate-400 hover:text-blue-400 transition">
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
                   Think Speak Work
                 </Link>
               </nav>
@@ -986,6 +1012,7 @@ export default function TokAwayLanding() {
             <div>
               <h4 className="text-white font-bold mb-4">Legal</h4>
               <nav className="space-y-2">
+<<<<<<< HEAD
                 <Link href="/legal-disclaimer.md" className="text-slate-400 hover:text-blue-400 transition">
                   Privacy Policy
                 </Link>
@@ -995,6 +1022,17 @@ export default function TokAwayLanding() {
                 </Link>
                 <br />
                 <Link href="/sanders-viopro-labs" className="text-slate-400 hover:text-blue-400 transition">
+=======
+                <Link href="/privacy" className="text-slate-400 hover:text-blue-400 transition">
+                  Privacy Policy
+                </Link>
+                <br />
+                <Link href="/terms" className="text-slate-400 hover:text-blue-400 transition">
+                  Terms of Service
+                </Link>
+                <br />
+                <Link href="/contact" className="text-slate-400 hover:text-blue-400 transition">
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
                   Contact
                 </Link>
               </nav>
@@ -1003,7 +1041,10 @@ export default function TokAwayLanding() {
 
           <div className="border-t border-slate-700 pt-6 text-center text-slate-500 text-sm">
             <p>&copy; 2024 Tok Building Ecosystem. All rights reserved.</p>
+<<<<<<< HEAD
             <p className="mt-2">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </div>
         </div>
       </footer>

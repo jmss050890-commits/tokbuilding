@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿import { AGENTS } from "@/lib/lib/lib/agents";
+=======
+import { AGENTS } from "@/lib/lib/lib/agents";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
 import {
@@ -52,7 +56,11 @@ export async function POST(req) {
           response: buildAgentDemoModeResponse(
             graceAgent.name,
             language,
+<<<<<<< HEAD
             "I'm Grace, and I'm here with you. I know the SVL story, the sandersvioprolabsllc.com upgrade, and how the mission keeps growing through God's grace. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening.",
+=======
+            "I'm Grace, and I'm here with you. I know the SVL story, the sandersvioprolabs.com upgrade, and how the mission keeps growing through God's grace. Right now I'm in demo mode, but when we're fully connected, I'll support you with motivation, emotional encouragement, and calm guidance. You're not alone. I'm listening.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           ),
           safetyMode: safetyCase.requiresSupportiveTone,
         }),
@@ -116,7 +124,11 @@ export async function POST(req) {
         response: buildAgentRetryResponse(
           "Grace",
           language,
+<<<<<<< HEAD
           "I hear you. TokBuilding is the part of SVL that helps people build something real for themselves. It gives people a way to turn ideas into agents, prompts, and useful tools, and the rest of SVL helps those tools get seen, supported, and connected to people who need them. You can start at sandersvioprolabsllc.com or go straight to TokBuilding from there.",
+=======
+          "I hear you. TokBuilding is the part of SVL that helps people build something real for themselves. It gives people a way to turn ideas into agents, prompts, and useful tools, and the rest of SVL helps those tools get seen, supported, and connected to people who need them. You can start at sandersvioprolabs.com or go straight to TokBuilding from there.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         ),
         safetyMode,
         fallbackMode: true,

@@ -227,7 +227,11 @@ npm run start  # Or your deployment server command
 | **MongoDB** | 512MB free tier | $57-400/mo | Starts at shared tier |
 | **SendGrid** | 100 emails/day | $20-100/mo | Volume-based pricing |
 | **OpenAI** | Pay-per-use | $5-50/mo | Depends on usage |
+<<<<<<< HEAD
 | **Domain** | - | $10-15/year | sandersvioprolabsllc.com |
+=======
+| **Domain** | - | $10-15/year | sandersvioprolabs.com |
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 | **SSL Certificate** | Included | Free | Vercel includes; Let's Encrypt free |
 | **TOTAL** | - | **~$150-200/mo** | Scales with customer volume |
 

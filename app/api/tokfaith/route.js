@@ -11,6 +11,7 @@ import {
   getRequestSiteLanguage,
   getResponseLanguageSystemMessage,
 } from '@/lib/agent-response-language';
+<<<<<<< HEAD
 import { getOpenAIApiKey } from '@/lib/openai-key';
 
 const openAiApiKey = getOpenAIApiKey();
@@ -19,6 +20,12 @@ const openai = openAiApiKey
       apiKey: openAiApiKey,
     })
   : null;
+=======
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || 'sk-demo-mode',
+});
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 /**
  * TokFaith Multi-Perspective Agent
@@ -67,6 +74,7 @@ async function generateTokFaithResponse(
   responseLanguageSystemMessage,
   supportiveHandoffSystemMessage,
 ) {
+<<<<<<< HEAD
   if (!openai) {
     return {
       perspective: 'Demo Mode',
@@ -75,6 +83,8 @@ async function generateTokFaithResponse(
     };
   }
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const perspectivePrompts = {
     ethiopian: {
       name: 'Ethiopian Lens',
@@ -210,6 +220,7 @@ export async function POST(request) {
     }
 
     const perspective = forcePerspective || detectTokFaithPerspective(message);
+<<<<<<< HEAD
     const perspectivePrompts = {
       ethiopian: {
         name: 'Ethiopian Lens',
@@ -316,6 +327,39 @@ export async function POST(request) {
         'Transfer-Encoding': 'chunked',
       },
     });
+=======
+    const responseData = await generateTokFaithResponse(
+      message,
+      perspective,
+      systemContext,
+      responseLanguageSystemMessage,
+      safetyCase.requiresSupportiveTone
+        ? getSupportiveHandoffSystemMessage('TokFaith')
+        : null,
+    );
+
+    // Save to memory (non-blocking)
+    await saveTokFaithLesson(message, responseData);
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: message,
+        perspective: responseData.perspective,
+        description: responseData.description,
+        response: responseData.response,
+        perspectives: {
+          available: ['ethiopian', 'kjv', 'ethiopian-with-kjv-option'],
+          current: perspective,
+          canSwitch: true,
+        },
+      }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   } catch (error) {
     console.error('TokFaith API error:', error);
     return new Response(

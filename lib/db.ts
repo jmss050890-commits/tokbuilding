@@ -157,6 +157,7 @@ export interface FirstGuardianThreadMemory {
   messageCount: number;
 }
 
+<<<<<<< HEAD
 export interface MiiaOutreachLog {
   _id?: string;
   to: string;
@@ -169,6 +170,8 @@ export interface MiiaOutreachLog {
   createdAt: Date;
 }
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 /**
  * Memorial Storage (uses TokStore Subscription for membership tracking)
  * Free tier: appId 'memorial-free'
@@ -250,6 +253,7 @@ export interface GuardianConversation {
 }
 
 /**
+<<<<<<< HEAD
  * Mr. KPA Guardian - Personal guidance Guardian for each user
  * Distinct from Memorial Guardians - advisor, counselor, strategic partner
  */
@@ -286,6 +290,8 @@ export interface MrKpaReceipt {
 }
 
 /**
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
  * MongoDB Connection Helper
  */
 import { MongoClient } from 'mongodb';
@@ -406,6 +412,7 @@ export async function getFirstGuardianThreadMemoriesCollection() {
 
   return collection;
 }
+<<<<<<< HEAD
 
 export async function getMiiaOutreachLogsCollection() {
   const db = await getDatabase();
@@ -418,3 +425,5 @@ export async function getMiiaOutreachLogsCollection() {
 
   return collection;
 }
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

@@ -1,5 +1,6 @@
 'use client';
 
+<<<<<<< HEAD
 
 import Link from 'next/link';
 import { Heart, BookOpen, Lightbulb, MessageCircle, Play } from 'lucide-react';
@@ -23,11 +24,17 @@ function getTokFaithVoice() {
   // Last resort: any English voice
   return voices.find(v => v.lang?.startsWith('en-')) || voices[0] || null;
 }
+=======
+import Link from 'next/link';
+import { Heart, BookOpen, Lightbulb, MessageCircle } from 'lucide-react';
+import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 export const dynamic = 'force-dynamic';
 
 export default function TokFaithPage() {
   const copy = useSiteCopy();
+<<<<<<< HEAD
   const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // SVL Sovereign Credential Banner
@@ -116,6 +123,11 @@ export default function TokFaithPage() {
       {sovereignBanner}
       {tokfaithIntro}
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-amber-950 to-slate-950">
+=======
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-amber-950 to-slate-950">
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       {/* Navigation Bar */}
       <nav className="fixed top-0 z-40 w-full bg-slate-900/80 backdrop-blur border-b border-amber-800/30">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -154,6 +166,7 @@ export default function TokFaithPage() {
                 <span className="text-amber-100">{copy.tokfaith.hero.title3}</span>
               </h2>
 
+<<<<<<< HEAD
               <div className="flex items-center gap-2">
                 <p className="text-amber-50 text-lg leading-relaxed max-w-xl">
                   {copy.tokfaith.hero.body}
@@ -167,6 +180,11 @@ export default function TokFaithPage() {
                   <Play className="w-4 h-4" /> Listen
                 </button>
               </div>
+=======
+              <p className="text-amber-50 text-lg leading-relaxed max-w-xl">
+                {copy.tokfaith.hero.body}
+              </p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
               <div className="flex gap-4 pt-4">
                 <Link
@@ -423,9 +441,14 @@ export default function TokFaithPage() {
         <p className="mt-4">
           {copy.tokfaith.footer.disclaimer}
         </p>
+<<<<<<< HEAD
         <p className="mt-4">Sanders Viopro Labs LLC</p>
       </footer>
     </div>
     </>
+=======
+      </footer>
+    </div>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   );
 }

@@ -10,6 +10,7 @@ async function postJson(path, payload, language) {
     body: JSON.stringify(payload),
   });
 
+<<<<<<< HEAD
   const contentType = response.headers.get("content-type") || "";
   if (contentType.includes("application/json")) {
     const json = await response.json();
@@ -22,6 +23,14 @@ async function postJson(path, payload, language) {
 
 function getResponseText(result) {
   return result?.json?.response || result?.json?.reply || result?.text || "";
+=======
+  const json = await response.json();
+  return { ok: response.ok, status: response.status, json };
+}
+
+function getResponseText(result) {
+  return result?.json?.response || result?.json?.reply || "";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 }
 
 async function run() {

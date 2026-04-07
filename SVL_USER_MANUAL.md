@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿# SVL User Manual
 
 ## What This Is
@@ -5,12 +6,22 @@
 This manual explains how to use Sanders Viopro Labs LLC in simple language.
 
 SVL stands for **Sanders Viopro Labs LLC**.
+=======
+# SVL User Manual
+
+## What This Is
+
+This manual explains how to use Sanders Viopro Labs in simple language.
+
+SVL stands for **Sanders Viopro Labs**.
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 KPA stands for **Keep People Alive**.
 
 Every product in the lab is supposed to help protect life, support people, and move the mission forward.
 
 ## Main Domains
 
+<<<<<<< HEAD
 - Main SVL lab: `https://sandersvioprolabsllc.com`
 - TokHealth direct link: `https://tokhealth.sandersvioprolabsllc.com`
 - TokStore: `https://sandersvioprolabsllc.com/tokstore`
@@ -19,6 +30,16 @@ Every product in the lab is supposed to help protect life, support people, and m
 ### Important TokHealth Note
 
 `tokhealth.sandersvioprolabsllc.com` currently redirects to the original TokHealth mobile experience:
+=======
+- Main SVL lab: `https://sandersvioprolabs.com`
+- TokHealth direct link: `https://tokhealth.sandersvioprolabs.com`
+- TokStore: `https://sandersvioprolabs.com/tokstore`
+- Agent hub: `https://sandersvioprolabs.com/agent`
+
+### Important TokHealth Note
+
+`tokhealth.sandersvioprolabs.com` currently redirects to the original TokHealth mobile experience:
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 - Original TokHealth app: `https://tokhealth-mobile.emergent.host/`
 
@@ -38,7 +59,11 @@ Use the main lab site when you want the full SVL experience.
 
 Go here:
 
+<<<<<<< HEAD
 - `https://sandersvioprolabsllc.com`
+=======
+- `https://sandersvioprolabs.com`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 Use it for:
 
@@ -58,7 +83,11 @@ SVL agents are voice and chat personalities trained for different roles.
 
 Go here:
 
+<<<<<<< HEAD
 - `https://sandersvioprolabsllc.com/agent`
+=======
+- `https://sandersvioprolabs.com/agent`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ## Product Guide
 
@@ -77,7 +106,11 @@ Use it for:
 
 Direct link:
 
+<<<<<<< HEAD
 - `https://tokhealth.sandersvioprolabsllc.com`
+=======
+- `https://tokhealth.sandersvioprolabs.com`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ### TokThru / KPA
 
@@ -128,7 +161,11 @@ TokStore is the main place to browse SVL products.
 
 Go here:
 
+<<<<<<< HEAD
 - `https://sandersvioprolabsllc.com/tokstore`
+=======
+- `https://sandersvioprolabs.com/tokstore`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 Use it for:
 
@@ -142,7 +179,11 @@ Use it for:
 
 Open the full agent hub here:
 
+<<<<<<< HEAD
 - `https://sandersvioprolabsllc.com/agent`
+=======
+- `https://sandersvioprolabs.com/agent`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ### HATATA
 
@@ -257,7 +298,11 @@ If something does not support life, protection, or meaningful empowerment, it do
 
 If you are brand new, start here:
 
+<<<<<<< HEAD
 1. Visit `https://sandersvioprolabsllc.com`
+=======
+1. Visit `https://sandersvioprolabs.com`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 2. Open `TokStore`
 3. Review the product lineup
 4. Visit `TokHealth`
@@ -305,4 +350,7 @@ It is one lab, one mission, one standard:
 - Version: `1.0`
 - Purpose: first easy-to-understand user manual for SVL
 - Status: active working manual
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

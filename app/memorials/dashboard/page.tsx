@@ -2,9 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+<<<<<<< HEAD
 import { useRouter } from 'next/navigation';
 import { Heart, Edit2, Trash2, Plus, Lock, BarChart3, Users, MessageCircle, Zap, LogOut } from 'lucide-react';
 import { ProtectedRoute } from '@/app/memorials/protected-route';
+=======
+import { Heart, Edit2, Trash2, Plus, Lock, BarChart3, Users } from 'lucide-react';
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 interface Memorial {
   _id: string;
@@ -29,7 +33,10 @@ export default function MemorialDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [showNewForm, setShowNewForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+<<<<<<< HEAD
   const router = useRouter();
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const [formData, setFormData] = useState({
     name: '',
     relationship: '',
@@ -40,11 +47,14 @@ export default function MemorialDashboard() {
     isPublic: false,
   });
 
+<<<<<<< HEAD
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
     router.push('/memorials/login');
   };
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   // Load user's memorials and tier info
   useEffect(() => {
     const loadData = async () => {
@@ -129,6 +139,7 @@ export default function MemorialDashboard() {
   const canAddMore = tierInfo && memorials.length < tierInfo.slotLimit;
 
   return (
+<<<<<<< HEAD
     <ProtectedRoute>
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         {/* Navigation */}
@@ -152,6 +163,21 @@ export default function MemorialDashboard() {
             </div>
           </div>
         </nav>
+=======
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      {/* Navigation */}
+      <nav className="fixed top-0 z-40 w-full bg-slate-900/80 backdrop-blur border-b border-amber-800/30">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Heart className="w-6 h-6 text-amber-600" />
+            <h1 className="text-xl font-bold text-amber-100">My Legacy Vault</h1>
+          </div>
+          <Link href="/memorials" className="text-amber-200 hover:text-amber-100 transition text-sm">
+            Browse All
+          </Link>
+        </div>
+      </nav>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
       {/* Main Content */}
       <div className="pt-32 pb-20 px-6">
@@ -216,6 +242,7 @@ export default function MemorialDashboard() {
             </div>
           )}
 
+<<<<<<< HEAD
           {/* Mr. KPA Guardian */}
           <div className="mb-12 bg-gradient-to-br from-blue-900/30 to-blue-800/10 border border-blue-600/40 rounded-lg p-8">
             <div className="flex items-start justify-between">
@@ -256,6 +283,8 @@ export default function MemorialDashboard() {
             </div>
           </div>
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           {/* Memorials Header */}
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-amber-100">Your Memorials</h2>
@@ -467,7 +496,11 @@ export default function MemorialDashboard() {
           )}
         </div>
       </div>
+<<<<<<< HEAD
       </div>
     </ProtectedRoute>
+=======
+    </div>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   );
 }

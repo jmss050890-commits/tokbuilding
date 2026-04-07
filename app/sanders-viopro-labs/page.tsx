@@ -4,12 +4,16 @@
 
 import Link from 'next/link';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+<<<<<<< HEAD
 import FacebookPostEmbed from '@/app/components/FacebookPostEmbed';
 import VoiceStyleSpeaker from '@/app/components/VoiceStyleSpeaker';
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 export default function SandersVioProLabs() {
   const copy = useSiteCopy();
   const pageCopy = copy.sandersVioproLabs;
+<<<<<<< HEAD
   const svlPageSpeechText = [
     'Sanders Viopro Labs LLC.',
     '#Sandersvioprolabs.',
@@ -27,6 +31,8 @@ export default function SandersVioProLabs() {
     'The result of Next.JS meeting God\'s Vision Through SVL to KPA.',
     "Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards.",
   ].join(' ');
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 text-white">
@@ -35,7 +41,11 @@ export default function SandersVioProLabs() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-3xl">🥼</span>
+<<<<<<< HEAD
             <h1 className="text-2xl font-bold">Sanders Viopro Labs LLC</h1>
+=======
+            <h1 className="text-2xl font-bold">Sanders Viopro Labs</h1>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </div>
           <div className="flex gap-4 items-center">
             <Link href="/our-story" className="px-4 py-2 rounded-lg text-purple-300 hover:text-white transition">
@@ -43,6 +53,9 @@ export default function SandersVioProLabs() {
             </Link>
             <Link href="/svl-progress" className="px-4 py-2 rounded-lg text-amber-300 hover:text-white transition">
               {pageCopy.nav.progress}
+            </Link>
+            <Link href="/contact" className="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold transition focus:outline-none focus:ring-2 focus:ring-amber-300" aria-label="Contact Sanders Viopro Labs">
+              Contact
             </Link>
             <Link href="/" className="px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition">
               ← {pageCopy.nav.backHome}
@@ -55,12 +68,17 @@ export default function SandersVioProLabs() {
         {/* Hero Section */}
         <div className="text-center mb-20">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+<<<<<<< HEAD
             Sanders Viopro Labs LLC
+=======
+            Sanders Viopro Labs
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </h1>
           <p className="text-2xl text-purple-300 mb-6">#Sandersvioprolabs</p>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto">
             {pageCopy.heroBody}
           </p>
+<<<<<<< HEAD
           <div className="mt-6 flex justify-center">
             <VoiceStyleSpeaker
               text={svlPageSpeechText}
@@ -70,6 +88,8 @@ export default function SandersVioProLabs() {
               stopTitle="Stop SVL page"
             />
           </div>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
 
         {/* Mission Section */}
@@ -142,6 +162,7 @@ export default function SandersVioProLabs() {
           </Link>
         </div>
 
+<<<<<<< HEAD
         <div className="mb-16">
           <Link href="/sanders-viopro-labs/gifts" className="block bg-gradient-to-br from-amber-950/60 via-purple-950/40 to-slate-900 rounded-xl border-2 border-amber-400/35 hover:border-amber-200/70 p-12 transition transform hover:scale-105 cursor-pointer">
             <div className="text-center">
@@ -278,6 +299,8 @@ export default function SandersVioProLabs() {
           </Link>
         </div>
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         {/* Our Products */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-center">{pageCopy.productsTitle}</h2>
@@ -340,6 +363,7 @@ export default function SandersVioProLabs() {
             <p className="text-slate-400">{pageCopy.initiatives.thinkSpeakWork}</p>
           </Link>
         </div>
+<<<<<<< HEAD
 
         {/* Facebook Post Embed */}
         <div className="mb-16 bg-slate-900/60 rounded-xl border border-purple-700/30 p-6 md:p-8">
@@ -353,14 +377,19 @@ export default function SandersVioProLabs() {
             postedLabel="Wednesday, April 1, 2026"
           />
         </div>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       </div>
 
       {/* Footer */}
       <div className="bg-slate-900 border-t border-slate-800 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">{pageCopy.footerLine1}</p>
+<<<<<<< HEAD
           <p className="text-slate-300 mb-4">Sanders Viopro Labs LLC</p>
           <p className="text-slate-300 mb-4 font-semibold tracking-[0.18em]">Amen.</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           <p className="text-sm text-slate-300 mb-4">The result of Next.JS meeting God's Vision Through SVL to KPA</p>
           <p className="text-xs text-slate-500">#Sandersvioprolabs | #KPA-Keeppeoplealive | #thinkspeakworkandwatchGodwork4U</p>
         </div>

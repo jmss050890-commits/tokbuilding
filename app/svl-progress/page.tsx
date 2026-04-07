@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
             SVL Universe Banner
             <section className="w-full bg-gradient-to-r from-amber-900/40 via-slate-900/80 to-amber-900/30 border-b border-amber-900/20 py-4 px-6 flex justify-center">
@@ -24,10 +25,13 @@
         </div>
       </section>
 */
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 'use client';
 
 import Link from 'next/link';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+<<<<<<< HEAD
 import VoiceStyleSpeaker from '@/app/components/VoiceStyleSpeaker';
 
 const praiseSpeechText = [
@@ -52,6 +56,8 @@ const universeSpeechText = [
   'Our foundation is built on faith, vision, and the collaborative strength of our Guardians, always upholding KPA principles of safety, care, and protection for all.',
   "Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards.",
 ].join(' ');
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 const progressLayers = [
   {
@@ -103,8 +109,13 @@ const progressLayers = [
     summary:
       'The public site, subdomains, and guardian routes now reflect a more unified SVL platform.',
     bullets: [
+<<<<<<< HEAD
       'sandersvioprolabsllc.com is the upgraded public home',
       'tokhealth.sandersvioprolabsllc.com now lands on TokHealth directly',
+=======
+      'sandersvioprolabs.com is the upgraded public home',
+      'tokhealth.sandersvioprolabs.com now lands on TokHealth directly',
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       'Guardian pages and routes speak from the same current product map',
     ],
   },
@@ -123,11 +134,19 @@ const activeAgents = [
 ];
 
 const platformRoutes = [
+<<<<<<< HEAD
   { label: 'SVL Home', value: 'sandersvioprolabsllc.com', href: '/sanders-viopro-labs' },
   { label: 'SVL Guardians', value: 'sandersvioprolabsllc.com/agent', href: '/agent' },
   { label: 'First Guardian', value: 'sandersvioprolabsllc.com/agent/first-guardian', href: '/agent/first-guardian' },
   { label: 'TokHealth Experience', value: 'tokhealth.sandersvioprolabsllc.com', href: '/tokhealth' },
   { label: 'SVL Story', value: 'sandersvioprolabsllc.com/our-story', href: '/our-story' },
+=======
+  { label: 'SVL Home', value: 'sandersvioprolabs.com', href: '/sanders-viopro-labs' },
+  { label: 'SVL Guardians', value: 'sandersvioprolabs.com/agent', href: '/agent' },
+  { label: 'First Guardian', value: 'sandersvioprolabs.com/agent/first-guardian', href: '/agent/first-guardian' },
+  { label: 'TokHealth Experience', value: 'tokhealth.sandersvioprolabs.com', href: '/tokhealth' },
+  { label: 'SVL Story', value: 'sandersvioprolabs.com/our-story', href: '/our-story' },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 ];
 
 const sessionWins = [
@@ -142,6 +161,7 @@ const sessionWins = [
 export default function SvlProgressPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
+<<<<<<< HEAD
       {/* Birthday & KPA 2 KPA Celebration Section */}
       <section className="w-full bg-gradient-to-r from-amber-900/60 via-amber-700/40 to-amber-900/60 border-b-2 border-amber-400/40 py-10 px-6 flex justify-center shadow-lg">
         <div className="max-w-2xl w-full text-center">
@@ -198,6 +218,8 @@ export default function SvlProgressPage() {
           </div>
         </div>
       </section>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       <nav className="sticky top-0 z-40 border-b border-amber-700/20 bg-slate-950/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div>
@@ -226,7 +248,11 @@ export default function SvlProgressPage() {
                 March 23, 2026 Build Snapshot
               </p>
               <h2 className="mb-4 text-4xl font-bold leading-tight text-white">
+<<<<<<< HEAD
                 How Today&apos;s Work Fits Into Sanders Viopro Labs LLC
+=======
+                How Today&apos;s Work Fits Into Sanders Viopro Labs
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </h2>
               <p className="max-w-3xl text-lg leading-8 text-slate-200">
                 This page tracks the current shape of SVL after a major alignment day: the First
@@ -370,11 +396,14 @@ export default function SvlProgressPage() {
             </div>
           </div>
         </section>
+<<<<<<< HEAD
 
         {/* Gifts Reflection Section: What Makes SVL Different */}
         <section>
           {require('./gifts').default()}
         </section>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       </main>
     </div>
   );

@@ -1,7 +1,11 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+<<<<<<< HEAD
 import { Heart, Send, Loader2, Mic, Play, Pause } from 'lucide-react';
+=======
+import { Heart, Send, Loader2, Mic } from 'lucide-react';
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import Link from 'next/link';
 import {
   getSpeechRecognitionAPI,
@@ -11,8 +15,11 @@ import {
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 import { useSiteCopy, useSiteLanguage } from '@/app/components/SiteLanguageControl';
 
+<<<<<<< HEAD
 import SpeakerBox from '@/app/components/SpeakerBox';
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 interface Message {
   id: string;
   type: 'user' | 'assistant' | 'assistant-error' | 'intro';
@@ -50,6 +57,7 @@ function getPerspectiveLabel(
 }
 
 export default function TokFaithAgent() {
+<<<<<<< HEAD
     const [currentSpeakingMessageId, setCurrentSpeakingMessageId] = useState<string | null>(null);
     const [isSpeakingMap, setIsSpeakingMap] = useState<Record<string, boolean>>({});
     const [currentSpeakingIndex, setCurrentSpeakingIndex] = useState<number | null>(null);
@@ -130,6 +138,8 @@ export default function TokFaithAgent() {
         speakMessage(messageToPlay.id, messageToPlay.content);
       }
     };
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const copy = useSiteCopy();
   const { language } = useSiteLanguage();
   const routeCopy = copy.tokfaithAgent;
@@ -231,6 +241,7 @@ export default function TokFaithAgent() {
         }),
       });
 
+<<<<<<< HEAD
       // Streaming response handling
       if (response.body && response.headers.get('content-type')?.includes('text/plain')) {
         const reader = response.body.getReader();
@@ -286,6 +297,34 @@ export default function TokFaithAgent() {
         ]);
         setCurrentPerspective(data.perspectives.current);
       }
+=======
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to get response from TokFaith');
+      }
+
+      // Store perspective option for this message
+      setPerspectiveHistory((prev) => ({
+        ...prev,
+        [userMessageId]: data.perspectives,
+      }));
+
+      // Add assistant response
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          type: 'assistant',
+          content: data.response,
+          perspective: data.perspective,
+          description: data.description,
+          perspectives: data.perspectives,
+        } as Message,
+      ]);
+
+      setCurrentPerspective(data.perspectives.current);
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     } catch (error) {
       console.error('Error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -414,7 +453,11 @@ export default function TokFaithAgent() {
 
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 max-w-4xl mx-auto w-full">
+<<<<<<< HEAD
         {messages.map((message, idx) => (
+=======
+        {messages.map((message) => (
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           <div
             key={message.id}
             className={`flex ${
@@ -443,6 +486,7 @@ export default function TokFaithAgent() {
 
               <p className="leading-relaxed whitespace-pre-wrap">{message.content}</p>
 
+<<<<<<< HEAD
               {/* Speaker Button for Assistant Messages */}
               {message.type === 'assistant' && (
                 <div className="mt-2 flex gap-2 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
@@ -470,6 +514,8 @@ export default function TokFaithAgent() {
                 </div>
               )}
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               {message.type === 'assistant' && message.perspectives && (
                 <div className="mt-4 pt-4 border-t border-amber-700/30">
                   <p className="text-xs text-amber-200/70 mb-2">{routeCopy.perspectiveHelp}</p>
@@ -495,6 +541,7 @@ export default function TokFaithAgent() {
             </div>
           </div>
         ))}
+<<<<<<< HEAD
       {/* Speaker Box for Audio Control */}
       {showSpeakerBox && currentSpeakingIndex !== null && (
         <SpeakerBox
@@ -515,6 +562,8 @@ export default function TokFaithAgent() {
           }}
         />
       )}
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
         {loading && (
           <div className="flex justify-start">

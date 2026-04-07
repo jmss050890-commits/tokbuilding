@@ -218,6 +218,7 @@ export default function OurStoryPage() {
         </div>
       </section>
 
+<<<<<<< HEAD
       {/* Sovereign Architect Public Bio */}
       <section className="py-16 px-6 bg-gradient-to-br from-black via-purple-900 to-black border-y border-purple-800/30">
         <div className="max-w-4xl mx-auto">
@@ -230,6 +231,8 @@ export default function OurStoryPage() {
           </div>
         </div>
       </section>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       {/* The Foundation */}
       <section className="py-16 px-6 bg-slate-900/50 border-y border-purple-800/20">
         <div className="max-w-4xl mx-auto">
@@ -512,7 +515,11 @@ export default function OurStoryPage() {
             ))}
           </div>
           <p className="text-purple-300 text-lg font-bold">
+<<<<<<< HEAD
               — Jerome Sanders · Mr. KPA · est. 1-31-2026
+=======
+            — Jerome Sanders · Mr. KPA · est. 2-21-2026
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </p>
         </div>
       </section>
@@ -546,7 +553,10 @@ export default function OurStoryPage() {
         </div>
         <div className="border-t border-purple-800/30 mt-8 pt-8 text-center text-purple-400 text-sm">
           <p>{pageCopy.footer.copyright}</p>
+<<<<<<< HEAD
           <p className="mt-2">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
       </footer>
     </div>

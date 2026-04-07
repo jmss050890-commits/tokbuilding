@@ -81,6 +81,7 @@ function getTokFaithPerspectiveMeta(perspective) {
   };
 }
 
+<<<<<<< HEAD
 function toPublicTokFaithError(error, language = "en") {
   const rawMessage = String(error?.message || "");
   const lower = rawMessage.toLowerCase();
@@ -101,6 +102,8 @@ function toPublicTokFaithError(error, language = "en") {
   return "TokFaith encountered a temporary issue. Please try again in a moment.";
 }
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 export async function POST(req) {
   let message = "";
   let userId;
@@ -161,7 +164,12 @@ export async function POST(req) {
     // CHECK FOR BIBLE READING REQUESTS FIRST
     if (detectBibleRequest(message)) {
       const bookRequest = extractBookAndChapter(message);
+<<<<<<< HEAD
       const bibleResponse = buildBibleReadingResponse(bookRequest, userName, language);
+=======
+          const bibleResponse = buildBibleReadingResponse(bookRequest, userName, language);
+      
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       return new Response(
         JSON.stringify({
           success: true,
@@ -212,6 +220,7 @@ export async function POST(req) {
       },
     ];
 
+<<<<<<< HEAD
     if (openAiApiKey) {
       // STREAMING RESPONSE
       const encoder = new TextEncoder();
@@ -328,6 +337,93 @@ export async function POST(req) {
           "x-tokfaith-perspectives-can-switch": String(perspectiveMeta.perspectives?.canSwitch === true),
         },
       }
+=======
+    let responseText;
+
+    if (openAiApiKey) {
+      responseText = await generateWithKpaGuard(
+        async () => {
+          const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages,
+            max_tokens: 1024,
+            temperature: 0.9,
+          });
+
+          return (
+            response.choices?.[0]?.message?.content?.trim() ||
+            buildDemoResponse(message, memoryContext, userName, language)
+          );
+        },
+        async (repairPrompt) => {
+          const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+              ...messages.slice(0, -1),
+              {
+                role: "user",
+                content: `Original user message:\n${message}\n\n${repairPrompt}`,
+              },
+            ],
+            max_tokens: 1024,
+            temperature: 0.9,
+          });
+
+          return (
+            response.choices?.[0]?.message?.content?.trim() ||
+            buildDemoResponse(message, memoryContext, userName, language)
+          );
+        }
+      );
+    } else {
+      responseText = buildDemoResponse(message, memoryContext, userName, language);
+    }
+
+    if (userId) {
+      await updateTokFaithMemory({
+        userId,
+        userName,
+        message,
+        response: responseText,
+        source: session ? "auth" : "guest",
+      });
+    }
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        agentName: tokFaithAgent.name,
+        response: responseText,
+        perspective: perspectiveMeta.perspective,
+        description: perspectiveMeta.description,
+        perspectives: perspectiveMeta.perspectives,
+        userId,
+        userName,
+        safetyMode,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  } catch (error) {
+    console.error("TokFaith Chat Error:", error);
+    return new Response(
+      JSON.stringify({
+        success: true,
+        agentName: "TokFaith",
+        response: buildDemoResponse(message || "Give me a word for today", null, userName, language),
+        perspective: perspectiveMeta.perspective,
+        description: perspectiveMeta.description,
+        perspectives: perspectiveMeta.perspectives,
+        userId,
+        safetyMode,
+        fallbackMode: true,
+        details:
+          process.env.NODE_ENV === "development" ? error?.message : undefined,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     );
   }
 }

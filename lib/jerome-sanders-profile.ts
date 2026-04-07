@@ -26,7 +26,11 @@ export const JEROME_SANDERS_CREDENTIALS: Credential[] = [
   },
   {
     type: "Achievement",
+<<<<<<< HEAD
     title: "Sanders Viopro Labs LLC Founder",
+=======
+    title: "Sanders Viopro Labs Founder",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     issuer: "Self-Directed",
     date: "2024-Present",
     description:
@@ -35,7 +39,11 @@ export const JEROME_SANDERS_CREDENTIALS: Credential[] = [
   {
     type: "Achievement",
     title: "TokBuilding Platform Creator",
+<<<<<<< HEAD
     issuer: "Sanders Viopro Labs LLC",
+=======
+    issuer: "Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     date: "2024-Present",
     description:
       "Designed and built TokBuilding, a no-code AI agent builder that empowers non-technical users to create custom AI agents with system prompts, personality, tone, and specialization.",
@@ -43,7 +51,11 @@ export const JEROME_SANDERS_CREDENTIALS: Credential[] = [
   {
     type: "Achievement",
     title: "Ethiopian Bible Integration for TokFaith",
+<<<<<<< HEAD
     issuer: "Sanders Viopro Labs LLC",
+=======
+    issuer: "Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     date: "2026",
     description:
       "Architected comprehensive Ethiopian Orthodox Bible database with 8 canonical books (Enoch, Jubilees, Meqabyan, Sirach, Wisdom, Baruch, Tobit, Judith) containing 30+ passages for scripture reading, teaching, and spiritual guidance.",
@@ -71,7 +83,11 @@ export interface JeromeSandersProfile {
 export const JEROME_SANDERS_PROFILE: JeromeSandersProfile = {
   name: "Jerome Sanders",
   title: "Founder & Chief Architect",
+<<<<<<< HEAD
   organization: "Sanders Viopro Labs LLC",
+=======
+  organization: "Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   mission:
     "Keep People Alive through technology that protects life, improves health, and empowers creators with AI.",
   expertise: [

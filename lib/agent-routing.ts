@@ -5,11 +5,14 @@ const AGENT_ALIAS_MAP: Record<string, string> = {
   "agent/mr-kpa": "mr-kpa",
   "agent/tok2myia": "tok2myia",
   "agent/tokfaith": "tokfaith",
+<<<<<<< HEAD
   "agent/portable-hydroponic-plant": "portable-hydroponic-plant",
   "hydroponics": "portable-hydroponic-plant",
   "portable-hydroponics": "portable-hydroponic-plant",
   "portable-hydroponic-plant": "portable-hydroponic-plant",
   "svl-portable-hydroponic-plant": "portable-hydroponic-plant",
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   "faith": "tokfaith",
   "tokfaith": "tokfaith",
   "agent/first-guardian": "first-guardian",

@@ -26,6 +26,7 @@ interface OrderConfirmationData {
   downloadLink?: string;
 }
 
+<<<<<<< HEAD
 interface OutreachEmailData {
   brand?: string;
   to: string;
@@ -33,6 +34,8 @@ interface OutreachEmailData {
   body: string;
 }
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 function getErrorMessage(error: unknown) {
   return error instanceof Error ? error.message : 'Unknown error';
 }
@@ -173,14 +176,22 @@ function generateLicenseEmailHTML(data: LicenseEmailData & { brandColor?: string
             <ul>
               <li><a href="https://docs.tokbuilding.com/install">Installation Guide</a></li>
               <li><a href="https://docs.tokbuilding.com/activate">License Activation</a></li>
+<<<<<<< HEAD
               <li>Email: support@sandersvioprolabsllc.com</li>
+=======
+              <li>Email: support@sandersvioprolabs.com</li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             </ul>
 
             ${data.expiryDate ? `<p style="color: #6b7280; font-size: 13px; border-top: 1px solid #e5e7eb; padding-top: 15px; margin-top: 15px;"><strong>License Valid Until:</strong> ${data.expiryDate}</p>` : ''}
           </div>
 
           <div class="footer">
+<<<<<<< HEAD
             <p>© 2026 Sanders Viopro Labs LLC. Mission: Keeping People Alive.</p>
+=======
+            <p>© 2026 Sanders Viopro Labs. Mission: Keeping People Alive.</p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             <p>This is a transaction email. Please do not reply to this message.</p>
           </div>
         </div>
@@ -237,7 +248,11 @@ function generateWelcomeEmailHTML(data: {
           </div>
 
           <div class="footer">
+<<<<<<< HEAD
             <p>© 2026 Sanders Viopro Labs LLC. Mission: Keeping People Alive.</p>
+=======
+            <p>© 2026 Sanders Viopro Labs. Mission: Keeping People Alive.</p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             <p>This is a transactional email. <a href="#">Manage preferences</a></p>
           </div>
         </div>
@@ -307,6 +322,7 @@ export async function sendOrderConfirmationEmail(
   }
 }
 
+<<<<<<< HEAD
 function escapeHtml(input: string): string {
   return input
     .replaceAll('&', '&amp;')
@@ -356,6 +372,8 @@ export async function sendOutreachEmail(data: OutreachEmailData) {
   );
 }
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 function generateOrderConfirmationHTML(data: OrderConfirmationData & {
   brandColor?: string;
   supportEmail?: string;
@@ -436,13 +454,21 @@ function generateOrderConfirmationHTML(data: OrderConfirmationData & {
             <h3>Need Help?</h3>
             <p>If you have any questions about your order or need support, reach out to us:</p>
             <ul>
+<<<<<<< HEAD
               <li>Email: ${data.supportEmail || 'support@sandersvioprolabsllc.com'}</li>
+=======
+              <li>Email: ${data.supportEmail || 'support@sandersvioprolabs.com'}</li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               <li><a href="https://docs.tokbuilding.com">Documentation</a></li>
             </ul>
           </div>
 
           <div class="footer">
+<<<<<<< HEAD
             <p>© 2026 Sanders Viopro Labs LLC. Mission: Keeping People Alive.</p>
+=======
+            <p>© 2026 Sanders Viopro Labs. Mission: Keeping People Alive.</p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             <p>This is a transactional email. <a href="#">Manage preferences</a></p>
           </div>
         </div>

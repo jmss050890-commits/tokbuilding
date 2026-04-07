@@ -1,6 +1,10 @@
 import OpenAI from "openai";
 import { getOpenAIApiKey } from "@/lib/openai-key";
+<<<<<<< HEAD
 
+=======
+import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 const SYSTEM_PROMPTS = {
   "guardian-angel": `You are TokSmart's Guardian Angel mode - a protective, compassionate advisor for moments that matter.
@@ -128,6 +132,7 @@ export async function POST(req) {
     // Select system prompt based on safety mode
     const systemPrompt = SYSTEM_PROMPTS[aiModel] || SYSTEM_PROMPTS["smart-analyst"];
 
+<<<<<<< HEAD
     // Streaming response
     const encoder = new TextEncoder();
     let firstChunk = true;
@@ -189,6 +194,39 @@ export async function POST(req) {
         "Transfer-Encoding": "chunked",
       },
     });
+=======
+    const response = await generateWithKpaGuard(
+      async () => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4-turbo",
+          max_tokens: 1024,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: message },
+          ],
+        });
+
+        return completion.choices?.[0]?.message?.content || "No response generated.";
+      },
+      async (repairPrompt) => {
+        const completion = await client.chat.completions.create({
+          model: "gpt-4-turbo",
+          max_tokens: 1024,
+          messages: [
+            { role: "system", content: systemPrompt },
+            {
+              role: "user",
+              content: `Original user message:\n${message}\n\n${repairPrompt}`,
+            },
+          ],
+        });
+
+        return completion.choices?.[0]?.message?.content || "No response generated.";
+      }
+    );
+
+    return Response.json({ response, aiModel });
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   } catch (error) {
     console.error("TokSmart error:", error);
     return Response.json(

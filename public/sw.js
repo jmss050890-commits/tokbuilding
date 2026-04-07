@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const CACHE_NAME = "grace-shell-v3";
+=======
+const CACHE_NAME = "grace-shell-v2";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 const STATIC_ASSETS = ["/agent/grace", "/agent/tokfaith", "/manifest.webmanifest", "/icon", "/apple-icon"];
 
 self.addEventListener("install", (event) => {

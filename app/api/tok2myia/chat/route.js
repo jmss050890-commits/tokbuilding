@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿import { AGENTS } from "@/lib/lib/lib/agents";
+=======
+import { AGENTS } from "@/lib/lib/lib/agents";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
 import {
@@ -66,7 +70,11 @@ export async function POST(req) {
           response: buildAgentDemoModeResponse(
             tok2myia.name,
             language,
+<<<<<<< HEAD
             "I'm Tok2Myia, your knowledge guide. I know the SVL story, the sandersvioprolabsllc.com upgrade, and the TokHealth plus TokThru integration too. I'm currently in demo mode. In production, I'll provide intelligent search, knowledge synthesis, research assistance, and decision support - all aligned with the KPA mission to help you stay informed and empowered.",
+=======
+            "I'm Tok2Myia, your knowledge guide. I know the SVL story, the sandersvioprolabs.com upgrade, and the TokHealth plus TokThru integration too. I'm currently in demo mode. In production, I'll provide intelligent search, knowledge synthesis, research assistance, and decision support - all aligned with the KPA mission to help you stay informed and empowered.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           ),
           role: "assistant",
           agentName: tok2myia.name,
@@ -140,7 +148,11 @@ export async function POST(req) {
         response: buildAgentRetryResponse(
           agentName,
           language,
+<<<<<<< HEAD
           "Oh, let's break that down simply. TokBuilding is SVL's builder space. It helps people make AI agents, prompts, and useful tools for real life. Then other parts of SVL help those tools get seen, supported, and connected to the right people. You can start at sandersvioprolabsllc.com if you want the whole map, or go straight to TokBuilding if you want the builder part.",
+=======
+          "Oh, let's break that down simply. TokBuilding is SVL's builder space. It helps people make AI agents, prompts, and useful tools for real life. Then other parts of SVL help those tools get seen, supported, and connected to the right people. You can start at sandersvioprolabs.com if you want the whole map, or go straight to TokBuilding if you want the builder part.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         ),
         role: "assistant",
         agentName,
@@ -153,4 +165,7 @@ export async function POST(req) {
     );
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿import OpenAI from "openai";
+=======
+import OpenAI from "openai";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import { AGENTS } from "@/lib/lib/lib/agents";
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
@@ -92,7 +96,11 @@ export async function POST(req) {
           response: buildAgentDemoModeResponse(
             a1Agent.name,
             language,
+<<<<<<< HEAD
             "I'm A1, SVL's strategic intelligence agent. I know the SVL story, the sandersvioprolabsllc.com upgrade, and the TokHealth plus TokThru integration. I'm currently in demo mode, but in production I'll help you turn that vision into systems, products, and deployable reality.",
+=======
+            "I'm A1, SVL's strategic intelligence agent. I know the SVL story, the sandersvioprolabs.com upgrade, and the TokHealth plus TokThru integration. I'm currently in demo mode, but in production I'll help you turn that vision into systems, products, and deployable reality.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           ),
           safetyMode: safetyCase.requiresSupportiveTone,
         }),
@@ -151,7 +159,11 @@ export async function POST(req) {
         response: buildAgentRetryResponse(
           "A1",
           language,
+<<<<<<< HEAD
           "That's a good question. TokBuilding is SVL's builder lane. It helps people turn ideas into AI agents, prompts, and real tools they can actually use. In the bigger system, TokBuilding helps create what TokSEO helps people find and what the SVL agent hub helps people understand and use. You can start at sandersvioprolabsllc.com or go straight to TokBuilding to see that lane in action.",
+=======
+          "That's a good question. TokBuilding is SVL's builder lane. It helps people turn ideas into AI agents, prompts, and real tools they can actually use. In the bigger system, TokBuilding helps create what TokSEO helps people find and what the SVL agent hub helps people understand and use. You can start at sandersvioprolabs.com or go straight to TokBuilding to see that lane in action.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         ),
         safetyMode,
         fallbackMode: true,

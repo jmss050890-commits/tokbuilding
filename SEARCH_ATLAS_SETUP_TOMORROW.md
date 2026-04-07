@@ -41,7 +41,11 @@ node scripts/test-search-atlas-connection.js
 **Expected output**:
 ```
 ✅ Connected to Search Atlas
+<<<<<<< HEAD
 ✅ Brand Vault: Sanders Viopro Labs LLC
+=======
+✅ Brand Vault: Sanders Viopro Labs
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 ✅ Keywords tracked: 47
 ✅ Competitors: 6
 ```

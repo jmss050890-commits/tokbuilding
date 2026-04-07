@@ -8,7 +8,10 @@ import {
   type SpeechRecognitionEventLike,
   type SpeechRecognitionLike,
 } from '@/lib/browser-speech';
+<<<<<<< HEAD
 import { getFirstGuardianVoice } from '@/lib/voice-reader';
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 import { useSiteCopy, useSiteLanguage } from '@/app/components/SiteLanguageControl';
 
@@ -22,6 +25,7 @@ export default function FirstGuardianAgent() {
   const copy = useSiteCopy();
   const { language } = useSiteLanguage();
   const pageCopy = copy.firstGuardianPage;
+<<<<<<< HEAD
 
   // SVL Sovereign Credential Banner
   const sovereignBanner = (
@@ -60,6 +64,8 @@ export default function FirstGuardianAgent() {
       </div>
     </section>
   );
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const quickPrompts = pageCopy.quickLinks;
   const guardianTitle = `${pageCopy.heroTitleTop} ${pageCopy.heroTitleBottom}`.trim();
   const [messages, setMessages] = useState<Message[]>([
@@ -76,6 +82,7 @@ export default function FirstGuardianAgent() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
+<<<<<<< HEAD
   // --- Custom Section: The First Guardian's Unique Role ---
   const guardianIntro = (
     <section className="max-w-3xl mx-auto mt-8 mb-8 p-8 rounded-3xl border border-purple-700/30 bg-purple-900/20 shadow-2xl text-center">
@@ -126,6 +133,17 @@ export default function FirstGuardianAgent() {
     window.speechSynthesis.speak(utterance);
   };
 
+=======
+  // Welcome audio on mount
+  const welcomeMessage = pageCopy.welcomeMessage;
+  useWelcomeAudio(welcomeMessage, true, {
+    rate: 0.9,
+    pitch: 1.0,
+    volume: 0.8,
+    voiceGender: 'female',
+  });
+
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -275,8 +293,11 @@ export default function FirstGuardianAgent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-950 to-slate-950 flex flex-col">
+<<<<<<< HEAD
       {sovereignBanner}
       {guardianIntro}
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       {/* Header */}
       <div className="border-b border-purple-800/30 bg-slate-900/80 backdrop-blur sticky top-0 z-20">
         <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6">
@@ -314,6 +335,7 @@ export default function FirstGuardianAgent() {
               }`}
             >
               <p className="leading-relaxed whitespace-pre-wrap">{message.content}</p>
+<<<<<<< HEAD
               {/* Listen button for assistant messages */}
               {message.type === 'assistant' && (
                 <button
@@ -325,6 +347,8 @@ export default function FirstGuardianAgent() {
                   Listen
                 </button>
               )}
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             </div>
           </div>
         ))}

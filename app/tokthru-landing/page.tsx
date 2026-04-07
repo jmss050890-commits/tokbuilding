@@ -353,15 +353,25 @@ export default function TokThruLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
+<<<<<<< HEAD
                 <li><a href="mailto:support@sandersvioprolabsllc.com" className="hover:text-purple-400">Email Support</a></li>
                 <li><a href="/legal-disclaimer.md" className="hover:text-purple-400">Privacy</a></li>
+=======
+                <li><a href="mailto:support@tokthru.app" className="hover:text-purple-400">Email Support</a></li>
+                <li><a href="https://tokthru.app/privacy" className="hover:text-purple-400">Privacy</a></li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-slate-300">Legal</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
+<<<<<<< HEAD
                 <li><a href="/legal-disclaimer.md" className="hover:text-purple-400">Privacy Policy</a></li>
                 <li><a href="/legal-disclaimer.md" className="hover:text-purple-400">Terms</a></li>
+=======
+                <li><a href="https://tokthru.app/privacy" className="hover:text-purple-400">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-purple-400">Terms</a></li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </ul>
             </div>
           </div>
@@ -369,7 +379,10 @@ export default function TokThruLanding() {
             <p className="text-center text-slate-400 text-sm">
               © 2026 TokThru. Ride safe, get home safe. Part of the KPA Mission.
             </p>
+<<<<<<< HEAD
             <p className="text-center text-slate-400 text-sm mt-2">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </div>
         </div>
       </footer>

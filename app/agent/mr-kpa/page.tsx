@@ -22,6 +22,7 @@ export default function MrKPAAgent() {
   const copy = useSiteCopy();
   const { language } = useSiteLanguage();
   const routeCopy = copy.mrKpaAgent;
+<<<<<<< HEAD
 
   // SVL Sovereign Credential Banner
   const sovereignBanner = (
@@ -60,6 +61,8 @@ export default function MrKPAAgent() {
       </div>
     </section>
   );
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
@@ -79,6 +82,7 @@ export default function MrKPAAgent() {
   const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
+<<<<<<< HEAD
   // --- Custom Section: Mr. KPA's Unique Role ---
   const kpaIntro = (
     <section className="max-w-3xl mx-auto mt-8 mb-8 p-8 rounded-3xl border border-blue-700/30 bg-blue-900/20 shadow-2xl text-center">
@@ -107,6 +111,8 @@ export default function MrKPAAgent() {
     </section>
   );
 
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   // Welcome audio on mount
   const welcomeMessage = routeCopy.audioWelcome;
   useWelcomeAudio(welcomeMessage, true, {
@@ -382,8 +388,11 @@ export default function MrKPAAgent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-blue-950 to-slate-950 flex flex-col">
+<<<<<<< HEAD
       {sovereignBanner}
       {kpaIntro}
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       {/* Header */}
       <div className="border-b border-blue-800/30 bg-slate-900/80 backdrop-blur sticky top-0 z-20">
         <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6">

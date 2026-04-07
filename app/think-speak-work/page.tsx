@@ -182,7 +182,10 @@ export default function ThinkSpeakWork() {
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">Think. Speak. Work. Believe. Watch God work for you.</p>
           <p className="text-xs text-slate-500">#thinkspeakworkandwatchGodwork4U | #KPA-Keeppeoplealive | #Sandersvioprolabs</p>
+<<<<<<< HEAD
           <p className="text-slate-300 mt-2">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
       </div>
     </div>

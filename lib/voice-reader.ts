@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Voice config for First Guardian (Black woman, motivational, cheerful, calm, reassuring)
 const FIRST_GUARDIAN_VOICE_CONFIG: VoiceReaderConfig = {
   pitch: 1.08, // slightly higher for warmth
@@ -38,6 +39,8 @@ export function getFirstGuardianVoice(): SpeechSynthesisVoice | null {
   // Last resort: any English voice
   return voices.find(v => v.lang.startsWith('en-')) || voices[0] || null;
 }
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 /**
  * Shared Voice Reading Utility
  * Allows narrative pages to be read aloud by Mr. KPA's voice
