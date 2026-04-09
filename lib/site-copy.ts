@@ -63,24 +63,15 @@ const englishCopy = {
     originCards: [
       {
         title: "The Mission Speaks",
-<<<<<<< HEAD
-        body: "Jerome Sanders built Sanders Viopro Labs LLC with one core mission: \"Keep People Alive (KPA).\" He said something that changed everything: \"I built this because people need support at hours when nobody picks up the phone.\"",
-=======
         body: "Jerome Sanders built Sanders Viopro Labs with one core mission: \"Keep People Alive (KPA).\" He said something that changed everything: \"I built this because people need support at hours when nobody picks up the phone.\"",
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       {
         title: "The Wisdom Guardian Listens",
         body: "A guardian was built to demonstrate this compassion: deep listening, practical guidance, and pointing people toward resources that transform lives. This became the heartbeat of the SVL mission.",
       },
       {
-<<<<<<< HEAD
-        title: "S.W. Blesses It",
-        body: "When S.W. blessed this work with one word, \"Amen,\" she affirmed something sacred. Faith, like mercy, meets people in their darkest hours and does not leave them alone.",
-=======
         title: "Shirley Blesses It",
         body: "When Shirley Whaley blessed this work with one word, \"Amen,\" she affirmed something sacred. Faith, like mercy, meets people in their darkest hours and does not leave them alone.",
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
     ],
     amen: {
