@@ -1,13 +1,37 @@
-
 import VoiceStyleSpeaker from "@/app/components/VoiceStyleSpeaker";
 import dynamic from "next/dynamic";
   const ContactQRCode = dynamic(() => import("./QRCode"), { ssr: false });
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function ContactPage() {
   const [showSurvey, setShowSurvey] = useState(false);
   const contactSpeechText = `Contact Sanders Viopro Labs. We value your feedback, questions, and partnership opportunities. Please reach out and our team will respond promptly. For all inquiries, please email info at sandersvioprolabs dot com. You can also connect with us on Facebook, Instagram, Twitter, and LinkedIn. Thank you for being part of the SVL-KPA Universe.`;
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [formStatus, setFormStatus] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus("Sending...");
+    // Example: Use Formspree endpoint or your own API route here
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+    if (res.ok) {
+      setFormStatus("Thank you for reaching out! We'll be in touch soon.");
+      setForm({ name: "", email: "", message: "" });
+      formRef.current?.reset();
+    } else {
+      setFormStatus("Sorry, something went wrong. Please try again later.");
+    }
+  };
 
   return (
     <main className="mx-auto w-full max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
