@@ -261,15 +261,25 @@ export default function TokHealthLanding() {
             <div>
               <h4 className="font-bold mb-3 text-slate-300">{landingCopy.footerColumns.support}</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
+<<<<<<< HEAD
+                <li><a href="mailto:support@sandersvioprolabsllc.com" className="hover:text-green-400">{landingCopy.footerColumns.emailSupport}</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-green-400">{landingCopy.footerColumns.privacy}</a></li>
+=======
                 <li><a href="mailto:support@tokhealth.app" className="hover:text-green-400">{landingCopy.footerColumns.emailSupport}</a></li>
                 <li><a href="https://tokhealth.app/privacy" className="hover:text-green-400">{landingCopy.footerColumns.privacy}</a></li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-3 text-slate-300">{landingCopy.footerColumns.legal}</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
+<<<<<<< HEAD
+                <li><a href="/legal-disclaimer.md" className="hover:text-green-400">{landingCopy.footerColumns.privacyPolicy}</a></li>
+                <li><a href="/legal-disclaimer.md" className="hover:text-green-400">{landingCopy.footerColumns.terms}</a></li>
+=======
                 <li><a href="https://tokhealth.app/privacy" className="hover:text-green-400">{landingCopy.footerColumns.privacyPolicy}</a></li>
                 <li><a href="#" className="hover:text-green-400">{landingCopy.footerColumns.terms}</a></li>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </ul>
             </div>
           </div>
@@ -277,6 +287,10 @@ export default function TokHealthLanding() {
             <p className="text-center text-slate-400 text-sm">
               {landingCopy.footerCopyright}
             </p>
+<<<<<<< HEAD
+            <p className="text-center text-slate-400 text-sm mt-2">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </div>
         </div>
       </footer>

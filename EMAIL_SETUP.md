@@ -13,7 +13,11 @@ lib/
 ```
 
 **Supported Brands:**
+<<<<<<< HEAD
+- `svl` — Sanders Viopro Labs LLC (parent)
+=======
 - `svl` — Sanders Viopro Labs (parent)
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 - `tokaway` — TokAway Safety App
 - `tokhealth` — TokHealth Wellness
 - `toksmart` — TokSmart Business
@@ -70,7 +74,11 @@ await sendLicenseEmail({
 
 Output:
 ```
+<<<<<<< HEAD
+From: TokAway Safety <noreply-tokaway@sandersvioprolabsllc.com>
+=======
 From: TokAway Safety <noreply-tokaway@sandersvioprolabs.com>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 Subject: Your TokAway License Key
 (Brand-colored HTML email with license key, download button, support links)
 ```
@@ -96,7 +104,11 @@ await sendOrderConfirmationEmail({
 
 Output:
 ```
+<<<<<<< HEAD
+From: TokSmart Business <noreply-toksmart@sandersvioprolabsllc.com>
+=======
 From: TokSmart Business <noreply-toksmart@sandersvioprolabs.com>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 Subject: Order Confirmation: TokSmart Business Suite
 (Brand-colored order summary with amount, product details, next steps)
 ```
@@ -116,7 +128,11 @@ await sendWelcomeEmail(
 
 Output:
 ```
+<<<<<<< HEAD
+From: TokHealth Wellness <noreply-tokhealth@sandersvioprolabsllc.com>
+=======
 From: TokHealth Wellness <noreply-tokhealth@sandersvioprolabs.com>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 Subject: Welcome to TokHealth
 (Brand-colored welcome with call-to-action, documentation links)
 ```
@@ -210,7 +226,11 @@ tokaway: {
 newbrand: {
   brand: "Your Brand",
   productName: "Your Product",
+<<<<<<< HEAD
+  senderEmail: process.env.NEWBRAND_EMAIL || "noreply-newbrand@sandersvioprolabsllc.com",
+=======
   senderEmail: process.env.NEWBRAND_EMAIL || "noreply-newbrand@sandersvioprolabs.com",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   senderName: "Your Brand",
   brandColor: "#FF00FF",
   supportEmail: "Loop2008tokhealth@outlook.com",
@@ -220,7 +240,11 @@ newbrand: {
 
 2. Add env var to `.env.local.example`:
 ```
+<<<<<<< HEAD
+NEWBRAND_EMAIL=noreply-newbrand@sandersvioprolabsllc.com
+=======
 NEWBRAND_EMAIL=noreply-newbrand@sandersvioprolabs.com
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 ```
 
 3. Use in code:

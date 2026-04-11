@@ -8,6 +8,19 @@ export default function VCCHub() {
 
   const products = [
     {
+      id: "spl",
+      name: "SPL Green Room",
+      icon: "🕊️",
+      role: "Approval-Gated Launch Control",
+      description: "Staging lane for the SVL-KPA-SPL banner, launch order, and live surfaces. Prepared for rapid movement without exposing a one-click public launch. Created 2026-04-07 05:31:30 AM -05:00.",
+      color: "#f59e0b",
+      textColor: "#fde68a",
+      bgGradient: "rgba(245, 158, 11, 0.1)",
+      url: "/spl",
+      mission: "Prepare the message. Hold the line. Launch only on approval.",
+      features: ["Approval Gate", "Launch Sequence", "Green Room", "SVL Banner"]
+    },
+    {
       id: "tokhealth",
       name: "TokHealth",
       icon: "🏥",
@@ -157,7 +170,7 @@ export default function VCCHub() {
       <section style={{ padding: "80px 40px", textAlign: "center", position: "relative", zIndex: 1 }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div style={{ fontSize: 12, letterSpacing: 4, color: "#5a5a72", textTransform: "uppercase", marginBottom: 20 }}>
-            Sanders Viopro Labs · Product Suite
+            Sanders Viopro Labs LLC · Product Suite
           </div>
           <h1
             style={{
@@ -362,9 +375,10 @@ export default function VCCHub() {
           zIndex: 1,
         }}
       >
-        <p>Sanders Viopro Labs · Mr. KPA · Verified Signature Authority · The Lab</p>
+        <p>Sanders Viopro Labs LLC · Mr. KPA · Verified Signature Authority · The Lab</p>
         <p style={{ marginTop: 12 }}>Protect Lives. Empower Communities. Build the Future.</p>
       </footer>
     </div>
   );
+  // #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN
 }

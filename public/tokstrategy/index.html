@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TokStrategy Market Value Calculator</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2e;
+      --panel-2: #16223d;
+      --text: #e8eefc;
+      --muted: #9bb0dc;
+      --accent: #2dd4bf;
+      --accent-2: #f59e0b;
+      --line: #27406f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #182846 0%, var(--bg) 50%);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #15213b 0%, #0f1930 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 8px 0; font-size: 30px; }
+    .sub { margin: 0; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: 1.1fr 1fr; }
+    }
+    .card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    input {
+      width: 100%;
+      border: 1px solid #35507f;
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    .btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: 1px solid #2f4f86;
+      background: #163158;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.primary {
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      border-color: #14b8a6;
+    }
+    .results {
+      display: grid;
+      gap: 10px;
+    }
+    .scenario {
+      border: 1px solid #314d7d;
+      border-radius: 12px;
+      padding: 14px;
+      background: #12213d;
+    }
+    .scenario h3 { margin: 0 0 6px 0; font-size: 18px; }
+    .kpi { margin: 2px 0; color: #c5d6fa; font-size: 14px; }
+    .value { color: var(--accent); font-size: 22px; font-weight: 700; margin-top: 8px; }
+    .math {
+      margin-top: 10px;
+      border-top: 1px dashed #355681;
+      padding-top: 10px;
+    }
+    .math h4 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      color: #dce8ff;
+    }
+    .math p {
+      margin: 3px 0;
+      color: #bfd2f5;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .priority-strip {
+      margin-top: 10px;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #0e2a48;
+      border: 1px solid #3b628f;
+      color: #d8e7ff;
+    }
+    .smart {
+      border: 1px solid #36598f;
+      border-radius: 12px;
+      padding: 12px;
+      background: #101d35;
+      margin-bottom: 12px;
+    }
+    .hint { margin: 4px 0 0 0; color: #b7c9ee; font-size: 13px; }
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: #d4e2ff;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .check input {
+      width: 16px;
+      height: 16px;
+      accent-color: #2dd4bf;
+    }
+    .insight {
+      border: 1px solid #355681;
+      border-radius: 12px;
+      padding: 14px;
+      background: #10203a;
+      margin-top: 10px;
+    }
+    .insight h3 { margin: 0 0 6px 0; font-size: 18px; }
+    .insight p { margin: 4px 0; color: #cfdefb; font-size: 14px; line-height: 1.5; }
+    .sr {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #355681;
+      background: #10203a;
+    }
+    .sr-title { margin: 0 0 8px 0; font-size: 14px; color: #dce8ff; font-weight: 700; }
+    .sr-status { margin: 8px 0 0 0; font-size: 13px; color: #bcd0f8; }
+    .copy-status { margin: 8px 0 0 0; font-size: 13px; color: #bcd0f8; }
+    .sr-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    select {
+      border: 1px solid #35507f;
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    .foot {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>TokStrategy Market Value Calculator</h1>
+      <p class="sub">Sanders Viopro Labs LLC • KPA - Keep People Alive</p>
+      <p class="sub">Updated baseline: $2.5M ARR and $1.5M hardware revenue</p>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Inputs</h2>
+        <div class="row">
+          <div>
+            <label for="arr">ARR (USD)</label>
+            <input id="arr" type="number" value="2500000" min="0" step="10000" />
+          </div>
+          <div>
+            <label for="hardware">Hardware Revenue (USD)</label>
+            <input id="hardware" type="number" value="1500000" min="0" step="10000" />
+          </div>
+        </div>
+
+        <h3>Conservative</h3>
+        <div class="row">
+          <div>
+            <label for="swCons">Software Multiple</label>
+            <input id="swCons" type="number" value="4" min="0" step="0.1" />
+          </div>
+          <div>
+            <label for="hwCons">Hardware Multiple</label>
+            <input id="hwCons" type="number" value="1" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="spCons">Strategic Premium (decimal)</label>
+            <input id="spCons" type="number" value="0.1" min="0" step="0.01" />
+          </div>
+        </div>
+
+        <h3>Base</h3>
+        <div class="row">
+          <div>
+            <label for="swBase">Software Multiple</label>
+            <input id="swBase" type="number" value="6" min="0" step="0.1" />
+          </div>
+          <div>
+            <label for="hwBase">Hardware Multiple</label>
+            <input id="hwBase" type="number" value="2" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="spBase">Strategic Premium (decimal)</label>
+            <input id="spBase" type="number" value="0.2" min="0" step="0.01" />
+          </div>
+        </div>
+
+        <h3>Aggressive</h3>
+        <div class="row">
+          <div>
+            <label for="swAgg">Software Multiple</label>
+            <input id="swAgg" type="number" value="10" min="0" step="0.1" />
+          </div>
+          <div>
+            <label for="hwAgg">Hardware Multiple</label>
+            <input id="hwAgg" type="number" value="3" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="spAgg">Strategic Premium (decimal)</label>
+            <input id="spAgg" type="number" value="0.4" min="0" step="0.01" />
+          </div>
+        </div>
+
+        <h3>SVL-KPA Smart Upgrade Forecast</h3>
+        <div class="smart">
+          <label class="check" for="useSmartUpgrade">
+            <input id="useSmartUpgrade" type="checkbox" checked />
+            Auto-calculate upgrade growth from pilot-to-scale model
+          </label>
+          <div class="row">
+            <div>
+              <label for="pilotSetupFee">Pilot Setup Fee (USD)</label>
+              <input id="pilotSetupFee" type="number" value="25000" min="0" step="1000" />
+            </div>
+            <div>
+              <label for="pilotMonthlyFee">Pilot Monthly Fee (USD)</label>
+              <input id="pilotMonthlyFee" type="number" value="6500" min="0" step="500" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="pilotMonths">Pilot Months</label>
+              <input id="pilotMonths" type="number" value="3" min="1" step="1" />
+            </div>
+            <div>
+              <label for="trainingFee">Optional Training Fee (USD)</label>
+              <input id="trainingFee" type="number" value="5000" min="0" step="500" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="expansionProperties">Expansion Properties (Post Pilot)</label>
+              <input id="expansionProperties" type="number" value="4" min="0" step="1" />
+            </div>
+            <div>
+              <label for="annualPerProperty">Annual Value Per Property (USD)</label>
+              <input id="annualPerProperty" type="number" value="85000" min="0" step="1000" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="confidence">Execution Confidence (0 to 1)</label>
+              <input id="confidence" type="number" value="0.75" min="0" max="1" step="0.01" />
+            </div>
+            <div>
+              <label for="crossSellLift">Cross-Sell/Upsell Lift (USD)</label>
+              <input id="crossSellLift" type="number" value="120000" min="0" step="1000" />
+            </div>
+          </div>
+          <p class="hint">Smart annual growth estimate: <strong id="smartGrowthPreview">$0</strong></p>
+        </div>
+
+        <h3>SVL-KPA Upgrade Value</h3>
+        <div class="row">
+          <div>
+            <label for="upgradeGrowth">Annual Growth Lift From Upgrades (USD)</label>
+            <input id="upgradeGrowth" type="number" value="900000" min="0" step="10000" />
+          </div>
+          <div>
+            <label for="upgradeSavings">Annual Risk/Cost Reduction (USD)</label>
+            <input id="upgradeSavings" type="number" value="350000" min="0" step="10000" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="upgradeMult">Upgrade Value Multiple</label>
+            <input id="upgradeMult" type="number" value="4" min="0" step="0.1" />
+          </div>
+        </div>
+
+        <div class="btns">
+          <button class="primary" id="calcBtn">Calculate</button>
+          <button id="resetBtn">Reset Defaults</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Valuation Output</h2>
+        <div class="results" id="results"></div>
+        <div class="insight" id="insightPanel"></div>
+        <div class="sr" aria-live="polite">
+          <p class="sr-title">Board Summary Export</p>
+          <div class="sr-row">
+            <button id="copySummaryBtn" type="button" class="primary">Copy Board Summary</button>
+          </div>
+          <p class="copy-status" id="copyStatus">Summary export ready.</p>
+        </div>
+        <div class="sr" aria-live="polite">
+          <p class="sr-title">SVL-KPA Screen Reader</p>
+          <div class="sr-row">
+            <label for="voiceStyle">Voice Style</label>
+            <select id="voiceStyle">
+              <option value="warm">Warm</option>
+              <option value="command">Command</option>
+              <option value="calm">Calm</option>
+            </select>
+            <button id="speakBtn" type="button" class="primary">Speak SVL-KPA Report</button>
+            <button id="stopSpeakBtn" type="button">Stop</button>
+          </div>
+          <p class="sr-status" id="srStatus">Screen reader ready.</p>
+        </div>
+      </section>
+    </div>
+
+    <p class="foot">Formula: Core Value = ((ARR x Software Multiple) + (Hardware Revenue x Hardware Multiple)) x (1 + Strategic Premium)</p>
+    <p class="foot">Upgrade Value = (Growth Lift + Risk/Cost Reduction) x Upgrade Value Multiple x Scenario Weight</p>
+    <p class="foot">Total Value = Core Value + Upgrade Value</p>
+  </div>
+
+  <script>
+    const defaults = {
+      arr: 2500000,
+      hardware: 1500000,
+      swCons: 4,
+      hwCons: 1,
+      spCons: 0.1,
+      swBase: 6,
+      hwBase: 2,
+      spBase: 0.2,
+      swAgg: 10,
+      hwAgg: 3,
+      spAgg: 0.4,
+      useSmartUpgrade: true,
+      pilotSetupFee: 25000,
+      pilotMonthlyFee: 6500,
+      pilotMonths: 3,
+      trainingFee: 5000,
+      expansionProperties: 4,
+      annualPerProperty: 85000,
+      confidence: 0.75,
+      crossSellLift: 120000,
+      upgradeGrowth: 424500,
+      upgradeSavings: 350000,
+      upgradeMult: 4,
+    };
+
+    const scenarioWeight = {
+      cons: 0.7,
+      base: 1.0,
+      agg: 1.3,
+    };
+
+    function usd(n) {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+    }
+
+    function val(id) {
+      return Number(document.getElementById(id).value || 0);
+    }
+
+    function checked(id) {
+      return Boolean(document.getElementById(id).checked);
+    }
+
+    function smartUpgradeGrowth() {
+      const pilotRevenue = val("pilotSetupFee") + (val("pilotMonthlyFee") * val("pilotMonths")) + val("trainingFee");
+      const expansionRevenue = val("expansionProperties") * val("annualPerProperty") * val("confidence");
+      return pilotRevenue + expansionRevenue + val("crossSellLift");
+    }
+
+    function compute(arr, hw, sw, hm, sp, upgradeBase, weight) {
+      const recurring = arr * sw;
+      const hardware = hw * hm;
+      const subtotal = recurring + hardware;
+      const premiumAmt = subtotal * sp;
+      const coreTotal = subtotal + premiumAmt;
+      const upgradeValue = upgradeBase * weight;
+      const total = coreTotal + upgradeValue;
+      return { recurring, hardware, subtotal, premiumAmt, coreTotal, upgradeValue, total };
+    }
+
+    function renderScenario(title, r) {
+      return `
+        <article class="scenario">
+          <h3>${title}</h3>
+          <p class="kpi">Recurring value: ${usd(r.recurring)}</p>
+          <p class="kpi">Hardware value: ${usd(r.hardware)}</p>
+          <p class="kpi">Subtotal: ${usd(r.subtotal)}</p>
+          <p class="kpi">Strategic premium: ${usd(r.premiumAmt)}</p>
+          <p class="kpi">Core value: ${usd(r.coreTotal)}</p>
+          <p class="kpi">SVL-KPA upgrade value: ${usd(r.upgradeValue)}</p>
+          <p class="value">Estimated market value: ${usd(r.total)}</p>
+          <div class="math">
+            <h4>Easy Math Breakdown</h4>
+            <p>1) Core operating value = recurring (${usd(r.recurring)}) + hardware (${usd(r.hardware)}) = ${usd(r.subtotal)}</p>
+            <p>2) Strategic premium added = ${usd(r.premiumAmt)}</p>
+            <p>3) Core total = ${usd(r.coreTotal)}</p>
+            <p>4) SVL-KPA upgrade value added = ${usd(r.upgradeValue)}</p>
+            <p><strong>Final = Core total + Upgrade value = ${usd(r.total)}</strong></p>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderInsight(base, cons, agg) {
+      const spread = agg.total - cons.total;
+      const upgradeShare = base.total > 0 ? (base.upgradeValue / base.total) : 0;
+      const lane = upgradeShare >= 0.2 ? "High upgrade leverage" : "Balanced leverage";
+      const action = upgradeShare >= 0.2
+        ? "Protect rollout velocity and capture expansion properties quickly to preserve upside."
+        : "Increase upgrade-linked revenue conversion before scaling multiples further.";
+      const p1 = upgradeShare >= 0.2
+        ? "Lock pilot-to-expansion execution milestones and owners now."
+        : "Strengthen upgrade conversion and cost-savings capture first.";
+      const p2 = spread > base.total * 0.35
+        ? "Reduce variance by tightening assumptions and proving KPI reliability."
+        : "Maintain current assumption discipline and monitor monthly KPI drift.";
+      const p3 = "Publish weekly SVL-KPA board summary to keep decisions fast and aligned.";
+
+      return `
+        <h3>Super Smart Readout</h3>
+        <p><strong>Decision lane:</strong> ${lane}</p>
+        <p><strong>Base scenario value:</strong> ${usd(base.total)}</p>
+        <p><strong>Upgrade share of base valuation:</strong> ${(upgradeShare * 100).toFixed(1)}%</p>
+        <p><strong>Scenario spread (Aggressive - Conservative):</strong> ${usd(spread)}</p>
+        <p><strong>Priority:</strong> ${action}</p>
+        <div class="priority-strip">Priority #1: ${p1}</div>
+        <div class="priority-strip">Priority #2: ${p2}</div>
+        <div class="priority-strip">Priority #3: ${p3}</div>
+        <div class="math">
+          <h4>Math In Plain English</h4>
+          <p>Core business value and SVL-KPA upgrade value are calculated separately.</p>
+          <p>Then they are combined to form final scenario value.</p>
+          <p>Upgrade share tells you how much of the valuation is driven by SVL-KPA improvements.</p>
+          <p>Scenario spread shows how sensitive the valuation is to assumptions.</p>
+        </div>
+      `;
+    }
+
+    function reportSpeech(base, cons, agg) {
+      const spread = agg.total - cons.total;
+      const upgradeShare = base.total > 0 ? (base.upgradeValue / base.total) : 0;
+      return [
+        "SVL KPA valuation report.",
+        `Conservative value: ${usd(cons.total)}.`,
+        `Base value: ${usd(base.total)}.`,
+        `Aggressive value: ${usd(agg.total)}.`,
+        `Base SVL KPA upgrade value: ${usd(base.upgradeValue)}.`,
+        `Upgrade share of base valuation: ${(upgradeShare * 100).toFixed(1)} percent.`,
+        `Scenario spread: ${usd(spread)}.`,
+        "Recommendation:",
+        upgradeShare >= 0.2
+          ? "Keep pilot to expansion velocity high and lock property rollout milestones early."
+          : "Increase upgrade conversion and savings capture before pushing higher valuation multiples."
+      ].join(" ");
+    }
+
+    function boardSummary(base, cons, agg) {
+      const spread = agg.total - cons.total;
+      const upgradeShare = base.total > 0 ? (base.upgradeValue / base.total) : 0;
+      const lane = upgradeShare >= 0.2 ? "High upgrade leverage" : "Balanced leverage";
+      const priority = upgradeShare >= 0.2
+        ? "Protect rollout velocity and lock expansion properties quickly."
+        : "Increase upgrade conversion and savings capture before pushing higher multiples.";
+
+      return [
+        "SVL-KPA TokStrategy Board Summary",
+        `Conservative Value: ${usd(cons.total)}`,
+        `Base Value: ${usd(base.total)}`,
+        `Aggressive Value: ${usd(agg.total)}`,
+        `Base Upgrade Value: ${usd(base.upgradeValue)}`,
+        `Upgrade Share of Base: ${(upgradeShare * 100).toFixed(1)}%`,
+        `Scenario Spread: ${usd(spread)}`,
+        `Decision Lane: ${lane}`,
+        `Priority: ${priority}`,
+      ].join("\n");
+    }
+
+    let latestReport = null;
+    let currentUtterance = null;
+
+    function calculate() {
+      const arr = val("arr");
+      const hardware = val("hardware");
+      const smartGrowth = smartUpgradeGrowth();
+      document.getElementById("smartGrowthPreview").textContent = usd(smartGrowth);
+
+      if (checked("useSmartUpgrade")) {
+        document.getElementById("upgradeGrowth").value = Math.round(smartGrowth);
+      }
+
+      const upgradeBase = (val("upgradeGrowth") + val("upgradeSavings")) * val("upgradeMult");
+
+      const cons = compute(arr, hardware, val("swCons"), val("hwCons"), val("spCons"), upgradeBase, scenarioWeight.cons);
+      const base = compute(arr, hardware, val("swBase"), val("hwBase"), val("spBase"), upgradeBase, scenarioWeight.base);
+      const agg = compute(arr, hardware, val("swAgg"), val("hwAgg"), val("spAgg"), upgradeBase, scenarioWeight.agg);
+
+      document.getElementById("results").innerHTML =
+        renderScenario("Conservative", cons) +
+        renderScenario("Base", base) +
+        renderScenario("Aggressive", agg);
+
+      document.getElementById("insightPanel").innerHTML = renderInsight(base, cons, agg);
+      latestReport = { base, cons, agg };
+    }
+
+    function reset() {
+      Object.entries(defaults).forEach(([k, v]) => {
+        const node = document.getElementById(k);
+        if (!node) return;
+        if (node.type === "checkbox") {
+          node.checked = Boolean(v);
+        } else {
+          node.value = v;
+        }
+      });
+      calculate();
+    }
+
+    function pickVoice(style, voices) {
+      const pools = {
+        warm: ["samantha", "ava", "victoria", "jenny"],
+        command: ["david", "mark", "alex", "guy"],
+        calm: ["zira", "aria", "karen", "moira"],
+      };
+      const targets = pools[style] || pools.warm;
+      const sorted = [...voices].sort((a, b) => {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        const ai = targets.findIndex((x) => aName.includes(x));
+        const bi = targets.findIndex((x) => bName.includes(x));
+        const as = ai === -1 ? 999 : ai;
+        const bs = bi === -1 ? 999 : bi;
+        return as - bs;
+      });
+      return sorted[0] || null;
+    }
+
+    function speakReport() {
+      if (!latestReport) calculate();
+      const synth = window.speechSynthesis;
+      synth.cancel();
+
+      const status = document.getElementById("srStatus");
+      const style = document.getElementById("voiceStyle").value;
+      const text = reportSpeech(latestReport.base, latestReport.cons, latestReport.agg);
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voices = synth.getVoices();
+      const voice = pickVoice(style, voices);
+
+      if (voice) utterance.voice = voice;
+      utterance.rate = style === "command" ? 0.95 : (style === "calm" ? 0.88 : 0.92);
+      utterance.pitch = style === "command" ? 0.95 : 1.0;
+      utterance.volume = 1;
+
+      utterance.onstart = () => { status.textContent = "Reading SVL-KPA report..."; };
+      utterance.onend = () => { status.textContent = "Screen reader complete."; };
+      utterance.onerror = () => { status.textContent = "Screen reader hit a temporary issue."; };
+
+      currentUtterance = utterance;
+      synth.speak(utterance);
+    }
+
+    function stopSpeak() {
+      window.speechSynthesis.cancel();
+      currentUtterance = null;
+      document.getElementById("srStatus").textContent = "Screen reader stopped.";
+    }
+
+    async function copyBoardSummary() {
+      if (!latestReport) calculate();
+      const text = boardSummary(latestReport.base, latestReport.cons, latestReport.agg);
+      const status = document.getElementById("copyStatus");
+
+      try {
+        await navigator.clipboard.writeText(text);
+        status.textContent = "Board summary copied to clipboard.";
+      } catch {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        status.textContent = "Board summary copied (fallback mode).";
+      }
+    }
+
+    const inputsToWatch = [
+      "arr", "hardware", "swCons", "hwCons", "spCons", "swBase", "hwBase", "spBase", "swAgg", "hwAgg", "spAgg",
+      "useSmartUpgrade", "pilotSetupFee", "pilotMonthlyFee", "pilotMonths", "trainingFee", "expansionProperties",
+      "annualPerProperty", "confidence", "crossSellLift", "upgradeGrowth", "upgradeSavings", "upgradeMult"
+    ];
+
+    inputsToWatch.forEach((id) => {
+      const node = document.getElementById(id);
+      if (!node) return;
+      const eventName = node.type === "checkbox" ? "change" : "input";
+      node.addEventListener(eventName, calculate);
+    });
+
+    document.getElementById("calcBtn").addEventListener("click", calculate);
+    document.getElementById("resetBtn").addEventListener("click", reset);
+    document.getElementById("speakBtn").addEventListener("click", speakReport);
+    document.getElementById("stopSpeakBtn").addEventListener("click", stopSpeak);
+    document.getElementById("copySummaryBtn").addEventListener("click", copyBoardSummary);
+    reset();
+  </script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVL-KPA First Guardian Logic Grid</title>
+  <style>
+    :root {
+      --bg: #120d08;
+      --panel: #1f1710;
+      --panel-2: #2a2017;
+      --line: #7a5634;
+      --gold: #f0bb6b;
+      --sand: #f5e8cf;
+      --warm: #d89a45;
+      --alert: #f26d6d;
+      --ok: #75d39b;
+      --muted: #c8b89f;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(240, 187, 107, 0.10), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(117, 211, 155, 0.10), transparent 22%),
+        linear-gradient(145deg, #0c0906 0%, #17110c 45%, #221810 100%);
+      color: var(--sand);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      border: 1px solid rgba(240, 187, 107, 0.35);
+      background: linear-gradient(135deg, rgba(42, 32, 23, 0.95), rgba(23, 17, 12, 0.95));
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: rgba(31, 23, 16, 0.96);
+      border: 1px solid rgba(122, 86, 52, 0.6);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.96rem;
+    }
+
+    .stat strong {
+      color: var(--sand);
+    }
+
+    .level-grid {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    button {
+      border: 1px solid rgba(122, 86, 52, 0.75);
+      background: linear-gradient(135deg, #3a291b, #2a1d13);
+      color: var(--sand);
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      border-color: var(--gold);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    button.active {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #7d5220, #5e3b15);
+      color: #fff5df;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #9a682a, #7a4f18);
+    }
+
+    .secondary {
+      background: linear-gradient(135deg, #2c4031, #1f2f25);
+    }
+
+    .danger {
+      background: linear-gradient(135deg, #6d2d2d, #4e1c1c);
+    }
+
+    .board-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 0;
+      width: min(100%, 630px);
+      border: 3px solid var(--gold);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #15100b;
+    }
+
+    .cell {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgba(122, 86, 52, 0.65);
+      background: #221811;
+      color: var(--sand);
+      font-size: 1.2rem;
+      text-align: center;
+      outline: none;
+      font-weight: 700;
+    }
+
+    .cell.fixed {
+      background: #3a2818;
+      color: var(--gold);
+    }
+
+    .cell.correct {
+      color: var(--ok);
+    }
+
+    .cell.error {
+      color: #fff;
+      background: #7a2c2c;
+    }
+
+    .cell:nth-child(3n) {
+      border-right: 2px solid var(--gold);
+    }
+
+    .cell:nth-child(9n) {
+      border-right: 1px solid rgba(122, 86, 52, 0.65);
+    }
+
+    .row-break {
+      border-bottom: 2px solid var(--gold) !important;
+    }
+
+    .message {
+      width: min(100%, 630px);
+      background: rgba(42, 32, 23, 0.9);
+      border: 1px solid rgba(122, 86, 52, 0.65);
+      border-radius: 14px;
+      padding: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .message strong {
+      color: var(--gold);
+    }
+
+    .status-ok {
+      color: var(--ok);
+      font-weight: 700;
+    }
+
+    .status-bad {
+      color: var(--alert);
+      font-weight: 700;
+    }
+
+    .footnote {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    @media (max-width: 940px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>SVL-KPA First Guardian Logic Grid</h1>
+      <p class="sub">Built for Michelle at The First Guardian. Home-first protection meets focused logic. Choose a challenge level, guard your lives, and finish the grid with calm precision.</p>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <h2>Guardian Status</h2>
+        <div class="stat"><span>Player</span><strong id="playerName">Michelle</strong></div>
+        <div class="stat"><span>Challenge</span><strong id="levelLabel">Easy</strong></div>
+        <div class="stat"><span>Lives Left</span><strong id="livesLabel">5</strong></div>
+        <div class="stat"><span>Mistakes</span><strong id="mistakesLabel">0</strong></div>
+        <div class="stat"><span>Timer</span><strong id="timerLabel">00:00</strong></div>
+        <div class="stat"><span>Completion</span><strong id="progressLabel">0 / 81</strong></div>
+
+        <h2>Challenge Levels</h2>
+        <div class="level-grid">
+          <button class="active" data-level="easy">Easy Guard</button>
+          <button data-level="medium">Steady Guardian</button>
+          <button data-level="hard">Household Shield</button>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="newPuzzleBtn">New Puzzle</button>
+          <button class="secondary" id="hintBtn">Use Hint</button>
+          <button class="danger" id="checkBtn">Check Board</button>
+        </div>
+
+        <p class="footnote">Challenge levels change how many starting clues you get and how many lives you can spend. Easy starts gentler. Hard demands household-shield focus.</p>
+      </aside>
+
+      <section class="panel board-shell">
+        <h2>Logic Board</h2>
+        <div class="board" id="board"></div>
+        <div class="message" id="messageBox"><strong>First Guardian briefing:</strong> Start calm. Protect your focus. One correct number at a time is still a win.</div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const PUZZLES = {
+      easy: [
+        {
+          puzzle: "530070000600195000098000060800060003400803001700020006060000280000419005000080079",
+          solution: "534678912672195348198342567859761423426853791713924856961537284287419635345286179"
+        },
+        {
+          puzzle: "200080300060070084030500209000105408000000000402706000301007040720040060004010003",
+          solution: "245981376169273584837564219976125438513498627482736951391657842728349165654812793"
+        }
+      ],
+      medium: [
+        {
+          puzzle: "000260701680070090190004500820100040004602900050003028009300074040050036703018000",
+          solution: "435269781682571493197834562826195347374682915951743628519326874248957136763418259"
+        },
+        {
+          puzzle: "300000000005009000200504000020000700160000058704310600000890100000067080000005437",
+          solution: "391682574475139826286574391523948716169726358748351692657893142934267185812415437"
+        }
+      ],
+      hard: [
+        {
+          puzzle: "000000907000420180000705026100904000050000040000507009920108000034059000507000000",
+          solution: "462831957795426183381795426173984265859612743246537819928168374634259871517343692"
+        },
+        {
+          puzzle: "030000080009000500000007000200080006000602000500010004000500000004000700020000010",
+          solution: "736951482819246573452837169243789156197652348568314924671598234984123765325467891"
+        }
+      ]
+    };
+
+    const LEVEL_SETTINGS = {
+      easy: { label: "Easy Guard", lives: 5 },
+      medium: { label: "Steady Guardian", lives: 4 },
+      hard: { label: "Household Shield", lives: 3 }
+    };
+
+    const state = {
+      level: "easy",
+      puzzle: [],
+      solution: [],
+      board: [],
+      fixed: new Set(),
+      lives: 5,
+      mistakes: 0,
+      timer: 0,
+      timerId: null,
+      hintUsed: false,
+      locked: false
+    };
+
+    function qs(id) {
+      return document.getElementById(id);
+    }
+
+    function playerFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const player = (params.get("player") || "Michelle").trim();
+      return player.slice(0, 24) || "Michelle";
+    }
+
+    function toArray(str) {
+      return str.split("").map((char) => Number(char));
+    }
+
+    function randomPuzzle(level) {
+      const pool = PUZZLES[level];
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function formatTime(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
+      const secs = (totalSeconds % 60).toString().padStart(2, "0");
+      return `${mins}:${secs}`;
+    }
+
+    function setMessage(html) {
+      qs("messageBox").innerHTML = html;
+    }
+
+    function updateStats() {
+      qs("playerName").textContent = playerFromUrl();
+      qs("levelLabel").textContent = LEVEL_SETTINGS[state.level].label;
+      qs("livesLabel").textContent = String(state.lives);
+      qs("mistakesLabel").textContent = String(state.mistakes);
+      qs("timerLabel").textContent = formatTime(state.timer);
+      const filled = state.board.filter((n) => n > 0).length;
+      qs("progressLabel").textContent = `${filled} / 81`;
+    }
+
+    function startTimer() {
+      stopTimer();
+      state.timerId = window.setInterval(() => {
+        if (state.locked) {
+          return;
+        }
+        state.timer += 1;
+        updateStats();
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (state.timerId) {
+        window.clearInterval(state.timerId);
+        state.timerId = null;
+      }
+    }
+
+    function selectLevel(level) {
+      state.level = level;
+      document.querySelectorAll("[data-level]").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.level === level);
+      });
+      newPuzzle();
+    }
+
+    function renderBoard() {
+      const board = qs("board");
+      board.innerHTML = "";
+
+      state.board.forEach((value, index) => {
+        const input = document.createElement("input");
+        input.className = "cell";
+        input.inputMode = "numeric";
+        input.maxLength = 1;
+        input.dataset.index = String(index);
+        input.value = value > 0 ? String(value) : "";
+
+        const row = Math.floor(index / 9);
+        if (row === 2 || row === 5) {
+          input.classList.add("row-break");
+        }
+
+        if (state.fixed.has(index)) {
+          input.disabled = true;
+          input.classList.add("fixed");
+        } else if (value > 0 && value === state.solution[index]) {
+          input.classList.add("correct");
+        }
+
+        input.addEventListener("input", onCellInput);
+        board.appendChild(input);
+      });
+
+      updateStats();
+    }
+
+    function onCellInput(event) {
+      if (state.locked) {
+        event.target.value = "";
+        return;
+      }
+
+      const idx = Number(event.target.dataset.index);
+      let raw = event.target.value.replace(/[^1-9]/g, "");
+      event.target.value = raw;
+
+      if (!raw) {
+        state.board[idx] = 0;
+        event.target.classList.remove("error", "correct");
+        updateStats();
+        return;
+      }
+
+      const guess = Number(raw);
+      if (guess === state.solution[idx]) {
+        state.board[idx] = guess;
+        event.target.classList.remove("error");
+        event.target.classList.add("correct");
+        setMessage("<strong>First Guardian briefing:</strong> Good placement. Stay steady and keep the house in order.");
+        if (isSolved()) {
+          state.locked = true;
+          stopTimer();
+          setMessage("<span class='status-ok'>Puzzle complete.</span> Michelle solved the grid with First Guardian discipline.");
+        }
+      } else {
+        state.mistakes += 1;
+        state.lives = Math.max(0, LEVEL_SETTINGS[state.level].lives - state.mistakes);
+        event.target.classList.add("error");
+        setMessage("<span class='status-bad'>Incorrect placement.</span> Reset your focus and protect your remaining lives.");
+        window.setTimeout(() => {
+          event.target.value = "";
+          event.target.classList.remove("error");
+        }, 450);
+        state.board[idx] = 0;
+
+        if (state.lives === 0) {
+          state.locked = true;
+          stopTimer();
+          setMessage("<span class='status-bad'>Challenge failed.</span> All lives used. Start a new puzzle and re-center.");
+        }
+      }
+
+      updateStats();
+    }
+
+    function isSolved() {
+      return state.board.every((n, i) => n === state.solution[i]);
+    }
+
+    function checkBoard() {
+      if (state.locked) {
+        return;
+      }
+      const openCells = state.board.filter((n) => n === 0).length;
+      if (openCells === 0 && isSolved()) {
+        state.locked = true;
+        stopTimer();
+        setMessage("<span class='status-ok'>Verified complete.</span> The grid is correct and fully protected.");
+        return;
+      }
+      setMessage("<strong>Board check:</strong> You still have " + openCells + " open cells. Keep working with calm precision.");
+    }
+
+    function useHint() {
+      if (state.locked) {
+        return;
+      }
+      const openIndexes = state.board
+        .map((value, index) => ({ value, index }))
+        .filter((item) => item.value === 0)
+        .map((item) => item.index);
+
+      if (openIndexes.length === 0) {
+        setMessage("<strong>Hint:</strong> No hint needed. The board is already full.");
+        return;
+      }
+
+      const idx = openIndexes[Math.floor(Math.random() * openIndexes.length)];
+      state.board[idx] = state.solution[idx];
+      setMessage("<strong>Hint used:</strong> One square has been stabilized for you. Use it to rebuild momentum.");
+      renderBoard();
+
+      if (isSolved()) {
+        state.locked = true;
+        stopTimer();
+        setMessage("<span class='status-ok'>Puzzle complete.</span> The final square is protected and the board is solved.");
+      }
+    }
+
+    function newPuzzle() {
+      const selected = randomPuzzle(state.level);
+      state.puzzle = toArray(selected.puzzle);
+      state.solution = toArray(selected.solution);
+      state.board = [...state.puzzle];
+      state.fixed = new Set();
+      state.puzzle.forEach((value, index) => {
+        if (value !== 0) {
+          state.fixed.add(index);
+        }
+      });
+      state.lives = LEVEL_SETTINGS[state.level].lives;
+      state.mistakes = 0;
+      state.timer = 0;
+      state.locked = false;
+      renderBoard();
+      startTimer();
+      setMessage("<strong>First Guardian briefing:</strong> " + LEVEL_SETTINGS[state.level].label + " is loaded. Guard your lives and protect your focus.");
+    }
+
+    document.querySelectorAll("[data-level]").forEach((button) => {
+      button.addEventListener("click", () => selectLevel(button.dataset.level));
+    });
+    qs("newPuzzleBtn").addEventListener("click", newPuzzle);
+    qs("hintBtn").addEventListener("click", useHint);
+    qs("checkBtn").addEventListener("click", checkBoard);
+
+    newPuzzle();
+  </script>
+</body>
+</html>

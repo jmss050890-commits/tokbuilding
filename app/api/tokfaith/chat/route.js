@@ -81,6 +81,29 @@ function getTokFaithPerspectiveMeta(perspective) {
   };
 }
 
+<<<<<<< HEAD
+function toPublicTokFaithError(error, language = "en") {
+  const rawMessage = String(error?.message || "");
+  const lower = rawMessage.toLowerCase();
+
+  if (
+    lower.includes("incorrect api key") ||
+    lower.includes("invalid api key") ||
+    lower.includes("401") ||
+    lower.includes("authentication")
+  ) {
+    if (language !== "en") {
+      return buildTokFaithFallbackResponse(language, "beloved");
+    }
+
+    return "TokFaith is temporarily running in fallback mode while the AI key is being refreshed. Please try again in a moment.";
+  }
+
+  return "TokFaith encountered a temporary issue. Please try again in a moment.";
+}
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 export async function POST(req) {
   let message = "";
   let userId;
@@ -141,8 +164,12 @@ export async function POST(req) {
     // CHECK FOR BIBLE READING REQUESTS FIRST
     if (detectBibleRequest(message)) {
       const bookRequest = extractBookAndChapter(message);
+<<<<<<< HEAD
+      const bibleResponse = buildBibleReadingResponse(bookRequest, userName, language);
+=======
           const bibleResponse = buildBibleReadingResponse(bookRequest, userName, language);
       
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       return new Response(
         JSON.stringify({
           success: true,
@@ -193,6 +220,124 @@ export async function POST(req) {
       },
     ];
 
+<<<<<<< HEAD
+    if (openAiApiKey) {
+      // STREAMING RESPONSE
+      const encoder = new TextEncoder();
+      let fullResponse = "";
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            await generateWithKpaGuard(
+              async () => {
+                const completion = await openai.chat.completions.create({
+                  model: "gpt-4o-mini",
+                  messages,
+                  max_tokens: 1024,
+                  temperature: 0.9,
+                  stream: true,
+                });
+                for await (const chunk of completion) {
+                  const content = chunk.choices?.[0]?.delta?.content || "";
+                  if (content) {
+                    fullResponse += content;
+                    controller.enqueue(encoder.encode(content));
+                  }
+                }
+                return fullResponse;
+              },
+              async (repairPrompt) => {
+                const completion = await openai.chat.completions.create({
+                  model: "gpt-4o-mini",
+                  messages: [
+                    ...messages.slice(0, -1),
+                    {
+                      role: "user",
+                      content: `Original user message:\n${message}\n\n${repairPrompt}`,
+                    },
+                  ],
+                  max_tokens: 1024,
+                  temperature: 0.9,
+                  stream: true,
+                });
+                for await (const chunk of completion) {
+                  const content = chunk.choices?.[0]?.delta?.content || "";
+                  if (content) {
+                    fullResponse += content;
+                    controller.enqueue(encoder.encode(content));
+                  }
+                }
+                return fullResponse;
+              }
+            );
+            if (userId) {
+              await updateTokFaithMemory({
+                userId,
+                userName,
+                message,
+                response: fullResponse,
+                source: session ? "auth" : "guest",
+              });
+            }
+            controller.close();
+          } catch (err) {
+            console.error("TokFaith streaming error:", err);
+            const fallbackText = buildDemoResponse(message, memoryContext, userName, language);
+            controller.enqueue(encoder.encode(fallbackText));
+            controller.close();
+          }
+        },
+      });
+      return new Response(stream, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-cache",
+          "Transfer-Encoding": "chunked",
+          "x-tokfaith-perspective": perspectiveMeta.perspective,
+          "x-tokfaith-description": perspectiveMeta.description,
+          "x-tokfaith-current-perspective": perspectiveMeta.current,
+          "x-tokfaith-perspectives-can-switch": String(perspectiveMeta.perspectives?.canSwitch === true),
+        },
+      });
+    } else {
+      // DEMO MODE (no OpenAI key)
+      const responseText = buildDemoResponse(message, memoryContext, userName, language);
+      if (userId) {
+        await updateTokFaithMemory({
+          userId,
+          userName,
+          message,
+          response: responseText,
+          source: session ? "auth" : "guest",
+        });
+      }
+      return new Response(responseText, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "x-tokfaith-perspective": perspectiveMeta.perspective,
+          "x-tokfaith-description": perspectiveMeta.description,
+          "x-tokfaith-current-perspective": perspectiveMeta.current,
+          "x-tokfaith-perspectives-can-switch": String(perspectiveMeta.perspectives?.canSwitch === true),
+        },
+      });
+    }
+  } catch (error) {
+    console.error("TokFaith Chat Error:", error);
+    return new Response(
+      buildDemoResponse(message || "", null, userName, language),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "x-tokfaith-perspective": perspectiveMeta.perspective,
+          "x-tokfaith-description": perspectiveMeta.description,
+          "x-tokfaith-current-perspective": perspectiveMeta.current,
+          "x-tokfaith-perspectives-can-switch": String(perspectiveMeta.perspectives?.canSwitch === true),
+        },
+      }
+=======
     let responseText;
 
     if (openAiApiKey) {
@@ -278,6 +423,7 @@ export async function POST(req) {
           process.env.NODE_ENV === "development" ? error?.message : undefined,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     );
   }
 }

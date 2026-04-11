@@ -1,0 +1,27 @@
+USPTO Provisional Submission Notes (KPA)
+
+Current issue:
+A document description must be chosen for each attached file.
+
+Fix steps:
+1. Go to Upload Documents.
+2. For file "TOKHEALTH_LEGACY_V1.PY DATE 022026.txt", set Document Description to "Specification" (Application Part).
+3. Confirm "generatedADS...pdf" is labeled "Application Data Sheet".
+4. Save/update both document rows.
+
+Critical consistency checks before final submit:
+1. Application Type: Utility
+2. Subtype: Provisional Application under 35 USC 111(b)
+3. Entity Status: Micro
+4. If no drawing file is uploaded, set total drawing sheets to 0.
+5. If drawing sheets is set to 1, upload one drawing file and label it Drawings.
+
+Payment snapshot:
+- Fee code: 3005
+- Fee description: Provisional Application Filing Fee
+- Amount selected: $65.00
+
+Final go/no-go:
+- Every uploaded file must have a valid document description.
+- Review screen shows no validation errors.
+- Submit only after document labels and drawing-sheet count match uploads.

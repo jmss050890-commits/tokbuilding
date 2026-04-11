@@ -1,3 +1,46 @@
+<<<<<<< HEAD
+// Voice config for First Guardian (Black woman, motivational, cheerful, calm, reassuring)
+const FIRST_GUARDIAN_VOICE_CONFIG: VoiceReaderConfig = {
+  pitch: 1.08, // slightly higher for warmth
+  rate: 0.97, // calm, not rushed
+  voicePattern: [
+    // Google/Cloud/Windows voices that sound like Black women or are warm, motivational, and cheerful
+    'en-US-Wavenet-F', 'en-US-Wavenet-A', 'en-US-Wavenet-C',
+    'Google US English Female', 'Samantha', 'Aria', 'Jenny', 'Michelle', 'Tessa', 'Karen',
+    'female', 'woman', 'girl', 'cheerful', 'motivational', 'calm', 'reassuring',
+    // Add more as needed for platform coverage
+  ],
+};
+
+/**
+ * Get First Guardian-locked voice (Black woman, motivational, cheerful, calm, reassuring)
+ */
+export function getFirstGuardianVoice(): SpeechSynthesisVoice | null {
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+
+  // Try preferred patterns first
+  for (const pattern of FIRST_GUARDIAN_VOICE_CONFIG.voicePattern!) {
+    const voice = voices.find(v => {
+      const safeName = v.name.toLowerCase();
+      const safePattern = pattern.toLowerCase();
+      return safeName.includes(safePattern);
+    });
+    if (voice) return voice;
+  }
+
+  // Fallback: any English female voice
+  const femaleVoice = voices.find(v =>
+    v.lang.startsWith('en-') &&
+    (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('woman'))
+  );
+  if (femaleVoice) return femaleVoice;
+
+  // Last resort: any English voice
+  return voices.find(v => v.lang.startsWith('en-')) || voices[0] || null;
+}
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 /**
  * Shared Voice Reading Utility
  * Allows narrative pages to be read aloud by Mr. KPA's voice

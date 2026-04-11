@@ -1,0 +1,11 @@
+item_no,part_number,description,material,supplier,supplier_part_no,unit_cost_usd,qty_per_unit,lead_time_days,alternate_supplier,alternate_part_no,compliance_notes
+1,SVL-PHG-001,Reservoir body,Food-grade PP,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Food-contact certified
+2,SVL-PHG-002,Grow deck lid,Food-grade PP,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Food-contact certified
+3,SVL-PHG-003,Net pot set (x6),HDPE,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Food-contact certified
+4,SVL-PHG-004,Air pump,ABS,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Electrical safety cert required
+5,SVL-PHG-005,Air tubing,Silicone,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Food-safe
+6,SVL-PHG-006,Check valve,PP,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Water-safe
+7,SVL-PHG-007,Airstone,Ceramic,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],N/A
+8,SVL-PHG-008,Power adapter,Electrical,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],UL/ETL required
+9,SVL-PHG-009,Gaskets/seals,Silicone,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Food-safe
+10,SVL-PHG-010,Fastener kit,Stainless steel,[Supplier],[PartNo],[Cost],[Qty],[LeadTime],[AltSupplier],[AltPart],Corrosion resistant

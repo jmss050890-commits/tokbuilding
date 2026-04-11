@@ -343,7 +343,11 @@ export default function SVLGuardian() {
 
       <div className="svl-shell">
         <div className="svl-topbar">
+<<<<<<< HEAD
+          <div className="svl-chip">Sanders Viopro Labs LLC • KPA • Keep People Alive</div>
+=======
           <div className="svl-chip">Sanders Viopro Labs • KPA • Keep People Alive</div>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           <div className="svl-stamp">SVL Guardian Active</div>
         </div>
 
@@ -355,7 +359,11 @@ export default function SVLGuardian() {
               built to guide, protect, and activate
             </h2>
             <p className="svl-copy">
+<<<<<<< HEAD
+              Sanders Viopro Labs LLC KPA (Keep People Alive) brings together A1, HATÄTA, Wisdom, plus voice-command centers: TokHealth, TokThru, and TokBuilding—all integrated inside an intelligent support system designed for guidance, oversight, and action.
+=======
               Sanders Viopro Labs KPA (Keep People Alive) brings together A1, HATÄTA, Wisdom, plus voice-command centers: TokHealth, TokThru, and TokBuilding—all integrated inside an intelligent support system designed for guidance, oversight, and action.
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             </p>
 
             <div className="svl-actions">
@@ -388,7 +396,11 @@ export default function SVLGuardian() {
               <div className="svl-photo-frame">
                 <Image 
                   src="/jerome-founder.png" 
+<<<<<<< HEAD
+                  alt="Jerome Sanders, founder of Sanders Viopro Labs LLC"
+=======
                   alt="Jerome Sanders, founder of Sanders Viopro Labs"
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
                   width={320}
                   height={400}
                   onError={(e) => {
@@ -401,7 +413,11 @@ export default function SVLGuardian() {
               <div>
                 <h3 className="svl-side-title">Creator & Founder</h3>
                 <p className="svl-side-copy">
+<<<<<<< HEAD
+                  Jerome Sanders founded Sanders Viopro Labs LLC with a singular mission: Keep People Alive. This ecosystem embodies his vision of intelligent systems that protect, guide, and activate real solutions for real people.
+=======
                   Jerome Sanders founded Sanders Viopro Labs with a singular mission: Keep People Alive. This ecosystem embodies his vision of intelligent systems that protect, guide, and activate real solutions for real people.
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
                 </p>
               </div>
             </div>

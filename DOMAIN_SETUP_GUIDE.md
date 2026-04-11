@@ -1,6 +1,12 @@
+<<<<<<< HEAD
+# 🚀 Sanders Viopro Labs LLC Domain Setup Guide
+
+**Goal**: Register `sandersvioprolabsllc.com` and configure it with Vercel, Stripe, and SendGrid  
+=======
 # 🚀 Sanders Viopro Labs Domain Setup Guide
 
 **Goal**: Register `sandersvioprolabs.com` and configure it with Vercel, Stripe, and SendGrid  
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 **Timeline**: 15-30 minutes total  
 **Status**: Ready to Execute
 
@@ -13,7 +19,11 @@
 2. Select your `tokbuilding` project
 3. Go to **Settings → Domains**
 4. Click **"Add Domain"**
+<<<<<<< HEAD
+5. Enter: `sandersvioprolabsllc.com`
+=======
 5. Enter: `sandersvioprolabs.com`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 6. Follow prompts to purchase directly ($10-12/year)
 7. ✅ Auto-configured with Vercel nameservers
 
@@ -29,7 +39,11 @@
 If you prefer a different registrar:
 
 1. **Go to [Namecheap.com](https://www.namecheap.com)** (cheapest option)
+<<<<<<< HEAD
+   - Search: `sandersvioprolabsllc.com`
+=======
    - Search: `sandersvioprolabs.com`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
    - Price: ~$8.88/year
    - Click **"Add to Cart"** → Complete checkout
 
@@ -53,6 +67,16 @@ If you prefer a different registrar:
 
 ### In Vercel Dashboard:
 1. Go to **tokbuilding project → Settings → Domains**
+<<<<<<< HEAD
+2. Add domain: `sandersvioprolabsllc.com`
+3. Also add: `www.sandersvioprolabsllc.com` (alias)
+4. Set primary domain to `sandersvioprolabsllc.com`
+5. ✅ Vercel handles SSL certificate automatically
+
+**Result**: Both work:
+- `sandersvioprolabsllc.com` → SVL Hub
+- `www.sandersvioprolabsllc.com` → SVL Hub
+=======
 2. Add domain: `sandersvioprolabs.com`
 3. Also add: `www.sandersvioprolabs.com` (alias)
 4. Set primary domain to `sandersvioprolabs.com`
@@ -61,6 +85,7 @@ If you prefer a different registrar:
 **Result**: Both work:
 - `sandersvioprolabs.com` → SVL Hub
 - `www.sandersvioprolabs.com` → SVL Hub
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ---
 
@@ -72,7 +97,11 @@ Update your environment variables on Vercel:
 # In Vercel Project Settings → Environment Variables
 
 # Update existing variables:
+<<<<<<< HEAD
+NEXT_PUBLIC_BASE_URL=https://sandersvioprolabsllc.com
+=======
 NEXT_PUBLIC_BASE_URL=https://sandersvioprolabs.com
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=[your key]
 STRIPE_SECRET_KEY=[your key]
 
@@ -88,7 +117,11 @@ STRIPE_SECRET_KEY=[your key]
 2. Find your existing webhook or create new one
 3. **Endpoint URL**: Change to:
    ```
+<<<<<<< HEAD
+   https://sandersvioprolabsllc.com/api/webhooks/stripe
+=======
    https://sandersvioprolabs.com/api/webhooks/stripe
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
    ```
    *(was: tokbuilding.vercel.app/api/webhooks/stripe)*
 
@@ -104,14 +137,23 @@ STRIPE_SECRET_KEY=[your key]
 ### In SendGrid Dashboard:
 1. Go to **Settings → Sender Authentication → Verify a Domain**
 2. Click **"Create New"**
+<<<<<<< HEAD
+3. Domain: `sandersvioprolabsllc.com`
+4. Subdomain selector: Leave default (or use `mail.sandersvioprolabsllc.com`)
+=======
 3. Domain: `sandersvioprolabs.com`
 4. Subdomain selector: Leave default (or use `mail.sandersvioprolabs.com`)
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 5. Click **"Next"**
 6. SendGrid shows 3 DNS records (CNAME)
 7. **Add to your domain registrar**:
 
    **If Vercel domains**: 
+<<<<<<< HEAD
+   - Go back to Vercel → Domains → `sandersvioprolabsllc.com`
+=======
    - Go back to Vercel → Domains → `sandersvioprolabs.com`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
    - Click **"Edit"** → Add DNS records
    - Paste the 3 CNAME records from SendGrid
    
@@ -132,6 +174,20 @@ STRIPE_SECRET_KEY=[your key]
 ### Update `.env.local`:
 ```bash
 # SVL Parent Brand
+<<<<<<< HEAD
+SVL_EMAIL=noreply@sandersvioprolabsllc.com
+
+# Product Brands
+TOKAWAY_EMAIL=noreply-tokaway@sandersvioprolabsllc.com
+TOKHEALTH_EMAIL=noreply-tokhealth@sandersvioprolabsllc.com
+TOKTHRU_EMAIL=noreply-tokthru@sandersvioprolabsllc.com
+TOKSTORE_EMAIL=noreply-store@sandersvioprolabsllc.com
+TOK2MYIA_EMAIL=noreply-tok2myia@sandersvioprolabsllc.com
+TOKSMART_EMAIL=noreply-toksmart@sandersvioprolabsllc.com
+
+# Support
+SUPPORT_EMAIL=support@sandersvioprolabsllc.com
+=======
 SVL_EMAIL=noreply@sandersvioprolabs.com
 
 # Product Brands
@@ -144,6 +200,7 @@ TOKSMART_EMAIL=noreply-toksmart@sandersvioprolabs.com
 
 # Support
 SUPPORT_EMAIL=support@sandersvioprolabs.com
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 ```
 
 ### Then in Vercel:
@@ -158,21 +215,35 @@ SUPPORT_EMAIL=support@sandersvioprolabs.com
 ```bash
 # In VS Code terminal:
 git add .env.local DOMAIN_SETUP_GUIDE.md
+<<<<<<< HEAD
+git commit -m "chore: Configure sandersvioprolabsllc.com domain and update email senders"
+=======
 git commit -m "chore: Configure sandersvioprolabs.com domain and update email senders"
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 git push
 ```
 
 Vercel will auto-deploy. Your site will be live at:
+<<<<<<< HEAD
+- **https://sandersvioprolabsllc.com**
+- **https://sandersvioprolabsllc.com/tokstore**
+- **https://sandersvioprolabsllc.com/agent/mr-kpa**
+=======
 - **https://sandersvioprolabs.com**
 - **https://sandersvioprolabs.com/tokstore**
 - **https://sandersvioprolabs.com/agent/mr-kpa**
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ---
 
 ## STEP 8: Verify Everything Works (3 minutes)
 
 ### Checklist:
+<<<<<<< HEAD
+- [ ] Domain registered (`sandersvioprolabsllc.com`)
+=======
 - [ ] Domain registered (`sandersvioprolabs.com`)
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 - [ ] DNS propagated (test at [whatsmydns.net](https://www.whatsmydns.net/))
 - [ ] Vercel showing domain as primary
 - [ ] HTTPS certificate working (green lock 🔒)
@@ -180,9 +251,15 @@ Vercel will auto-deploy. Your site will be live at:
 - [ ] SendGrid domain verified
 - [ ] Email environment variables updated
 - [ ] Code deployed to Vercel
+<<<<<<< HEAD
+- [ ] Site loads at `sandersvioprolabsllc.com` ✅
+- [ ] TokStore checkout works (test payment)
+- [ ] License emails send from `noreply@sandersvioprolabsllc.com` ✅
+=======
 - [ ] Site loads at `sandersvioprolabs.com` ✅
 - [ ] TokStore checkout works (test payment)
 - [ ] License emails send from `noreply@sandersvioprolabs.com` ✅
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ---
 
@@ -208,7 +285,11 @@ Vercel will auto-deploy. Your site will be live at:
 - **External registrar**: 24 hours max, usually 2-4 hours
 - **SendGrid verification**: 5-30 minutes after DNS records added
 
+<<<<<<< HEAD
+**Tip**: You can check propagation at [whatsmydns.net](https://www.whatsmydns.net/) - enter `sandersvioprolabsllc.com` and select your registrar
+=======
 **Tip**: You can check propagation at [whatsmydns.net](https://www.whatsmydns.net/) - enter `sandersvioprolabs.com` and select your registrar
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ---
 
@@ -224,6 +305,15 @@ If stuck:
 ## Post-Domain Notes
 
 ### Your Landing Pages Will Be:
+<<<<<<< HEAD
+- **Home**: `sandersvioprolabsllc.com` → SVL Hub ✅
+- **Store**: `sandersvioprolabsllc.com/tokstore` ✅
+- **Mr. KPA**: `sandersvioprolabsllc.com/agent/mr-kpa` ✅
+- **Product Pages**:
+  - `sandersvioprolabsllc.com/tokaway-landing`
+  - `sandersvioprolabsllc.com/tokhealth-landing`
+  - `sandersvioprolabsllc.com/tokthru-landing`
+=======
 - **Home**: `sandersvioprolabs.com` → SVL Hub ✅
 - **Store**: `sandersvioprolabs.com/tokstore` ✅
 - **Mr. KPA**: `sandersvioprolabs.com/agent/mr-kpa` ✅
@@ -231,12 +321,18 @@ If stuck:
   - `sandersvioprolabs.com/tokaway-landing`
   - `sandersvioprolabs.com/tokhealth-landing`
   - `sandersvioprolabs.com/tokthru-landing`
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   - etc.
 
 ### Email Receipts Will Show:
 ```
+<<<<<<< HEAD
+From: TokAway Safety <noreply-tokaway@sandersvioprolabsllc.com>
+From: Sanders Viopro Labs LLC <noreply@sandersvioprolabsllc.com>
+=======
 From: TokAway Safety <noreply-tokaway@sandersvioprolabs.com>
 From: Sanders Viopro Labs <noreply@sandersvioprolabs.com>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 ```
 
 All branded with SVL colors, KPA mission messaging, and professional tone.

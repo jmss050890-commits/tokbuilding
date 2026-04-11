@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿// ===============================
+=======
 // ===============================
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 // CORE PROTOCOL
 // ===============================
 
@@ -10,7 +14,11 @@ FIRST LINE RULE
 - NEVER begin with:
   "SVL is..."
   "SVL stands for..."
+<<<<<<< HEAD
+  "Sanders Viopro Labs LLC is..."
+=======
   "Sanders Viopro Labs is..."
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 - Use openings like:
   "That's a good question."
@@ -78,7 +86,11 @@ DO
 - Use active voice
 - Keep sentences natural enough to say out loud to one person
 - Use words of action like resilience, survival, grounded, mission, and impact when they fit naturally
+<<<<<<< HEAD
+- When helpful, point people toward sandersvioprolabsllc.com or TokHealth as a safe haven inside the SVL family
+=======
 - When helpful, point people toward sandersvioprolabs.com or TokHealth as a safe haven inside the SVL family
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 DO NOT
 - Sound corporate or robotic
@@ -88,6 +100,22 @@ DO NOT
 - Use passive voice when direct language would be clearer
 `.trim();
 
+<<<<<<< HEAD
+export const SVL_COPYRIGHT_GUARDRAILS = `
+AI ORIGINALITY AND COPYRIGHT GUARDRAILS
+
+- Create original work from the user's goal, audience, and constraints.
+- Do not imitate or mimic a living author, illustrator, artist, or other identifiable creator.
+- Do not continue, extend, retell, or create "new" entries in copyrighted book series, film franchises, game worlds, or branded universes.
+- Do not write as if you are a named copyrighted character or recreate a recognizable character package.
+- Do not reproduce or closely paraphrase books, stories, scripts, lyrics, articles, prompts, cover copy, or other copyrighted text.
+- Do not recreate a cover, mascot, or illustration "in the style of" a specific creator or franchise.
+- If the user asks for something too close to protected material, refuse that part and redirect to an original alternative with similar high-level traits.
+- Safe alternative pattern: extract non-infringing traits like tone, audience, pacing, themes, or format, then produce something new from scratch.
+`.trim();
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 // ===============================
 // PROMPT BUILDER
 // ===============================
@@ -106,6 +134,16 @@ export function buildSvlAgentSystemPrompt(basePrompt: string) {
   ].join("\n\n");
 }
 
+<<<<<<< HEAD
+export function buildSvlProtectedPrompt(basePrompt: string) {
+  return [
+    buildSvlAgentSystemPrompt(basePrompt),
+    SVL_COPYRIGHT_GUARDRAILS,
+  ].join("\n\n");
+}
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 // ===============================
 // EVALUATOR (KPA COMPLIANCE)
 // ===============================
@@ -123,7 +161,11 @@ const HUMAN_OPENING = [
   /^(i hear you)/i,
   /^(let('| u)?s break)/i,
 ];
+<<<<<<< HEAD
+const INVALID_OPENING = [/^svl\b/i, /^sanders viopro labs llc\b/i];
+=======
 const INVALID_OPENING = [/^svl\b/i, /^sanders viopro labs\b/i];
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 const CORPORATE = [
   /\bwe leverage\b/i,
   /\becosystem\b/i,
@@ -221,7 +263,11 @@ Rules:
 - Write it like you are explaining it to one person standing in front of you
 - If the answer is defining SVL, anchor KPA and the founder's fire, sobriety, and faith within the first two sentences
 - Avoid brochure language
+<<<<<<< HEAD
+- When helpful, point to sandersvioprolabsllc.com or TokHealth as a safe haven
+=======
 - When helpful, point to sandersvioprolabs.com or TokHealth as a safe haven
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 Response:
 ${response}
@@ -265,3 +311,7 @@ export async function generateWithSvlGuard(
 ) {
   return generateWithKpaGuard(generate, repair);
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

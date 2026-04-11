@@ -4,19 +4,52 @@
 
 import Link from 'next/link';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+<<<<<<< HEAD
+import FacebookPostEmbed from '@/app/components/FacebookPostEmbed';
+import VoiceStyleSpeaker from '@/app/components/VoiceStyleSpeaker';
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 export default function SandersVioProLabs() {
   const copy = useSiteCopy();
   const pageCopy = copy.sandersVioproLabs;
+<<<<<<< HEAD
+  const svlPageSpeechText = [
+    'Sanders Viopro Labs LLC.',
+    '#Sandersvioprolabs.',
+    pageCopy.heroBody,
+    'Our Mission.',
+    pageCopy.missionBody1,
+    pageCopy.missionBody2,
+    'Focus Areas.',
+    pageCopy.focusAreas[0]?.title,
+    pageCopy.focusAreas[0]?.body,
+    pageCopy.focusAreas[1]?.title,
+    pageCopy.focusAreas[1]?.body,
+    pageCopy.focusAreas[2]?.title,
+    pageCopy.focusAreas[2]?.body,
+    'The result of Next.JS meeting God\'s Vision Through SVL to KPA.',
+    "Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards.",
+  ].join(' ');
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 text-white">
+      {/* Grace Banner */}
+      <div className="w-full bg-amber-400 text-slate-900 text-center py-4 font-bold text-xl shadow-lg mb-6 rounded-b-xl">
+        This is Grace at its finest.
+      </div>
       {/* Navigation */}
       <nav className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur border-b border-purple-800/30">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-3xl">🥼</span>
+<<<<<<< HEAD
+            <h1 className="text-2xl font-bold">Sanders Viopro Labs LLC</h1>
+=======
             <h1 className="text-2xl font-bold">Sanders Viopro Labs</h1>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </div>
           <div className="flex gap-4 items-center">
             <Link href="/our-story" className="px-4 py-2 rounded-lg text-purple-300 hover:text-white transition">
@@ -24,6 +57,9 @@ export default function SandersVioProLabs() {
             </Link>
             <Link href="/svl-progress" className="px-4 py-2 rounded-lg text-amber-300 hover:text-white transition">
               {pageCopy.nav.progress}
+            </Link>
+            <Link href="/contact" className="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold transition focus:outline-none focus:ring-2 focus:ring-amber-300" aria-label="Contact Sanders Viopro Labs">
+              Contact
             </Link>
             <Link href="/" className="px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition">
               ← {pageCopy.nav.backHome}
@@ -36,12 +72,28 @@ export default function SandersVioProLabs() {
         {/* Hero Section */}
         <div className="text-center mb-20">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+<<<<<<< HEAD
+            Sanders Viopro Labs LLC
+=======
             Sanders Viopro Labs
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </h1>
           <p className="text-2xl text-purple-300 mb-6">#Sandersvioprolabs</p>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto">
             {pageCopy.heroBody}
           </p>
+<<<<<<< HEAD
+          <div className="mt-6 flex justify-center">
+            <VoiceStyleSpeaker
+              text={svlPageSpeechText}
+              speakLabel="Speak SVL Page"
+              stopLabel="Stop SVL Page"
+              speakTitle="Listen to SVL page"
+              stopTitle="Stop SVL page"
+            />
+          </div>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
 
         {/* Mission Section */}
@@ -114,6 +166,145 @@ export default function SandersVioProLabs() {
           </Link>
         </div>
 
+<<<<<<< HEAD
+        <div className="mb-16">
+          <Link href="/sanders-viopro-labs/gifts" className="block bg-gradient-to-br from-amber-950/60 via-purple-950/40 to-slate-900 rounded-xl border-2 border-amber-400/35 hover:border-amber-200/70 p-12 transition transform hover:scale-105 cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">🎁</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SVL Gifts</h2>
+              <p className="text-xl text-amber-100 mb-6 max-w-3xl mx-auto">
+                Revisit the living SVL gifts archive, including the Mahamantra collection, strategy reflection, and visual archive entries.
+              </p>
+              <span className="inline-block px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-lg transition">
+                Open Gifts Archive
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16 grid gap-6 lg:grid-cols-2">
+          <Link href="/sanders-viopro-labs/playbook" className="block bg-gradient-to-br from-fuchsia-950/70 via-slate-900 to-indigo-950/70 rounded-xl border-2 border-fuchsia-400/30 hover:border-fuchsia-200/70 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">♜</div>
+              <h2 className="text-4xl font-bold text-white mb-4">Sanders Family PlayBook</h2>
+              <p className="text-xl text-fuchsia-100 mb-6 max-w-3xl mx-auto">
+                An epic real-life game system with voice coaching, daily quests, family lanes, and legacy-building guidance.
+              </p>
+              <span className="inline-block px-6 py-3 bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold rounded-lg transition">
+                Enter The PlayBook
+              </span>
+            </div>
+          </Link>
+
+          <Link href="/sanders-viopro-labs/games" className="block bg-gradient-to-br from-emerald-950/70 via-slate-900 to-cyan-950/70 rounded-xl border-2 border-emerald-400/30 hover:border-emerald-200/70 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">🎮</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SVL Games</h2>
+              <p className="text-xl text-emerald-100 mb-6 max-w-3xl mx-auto">
+                A dedicated SVL home for your detective, logic, court, and academy game lanes, all anchored under one roof.
+              </p>
+              <span className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition">
+                Open Games Hub
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
+          <Link href="/amen" className="block bg-gradient-to-br from-amber-950/70 via-yellow-900/35 to-slate-900 rounded-xl border-2 border-amber-300/35 hover:border-amber-100/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">✨</div>
+              <h2 className="text-4xl font-bold text-white mb-4">Amen Heartbeat Page</h2>
+              <p className="text-xl text-amber-100 mb-6 max-w-3xl mx-auto">
+                A simple faith-and-gratitude lane anchored in the SVL mission. LLC standard, KPA purpose, and one clear word: Amen.
+              </p>
+              <span className="inline-block px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg transition">
+                Open Amen
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
+          <Link href="/spl" className="block bg-gradient-to-br from-emerald-950/70 via-slate-950 to-amber-950/45 rounded-xl border-2 border-emerald-300/35 hover:border-emerald-100/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">🕊️</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SPL Green Room</h2>
+              <p className="text-xl text-emerald-100 mb-6 max-w-3xl mx-auto">
+                Approval-gated launch prep for the SVL-KPA-SPL message. Banner locked, lanes staged, and operator sequence ready when you want to move.
+              </p>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-200 mb-6">
+                Created 2026-04-07 05:31:30 AM -05:00
+              </p>
+              <span className="inline-block px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg transition">
+                Open SPL Staging
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
+          <Link href="/tokfam" className="block bg-gradient-to-br from-pink-950/70 via-rose-950/40 to-slate-900 rounded-xl border-2 border-pink-400/35 hover:border-pink-200/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">🧸</div>
+              <h2 className="text-4xl font-bold text-white mb-4">TokFam: Miari's Celebration</h2>
+              <p className="text-xl text-pink-100 mb-6 max-w-3xl mx-auto">
+                A family love page made to celebrate Miari at age 1. A joyful lane for blessings, milestones, and legacy memories under the KPA mission.
+              </p>
+              <span className="inline-block px-6 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-lg transition">
+                Open TokFam
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
+          <Link href="/tokshow" className="block bg-gradient-to-br from-cyan-950/70 via-slate-900 to-amber-950/40 rounded-xl border-2 border-cyan-300/35 hover:border-cyan-100/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">📺</div>
+              <h2 className="text-4xl font-bold text-white mb-4">TokShow: Kysen & Bam Bam</h2>
+              <p className="text-xl text-cyan-100 mb-6 max-w-3xl mx-auto">
+                A realistic cartoon series launching Easter Sunday under SVL and KPA, starring Kysen and his little sister Bam Bam. Community safety stories, practical action steps, and family-first mission energy.
+              </p>
+              <span className="inline-block px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-lg transition">
+                Open TokShow
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
+          <Link href="/sanders-viopro-labs/executive-brief" className="block bg-gradient-to-br from-slate-950 via-cyan-950/40 to-amber-950/35 rounded-xl border-2 border-cyan-200/30 hover:border-cyan-100/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">📊</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SVL-KPA Executive Brief</h2>
+              <p className="text-xl text-cyan-100 mb-6 max-w-3xl mx-auto">
+                A concise operator-facing brief with pilot structure, proof stack, value framing, and the exact next ask for strategic partners.
+              </p>
+              <span className="inline-block px-6 py-3 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold rounded-lg transition">
+                Open Executive Brief
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="mb-16">
+          <Link href="/svl-kpa-positioning" className="block bg-gradient-to-br from-indigo-950/70 via-slate-900 to-cyan-950/50 rounded-xl border-2 border-indigo-300/30 hover:border-indigo-100/80 p-12 transition transform hover:scale-[1.02] cursor-pointer">
+            <div className="text-center">
+              <div className="text-5xl mb-6">🔬</div>
+              <h2 className="text-4xl font-bold text-white mb-4">SVL-KPA Research-Backed Positioning</h2>
+              <p className="text-xl text-indigo-100 mb-6 max-w-3xl mx-auto">
+                Science-grounded investor and client positioning. Pressure-tested against DuPont, HOP, and Safety II. Ready for boardroom conversations.
+              </p>
+              <span className="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition">
+                Open Positioning
+              </span>
+            </div>
+          </Link>
+        </div>
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         {/* Our Products */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-center">{pageCopy.productsTitle}</h2>
@@ -176,12 +367,33 @@ export default function SandersVioProLabs() {
             <p className="text-slate-400">{pageCopy.initiatives.thinkSpeakWork}</p>
           </Link>
         </div>
+<<<<<<< HEAD
+
+        {/* Facebook Post Embed */}
+        <div className="mb-16 bg-slate-900/60 rounded-xl border border-purple-700/30 p-6 md:p-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Latest TokHealth KPA Post</h2>
+          <p className="text-slate-300 mb-6">Community updates from our official Facebook page.</p>
+          <FacebookPostEmbed
+            postUrl="https://www.facebook.com/photo/?fbid=122106758763230551&set=a.122094869259230551"
+            permalinkUrl="https://www.facebook.com/permalink.php?story_fbid=122106758763230551&id=61586916537316&substory_index=1412421604251535"
+            pageUrl="https://www.facebook.com/people/TokHealth-KPA/61586916537316/"
+            pageName="TokHealth KPA"
+            postedLabel="Wednesday, April 1, 2026"
+          />
+        </div>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       </div>
 
       {/* Footer */}
       <div className="bg-slate-900 border-t border-slate-800 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">{pageCopy.footerLine1}</p>
+<<<<<<< HEAD
+          <p className="text-slate-300 mb-4">Sanders Viopro Labs LLC</p>
+          <p className="text-slate-300 mb-4 font-semibold tracking-[0.18em]">Amen.</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           <p className="text-sm text-slate-300 mb-4">The result of Next.JS meeting God's Vision Through SVL to KPA</p>
           <p className="text-xs text-slate-500">#Sandersvioprolabs | #KPA-Keeppeoplealive | #thinkspeakworkandwatchGodwork4U</p>
         </div>

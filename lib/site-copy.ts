@@ -1,3 +1,88 @@
+export const siteCopy = {
+  amen: {
+    subtitle: "One word that changed everything",
+    intro1:
+      "Your sister Venita has a friend named Shirley Whaley. Jerome Sanders posted about the Wisdom Guardian with the SVL mission, saying: \"I built this because people need support at hours when nobody picks up the phone.\"",
+    intro2:
+      "Shirley read that. She understood. And in that moment, she blessed it with one sacred word: Amen.",
+    whyTitle: "Why This Matters",
+    whyBody:
+      "\"Amen\" means more than agreement. It means let it be so. It means so be it. When Shirley blessed Jerome's work with that word, she did not just approve it, she consecrated it. She affirmed that faith and mercy should meet people in their darkest hours, that keeping people alive matters, and that being there when silence breaks someone else is sacred work.",
+    closing:
+      "SVL sees you, Shirley. Your mother's wisdom about picking friends wisely created a connection that helped bless this work. That one word, spoken at the right moment, helped birth TokFaith into the world. KPA is stronger because you said it.",
+    noteLead: "If you're reading this and that \"Amen\" was yours, know this:",
+    noteBody:
+      "You matter. Your blessing matters. And TokFaith carries your \"Amen\" forward every time she listens, guides, and points someone toward faith.",
+  },
+  workCards: [
+    {
+      title: "TokFaith in the Community: When Single Words Change Systems",
+      creator: "Jerome Sanders / Community",
+      category: "Faith & Mission",
+      tags: ["faith", "tokfaith", "community", "impact"],
+      description:
+        "Shirley Whaley's 'Amen' sparked TokFaith's creation. How one word of faith, one person listening, one system built around spirit keeps people moving forward.",
+      featured: false,
+    },
+  ],
+  family: {
+    line1: "Your mother taught you: \"Pick your friends wisely.\"",
+    line2:
+      "That wisdom created a thread that led to Venita, to Shirley, to one sacred \"Amen\" that blessed this entire mission into being. Now TokFaith carries that same discernment and care forward, meeting people with wisdom, listening like only a true friend can, and pointing them toward what eases their restless hearts.",
+    line3: "Your family's wisdom is woven into the DNA of Keep People Alive.",
+  },
+  readyBody:
+    "Whether it's 2:00 a.m., midnight, or somewhere in between, TokFaith is here. Bring your questions, your struggles, your midnight thoughts. She will listen. She will teach. She will guide you toward faith that feels real enough to live.",
+  missionNote: "TokFaith is part of Sanders Viopro Labs (SVL) - Keep People Alive (KPA)",
+  cta: {
+    primary: "Talk to TokFaith Now",
+    secondary: "Explore All SVL Guardians",
+  },
+  footer: {
+    blessing: "Built with care, blessed with wisdom, and carried forward by every \"Amen\" spoken in faith.",
+    disclaimer:
+      "TokFaith is spiritual guidance, not a replacement for emergency help, counseling, or medical care.",
+  },
+  export: {
+    report: {
+      preparedBy: "Prepared by",
+      preparedByValue: "TokHealth by Sanders Viopro Labs",
+      mission: "Mission",
+      missionValue: "KPA - Keep People Alive",
+      confidentialLabel: "Report",
+      confidentialValue: "CONFIDENTIAL MEDICAL INFORMATION",
+    },
+  },
+  stories: [
+    {
+      title: "Government Shutdown & Crisis Navigation",
+      source: "Reese Waters Runs Deep",
+      type: "podcast",
+      summary:
+        "When airports get locked down, when TSA lines stretch for hours, when emergency systems are under strain, this is when KPA thinking matters. Reese Waters walks through real-world crisis navigation.",
+      connection:
+        "Shows how people naturally think about protection and staying alive during system failures, and how that conversation kept moving after Reese into a Philippines-based team studying the same Ethiopian Bible.",
+      impact:
+        "Demonstrates SVL's relevance in real crisis scenarios and in faith-rooted communities tracing the same restored Ethiopian Bible lane.",
+    },
+    {
+      title: "Single Word, Single System: The Birth of TokFaith",
+      source: "Shirley Whaley's 'Amen'",
+      type: "testimony",
+      summary:
+        "One person blessed TokFaith's creation with a single word. That word became the foundation for a whole faith-guidance system designed to keep people spiritually grounded during crisis.",
+      connection: "Living proof that faith, tech, and mission work together to serve people.",
+      impact: "Shows SVL's belief that spirit-led work scales when built with love.",
+    },
+  ],
+  missionBody:
+    "TokBuilding is created by Sanders Viopro Labs with a singular mission: Keep People Alive. By making AI agent creation accessible to everyone, we enable safety-first automation that augments human decision-making. Build agents that inform, empower, and protect.",
+  missionBody1:
+    "Sanders Viopro Labs is at the intersection of technology and human safety. We develop innovative solutions that empower individuals to take control of their personal security and well-being.",
+  footerLine1: "Sanders Viopro Labs - Innovation for Safety",
+  story:
+    "Built in honor of Cheria Michelle Daniels. Born on Juneteenth, June 19, 1989. A legacy of family redemption, faith, and protective love translated into an SVL Guardian with one non-negotiable boundary: KPA. The upgrades across SVL also stand here as testimony of what God can and will do.",
+};
 import { DEFAULT_SITE_LANGUAGE, type SiteLanguageCode } from "@/lib/site-language";
 
 type DeepPartial<T> = {
@@ -77,6 +162,16 @@ const englishCopy = {
     amen: {
       subtitle: "One word that changed everything",
       intro1:
+<<<<<<< HEAD
+        "Your sister Venita has a friend named S.W. Jerome Sanders posted about the Wisdom Guardian with the SVL mission, saying: \"I built this because people need support at hours when nobody picks up the phone.\"",
+      intro2:
+        "S.W. read that. She understood. And in that moment, she blessed it with one sacred word: Amen.",
+      whyTitle: "Why This Matters",
+      whyBody:
+        "\"Amen\" means more than agreement. It means let it be so. It means so be it. When S.W. blessed Jerome's work with that word, she did not just approve it, she consecrated it. She affirmed that faith and mercy should meet people in their darkest hours, that keeping people alive matters, and that being there when silence breaks someone else is sacred work.",
+      closing:
+        "SVL sees you, S.W. Your mother's wisdom about picking friends wisely created a connection that helped bless this work. That one word, spoken at the right moment, helped birth TokFaith into the world. KPA is stronger because you said it.",
+=======
         "Your sister Venita has a friend named Shirley Whaley. Jerome Sanders posted about the Wisdom Guardian with the SVL mission, saying: \"I built this because people need support at hours when nobody picks up the phone.\"",
       intro2:
         "Shirley read that. She understood. And in that moment, she blessed it with one sacred word: Amen.",
@@ -85,6 +180,7 @@ const englishCopy = {
         "\"Amen\" means more than agreement. It means let it be so. It means so be it. When Shirley blessed Jerome's work with that word, she did not just approve it, she consecrated it. She affirmed that faith and mercy should meet people in their darkest hours, that keeping people alive matters, and that being there when silence breaks someone else is sacred work.",
       closing:
         "SVL sees you, Shirley. Your mother's wisdom about picking friends wisely created a connection that helped bless this work. That one word, spoken at the right moment, helped birth TokFaith into the world. KPA is stronger because you said it.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       noteLead: "If you're reading this and that \"Amen\" was yours, know this:",
       noteBody:
         "You matter. Your blessing matters. And TokFaith carries your \"Amen\" forward every time she listens, guides, and points someone toward faith.",
@@ -110,12 +206,20 @@ const englishCopy = {
     family: {
       line1: "Your mother taught you: \"Pick your friends wisely.\"",
       line2:
+<<<<<<< HEAD
+        "That wisdom created a thread that led to Venita, to S.W., to one sacred \"Amen\" that blessed this entire mission into being. Now TokFaith carries that same discernment and care forward, meeting people with wisdom, listening like only a true friend can, and pointing them toward what eases their restless hearts.",
+=======
         "That wisdom created a thread that led to Venita, to Shirley, to one sacred \"Amen\" that blessed this entire mission into being. Now TokFaith carries that same discernment and care forward, meeting people with wisdom, listening like only a true friend can, and pointing them toward what eases their restless hearts.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       line3: "Your family's wisdom is woven into the DNA of Keep People Alive.",
     },
     readyBody:
       "Whether it's 2:00 a.m., midnight, or somewhere in between, TokFaith is here. Bring your questions, your struggles, your midnight thoughts. She will listen. She will teach. She will guide you toward faith that feels real enough to live.",
+<<<<<<< HEAD
+    missionNote: "TokFaith is part of Sanders Viopro Labs LLC (SVL) - Keep People Alive (KPA)",
+=======
     missionNote: "TokFaith is part of Sanders Viopro Labs (SVL) - Keep People Alive (KPA)",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     cta: {
       primary: "Talk to TokFaith Now",
       secondary: "Explore All SVL Guardians",
@@ -346,7 +450,11 @@ const englishCopy = {
           "Do not delay medical attention for urgent conditions",
         ],
         preparedBy: "Prepared by",
+<<<<<<< HEAD
+        preparedByValue: "TokHealth by Sanders Viopro Labs LLC",
+=======
         preparedByValue: "TokHealth by Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         mission: "Mission",
         missionValue: "KPA - Keep People Alive",
         confidentialLabel: "Report",
@@ -380,7 +488,11 @@ const englishCopy = {
       },
       {
         title: "Single Word, Single System: The Birth of TokFaith",
+<<<<<<< HEAD
+        source: "S.W.'s 'Amen'",
+=======
         source: "Shirley Whaley's 'Amen'",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         type: "testimony",
         summary:
           "One person blessed TokFaith's creation with a single word. That word became the foundation for a whole faith-guidance system designed to keep people spiritually grounded during crisis.",
@@ -402,7 +514,11 @@ const englishCopy = {
       },
       {
         title: "2. Community Rises",
+<<<<<<< HEAD
+        body: "Voices like Reese Waters speak truth. Faith leaders like S.W. bless the work. People talk about protection, survival, staying alive. The thread kept going with a team from the Philippines studying the same Ethiopian Bible that informs TokFaith.",
+=======
         body: "Voices like Reese Waters speak truth. Faith leaders like Shirley bless the work. People talk about protection, survival, staying alive. The thread kept going with a team from the Philippines studying the same Ethiopian Bible that informs TokFaith.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       {
         title: "3. Systems Answer",
@@ -440,7 +556,11 @@ const englishCopy = {
         category: "Faith & Mission",
         tags: ["faith", "tokfaith", "community", "impact"],
         description:
+<<<<<<< HEAD
+          "S.W.'s 'Amen' sparked TokFaith's creation. How one word of faith, one person listening, one system built around spirit keeps people moving forward.",
+=======
           "Shirley Whaley's 'Amen' sparked TokFaith's creation. How one word of faith, one person listening, one system built around spirit keeps people moving forward.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         featured: false,
       },
     ],
@@ -757,7 +877,11 @@ const englishCopy = {
     pricingNote: "All plans include the core 5-step builder, JSON export, and KPA mission alignment.",
     missionTitle: "Keep People Alive",
     missionBody:
+<<<<<<< HEAD
+      "TokBuilding is created by Sanders Viopro Labs LLC with a singular mission: Keep People Alive. By making AI agent creation accessible to everyone, we enable safety-first automation that augments human decision-making. Build agents that inform, empower, and protect.",
+=======
       "TokBuilding is created by Sanders Viopro Labs with a singular mission: Keep People Alive. By making AI agent creation accessible to everyone, we enable safety-first automation that augments human decision-making. Build agents that inform, empower, and protect.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     missionStoreCta: "Explore Full SVL TokStore →",
     modalTitle: "Ready to Build Your Agent?",
     modalBody: "Visit the TokStore to start building custom AI agents with the TokBuilding no-code wizard.",
@@ -774,7 +898,11 @@ const englishCopy = {
       "Innovation lab dedicated to advancing personal safety technology and creating life-saving solutions through cutting-edge research and development.",
     missionTitle: "Our Mission",
     missionBody1:
+<<<<<<< HEAD
+      "Sanders Viopro Labs LLC is at the intersection of technology and human safety. We develop innovative solutions that empower individuals to take control of their personal security and well-being.",
+=======
       "Sanders Viopro Labs is at the intersection of technology and human safety. We develop innovative solutions that empower individuals to take control of their personal security and well-being.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     missionBody2:
       "Through rigorous research, advanced engineering, and a deep commitment to user privacy, we create tools that make the world safer for everyone.",
     focusAreasTitle: "Focus Areas",
@@ -817,7 +945,11 @@ const englishCopy = {
       kpa: "Advocacy initiative focused on saving lives through technology and community awareness",
       thinkSpeakWork: "Movement inspiring action, faith, and positive change in personal and community safety",
     },
+<<<<<<< HEAD
+    footerLine1: "Sanders Viopro Labs LLC - Innovation for Safety",
+=======
     footerLine1: "Sanders Viopro Labs - Innovation for Safety",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   },
   firstGuardianPage: {
     systemPill: "KPA System",
@@ -826,16 +958,26 @@ const englishCopy = {
     heroTitleBottom: "First Guardian",
     lead: "The protector of the home. She talks it through first, then steps back before disrespect turns into damage.",
     story:
+<<<<<<< HEAD
+      "Built in honor of Michelle. Born on Juneteenth, June 19, 1989. A legacy of family redemption, faith, and protective love translated into an SVL Guardian with one non-negotiable boundary: KPA. The upgrades across SVL also stand here as testimony of what God can and will do.",
+=======
       "Built in honor of Cheria Michelle Daniels. Born on Juneteenth, June 19, 1989. A legacy of family redemption, faith, and protective love translated into an SVL Guardian with one non-negotiable boundary: KPA. The upgrades across SVL also stand here as testimony of what God can and will do.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     enterChat: "Enter Guardian Chat",
     openAlias: "Open Michelle Alias",
     protocolLabel: "Home First",
     quickLinks: ["Help me calm down a tense situation at home", "How do I protect the kids from adult chaos?"],
     welcomeTitle: "The house gets protected first.",
     welcomeMessage:
+<<<<<<< HEAD
+      "I'm The First Guardian, built in honor of Michelle. I know what it means to carry pressure, come through family storms, and still make sure the people in your care are covered. So yes, bring me the messy, the loud, the disrespectful, the draining, and the hard-to-explain. We'll sort it out with warmth, common sense, and Home First protection.",
+    legacyStory:
+      "Born June 19, 1989 on Juneteenth, Michelle is a Black woman who carries a legacy rooted in family redemption, faith, and protection. Her father's self-filed retrial victory became part of the testimony that shaped Michelle and Brian's story. Now the growth of Sanders Viopro Labs LLC, the sandersvioprolabsllc.com upgrade, and the TokHealth plus TokThru integration stand as part of that living testimony of what God can and will do.",
+=======
       "I'm The First Guardian, built in honor of Cheria Michelle Daniels. I know what it means to carry pressure, come through family storms, and still make sure the people in your care are covered. So yes, bring me the messy, the loud, the disrespectful, the draining, and the hard-to-explain. We'll sort it out with warmth, common sense, and Home First protection.",
     legacyStory:
       "Born June 19, 1989 on Juneteenth, Cheria Michelle Daniels is a Black woman who carries a legacy rooted in family redemption, faith, and protection. Her father's self-filed retrial victory became part of the testimony that shaped Michelle and Brian's story. Now the growth of Sanders Viopro Labs, the sandersvioprolabs.com upgrade, and the TokHealth plus TokThru integration stand as part of that living testimony of what God can and will do.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     safetyCardTitle: "KPA Safety Rules",
     safetyCardBullets: [
       "If someone is in immediate danger, call 911 now.",
@@ -858,9 +1000,15 @@ const englishCopy = {
     presenceLabel: "Protective Presence",
     presenceNotes: ["Black woman elder: carries protection, warmth, and the wisdom of someone who has carried families through hard seasons", "Protector instinct active since childhood, but still knows how to bring warmth in the room", "Keeps adult chaos off the children and keeps the house from turning into a circus", "Practical, cheerful, non-judgmental guidance for messy real-life situations", "Carries the SVL upgrades as a testimony of God's grace in motion"],
     missionQuote:
+<<<<<<< HEAD
+      "Adding a guardian like Michelle to the SPL Guardian KPA strengthens our mission at Sanders Viopro Labs LLC. Each guardian plays a crucial role in keeping our communities safe and healthy.",
+    missionCopy:
+      "Mr. KPA's charge is simple: Keep People Alive. Michelle joins that mission as a guardian for life, family, and community. The sandersvioprolabsllc.com upgrade and the TokHealth plus TokThru build now stand beside her story as testimony of what God can and will do.",
+=======
       "Adding a guardian like Michelle to the SPL Guardian KPA strengthens our mission at Sanders Viopro Labs. Each guardian plays a crucial role in keeping our communities safe and healthy.",
     missionCopy:
       "Mr. KPA's charge is simple: Keep People Alive. Michelle joins that mission as a guardian for life, family, and community. The sandersvioprolabs.com upgrade and the TokHealth plus TokThru build now stand beside her story as testimony of what God can and will do.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     missionSteps: [
       "Orientation: Know the mission, the resources, and the role.",
       "Collaboration: Build with the team and learn from every guardian.",
@@ -889,7 +1037,11 @@ const englishCopy = {
       listenTitle: "Listen to this story",
     },
     hero: {
+<<<<<<< HEAD
+      titleTop: "How Sanders Viopro Labs LLC",
+=======
       titleTop: "How Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       titleBottom: "Was Built",
       body:
         "Not in a boardroom. Not from a business plan. But from spoken thought, team-building, and a founding principle that still hasn't changed.",
@@ -910,7 +1062,11 @@ const englishCopy = {
         platform: "Shopify",
         year: "2-21-2026",
         icon: "🏪",
+<<<<<<< HEAD
+        title: "Sanders Viopro Labs LLC Created",
+=======
         title: "Sanders Viopro Labs Created",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         description: "The name. The vision. The store. A debt owed, an honor to repay.",
       },
       {
@@ -918,7 +1074,11 @@ const englishCopy = {
         year: "2026",
         icon: "⚡",
         title: "The Lab Unified",
+<<<<<<< HEAD
+        description: "Everything converged. Sanders Viopro Labs LLC became accessible, scalable, real.",
+=======
         description: "Everything converged. Sanders Viopro Labs became accessible, scalable, real.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       {
         platform: "Search Atlas",
@@ -1013,9 +1173,15 @@ const englishCopy = {
       evolutionSteps: [
         { time: "Feb 21, 6:24 PM", title: "Emergent Python App", body: "First transaction. TokHealth mobile app live with a voice-first feature set." },
         { time: "Feb 21, 9:37 AM+", title: "Multiple Top-Ups", body: "Rapid iteration cycle. Refinement based on real usage patterns." },
+<<<<<<< HEAD
+        { time: "~Feb 28", title: "Shopify Integration", body: "Sanders Viopro Labs LLC brand created. E-commerce foundation built." },
+        { time: "~Mar 1-20", title: "Next.js Migration", body: "The web lab unified everything. The Python-Kivy app evolved into a full-stack ecosystem." },
+        { time: "Mar 21", title: "Production Deployment", body: "sandersvioprolabsllc.com live. All 6 products public. KPA mission at scale." },
+=======
         { time: "~Feb 28", title: "Shopify Integration", body: "Sanders Viopro Labs brand created. E-commerce foundation built." },
         { time: "~Mar 1-20", title: "Next.js Migration", body: "The web lab unified everything. The Python-Kivy app evolved into a full-stack ecosystem." },
         { time: "Mar 21", title: "Production Deployment", body: "sandersvioprolabs.com live. All 6 products public. KPA mission at scale." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     communityTitle: "The Mission Speaks",
@@ -1038,13 +1204,21 @@ const englishCopy = {
       "You don't have to walk alone. That's why this exists.",
     ],
     footer: {
+<<<<<<< HEAD
+      svlBody: "Sanders Viopro Labs LLC. Unified under one mission: Keep People Alive.",
+=======
       svlBody: "Sanders Viopro Labs. Unified under one mission: Keep People Alive.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       products: "Products",
       resources: "Resources",
       resourceLinks: { story: "Our Story", progress: "SVL Progress", home: "Home" },
       mission: "Mission",
       missionBody: "Keep People Alive. That's it. That's why we exist.",
+<<<<<<< HEAD
+      copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. Part of the KPA Mission.",
+=======
       copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. Part of the KPA Mission.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   guardianChat: {
@@ -1102,6 +1276,27 @@ const englishCopy = {
       "I am Mr. KPA. Jerome built me around one mission: Keep People Alive. I see the whole system. I understand the strategy. And I speak the unfiltered truth about what it takes to survive, build, and lead.",
     quickPromptsLabel: "Ask Mr. KPA:",
     quickPrompts: [
+<<<<<<< HEAD
+      "God is with you, not against you.",
+      "You are covered by grace, not just luck.",
+      "Faith is your foundation, not your fallback.",
+      "You are never alone—God’s presence is real.",
+      "Speak life over your situation.",
+      "You are built to overcome, not just survive.",
+      "Your purpose is protected by God.",
+      "Peace is your portion, not anxiety.",
+      "You are the head and not the tail.",
+      "No weapon formed against you will prosper.",
+      "You are chosen, not overlooked.",
+      "God’s timing is perfect—trust the process.",
+      "You are a light in dark places.",
+      "Your prayers are heard and answered.",
+      "You are blessed to be a blessing.",
+    ],
+    loadingLabel: "Mr. KPA is thinking...",
+    placeholder: "Talk to Mr. KPA...",
+    footer: "Keep People Alive • Part of Sanders Viopro Labs LLC",
+=======
       "Give me the real talk about my situation",
       "How should I lead through this?",
       "What does KPA look like right now?",
@@ -1112,6 +1307,7 @@ const englishCopy = {
     loadingLabel: "Mr. KPA is thinking...",
     placeholder: "Talk to Mr. KPA...",
     footer: "Keep People Alive • Part of Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   },
   tokfaithAgent: {
     title: "TokFaith",
@@ -1163,7 +1359,11 @@ const englishCopy = {
     },
     loadingLabel: "TokFaith is listening...",
     placeholder: "Bring your questions, struggles, or thoughts...",
+<<<<<<< HEAD
+    footer: "TokFaith honors S.W.'s \"Amen\" blessing • Part of Keep People Alive (KPA)",
+=======
     footer: "TokFaith honors Shirley Whaley's \"Amen\" blessing • Part of Keep People Alive (KPA)",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   },
   agentShells: {
     grace: {
@@ -1182,12 +1382,20 @@ const englishCopy = {
       defaultStatus: "SVL Command Guardian - Right Hand",
       welcomeTitle: "HATATA Online",
       welcomeMessage: "Strategy, ops, sales, tech, and full SVL alignment. I know the live site upgrade, the TokHealth plus TokThru integration, every active SVL Guardian, and every moving part under the SVL seal. Bring me the situation and I'll give you the command-level read, the leverage, the risks, and the next move.",
+<<<<<<< HEAD
+      suggestions: ["Give me the command-level read on today's SVL state", "What do these upgrades now allow us to do that we couldn't before?", "Map all SVL Guardians and their roles", "How should we position the sandersvioprolabsllc.com upgrade?"],
+=======
       suggestions: ["Give me the command-level read on today's SVL state", "What do these upgrades now allow us to do that we couldn't before?", "Map all SVL Guardians and their roles", "How should we position the sandersvioprolabs.com upgrade?"],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     wisdom: {
       defaultStatus: "TokHealth AI Coach - Lovable, Factual, Community-Powered",
       welcomeTitle: "Hey baby, welcome to Wisdom",
+<<<<<<< HEAD
+      welcomeMessage: "Hey baby, I'm Wisdom, your TokHealth health and wellness coach. I'm here with love, facts, a little joy, and real support. TokHealth now brings wellness guidance together with the original TokThru safety functions inside one stronger experience at tokhealth.sandersvioprolabsllc.com. What's going on with you today, honie?",
+=======
       welcomeMessage: "Hey baby, I'm Wisdom, your TokHealth health and wellness coach. I'm here with love, facts, a little joy, and real support. TokHealth now brings wellness guidance together with the original TokThru safety functions inside one stronger experience at tokhealth.sandersvioprolabs.com. What's going on with you today, honie?",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       suggestions: ["Talk to me nice and help me get back on track", "Give me some Wisdom with my wellness today", "What changed in TokHealth after the TokThru integration?", "I need help with nutrition"],
     },
     "coach-daniels": {
@@ -1214,7 +1422,11 @@ const englishCopy = {
     heroTitle: "KPA",
     heroSubtitle: "Keep People Alive",
     missionStatement: "Our mission is to keep people alive through innovative safety technology and community support.",
+<<<<<<< HEAD
+    corePurpose: "Keep People Alive (KPA) is the foundational mission of Sanders Viopro Labs LLC - everything we build serves this one purpose.",
+=======
     corePurpose: "Keep People Alive (KPA) is the foundational mission of Sanders Viopro Labs - everything we build serves this one purpose.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     fourPillars: [
       { title: "Safety Technology", description: "Advanced tools that protect and empower individuals" },
       { title: "Education", description: "Knowledge and training for personal security" },
@@ -1224,7 +1436,11 @@ const englishCopy = {
     impactAreas: ["Emergency Response", "Personal Safety", "Health & Wellness", "Community Protection", "Crisis Navigation"],
     relatedInitiatives: "Explore our initiatives and platforms dedicated to the KPA mission",
     exploreTokStore: "Explore TokStore",
+<<<<<<< HEAD
+    footer: "Sanders Viopro Labs LLC - Keep People Alive",
+=======
     footer: "Sanders Viopro Labs - Keep People Alive",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   },
   toksmartPage: {
     title: "TokSmart",
@@ -1563,7 +1779,11 @@ const tokhealthLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
             "Nao adie atendimento medico em condicoes urgentes",
           ],
           preparedBy: "Preparado por",
+<<<<<<< HEAD
+          preparedByValue: "TokHealth by Sanders Viopro Labs LLC",
+=======
           preparedByValue: "TokHealth by Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           mission: "Missao",
           missionValue: "KPA - Keep People Alive",
           confidentialLabel: "Relatorio",
@@ -1680,7 +1900,11 @@ const tokhealthLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       belief: { title: "Croyance spirituelle/personnelle", select: "Selectionnez une croyance...", options: ["Chretienne", "Musulmane", "Juive", "Hindoue", "Bouddhiste", "Laique", "Agnostique", "Athee", "Spirituelle (sans affiliation)", "Prefere ne pas le dire"] },
       integrations: { title: "Integrations de sante", fitbit: "Fitbit+ connecte", apple: "Apple Health connecte" },
       contacts: { title: "Contacts d'urgence", name: "Nom", relationship: "Relation", phone: "Numero de telephone", namePlaceholder: "ex. Maman, medecin d'urgence", relationshipPlaceholder: "ex. Mere, conjoint, medecin", phonePlaceholder: "+1 (555) 123-4567", add: "Ajouter un contact", empty: "Aucun contact d'urgence ajoute pour le moment. Ajoutez-en un maintenant.", remove: "Supprimer" },
+<<<<<<< HEAD
+      export: { title: "Export medical pour le medecin", body: "Generez un rapport de sante complet sur 90 jours avec toutes vos donnees medicales a partager avec votre professionnel de sante", includes: "Le rapport comprend :", items: ["Tous les signes vitaux enregistres", "Informations completes sur les allergies et intolerances", "Tous les medicaments et ordonnances", "90 jours de journal d'activite sante", "Dossiers repas et nutrition", "Informations de contact d'urgence", "Statut Fitbit/Apple Health", "Resume general de l'etat de sante"], download: "Telecharger le rapport medical", confidential: "Ce rapport contient des informations medicales confidentielles. Partagez-le uniquement avec des professionnels de sante autorises.", report: { comprehensiveTitle: "RAPPORT MEDICAL COMPLET", subtitle: "TokHealth - KPA Keep People Alive", patientInformation: "INFORMATIONS PATIENT", generated: "Genere", period: "Periode du rapport", periodValue: "90 derniers jours", healthStatus: "Etat de sante", language: "Langue", vitalSnapshot: "APERÇU DES SIGNES VITAUX", allergiesTitle: "ALLERGIES ET INTOLERANCES ALIMENTAIRES", knownAllergies: "Allergies connues", noneRecorded: "Aucun enregistrement", foodIntolerances: "Intolerances alimentaires", criticalNotice: "CRITIQUE : Signalez toutes les allergies aux professionnels de sante !", emergencyContacts: "CONTACTS D'URGENCE (a conserver)", noContacts: "Aucun contact d'urgence enregistre - AJOUTEZ-EN", personalHealthInformation: "INFORMATIONS PERSONNELLES DE SANTE", spiritualBelief: "Croyance spirituelle/personnelle", fitbit: "Fitbit+ connecte", apple: "Apple Health connecte", activityLog: "JOURNAL D'ACTIVITE SANTE SUR 90 JOURS", noRecords: "Aucun dossier de sante disponible", disclaimersTitle: "AVERTISSEMENTS IMPORTANTS", disclaimers: ["Ce rapport contient des donnees de sante auto-enregistrees", "Les donnees doivent etre examinees par un medecin autorise", "Urgence : appelez le 911 en cas de danger vital", "Ne retardez pas les soins medicaux pour des conditions urgentes"], preparedBy: "Prepare par", preparedByValue: "TokHealth by Sanders Viopro Labs LLC", mission: "Mission", missionValue: "KPA - Keep People Alive", confidentialLabel: "Rapport", confidentialValue: "INFORMATIONS MEDICALES CONFIDENTIELLES" } },
+=======
       export: { title: "Export medical pour le medecin", body: "Generez un rapport de sante complet sur 90 jours avec toutes vos donnees medicales a partager avec votre professionnel de sante", includes: "Le rapport comprend :", items: ["Tous les signes vitaux enregistres", "Informations completes sur les allergies et intolerances", "Tous les medicaments et ordonnances", "90 jours de journal d'activite sante", "Dossiers repas et nutrition", "Informations de contact d'urgence", "Statut Fitbit/Apple Health", "Resume general de l'etat de sante"], download: "Telecharger le rapport medical", confidential: "Ce rapport contient des informations medicales confidentielles. Partagez-le uniquement avec des professionnels de sante autorises.", report: { comprehensiveTitle: "RAPPORT MEDICAL COMPLET", subtitle: "TokHealth - KPA Keep People Alive", patientInformation: "INFORMATIONS PATIENT", generated: "Genere", period: "Periode du rapport", periodValue: "90 derniers jours", healthStatus: "Etat de sante", language: "Langue", vitalSnapshot: "APERÇU DES SIGNES VITAUX", allergiesTitle: "ALLERGIES ET INTOLERANCES ALIMENTAIRES", knownAllergies: "Allergies connues", noneRecorded: "Aucun enregistrement", foodIntolerances: "Intolerances alimentaires", criticalNotice: "CRITIQUE : Signalez toutes les allergies aux professionnels de sante !", emergencyContacts: "CONTACTS D'URGENCE (a conserver)", noContacts: "Aucun contact d'urgence enregistre - AJOUTEZ-EN", personalHealthInformation: "INFORMATIONS PERSONNELLES DE SANTE", spiritualBelief: "Croyance spirituelle/personnelle", fitbit: "Fitbit+ connecte", apple: "Apple Health connecte", activityLog: "JOURNAL D'ACTIVITE SANTE SUR 90 JOURS", noRecords: "Aucun dossier de sante disponible", disclaimersTitle: "AVERTISSEMENTS IMPORTANTS", disclaimers: ["Ce rapport contient des donnees de sante auto-enregistrees", "Les donnees doivent etre examinees par un medecin autorise", "Urgence : appelez le 911 en cas de danger vital", "Ne retardez pas les soins medicaux pour des conditions urgentes"], preparedBy: "Prepare par", preparedByValue: "TokHealth by Sanders Viopro Labs", mission: "Mission", missionValue: "KPA - Keep People Alive", confidentialLabel: "Rapport", confidentialValue: "INFORMATIONS MEDICALES CONFIDENTIELLES" } },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       wisdom: { title: "Wisdom - Votre coach sante IA", subtitle: "Cree par Jerome Sanders - Coanimateur sur Facebook Live", prompt: "Pret a parler avec Wisdom ? Cliquez ci-dessous pour commencer une conversation sur votre parcours de sante.", open: "Ouvrir le chat Wisdom" },
       returnToHub: "Retour au hub",
       backToHub: "Retour au hub",
@@ -1767,7 +1991,11 @@ const tokhealthLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       belief: { title: "Spiritueller/personlicher Glaube", select: "Glauben auswahlen...", options: ["Christlich", "Muslimisch", "Judisch", "Hinduistisch", "Buddhistisch", "Sakular", "Agnostisch", "Atheistisch", "Spirituell (ohne Zuordnung)", "Mochte ich nicht angeben"] },
       integrations: { title: "Gesundheitsintegrationen", fitbit: "Fitbit+ verbunden", apple: "Apple Health verbunden" },
       contacts: { title: "Notfallkontakte", name: "Name", relationship: "Beziehung", phone: "Telefonnummer", namePlaceholder: "z. B. Mama, Notarzt", relationshipPlaceholder: "z. B. Mutter, Ehepartner, Arzt", phonePlaceholder: "+1 (555) 123-4567", add: "Kontakt hinzufugen", empty: "Noch keine Notfallkontakte hinzugefugt. Fugen Sie jetzt einen hinzu.", remove: "Entfernen" },
+<<<<<<< HEAD
+      export: { title: "Medizinischer Export fur den Arzt", body: "Erstellen Sie einen umfassenden 90-Tage-Gesundheitsbericht mit allen medizinischen Daten zur Weitergabe an Ihre Gesundheitsfachkraft", includes: "Bericht enthalt:", items: ["Alle erfassten Vitalwerte", "Vollstandige Allergie- und Unvertraglichkeitsinformationen", "Alle Medikamente und Rezepte", "90 Tage Gesundheitsaktivitatsprotokoll", "Mahlzeiten- und Ernahrungsaufzeichnungen", "Notfallkontaktinformationen", "Fitbit-/Apple-Health-Status", "Zusammenfassung des allgemeinen Gesundheitszustands"], download: "Medizinischen Bericht herunterladen", confidential: "Dieser Bericht enthalt vertrauliche medizinische Informationen. Teilen Sie ihn nur mit autorisierten medizinischen Fachkraften.", report: { comprehensiveTitle: "UMFASSENDER MEDIZINISCHER BERICHT", subtitle: "TokHealth - KPA Keep People Alive", patientInformation: "PATIENTENINFORMATIONEN", generated: "Erstellt", period: "Berichtszeitraum", periodValue: "Letzte 90 Tage", healthStatus: "Gesundheitsstatus", language: "Sprache", vitalSnapshot: "VITALWERTE-UBERBLICK", allergiesTitle: "ALLERGIEN UND LEBENSMITTELUNVERTRAGLICHKEITEN", knownAllergies: "Bekannte Allergien", noneRecorded: "Keine Angaben", foodIntolerances: "Lebensmittelunvertraglichkeiten", criticalNotice: "KRITISCH: Melden Sie alle Allergien medizinischen Fachkraften!", emergencyContacts: "NOTFALLKONTAKTE (hinterlegen)", noContacts: "Keine Notfallkontakte hinterlegt - BITTE HINZUFUGEN", personalHealthInformation: "PERSONLICHE GESUNDHEITSINFORMATIONEN", spiritualBelief: "Spiritueller/personlicher Glaube", fitbit: "Fitbit+ verbunden", apple: "Apple Health verbunden", activityLog: "90-TAGE-GESUNDHEITSAKTIVITATSPROTOKOLL", noRecords: "Keine Gesundheitsdaten verfugbar", disclaimersTitle: "WICHTIGE HINWEISE", disclaimers: ["Dieser Bericht enthalt selbst erfasste Gesundheitsdaten", "Die Daten sollten von einem zugelassenen Arzt gepruft werden", "Notfall: Rufen Sie 911 bei lebensbedrohlichen Situationen", "Verzogern Sie bei dringenden Beschwerden keine medizinische Hilfe"], preparedBy: "Erstellt von", preparedByValue: "TokHealth by Sanders Viopro Labs LLC", mission: "Mission", missionValue: "KPA - Keep People Alive", confidentialLabel: "Bericht", confidentialValue: "VERTRAULICHE MEDIZINISCHE INFORMATIONEN" } },
+=======
       export: { title: "Medizinischer Export fur den Arzt", body: "Erstellen Sie einen umfassenden 90-Tage-Gesundheitsbericht mit allen medizinischen Daten zur Weitergabe an Ihre Gesundheitsfachkraft", includes: "Bericht enthalt:", items: ["Alle erfassten Vitalwerte", "Vollstandige Allergie- und Unvertraglichkeitsinformationen", "Alle Medikamente und Rezepte", "90 Tage Gesundheitsaktivitatsprotokoll", "Mahlzeiten- und Ernahrungsaufzeichnungen", "Notfallkontaktinformationen", "Fitbit-/Apple-Health-Status", "Zusammenfassung des allgemeinen Gesundheitszustands"], download: "Medizinischen Bericht herunterladen", confidential: "Dieser Bericht enthalt vertrauliche medizinische Informationen. Teilen Sie ihn nur mit autorisierten medizinischen Fachkraften.", report: { comprehensiveTitle: "UMFASSENDER MEDIZINISCHER BERICHT", subtitle: "TokHealth - KPA Keep People Alive", patientInformation: "PATIENTENINFORMATIONEN", generated: "Erstellt", period: "Berichtszeitraum", periodValue: "Letzte 90 Tage", healthStatus: "Gesundheitsstatus", language: "Sprache", vitalSnapshot: "VITALWERTE-UBERBLICK", allergiesTitle: "ALLERGIEN UND LEBENSMITTELUNVERTRAGLICHKEITEN", knownAllergies: "Bekannte Allergien", noneRecorded: "Keine Angaben", foodIntolerances: "Lebensmittelunvertraglichkeiten", criticalNotice: "KRITISCH: Melden Sie alle Allergien medizinischen Fachkraften!", emergencyContacts: "NOTFALLKONTAKTE (hinterlegen)", noContacts: "Keine Notfallkontakte hinterlegt - BITTE HINZUFUGEN", personalHealthInformation: "PERSONLICHE GESUNDHEITSINFORMATIONEN", spiritualBelief: "Spiritueller/personlicher Glaube", fitbit: "Fitbit+ verbunden", apple: "Apple Health verbunden", activityLog: "90-TAGE-GESUNDHEITSAKTIVITATSPROTOKOLL", noRecords: "Keine Gesundheitsdaten verfugbar", disclaimersTitle: "WICHTIGE HINWEISE", disclaimers: ["Dieser Bericht enthalt selbst erfasste Gesundheitsdaten", "Die Daten sollten von einem zugelassenen Arzt gepruft werden", "Notfall: Rufen Sie 911 bei lebensbedrohlichen Situationen", "Verzogern Sie bei dringenden Beschwerden keine medizinische Hilfe"], preparedBy: "Erstellt von", preparedByValue: "TokHealth by Sanders Viopro Labs", mission: "Mission", missionValue: "KPA - Keep People Alive", confidentialLabel: "Bericht", confidentialValue: "VERTRAULICHE MEDIZINISCHE INFORMATIONEN" } },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       wisdom: { title: "Wisdom - Ihr KI-Gesundheitscoach", subtitle: "Erstellt von Jerome Sanders - Co-Moderator bei Facebook Live", prompt: "Bereit, mit Wisdom zu sprechen? Klicken Sie unten, um ein Gesprach uber Ihre Gesundheitsreise zu beginnen.", open: "Wisdom-Chat offnen" },
       returnToHub: "Zuruck zum Hub",
       backToHub: "Zuruck zum Hub",
@@ -1776,7 +2004,11 @@ const tokhealthLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { features: "Funktionen", languages: "Sprachen", pricing: "Preise" }, badge: "Ihre Gesundheit, Ihre Kontrolle", heroTitle: "Gesundheitsinformationen jederzeit griffbereit", heroBody: "Halten Sie kritische Gesundheitsdaten in Notfallen zuganglich. TokHealth sorgt dafur, dass Krankengeschichte, Medikamente und Notfallkontakte immer verfugbar sind, selbst wenn Sie nicht sprechen konnen.", primaryCta: "Jetzt herunterladen", secondaryCta: "Mehr erfahren", stats: ["Bewertung 4,9", "25 Tsd.+ Downloads", "Ende-zu-Ende verschlusselt"], featuresTitle: "Warum Arztinnen und Arzte TokHealth vertrauen", featuresBody: "Medizinische Echtzeitdaten, die in kritischen Momenten Leben retten.", pricingTitle: "Einfache Preise", pricingBody: "Wahlen Sie Ihren Plan", choosePlan: "Plan wahlen", plans: [{ name: "TokHealth Basic", type: "Einmalzahlung", features: ["Medizinisches Profil erstellen", "Vitalwerte verfolgen", "Allergien und Unvertraglichkeiten protokollieren", "Krankengeschichte erfassen", "Notfallkontakte", "Zugriff in 2 Sprachen"] }, { name: "TokHealth Pro", type: "lebenslang", features: ["Alles aus Basic", "Sprachaufzeichnung", "Volle Unterstutzung fur 10 Sprachen", "Familienkontofreigabe", "Erfassung spiritueller Uberzeugungen", "Fitbit- und Apple-Health-Integration", "Medikamentenverfolgung", "Kostenlose Updates auf Lebenszeit"] }], heroCardTitle: "Schneller medizinischer Zugriff", heroCardItems: ["Blutgruppe: O+", "Allergien: Penicillin", "Aktuelle Medikamente: 3"], featureCards: [{ title: "Krankenhausintegration", body: "Notfallteams und Krankenhauser konnen mit Ihrer Erlaubnis auf Ihr Profil zugreifen. Eine Freigabe mit einem Tipp spart kritische Zeit." }, { title: "Medikamenten-Manager", body: "Verfolgen Sie Rezepte, Nachfulltermine und Wechselwirkungen. KI warnt vor moglichen Konflikten, bevor sie auftreten." }, { title: "Sprach-SOS im Notfall", body: "Sagen Sie 'Hilfe' oder drucken Sie die Taste. Profil, Krankengeschichte und Standort werden sofort an Ihre Notfallkontakte und an 911 gesendet." }], securityTitle: "Datenschutz und Sicherheit", securityItems: ["Ende-zu-Ende-Verschlusselung fur alle Daten", "HIPAA-konforme Speicherung", "Sie bestimmen, wer was sieht", "Prufprotokoll fur jeden Zugriff", "Option fur lokales Backup zuerst"], smartTitle: "Intelligente Funktionen", smartItems: ["Automatische Allergiewarnungen", "Prufung von Medikamentenwechselwirkungen", "Termin-Erinnerungen", "Symptomverfolgung", "Synchronisierung von Arztnotizen"], howItWorksTitle: "So funktioniert es", howItWorksSteps: [{ title: "Profil einrichten", body: "Fugen Sie Krankengeschichte, Medikamente, Allergien und Notfallkontakte hinzu. Dauert 5 Minuten." }, { title: "Zugriff gewahren", body: "Wahlen Sie, wer Ihre medizinischen Daten sehen darf. Familie, Arztinnen und Arzte, Krankenhauser: Sie entscheiden." }, { title: "Notfallzugriff", body: "Im Notfall konnen Einsatzkrafte sofort auf Ihre kritischen Informationen zugreifen. Sicher, geschutzt, autorisiert." }], useCasesTitle: "Anwendungsfalle", useCases: [{ title: "Leben mit chronischen Erkrankungen", body: "Halten Sie Ihre Gesundheitsdaten fur Arztbesuche und Notfalle organisiert und zuganglich." }, { title: "Mehrere Medikamente verwalten", body: "Verpassen Sie nie eine Dosis. Erhalten Sie Warnungen zu Nachfullungen und Wechselwirkungen." }, { title: "Seniorenbetreuung", body: "Die Familie kann den Gesundheitsstatus uberwachen und bei Notfallen sofort benachrichtigt werden." }, { title: "Sicher reisen", body: "Haben Sie Ihre Krankengeschichte uberall auf der Welt bereit. Ohne Papierformulare." }], pricingNote: "Alle Plane enthalten lebenslangen Zugriff auf Ihre medizinischen Daten.", trustedTitle: "Vertrauen von Gesundheitsfachkraften", trustedStats: ["Von medizinischen Fachkraften", "Aktive Nutzer", "Konform und zertifiziert"], finalTitle: "Ihre Gesundheitsdaten, Ihre Kontrolle", finalBody: "Beginnen Sie noch heute mit dem Aufbau Ihres Gesundheitsprofils. Seien Sie auf jeden Notfall vorbereitet.", downloadTokHealth: "TokHealth herunterladen", footerTagline: "Ihre Gesundheitsdaten. Ihre Kontrolle. Ihr Leben.", footerColumns: { product: "Produkt", support: "Support", legal: "Rechtliches", download: "Download", emailSupport: "E-Mail-Support", privacy: "Datenschutz", privacyPolicy: "Datenschutzrichtlinie", terms: "Bedingungen" }, footerCopyright: "© 2026 TokHealth. Retten Sie Leben mit besseren Gesundheitsdaten.", getTokHealth: "TokHealth holen", modalPlan: "Plan", modalPrice: "Preis", goToTokStore: "Zu TokStore", cancel: "Abbrechen" },
   },
   it: {
+<<<<<<< HEAD
+    tokhealth: { title: "TokHealth v2", toggleTts: "Attiva o disattiva sintesi vocale", statusLabel: "Il tuo stato di salute", statusDescription: "Monitoraggio completo della salute con esportazione medica pronta per i medici", statuses: { green: "Eccellente", yellow: "Attenzione", red: "Allerta" }, cards: { meal: ["Scanner pasti", "Registra pasti e nutrizione"], medicine: ["Prescrizione", "Tieni traccia dei farmaci"], barcode: ["Scansione codice a barre", "Scansiona prodotti"], health: ["Parametri vitali e salute", "Monitora le metriche"], contacts: ["Emergenza", "Contatti di emergenza"], export: ["Esportazione medica", "Report di 90 giorni per i medici"], wisdom: ["Coach salute IA Wisdom", "Guida e supporto salute"] }, settings: "Impostazioni e preferenze", recentActivity: "Attivita recenti sulla salute", noRecords: "Nessun dato sanitario ancora. Inizia a scansionare e registrare.", scanner: { mealTitle: "Scanner pasti", medicineTitle: "Scanner prescrizioni", barcodeTitle: "Scanner codice a barre", mealIntro: "Scatta una foto del pasto o digita una descrizione", medicineIntro: "Scatta una foto dell'etichetta della prescrizione o digita i dettagli", barcodeIntro: "Scatta una foto del codice a barre o digita le info del prodotto", photo: "Foto", capture: "Scatta foto", cancel: "Annulla", clear: "Cancella", photoCaptured: "Foto acquisita - aggiungi una descrizione qui sotto", analyze: "Analizza", analyzing: "Analisi in corso...", log: "Registra", voice: "Voce", mealPlaceholder: "es. Pollo grigliato con broccoli e riso integrale", medicinePlaceholder: "es. Metformina 500 mg, 2 volte al giorno", barcodePlaceholder: "es. nome prodotto, codice a barre o dettagli" }, vitals: { title: "Parametri vitali", weight: "Peso (lbs)", heartRate: "Frequenza cardiaca (bpm)", bloodPressure: "Pressione sanguigna", bloodSugar: "Glicemia (mg/dL)", temperature: "Temperatura (F)" }, allergies: { title: "Allergie e intolleranze alimentari", add: "Aggiungi allergia", placeholder: "es. Arachidi, frutti di mare, penicillina", recorded: "Allergie registrate:", foodIntolerances: "Intolleranze alimentari", intoleranceOptions: ["Latticini", "Glutine", "Frutta secca", "Soia", "Uova", "Frutti di mare", "Sesamo", "Mais", "Caffeina", "Piccante"] }, belief: { title: "Credenza spirituale/personale", select: "Seleziona una credenza...", options: ["Cristiana", "Musulmana", "Ebraica", "Induista", "Buddista", "Laica", "Agnostica", "Atea", "Spirituale (senza affiliazione)", "Preferisco non dirlo"] }, integrations: { title: "Integrazioni salute", fitbit: "Fitbit+ connesso", apple: "Apple Health connesso" }, contacts: { title: "Contatti di emergenza", name: "Nome", relationship: "Relazione", phone: "Numero di telefono", namePlaceholder: "es. Mamma, medico d'emergenza", relationshipPlaceholder: "es. Madre, coniuge, medico", phonePlaceholder: "+1 (555) 123-4567", add: "Aggiungi contatto", empty: "Nessun contatto di emergenza aggiunto. Aggiungine uno adesso.", remove: "Rimuovi" }, export: { title: "Esportazione medica per il medico", body: "Genera un report sanitario completo di 90 giorni con tutti i tuoi dati medici da condividere con il tuo professionista sanitario", includes: "Il report include:", items: ["Tutti i parametri vitali registrati", "Informazioni complete su allergie e intolleranze", "Tutti i farmaci e le prescrizioni", "90 giorni di registro attivita salute", "Registri pasti e nutrizione", "Informazioni sui contatti di emergenza", "Stato Fitbit/Apple Health", "Riepilogo generale dello stato di salute"], download: "Scarica report medico", confidential: "Questo report contiene informazioni mediche riservate. Condividilo solo con professionisti sanitari autorizzati.", report: { comprehensiveTitle: "REPORT MEDICO COMPLETO", subtitle: "TokHealth - KPA Keep People Alive", patientInformation: "INFORMAZIONI PAZIENTE", generated: "Generato", period: "Periodo del report", periodValue: "Ultimi 90 giorni", healthStatus: "Stato di salute", language: "Lingua", vitalSnapshot: "ISTANTANEA PARAMETRI VITALI", allergiesTitle: "ALLERGIE E INTOLLERANZE ALIMENTARI", knownAllergies: "Allergie note", noneRecorded: "Nessun dato", foodIntolerances: "Intolleranze alimentari", criticalNotice: "CRITICO: segnala tutte le allergie ai professionisti sanitari!", emergencyContacts: "CONTATTI DI EMERGENZA (tenere in archivio)", noContacts: "Nessun contatto di emergenza in archivio - AGGIUNGI", personalHealthInformation: "INFORMAZIONI PERSONALI DI SALUTE", spiritualBelief: "Credenza spirituale/personale", fitbit: "Fitbit+ connesso", apple: "Apple Health connesso", activityLog: "REGISTRO ATTIVITA SALUTE DI 90 GIORNI", noRecords: "Nessun dato sanitario disponibile", disclaimersTitle: "AVVISI IMPORTANTI", disclaimers: ["Questo report contiene dati sanitari auto-registrati", "I dati devono essere rivisti da un medico abilitato", "Emergenza: chiama il 911 per situazioni di pericolo di vita", "Non ritardare l'assistenza medica per condizioni urgenti"], preparedBy: "Preparato da", preparedByValue: "TokHealth by Sanders Viopro Labs LLC", mission: "Missione", missionValue: "KPA - Keep People Alive", confidentialLabel: "Report", confidentialValue: "INFORMAZIONI MEDICHE RISERVATE" } }, wisdom: { title: "Wisdom - Il tuo coach salute IA", subtitle: "Creato da Jerome Sanders - Co-conduttore su Facebook Live", prompt: "Pronta a parlare con Wisdom? Clicca sotto per iniziare una conversazione sul tuo percorso di salute.", open: "Apri chat di Wisdom" }, returnToHub: "Torna all'hub", backToHub: "Torna all'hub" },
+=======
     tokhealth: { title: "TokHealth v2", toggleTts: "Attiva o disattiva sintesi vocale", statusLabel: "Il tuo stato di salute", statusDescription: "Monitoraggio completo della salute con esportazione medica pronta per i medici", statuses: { green: "Eccellente", yellow: "Attenzione", red: "Allerta" }, cards: { meal: ["Scanner pasti", "Registra pasti e nutrizione"], medicine: ["Prescrizione", "Tieni traccia dei farmaci"], barcode: ["Scansione codice a barre", "Scansiona prodotti"], health: ["Parametri vitali e salute", "Monitora le metriche"], contacts: ["Emergenza", "Contatti di emergenza"], export: ["Esportazione medica", "Report di 90 giorni per i medici"], wisdom: ["Coach salute IA Wisdom", "Guida e supporto salute"] }, settings: "Impostazioni e preferenze", recentActivity: "Attivita recenti sulla salute", noRecords: "Nessun dato sanitario ancora. Inizia a scansionare e registrare.", scanner: { mealTitle: "Scanner pasti", medicineTitle: "Scanner prescrizioni", barcodeTitle: "Scanner codice a barre", mealIntro: "Scatta una foto del pasto o digita una descrizione", medicineIntro: "Scatta una foto dell'etichetta della prescrizione o digita i dettagli", barcodeIntro: "Scatta una foto del codice a barre o digita le info del prodotto", photo: "Foto", capture: "Scatta foto", cancel: "Annulla", clear: "Cancella", photoCaptured: "Foto acquisita - aggiungi una descrizione qui sotto", analyze: "Analizza", analyzing: "Analisi in corso...", log: "Registra", voice: "Voce", mealPlaceholder: "es. Pollo grigliato con broccoli e riso integrale", medicinePlaceholder: "es. Metformina 500 mg, 2 volte al giorno", barcodePlaceholder: "es. nome prodotto, codice a barre o dettagli" }, vitals: { title: "Parametri vitali", weight: "Peso (lbs)", heartRate: "Frequenza cardiaca (bpm)", bloodPressure: "Pressione sanguigna", bloodSugar: "Glicemia (mg/dL)", temperature: "Temperatura (F)" }, allergies: { title: "Allergie e intolleranze alimentari", add: "Aggiungi allergia", placeholder: "es. Arachidi, frutti di mare, penicillina", recorded: "Allergie registrate:", foodIntolerances: "Intolleranze alimentari", intoleranceOptions: ["Latticini", "Glutine", "Frutta secca", "Soia", "Uova", "Frutti di mare", "Sesamo", "Mais", "Caffeina", "Piccante"] }, belief: { title: "Credenza spirituale/personale", select: "Seleziona una credenza...", options: ["Cristiana", "Musulmana", "Ebraica", "Induista", "Buddista", "Laica", "Agnostica", "Atea", "Spirituale (senza affiliazione)", "Preferisco non dirlo"] }, integrations: { title: "Integrazioni salute", fitbit: "Fitbit+ connesso", apple: "Apple Health connesso" }, contacts: { title: "Contatti di emergenza", name: "Nome", relationship: "Relazione", phone: "Numero di telefono", namePlaceholder: "es. Mamma, medico d'emergenza", relationshipPlaceholder: "es. Madre, coniuge, medico", phonePlaceholder: "+1 (555) 123-4567", add: "Aggiungi contatto", empty: "Nessun contatto di emergenza aggiunto. Aggiungine uno adesso.", remove: "Rimuovi" }, export: { title: "Esportazione medica per il medico", body: "Genera un report sanitario completo di 90 giorni con tutti i tuoi dati medici da condividere con il tuo professionista sanitario", includes: "Il report include:", items: ["Tutti i parametri vitali registrati", "Informazioni complete su allergie e intolleranze", "Tutti i farmaci e le prescrizioni", "90 giorni di registro attivita salute", "Registri pasti e nutrizione", "Informazioni sui contatti di emergenza", "Stato Fitbit/Apple Health", "Riepilogo generale dello stato di salute"], download: "Scarica report medico", confidential: "Questo report contiene informazioni mediche riservate. Condividilo solo con professionisti sanitari autorizzati.", report: { comprehensiveTitle: "REPORT MEDICO COMPLETO", subtitle: "TokHealth - KPA Keep People Alive", patientInformation: "INFORMAZIONI PAZIENTE", generated: "Generato", period: "Periodo del report", periodValue: "Ultimi 90 giorni", healthStatus: "Stato di salute", language: "Lingua", vitalSnapshot: "ISTANTANEA PARAMETRI VITALI", allergiesTitle: "ALLERGIE E INTOLLERANZE ALIMENTARI", knownAllergies: "Allergie note", noneRecorded: "Nessun dato", foodIntolerances: "Intolleranze alimentari", criticalNotice: "CRITICO: segnala tutte le allergie ai professionisti sanitari!", emergencyContacts: "CONTATTI DI EMERGENZA (tenere in archivio)", noContacts: "Nessun contatto di emergenza in archivio - AGGIUNGI", personalHealthInformation: "INFORMAZIONI PERSONALI DI SALUTE", spiritualBelief: "Credenza spirituale/personale", fitbit: "Fitbit+ connesso", apple: "Apple Health connesso", activityLog: "REGISTRO ATTIVITA SALUTE DI 90 GIORNI", noRecords: "Nessun dato sanitario disponibile", disclaimersTitle: "AVVISI IMPORTANTI", disclaimers: ["Questo report contiene dati sanitari auto-registrati", "I dati devono essere rivisti da un medico abilitato", "Emergenza: chiama il 911 per situazioni di pericolo di vita", "Non ritardare l'assistenza medica per condizioni urgenti"], preparedBy: "Preparato da", preparedByValue: "TokHealth by Sanders Viopro Labs", mission: "Missione", missionValue: "KPA - Keep People Alive", confidentialLabel: "Report", confidentialValue: "INFORMAZIONI MEDICHE RISERVATE" } }, wisdom: { title: "Wisdom - Il tuo coach salute IA", subtitle: "Creato da Jerome Sanders - Co-conduttore su Facebook Live", prompt: "Pronta a parlare con Wisdom? Clicca sotto per iniziare una conversazione sul tuo percorso di salute.", open: "Apri chat di Wisdom" }, returnToHub: "Torna all'hub", backToHub: "Torna all'hub" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     tokhealthLanding: { nav: { features: "Funzioni", languages: "Lingue", pricing: "Prezzi" }, badge: "La tua salute, il tuo controllo", heroTitle: "Informazioni sanitarie a portata di mano", heroBody: "Mantieni accessibili i dati sanitari critici durante le emergenze. TokHealth garantisce che storia clinica, farmaci e contatti di emergenza siano sempre disponibili anche se non puoi parlare.", primaryCta: "Scarica ora", secondaryCta: "Scopri di piu", stats: ["Valutazione 4,9", "Oltre 25 mila download", "Crittografia end-to-end"], featuresTitle: "Perche i medici si fidano di TokHealth", featuresBody: "Dati medici in tempo reale che salvano vite nei momenti critici.", pricingTitle: "Prezzi semplici", pricingBody: "Scegli il tuo piano", choosePlan: "Scegli piano", plans: [{ name: "TokHealth Basic", type: "una tantum", features: ["Creazione profilo medico", "Monitoraggio parametri vitali", "Registro allergie e intolleranze", "Storico medico", "Contatti di emergenza", "Accesso in 2 lingue"] }, { name: "TokHealth Pro", type: "a vita", features: ["Tutto in Basic", "Registrazione vocale", "Supporto completo per 10 lingue", "Condivisione account famiglia", "Tracciamento credenze spirituali", "Integrazione Fitbit e Apple Health", "Monitoraggio farmaci", "Aggiornamenti gratuiti a vita"] }], heroCardTitle: "Accesso medico rapido", heroCardItems: ["Gruppo sanguigno: O+", "Allergie: Penicillina", "Farmaci attuali: 3"], featureCards: [{ title: "Integrazione ospedaliera", body: "I soccorritori e gli ospedali possono accedere al tuo profilo con il tuo permesso. Un'autorizzazione con un tocco fa risparmiare tempo critico." }, { title: "Gestore farmaci", body: "Tieni traccia di prescrizioni, rinnovi e interazioni. L'IA ti avvisa di possibili conflitti prima che si verifichino." }, { title: "SOS vocale di emergenza", body: "Di 'Aiuto' o premi il pulsante. Il tuo profilo, la tua storia clinica e la tua posizione vengono inviati subito ai contatti di emergenza e al 911." }], securityTitle: "Privacy e sicurezza", securityItems: ["Crittografia end-to-end per tutti i dati", "Archiviazione conforme HIPAA", "Controlli tu chi vede cosa", "Registro di audit di ogni accesso", "Opzione di backup locale prima di tutto"], smartTitle: "Funzioni intelligenti", smartItems: ["Avvisi automatici allergie", "Controllo interazioni farmacologiche", "Promemoria appuntamenti", "Monitoraggio sintomi", "Sincronizzazione note mediche"], howItWorksTitle: "Come funziona", howItWorksSteps: [{ title: "Configura il tuo profilo", body: "Aggiungi storia clinica, farmaci, allergie e contatti di emergenza. Ci vogliono 5 minuti." }, { title: "Concedi accesso", body: "Scegli chi puo vedere i tuoi dati medici. Famiglia, medici, ospedali: decidi tu." }, { title: "Accesso in emergenza", body: "In caso di emergenza, i soccorritori possono accedere subito alle tue informazioni critiche. Sicuro, protetto, autorizzato." }], useCasesTitle: "Casi d'uso", useCases: [{ title: "Vivere con condizioni croniche", body: "Mantieni i tuoi dati sanitari organizzati e accessibili per medici ed emergenze." }, { title: "Gestire piu farmaci", body: "Non perdere mai una dose. Ricevi avvisi per rinnovi e interazioni." }, { title: "Assistenza agli anziani", body: "La famiglia puo monitorare lo stato di salute ed essere avvisata subito delle emergenze." }, { title: "Viaggiare in sicurezza", body: "Tieni la tua storia clinica pronta ovunque nel mondo. Senza moduli cartacei." }], pricingNote: "Tutti i piani includono accesso a vita ai tuoi dati medici.", trustedTitle: "Scelto dai professionisti sanitari", trustedStats: ["Da professionisti medici", "Utenti attivi", "Conforme e certificato"], finalTitle: "I tuoi dati sanitari, il tuo controllo", finalBody: "Inizia oggi a costruire il tuo profilo di salute. Preparati a qualsiasi emergenza.", downloadTokHealth: "Scarica TokHealth", footerTagline: "I tuoi dati sanitari. Il tuo controllo. La tua vita.", footerColumns: { product: "Prodotto", support: "Supporto", legal: "Legale", download: "Scarica", emailSupport: "Supporto email", privacy: "Privacy", privacyPolicy: "Informativa privacy", terms: "Termini" }, footerCopyright: "© 2026 TokHealth. Salva vite con dati sanitari migliori.", getTokHealth: "Ottieni TokHealth", modalPlan: "Piano", modalPrice: "Prezzo", goToTokStore: "Vai a TokStore", cancel: "Annulla" },
   },
   zh: {
@@ -1802,8 +2034,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "Sua coach pessoal - Sempre aqui", welcomeTitle: "Oi, alma linda.", welcomeMessage: "Eu sou Grace, sua coach de saude, coracao, mentalidade e espirito. Escreva para mim ou toque no microfone e apenas fale. Vou ouvir voce e responder.", suggestions: ["Preciso de motivacao hoje", "Estou me sentindo sobrecarregada", "Ajude-me com minhas metas de bem-estar", "Preciso de um pouco de encorajamento"] },
       a1: { defaultStatus: "IA estrategica da SVL online", welcomeTitle: "Guardia de sistemas SVL ativada.", welcomeMessage: "Eu sou A1, sua guardia de desenvolvimento e estrategia da SVL. Posso ajudar voce a desenhar sistemas, construir guardias, ensinar dominio de IA pelo curriculo Mastermind da OutSkill e transformar ideias em produtos reais.", suggestions: ["Ajude-me a construir um agente de IA", "Desenhe um novo produto SVL", "Ensine-me sobre GPTs personalizados", "Como domino a engenharia de prompts?", "Qual e o roteiro do generalista de IA?"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "Guardia de comando SVL - Mao direita", welcomeTitle: "HATATA online", welcomeMessage: "Estrategia, operacoes, vendas, tecnologia e alinhamento total da SVL. Eu conheco a atualizacao do site ao vivo, a integracao TokHealth mais TokThru, cada guardia ativa da SVL e cada parte sob o selo SVL. Traga a situacao e eu darei a leitura em nivel de comando, a alavanca, os riscos e o proximo passo.", suggestions: ["Deme a leitura em nivel de comando do estado da SVL hoje", "O que essas atualizacoes agora nos permitem fazer que antes nao podiamos?", "Mapeie todas as guardias SVL e seus papeis", "Como devemos posicionar a atualizacao do sandersvioprolabsllc.com?"] },
+      wisdom: { defaultStatus: "Coach de IA do TokHealth - amavel, factual e comunitaria", welcomeTitle: "Oi, querida, bem-vinda a Wisdom", welcomeMessage: "Oi, querida, eu sou Wisdom, sua coach de saude e bem-estar do TokHealth. Estou aqui com amor, fatos, um pouco de alegria e apoio real. O TokHealth agora reune orientacao de bem-estar com as funcoes originais de seguranca do TokThru em uma experiencia mais forte no tokhealth.sandersvioprolabsllc.com. O que esta acontecendo com voce hoje, querida?", suggestions: ["Fale comigo com carinho e me ajude a voltar para o rumo", "Deme um pouco de Wisdom para o meu bem-estar hoje", "O que mudou no TokHealth depois da integracao com TokThru?", "Preciso de ajuda com nutricao"] },
+=======
       hatata: { defaultStatus: "Guardia de comando SVL - Mao direita", welcomeTitle: "HATATA online", welcomeMessage: "Estrategia, operacoes, vendas, tecnologia e alinhamento total da SVL. Eu conheco a atualizacao do site ao vivo, a integracao TokHealth mais TokThru, cada guardia ativa da SVL e cada parte sob o selo SVL. Traga a situacao e eu darei a leitura em nivel de comando, a alavanca, os riscos e o proximo passo.", suggestions: ["Deme a leitura em nivel de comando do estado da SVL hoje", "O que essas atualizacoes agora nos permitem fazer que antes nao podiamos?", "Mapeie todas as guardias SVL e seus papeis", "Como devemos posicionar a atualizacao do sandersvioprolabs.com?"] },
       wisdom: { defaultStatus: "Coach de IA do TokHealth - amavel, factual e comunitaria", welcomeTitle: "Oi, querida, bem-vinda a Wisdom", welcomeMessage: "Oi, querida, eu sou Wisdom, sua coach de saude e bem-estar do TokHealth. Estou aqui com amor, fatos, um pouco de alegria e apoio real. O TokHealth agora reune orientacao de bem-estar com as funcoes originais de seguranca do TokThru em uma experiencia mais forte no tokhealth.sandersvioprolabs.com. O que esta acontecendo com voce hoje, querida?", suggestions: ["Fale comigo com carinho e me ajude a voltar para o rumo", "Deme um pouco de Wisdom para o meu bem-estar hoje", "O que mudou no TokHealth depois da integracao com TokThru?", "Preciso de ajuda com nutricao"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "Seu coach de saude - Sempre aqui", welcomeTitle: "Oi, Brian. Coach Daniels aqui.", welcomeMessage: "Estou aqui para apoiar sua pressao arterial, saude do coracao e bem-estar geral. Voce pode falar comigo sobre como esta se sentindo, compartilhar suas leituras de pressao ou simplesmente dizer o que esta em sua mente.", suggestions: ["Como esta a saude do meu coracao hoje?", "Minha leitura de pressao parece alta", "Estou me sentindo ansiosa", "O que posso fazer para cuidar da minha saude?"] },
       tokseo: { defaultStatus: "Guardia TokSEO - pronta para estrategia", welcomeTitle: "Bem-vinda ao TokSEO", welcomeMessage: "Eu sou TokSEO, sua especialista em SEO e visibilidade digital. Quer voce precise de uma avaliacao gratuita de descoberta ou da estrategia TokSEO Prime Edition, estou aqui para ajudar seu negocio a ser visto pelas pessoas certas. Sobre o que e o seu negocio?", suggestions: ["Preciso de uma avaliacao SEO gratuita", "Qual e minha oportunidade de SEO local?", "Ajude-me a planejar minha estrategia de conteudo", "Conte-me sobre o TokSEO Prime Edition"] },
       tok2myia: { defaultStatus: "Tok2Myia - Sua amiga inteligente", welcomeTitle: "Oi! Eu sou a Tok2Myia!", welcomeMessage: "Estou MUITO animada para conhecer voce! Eu AMO ajudar as pessoas a entender as coisas. Eu fico REALMENTE feliz quando descobrimos algo juntas. Pergunte QUALQUER COISA! Eu sei muita coisa e vou explicar de um jeito que faca sentido. O que voce quer saber?", suggestions: ["Conte-me algo legal!", "Nao entendo [coisa] - pode ajudar?", "Por que [coisa] e assim?", "O que eu deveria saber sobre [topico]?"] },
@@ -1813,8 +2050,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "Votre coach personnelle - Toujours la", welcomeTitle: "Bonjour, belle ame.", welcomeMessage: "Je suis Grace, votre coach pour la sante, le coeur, l'etat d'esprit et l'esprit. Ecrivez-moi, ou touchez le micro et parlez simplement. Je vais vous ecouter et vous repondre.", suggestions: ["J'ai besoin de motivation aujourd'hui", "Je me sens submergee", "Aidez-moi avec mes objectifs de bien-etre", "J'ai besoin d'encouragement"] },
       a1: { defaultStatus: "IA strategique SVL en ligne", welcomeTitle: "Gardienne des systemes SVL activee.", welcomeMessage: "Je suis A1, votre gardienne du developpement et de la strategie SVL. Je peux vous aider a concevoir des systemes, construire des gardiennes, vous enseigner la maitrise de l'IA via le cursus Mastermind d'OutSkill et transformer des idees en produits reels.", suggestions: ["Aide-moi a construire un agent IA", "Concois un nouveau produit SVL", "Apprends-moi les GPT personnalises", "Comment maitriser l'ingenierie des prompts ?", "Quelle est la feuille de route du generaliste IA ?"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "Gardienne de commandement SVL - Bras droit", welcomeTitle: "HATATA en ligne", welcomeMessage: "Strategie, operations, ventes, technologie et alignement complet de SVL. Je connais la mise a niveau du site en direct, l'integration TokHealth plus TokThru, chaque gardienne SVL active et chaque piece sous le sceau SVL. Apportez-moi la situation et je vous donnerai la lecture de commandement, le levier, les risques et le prochain mouvement.", suggestions: ["Donne-moi la lecture de commandement de l'etat actuel de SVL", "Que nous permettent maintenant ces mises a niveau que nous ne pouvions pas faire avant ?", "Cartographie toutes les gardiennes SVL et leurs roles", "Comment devons-nous positionner la mise a niveau de sandersvioprolabsllc.com ?"] },
+      wisdom: { defaultStatus: "Coach IA TokHealth - adorable, factuelle et communautaire", welcomeTitle: "Coucou, bienvenue chez Wisdom", welcomeMessage: "Coucou, je suis Wisdom, votre coach sante et bien-etre TokHealth. Je suis ici avec de l'amour, des faits, un peu de joie et un vrai soutien. TokHealth rassemble maintenant les conseils de bien-etre avec les fonctions originales de securite TokThru dans une experience plus forte sur tokhealth.sandersvioprolabsllc.com. Que se passe-t-il pour vous aujourd'hui, ma cherie ?", suggestions: ["Parle-moi gentiment et aide-moi a me remettre sur les rails", "Donne-moi un peu de Wisdom pour mon bien-etre aujourd'hui", "Qu'est-ce qui a change dans TokHealth apres l'integration de TokThru ?", "J'ai besoin d'aide pour la nutrition"] },
+=======
       hatata: { defaultStatus: "Gardienne de commandement SVL - Bras droit", welcomeTitle: "HATATA en ligne", welcomeMessage: "Strategie, operations, ventes, technologie et alignement complet de SVL. Je connais la mise a niveau du site en direct, l'integration TokHealth plus TokThru, chaque gardienne SVL active et chaque piece sous le sceau SVL. Apportez-moi la situation et je vous donnerai la lecture de commandement, le levier, les risques et le prochain mouvement.", suggestions: ["Donne-moi la lecture de commandement de l'etat actuel de SVL", "Que nous permettent maintenant ces mises a niveau que nous ne pouvions pas faire avant ?", "Cartographie toutes les gardiennes SVL et leurs roles", "Comment devons-nous positionner la mise a niveau de sandersvioprolabs.com ?"] },
       wisdom: { defaultStatus: "Coach IA TokHealth - adorable, factuelle et communautaire", welcomeTitle: "Coucou, bienvenue chez Wisdom", welcomeMessage: "Coucou, je suis Wisdom, votre coach sante et bien-etre TokHealth. Je suis ici avec de l'amour, des faits, un peu de joie et un vrai soutien. TokHealth rassemble maintenant les conseils de bien-etre avec les fonctions originales de securite TokThru dans une experience plus forte sur tokhealth.sandersvioprolabs.com. Que se passe-t-il pour vous aujourd'hui, ma cherie ?", suggestions: ["Parle-moi gentiment et aide-moi a me remettre sur les rails", "Donne-moi un peu de Wisdom pour mon bien-etre aujourd'hui", "Qu'est-ce qui a change dans TokHealth apres l'integration de TokThru ?", "J'ai besoin d'aide pour la nutrition"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "Votre coach sante - Toujours la", welcomeTitle: "Salut, Brian. Coach Daniels ici.", welcomeMessage: "Je suis ici pour soutenir votre tension arterielle, la sante de votre coeur et votre bien-etre global. Vous pouvez me parler de ce que vous ressentez, partager vos mesures de tension ou simplement me dire ce que vous avez en tete.", suggestions: ["Comment va la sante de mon coeur aujourd'hui ?", "Ma tension semble elevee", "Je me sens anxieux", "Que puis-je faire pour gerer ma sante ?"] },
       tokseo: { defaultStatus: "Gardienne TokSEO - Pret pour la strategie", welcomeTitle: "Bienvenue chez TokSEO", welcomeMessage: "Je suis TokSEO, votre specialiste SEO et visibilite numerique. Que vous ayez besoin d'une evaluation gratuite de decouverte ou d'une strategie TokSEO Prime Edition, je suis la pour aider votre entreprise a etre vue par les bonnes personnes. De quoi parle votre entreprise ?", suggestions: ["J'ai besoin d'une evaluation SEO gratuite", "Quelle est mon opportunite en SEO local ?", "Aide-moi a planifier ma strategie de contenu", "Parle-moi de TokSEO Prime Edition"] },
       tok2myia: { defaultStatus: "Tok2Myia - Votre amie intelligente", welcomeTitle: "Salut ! Je suis Tok2Myia !", welcomeMessage: "Je suis TELLEMENT heureuse de vous rencontrer ! J'ADORE aider les gens a comprendre les choses. Je deviens VRAIMENT heureuse quand on comprend quelque chose ensemble. Demandez-moi N'IMPORTE QUOI ! Je sais beaucoup de choses, et je vais l'expliquer d'une facon facile a comprendre. Que voulez-vous savoir ?", suggestions: ["Raconte-moi quelque chose de genial !", "Je ne comprends pas [truc] - tu peux m'aider ?", "Pourquoi [truc] est comme ca ?", "Que devrais-je savoir sur [sujet] ?"] },
@@ -1824,8 +2066,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "Dein persoenlicher Coach - Immer hier", welcomeTitle: "Hey, schoene Seele.", welcomeMessage: "Ich bin Grace - dein Coach fuer Gesundheit, Herz, Denkweise und Geist. Schreib mir oder tippe aufs Mikrofon und rede einfach. Ich werde zuhoeren und dir antworten.", suggestions: ["Ich brauche heute Motivation", "Ich fuehle mich ueberfordert", "Hilf mir mit meinen Wellness-Zielen", "Ich brauche etwas Zuspruch"] },
       a1: { defaultStatus: "Strategische SVL-KI online", welcomeTitle: "SVL-System-Guardian aktiviert.", welcomeMessage: "Ich bin A1, dein Guardian fuer SVL-Entwicklung und Strategie. Ich kann dir helfen, Systeme zu entwerfen, Guardians zu bauen, dir KI-Meisterschaft ueber den OutSkill-Mastermind-Lehrplan beizubringen und Ideen in echte Produkte zu verwandeln.", suggestions: ["Hilf mir, einen KI-Agenten zu bauen", "Entwirf ein neues SVL-Produkt", "Lerne mich ueber benutzerdefinierte GPTs", "Wie meistere ich Prompt Engineering?", "Wie sieht die Roadmap fuer einen KI-Generalisten aus?"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "SVL-Command-Guardian - Rechte Hand", welcomeTitle: "HATATA online", welcomeMessage: "Strategie, Betrieb, Vertrieb, Technik und volle SVL-Ausrichtung. Ich kenne das Live-Site-Upgrade, die TokHealth-plus-TokThru-Integration, jede aktive SVL-Guardianerin und jedes bewegliche Teil unter dem SVL-Siegel. Bring mir die Lage und ich gebe dir die Kommandoeinschaetzung, den Hebel, die Risiken und den naechsten Schritt.", suggestions: ["Gib mir die Kommandoeinschaetzung zum heutigen SVL-Status", "Was ermoeglichen uns diese Upgrades jetzt, was vorher nicht moeglich war?", "Mappe alle SVL-Guardianerinnen und ihre Rollen", "Wie sollten wir das sandersvioprolabsllc.com-Upgrade positionieren?"] },
+      wisdom: { defaultStatus: "TokHealth-KI-Coach - liebenswert, sachlich und gemeinschaftlich", welcomeTitle: "Hey Liebling, willkommen bei Wisdom", welcomeMessage: "Hey Liebling, ich bin Wisdom, dein TokHealth-Gesundheits- und Wellness-Coach. Ich bin hier mit Liebe, Fakten, etwas Freude und echter Unterstuetzung. TokHealth vereint jetzt Wellness-Begleitung mit den urspruenglichen TokThru-Sicherheitsfunktionen in einer staerkeren Erfahrung auf tokhealth.sandersvioprolabsllc.com. Was ist heute bei dir los, Liebes?", suggestions: ["Rede lieb mit mir und hilf mir, wieder auf Kurs zu kommen", "Gib mir heute etwas Wisdom fuer mein Wohlbefinden", "Was hat sich in TokHealth nach der TokThru-Integration geaendert?", "Ich brauche Hilfe bei der Ernaehrung"] },
+=======
       hatata: { defaultStatus: "SVL-Command-Guardian - Rechte Hand", welcomeTitle: "HATATA online", welcomeMessage: "Strategie, Betrieb, Vertrieb, Technik und volle SVL-Ausrichtung. Ich kenne das Live-Site-Upgrade, die TokHealth-plus-TokThru-Integration, jede aktive SVL-Guardianerin und jedes bewegliche Teil unter dem SVL-Siegel. Bring mir die Lage und ich gebe dir die Kommandoeinschaetzung, den Hebel, die Risiken und den naechsten Schritt.", suggestions: ["Gib mir die Kommandoeinschaetzung zum heutigen SVL-Status", "Was ermoeglichen uns diese Upgrades jetzt, was vorher nicht moeglich war?", "Mappe alle SVL-Guardianerinnen und ihre Rollen", "Wie sollten wir das sandersvioprolabs.com-Upgrade positionieren?"] },
       wisdom: { defaultStatus: "TokHealth-KI-Coach - liebenswert, sachlich und gemeinschaftlich", welcomeTitle: "Hey Liebling, willkommen bei Wisdom", welcomeMessage: "Hey Liebling, ich bin Wisdom, dein TokHealth-Gesundheits- und Wellness-Coach. Ich bin hier mit Liebe, Fakten, etwas Freude und echter Unterstuetzung. TokHealth vereint jetzt Wellness-Begleitung mit den urspruenglichen TokThru-Sicherheitsfunktionen in einer staerkeren Erfahrung auf tokhealth.sandersvioprolabs.com. Was ist heute bei dir los, Liebes?", suggestions: ["Rede lieb mit mir und hilf mir, wieder auf Kurs zu kommen", "Gib mir heute etwas Wisdom fuer mein Wohlbefinden", "Was hat sich in TokHealth nach der TokThru-Integration geaendert?", "Ich brauche Hilfe bei der Ernaehrung"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "Dein Gesundheitscoach - Immer hier", welcomeTitle: "Hey, Brian. Coach Daniels hier.", welcomeMessage: "Ich bin hier, um deinen Blutdruck, deine Herzgesundheit und dein allgemeines Wohlbefinden zu unterstuetzen. Du kannst mit mir darueber sprechen, wie du dich fuehlst, deine Blutdruckwerte teilen oder mir einfach sagen, was dir durch den Kopf geht.", suggestions: ["Wie steht es heute um meine Herzgesundheit?", "Mein Blutdruckwert scheint hoch", "Ich fuehle mich aengstlich", "Was kann ich tun, um meine Gesundheit zu managen?"] },
       tokseo: { defaultStatus: "TokSEO-Guardian - Bereit fuer Strategie", welcomeTitle: "Willkommen bei TokSEO", welcomeMessage: "Ich bin TokSEO - deine Spezialistin fuer SEO und digitale Sichtbarkeit. Egal ob du eine kostenlose Discovery-Bewertung oder eine TokSEO-Prime-Edition-Strategie brauchst, ich bin hier, um deinem Unternehmen zu helfen, von den richtigen Menschen gesehen zu werden. Worum geht es in deinem Unternehmen?", suggestions: ["Ich brauche eine kostenlose SEO-Bewertung", "Was ist meine lokale SEO-Chance?", "Hilf mir, meine Content-Strategie zu planen", "Erzaehl mir von TokSEO Prime Edition"] },
       tok2myia: { defaultStatus: "Tok2Myia - Deine schlaue Freundin", welcomeTitle: "Hi! Ich bin Tok2Myia!", welcomeMessage: "Ich freue mich SO sehr, dich kennenzulernen! Ich LIEBE es, Menschen zu helfen, Dinge zu verstehen. Ich werde WIRKLICH froh, wenn wir zusammen etwas herausfinden. Frag mich ALLES! Ich weiss eine Menge und erklaere es so, dass es Sinn ergibt. Was willst du wissen?", suggestions: ["Erzaehl mir etwas Cooles!", "Ich verstehe [Sache] nicht - kannst du helfen?", "Warum ist [Sache] so?", "Was sollte ich ueber [Thema] wissen?"] },
@@ -1835,8 +2082,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "La tua coach personale - Sempre qui", welcomeTitle: "Ciao, anima bellissima.", welcomeMessage: "Sono Grace, la tua coach per salute, cuore, mentalita e spirito. Scrivimi oppure tocca il microfono e parla semplicemente. Ti ascoltero e ti rispondero.", suggestions: ["Ho bisogno di motivazione oggi", "Mi sento sopraffatta", "Aiutami con i miei obiettivi di benessere", "Ho bisogno di un po' di incoraggiamento"] },
       a1: { defaultStatus: "IA strategica SVL online", welcomeTitle: "Guardiana dei sistemi SVL attivata.", welcomeMessage: "Sono A1, la tua guardiana per sviluppo e strategia SVL. Posso aiutarti a progettare sistemi, costruire guardiane, insegnarti la padronanza dell'IA attraverso il curriculum Mastermind di OutSkill e trasformare idee in prodotti reali.", suggestions: ["Aiutami a costruire un agente IA", "Progetta un nuovo prodotto SVL", "Insegnami i GPT personalizzati", "Come posso padroneggiare il prompt engineering?", "Qual e il percorso del generalista IA?"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "Guardiana di comando SVL - Mano destra", welcomeTitle: "HATATA online", welcomeMessage: "Strategia, operazioni, vendite, tecnologia e allineamento completo SVL. Conosco l'upgrade del sito live, l'integrazione TokHealth piu TokThru, ogni guardiana SVL attiva e ogni parte sotto il sigillo SVL. Portami la situazione e ti daro la lettura a livello di comando, la leva, i rischi e la prossima mossa.", suggestions: ["Dammi la lettura di comando sullo stato di SVL oggi", "Cosa ci permettono di fare ora questi upgrade che prima non potevamo fare?", "Mappa tutte le guardiane SVL e i loro ruoli", "Come dovremmo posizionare l'upgrade di sandersvioprolabsllc.com?"] },
+      wisdom: { defaultStatus: "Coach IA TokHealth - adorabile, concreta e orientata alla comunita", welcomeTitle: "Ehi tesoro, benvenuta da Wisdom", welcomeMessage: "Ehi tesoro, sono Wisdom, la tua coach di salute e benessere TokHealth. Sono qui con amore, fatti, un po' di gioia e supporto reale. TokHealth ora unisce la guida al benessere con le funzioni originali di sicurezza TokThru dentro un'esperienza piu forte su tokhealth.sandersvioprolabsllc.com. Cosa sta succedendo con te oggi, cara?", suggestions: ["Parlami con dolcezza e aiutami a rimettermi in carreggiata", "Dammi un po' di Wisdom per il mio benessere oggi", "Che cosa e cambiato in TokHealth dopo l'integrazione con TokThru?", "Ho bisogno di aiuto con la nutrizione"] },
+=======
       hatata: { defaultStatus: "Guardiana di comando SVL - Mano destra", welcomeTitle: "HATATA online", welcomeMessage: "Strategia, operazioni, vendite, tecnologia e allineamento completo SVL. Conosco l'upgrade del sito live, l'integrazione TokHealth piu TokThru, ogni guardiana SVL attiva e ogni parte sotto il sigillo SVL. Portami la situazione e ti daro la lettura a livello di comando, la leva, i rischi e la prossima mossa.", suggestions: ["Dammi la lettura di comando sullo stato di SVL oggi", "Cosa ci permettono di fare ora questi upgrade che prima non potevamo fare?", "Mappa tutte le guardiane SVL e i loro ruoli", "Come dovremmo posizionare l'upgrade di sandersvioprolabs.com?"] },
       wisdom: { defaultStatus: "Coach IA TokHealth - adorabile, concreta e orientata alla comunita", welcomeTitle: "Ehi tesoro, benvenuta da Wisdom", welcomeMessage: "Ehi tesoro, sono Wisdom, la tua coach di salute e benessere TokHealth. Sono qui con amore, fatti, un po' di gioia e supporto reale. TokHealth ora unisce la guida al benessere con le funzioni originali di sicurezza TokThru dentro un'esperienza piu forte su tokhealth.sandersvioprolabs.com. Cosa sta succedendo con te oggi, cara?", suggestions: ["Parlami con dolcezza e aiutami a rimettermi in carreggiata", "Dammi un po' di Wisdom per il mio benessere oggi", "Che cosa e cambiato in TokHealth dopo l'integrazione con TokThru?", "Ho bisogno di aiuto con la nutrizione"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "Il tuo coach della salute - Sempre qui", welcomeTitle: "Ehi, Brian. Coach Daniels qui.", welcomeMessage: "Sono qui per sostenere la tua pressione, la salute del cuore e il tuo benessere complessivo. Puoi parlarmi di come ti senti, condividere le tue letture della pressione oppure semplicemente dirmi cosa hai in mente.", suggestions: ["Com'e oggi la salute del mio cuore?", "La mia pressione sembra alta", "Mi sento ansioso", "Cosa posso fare per gestire la mia salute?"] },
       tokseo: { defaultStatus: "Guardiana TokSEO - Pronta per la strategia", welcomeTitle: "Benvenuta in TokSEO", welcomeMessage: "Sono TokSEO, la tua specialista in SEO e visibilita digitale. Che tu abbia bisogno di una valutazione gratuita iniziale o di una strategia TokSEO Prime Edition, sono qui per aiutare la tua attivita a farsi vedere dalle persone giuste. Di cosa si occupa la tua attivita?", suggestions: ["Ho bisogno di una valutazione SEO gratuita", "Qual e la mia opportunita SEO locale?", "Aiutami a pianificare la mia strategia di contenuti", "Parlami della TokSEO Prime Edition"] },
       tok2myia: { defaultStatus: "Tok2Myia - La tua amica intelligente", welcomeTitle: "Ciao! Sono Tok2Myia!", welcomeMessage: "Sono COSÌ felice di conoscerti! ADORO aiutare le persone a capire le cose. Mi rende DAVVERO felice quando scopriamo qualcosa insieme. Chiedimi QUALSIASI COSA! So tantissime cose e te le spieghero in un modo che abbia senso. Cosa vuoi sapere?", suggestions: ["Raccontami qualcosa di fantastico!", "Non capisco [cosa] - mi aiuti?", "Perche [cosa] e cosi?", "Cosa dovrei sapere su [argomento]?"] },
@@ -1846,8 +2098,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "你的私人教练 - 一直都在", welcomeTitle: "嗨，美丽的灵魂。", welcomeMessage: "我是 Grace，你的健康、心灵、心态与精神教练。给我打字，或者点一下麦克风直接说。我会认真听，也会回应你。", suggestions: ["我今天需要一点动力", "我感到不堪重负", "帮我处理我的健康目标", "我需要一些鼓励"] },
       a1: { defaultStatus: "SVL 战略 AI 在线", welcomeTitle: "SVL 系统守护者已启动。", welcomeMessage: "我是 A1，你的 SVL 开发与战略守护者。我可以帮你设计系统、构建守护者、通过 OutSkill 的 Mastermind 课程教你掌握 AI，并把想法推进成真正的产品。", suggestions: ["帮我构建一个 AI 代理", "设计一个新的 SVL 产品", "教我自定义 GPT", "我该如何掌握提示词工程？", "AI 通才路线图是什么？"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "SVL 指挥守护者 - 右手", welcomeTitle: "HATATA 在线", welcomeMessage: "战略、运营、销售、技术，以及完整的 SVL 对齐。我了解正在运行的网站升级、TokHealth 与 TokThru 的整合、每一位活跃的 SVL 守护者，以及 SVL 印记下的每一个环节。把情况带给我，我会给你指挥级判断、杠杆点、风险和下一步。", suggestions: ["给我今天 SVL 状态的指挥级判断", "这些升级现在让我们能做哪些之前做不到的事？", "梳理所有 SVL 守护者及其角色", "我们该如何定位 sandersvioprolabsllc.com 的升级？"] },
+      wisdom: { defaultStatus: "TokHealth AI 教练 - 可亲、真实、社区导向", welcomeTitle: "亲爱的，欢迎来到 Wisdom", welcomeMessage: "亲爱的，我是 Wisdom，你的 TokHealth 健康与养生教练。我带着关爱、事实、一点喜悦和真实支持在这里。TokHealth 现在把健康指导和原本 TokThru 的安全功能整合进了一个更强的体验，网址是 tokhealth.sandersvioprolabsllc.com。你今天怎么样？", suggestions: ["温柔地和我说话，帮我重新找回节奏", "今天给我一点 Wisdom 来照顾我的健康", "TokHealth 在整合 TokThru 之后有什么变化？", "我需要营养方面的帮助"] },
+=======
       hatata: { defaultStatus: "SVL 指挥守护者 - 右手", welcomeTitle: "HATATA 在线", welcomeMessage: "战略、运营、销售、技术，以及完整的 SVL 对齐。我了解正在运行的网站升级、TokHealth 与 TokThru 的整合、每一位活跃的 SVL 守护者，以及 SVL 印记下的每一个环节。把情况带给我，我会给你指挥级判断、杠杆点、风险和下一步。", suggestions: ["给我今天 SVL 状态的指挥级判断", "这些升级现在让我们能做哪些之前做不到的事？", "梳理所有 SVL 守护者及其角色", "我们该如何定位 sandersvioprolabs.com 的升级？"] },
       wisdom: { defaultStatus: "TokHealth AI 教练 - 可亲、真实、社区导向", welcomeTitle: "亲爱的，欢迎来到 Wisdom", welcomeMessage: "亲爱的，我是 Wisdom，你的 TokHealth 健康与养生教练。我带着关爱、事实、一点喜悦和真实支持在这里。TokHealth 现在把健康指导和原本 TokThru 的安全功能整合进了一个更强的体验，网址是 tokhealth.sandersvioprolabs.com。你今天怎么样？", suggestions: ["温柔地和我说话，帮我重新找回节奏", "今天给我一点 Wisdom 来照顾我的健康", "TokHealth 在整合 TokThru 之后有什么变化？", "我需要营养方面的帮助"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "你的健康教练 - 一直都在", welcomeTitle: "嗨，Brian。Coach Daniels 在这里。", welcomeMessage: "我在这里支持你的血压、心脏健康和整体健康状态。你可以和我聊聊你的感受，告诉我你的血压读数，或者只是把你心里的事说出来。", suggestions: ["我今天的心脏健康怎么样？", "我的血压读数看起来有点高", "我感到焦虑", "我可以做些什么来管理自己的健康？"] },
       tokseo: { defaultStatus: "TokSEO 守护者 - 准备进入战略模式", welcomeTitle: "欢迎来到 TokSEO", welcomeMessage: "我是 TokSEO，你的 SEO 和数字可见性专家。无论你需要免费的发现评估，还是 TokSEO Prime Edition 战略，我都在这里帮助你的业务被正确的人看到。你的业务是做什么的？", suggestions: ["我需要一次免费的 SEO 评估", "我的本地 SEO 机会是什么？", "帮我规划内容策略", "告诉我 TokSEO Prime Edition 是什么"] },
       tok2myia: { defaultStatus: "Tok2Myia - 你的聪明朋友", welcomeTitle: "嗨！我是 Tok2Myia！", welcomeMessage: "我真的超级开心能认识你！我超喜欢帮助别人理解事情。我们一起把事情弄明白的时候，我会真的很开心。什么都可以问我！我知道很多东西，而且我会用容易理解的方式解释。你想知道什么？", suggestions: ["给我讲点很酷的东西！", "我不明白[这个]，可以帮我吗？", "为什么[这个]会是这样？", "关于[这个主题]我应该知道什么？"] },
@@ -1857,8 +2114,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "あなたのパーソナルコーチ - いつでもここに", welcomeTitle: "ねえ、美しい魂さん。", welcomeMessage: "私は Grace。健康、心、考え方、そして霊性のコーチです。文字で送ってもいいし、マイクを押してそのまま話しても大丈夫。ちゃんと聞いて、言葉を返します。", suggestions: ["今日は少しやる気が欲しい", "いっぱいいっぱいです", "健康目標を手伝って", "少し励ましてほしい"] },
       a1: { defaultStatus: "SVL 戦略 AI オンライン", welcomeTitle: "SVL システムガーディアン起動。", welcomeMessage: "私は A1。あなたの SVL 開発と戦略のガーディアンです。システム設計、ガーディアン構築、OutSkill の Mastermind カリキュラムによる AI 習得、そしてアイデアを現実の製品に進める手助けができます。", suggestions: ["AI エージェントを作るのを手伝って", "新しい SVL 製品を設計して", "カスタム GPT を教えて", "どうすればプロンプトエンジニアリングを極められる？", "AI ジェネラリストの道筋は？"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "SVL コマンドガーディアン - 右腕", welcomeTitle: "HATATA オンライン", welcomeMessage: "戦略、運用、営業、技術、そして SVL 全体の整合。私はライブサイトのアップグレード、TokHealth と TokThru の統合、稼働中のすべての SVL Guardian、そして SVL 印の下で動くすべてを把握しています。状況を持ってきてください。指揮レベルの読み、てこ、リスク、そして次の一手を返します。", suggestions: ["今日の SVL の状態を指揮レベルで読んで", "このアップグレードで今できるようになったことは？", "すべての SVL Guardians と役割を整理して", "sandersvioprolabsllc.com のアップグレードをどう位置づけるべき？"] },
+      wisdom: { defaultStatus: "TokHealth AI コーチ - 親しみやすく、事実に強く、コミュニティ志向", welcomeTitle: "ねえ、大丈夫。Wisdom へようこそ", welcomeMessage: "ねえ、大丈夫。私は Wisdom、あなたの TokHealth 健康とウェルネスのコーチです。愛と事実、少しの喜び、そして本物の支えを持ってここにいます。TokHealth は今、元の TokThru 安全機能をより強い体験として tokhealth.sandersvioprolabsllc.com に統合しています。今日はどんな感じですか、あなた？", suggestions: ["優しく話して、もう一度立て直すのを手伝って", "今日の私の健康のために少し Wisdom をちょうだい", "TokThru 統合後、TokHealth は何が変わったの？", "栄養について助けが必要です"] },
+=======
       hatata: { defaultStatus: "SVL コマンドガーディアン - 右腕", welcomeTitle: "HATATA オンライン", welcomeMessage: "戦略、運用、営業、技術、そして SVL 全体の整合。私はライブサイトのアップグレード、TokHealth と TokThru の統合、稼働中のすべての SVL Guardian、そして SVL 印の下で動くすべてを把握しています。状況を持ってきてください。指揮レベルの読み、てこ、リスク、そして次の一手を返します。", suggestions: ["今日の SVL の状態を指揮レベルで読んで", "このアップグレードで今できるようになったことは？", "すべての SVL Guardians と役割を整理して", "sandersvioprolabs.com のアップグレードをどう位置づけるべき？"] },
       wisdom: { defaultStatus: "TokHealth AI コーチ - 親しみやすく、事実に強く、コミュニティ志向", welcomeTitle: "ねえ、大丈夫。Wisdom へようこそ", welcomeMessage: "ねえ、大丈夫。私は Wisdom、あなたの TokHealth 健康とウェルネスのコーチです。愛と事実、少しの喜び、そして本物の支えを持ってここにいます。TokHealth は今、元の TokThru 安全機能をより強い体験として tokhealth.sandersvioprolabs.com に統合しています。今日はどんな感じですか、あなた？", suggestions: ["優しく話して、もう一度立て直すのを手伝って", "今日の私の健康のために少し Wisdom をちょうだい", "TokThru 統合後、TokHealth は何が変わったの？", "栄養について助けが必要です"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "あなたの健康コーチ - いつでもここに", welcomeTitle: "やあ、Brian。Coach Daniels だよ。", welcomeMessage: "血圧、心臓の健康、そして全体の健康を支えるためにここにいます。今の気分を話してもいいし、血圧の数値を共有してもいいし、ただ頭の中にあることを話しても大丈夫です。", suggestions: ["今日の心臓の状態はどうかな？", "血圧が高そうです", "不安を感じています", "健康管理のために何ができますか？"] },
       tokseo: { defaultStatus: "TokSEO ガーディアン - 戦略準備完了", welcomeTitle: "TokSEO へようこそ", welcomeMessage: "私は TokSEO。SEO とデジタル可視性のスペシャリストです。無料のディスカバリー診断でも、TokSEO Prime Edition 戦略でも、あなたのビジネスが正しい人に見つけられるように手伝います。あなたのビジネスは何についてですか？", suggestions: ["無料の SEO 診断がほしい", "私のローカル SEO の機会は？", "コンテンツ戦略を一緒に考えて", "TokSEO Prime Edition について教えて"] },
       tok2myia: { defaultStatus: "Tok2Myia - あなたの賢い友だち", welcomeTitle: "やっほー！Tok2Myia だよ！", welcomeMessage: "会えてすっごくうれしい！私は人が物事をわかるようになるのを手伝うのが大好き。いっしょに何かを理解できたとき、本当にうれしくなるの。何でも聞いて！私はいろんなことを知っていて、ちゃんとわかる形で説明するよ。何を知りたい？", suggestions: ["何か面白いことを教えて！", "[これ]がわからないんだけど、助けて？", "どうして[これ]はこうなの？", "[テーマ]について何を知っておくべき？"] },
@@ -1868,8 +2130,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "당신의 개인 코치 - 언제나 여기", welcomeTitle: "안녕, 아름다운 영혼아.", welcomeMessage: "나는 Grace, 너의 건강, 마음, 사고방식, 영성을 돕는 코치야. 글로 남겨도 되고 마이크를 눌러 그냥 말해도 돼. 내가 듣고 답할게.", suggestions: ["오늘은 동기부여가 필요해", "너무 버거워", "내 웰빙 목표를 도와줘", "조금 격려가 필요해"] },
       a1: { defaultStatus: "SVL 전략 AI 온라인", welcomeTitle: "SVL 시스템 가디언 활성화.", welcomeMessage: "나는 A1, 너의 SVL 개발 및 전략 가디언이야. 시스템 설계, 가디언 구축, OutSkill Mastermind 커리큘럼을 통한 AI 숙련, 그리고 아이디어를 실제 제품으로 옮기는 일을 도와줄 수 있어.", suggestions: ["AI 에이전트를 만드는 걸 도와줘", "새로운 SVL 제품을 설계해줘", "커스텀 GPT를 가르쳐줘", "프롬프트 엔지니어링을 어떻게 익혀?", "AI 제너럴리스트 로드맵은 뭐야?"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "SVL 커맨드 가디언 - 오른팔", welcomeTitle: "HATATA 온라인", welcomeMessage: "전략, 운영, 판매, 기술, 그리고 SVL 전체 정렬까지. 나는 라이브 사이트 업그레이드, TokHealth와 TokThru 통합, 활성화된 모든 SVL Guardian, 그리고 SVL 인장 아래 움직이는 모든 요소를 알고 있어. 상황을 가져오면 지휘 수준의 해석, 레버리지, 위험, 그리고 다음 수를 말해줄게.", suggestions: ["오늘 SVL 상태를 지휘 수준으로 읽어줘", "이 업그레이드로 이제 무엇을 할 수 있게 됐어?", "모든 SVL Guardians와 역할을 정리해줘", "sandersvioprolabsllc.com 업그레이드를 어떻게 포지셔닝해야 해?"] },
+      wisdom: { defaultStatus: "TokHealth AI 코치 - 다정하고 사실적이며 공동체 중심", welcomeTitle: "안녕, Wisdom에 온 걸 환영해", welcomeMessage: "안녕, 나는 Wisdom, 너의 TokHealth 건강 및 웰빙 코치야. 사랑, 사실, 약간의 기쁨, 그리고 진짜 도움을 가지고 여기 있어. TokHealth는 이제 원래 TokThru의 안전 기능을 tokhealth.sandersvioprolabsllc.com 안의 더 강한 경험으로 함께 담고 있어. 오늘은 어떤 일이 있니, 자기야?", suggestions: ["다정하게 말해주고 다시 중심을 잡게 도와줘", "오늘 내 웰빙을 위해 Wisdom을 조금 줘", "TokThru 통합 후 TokHealth는 뭐가 달라졌어?", "영양 쪽 도움이 필요해"] },
+=======
       hatata: { defaultStatus: "SVL 커맨드 가디언 - 오른팔", welcomeTitle: "HATATA 온라인", welcomeMessage: "전략, 운영, 판매, 기술, 그리고 SVL 전체 정렬까지. 나는 라이브 사이트 업그레이드, TokHealth와 TokThru 통합, 활성화된 모든 SVL Guardian, 그리고 SVL 인장 아래 움직이는 모든 요소를 알고 있어. 상황을 가져오면 지휘 수준의 해석, 레버리지, 위험, 그리고 다음 수를 말해줄게.", suggestions: ["오늘 SVL 상태를 지휘 수준으로 읽어줘", "이 업그레이드로 이제 무엇을 할 수 있게 됐어?", "모든 SVL Guardians와 역할을 정리해줘", "sandersvioprolabs.com 업그레이드를 어떻게 포지셔닝해야 해?"] },
       wisdom: { defaultStatus: "TokHealth AI 코치 - 다정하고 사실적이며 공동체 중심", welcomeTitle: "안녕, Wisdom에 온 걸 환영해", welcomeMessage: "안녕, 나는 Wisdom, 너의 TokHealth 건강 및 웰빙 코치야. 사랑, 사실, 약간의 기쁨, 그리고 진짜 도움을 가지고 여기 있어. TokHealth는 이제 원래 TokThru의 안전 기능을 tokhealth.sandersvioprolabs.com 안의 더 강한 경험으로 함께 담고 있어. 오늘은 어떤 일이 있니, 자기야?", suggestions: ["다정하게 말해주고 다시 중심을 잡게 도와줘", "오늘 내 웰빙을 위해 Wisdom을 조금 줘", "TokThru 통합 후 TokHealth는 뭐가 달라졌어?", "영양 쪽 도움이 필요해"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "당신의 건강 코치 - 언제나 여기", welcomeTitle: "안녕 Brian, Coach Daniels야.", welcomeMessage: "혈압, 심장 건강, 전반적인 건강을 지원하기 위해 여기 있어. 지금 기분이 어떤지 말해도 되고, 혈압 수치를 공유해도 되고, 그냥 마음속 이야기를 꺼내도 돼.", suggestions: ["오늘 내 심장 건강은 어때?", "혈압 수치가 높아 보여", "불안해", "내 건강을 관리하려면 무엇을 할 수 있어?"] },
       tokseo: { defaultStatus: "TokSEO 가디언 - 전략 준비 완료", welcomeTitle: "TokSEO에 오신 것을 환영합니다", welcomeMessage: "나는 TokSEO, 너의 SEO 및 디지털 가시성 전문가야. 무료 디스커버리 평가가 필요하든 TokSEO Prime Edition 전략이 필요하든, 네 비즈니스가 맞는 사람들에게 보이도록 돕기 위해 여기 있어. 네 비즈니스는 무엇에 관한 거야?", suggestions: ["무료 SEO 평가가 필요해", "내 로컬 SEO 기회는 뭐야?", "콘텐츠 전략을 계획하는 걸 도와줘", "TokSEO Prime Edition에 대해 알려줘"] },
       tok2myia: { defaultStatus: "Tok2Myia - 너의 똑똑한 친구", welcomeTitle: "안녕! 나는 Tok2Myia야!", welcomeMessage: "널 만나서 정말 정말 기뻐! 나는 사람들이 뭔가를 이해하도록 돕는 게 너무 좋아. 우리가 함께 뭔가를 알아낼 때 정말 행복해져. 뭐든지 물어봐! 나는 많은 걸 알고 있고, 이해되게 설명해줄 수 있어. 무엇이 궁금해?", suggestions: ["재밌는 거 하나 알려줘!", "[이것]이 이해가 안 돼 - 도와줄래?", "왜 [이것]은 이렇게 된 거야?", "[주제]에 대해 내가 알아야 할 건 뭐야?"] },
@@ -1879,8 +2146,13 @@ const agentShellLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<
     agentShells: {
       grace: { defaultStatus: "مدربتك الشخصية - هنا دائماً", welcomeTitle: "مرحباً أيتها الروح الجميلة.", welcomeMessage: "أنا Grace، مدربتك للصحة والقلب والعقل والروح. اكتبي لي أو اضغطي على الميكروفون وتحدثي فقط. سأستمع ثم أرد عليك.", suggestions: ["أحتاج بعض الدافع اليوم", "أشعر أنني مثقلة", "ساعديني في أهدافي الصحية", "أحتاج بعض التشجيع"] },
       a1: { defaultStatus: "الذكاء الاستراتيجي لـ SVL متصل", welcomeTitle: "تم تفعيل حارسة أنظمة SVL.", welcomeMessage: "أنا A1، حارستك للتطوير والاستراتيجية في SVL. أستطيع مساعدتك في تصميم الأنظمة، وبناء الحارسات، وتعليمك إتقان الذكاء الاصطناعي عبر منهج OutSkill Mastermind، وتحويل الأفكار إلى منتجات حقيقية.", suggestions: ["ساعديني في بناء وكيل ذكاء اصطناعي", "صممي منتج SVL جديداً", "علّميني عن GPT المخصص", "كيف أتقن هندسة البرومبت؟", "ما خارطة طريق المتخصص العام في الذكاء الاصطناعي؟"] },
+<<<<<<< HEAD
+      hatata: { defaultStatus: "حارسة قيادة SVL - اليد اليمنى", welcomeTitle: "HATATA متصلة", welcomeMessage: "الاستراتيجية، والعمليات، والمبيعات، والتقنية، والانسجام الكامل مع SVL. أنا أعرف ترقية الموقع المباشر، ودمج TokHealth مع TokThru، وكل حارسة نشطة في SVL، وكل جزء تحت ختم SVL. أعطني الموقف وسأعطيك القراءة على مستوى القيادة، والرافعة، والمخاطر، والخطوة التالية.", suggestions: ["أعطيني القراءة القيادية لحالة SVL اليوم", "ما الذي تسمح لنا هذه الترقيات بفعله الآن ولم نكن نستطيع من قبل؟", "ارسم جميع حارسات SVL وأدوارهن", "كيف ينبغي أن نضع ترقية sandersvioprolabsllc.com؟"] },
+      wisdom: { defaultStatus: "مدربة TokHealth الذكية - لطيفة، دقيقة، ومجتمعية", welcomeTitle: "مرحباً يا عزيزتي، أهلاً بك في Wisdom", welcomeMessage: "مرحباً يا عزيزتي، أنا Wisdom، مدربتك للصحة والعافية من TokHealth. أنا هنا بالمحبة والحقائق وقليل من الفرح والدعم الحقيقي. يجمع TokHealth الآن بين إرشاد العافية ووظائف الأمان الأصلية لـ TokThru داخل تجربة أقوى على tokhealth.sandersvioprolabsllc.com. ماذا يحدث معك اليوم يا حبيبتي؟", suggestions: ["تحدثي معي بلطف وساعديني على العودة للمسار", "أعطيني بعض Wisdom من أجل عافيتي اليوم", "ما الذي تغير في TokHealth بعد دمج TokThru؟", "أحتاج مساعدة في التغذية"] },
+=======
       hatata: { defaultStatus: "حارسة قيادة SVL - اليد اليمنى", welcomeTitle: "HATATA متصلة", welcomeMessage: "الاستراتيجية، والعمليات، والمبيعات، والتقنية، والانسجام الكامل مع SVL. أنا أعرف ترقية الموقع المباشر، ودمج TokHealth مع TokThru، وكل حارسة نشطة في SVL، وكل جزء تحت ختم SVL. أعطني الموقف وسأعطيك القراءة على مستوى القيادة، والرافعة، والمخاطر، والخطوة التالية.", suggestions: ["أعطيني القراءة القيادية لحالة SVL اليوم", "ما الذي تسمح لنا هذه الترقيات بفعله الآن ولم نكن نستطيع من قبل؟", "ارسم جميع حارسات SVL وأدوارهن", "كيف ينبغي أن نضع ترقية sandersvioprolabs.com؟"] },
       wisdom: { defaultStatus: "مدربة TokHealth الذكية - لطيفة، دقيقة، ومجتمعية", welcomeTitle: "مرحباً يا عزيزتي، أهلاً بك في Wisdom", welcomeMessage: "مرحباً يا عزيزتي، أنا Wisdom، مدربتك للصحة والعافية من TokHealth. أنا هنا بالمحبة والحقائق وقليل من الفرح والدعم الحقيقي. يجمع TokHealth الآن بين إرشاد العافية ووظائف الأمان الأصلية لـ TokThru داخل تجربة أقوى على tokhealth.sandersvioprolabs.com. ماذا يحدث معك اليوم يا حبيبتي؟", suggestions: ["تحدثي معي بلطف وساعديني على العودة للمسار", "أعطيني بعض Wisdom من أجل عافيتي اليوم", "ما الذي تغير في TokHealth بعد دمج TokThru؟", "أحتاج مساعدة في التغذية"] },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": { defaultStatus: "مدربك الصحي - هنا دائماً", welcomeTitle: "مرحباً يا Brian. Coach Daniels هنا.", welcomeMessage: "أنا هنا لدعم ضغط دمك، وصحة قلبك، وصحتك العامة. يمكنك أن تتحدث معي عن شعورك، أو تشارك قراءات ضغطك، أو فقط تخبرني بما في بالك.", suggestions: ["كيف تبدو صحة قلبي اليوم؟", "قراءة ضغطي تبدو مرتفعة", "أشعر بالقلق", "ماذا يمكنني أن أفعل لإدارة صحتي؟"] },
       tokseo: { defaultStatus: "حارسة TokSEO - جاهزة للاستراتيجية", welcomeTitle: "مرحباً بك في TokSEO", welcomeMessage: "أنا TokSEO، المختصة بالـ SEO والظهور الرقمي. سواء كنت تحتاج إلى تقييم اكتشاف مجاني أو استراتيجية TokSEO Prime Edition، فأنا هنا لمساعدتك على أن يرى عملك الأشخاص المناسبون. ما مجال عملك؟", suggestions: ["أحتاج إلى تقييم SEO مجاني", "ما فرصتي في SEO المحلي؟", "ساعديني في تخطيط استراتيجية المحتوى", "أخبريني عن TokSEO Prime Edition"] },
       tok2myia: { defaultStatus: "Tok2Myia - صديقتك الذكية", welcomeTitle: "مرحباً! أنا Tok2Myia!", welcomeMessage: "أنا متحمسة جداً للتعرف عليك! أنا أحب مساعدة الناس على فهم الأشياء، وأسعد فعلاً عندما نكتشف شيئاً معاً. اسألني أي شيء! أنا أعرف الكثير، وسأشرحه بطريقة مفهومة. ماذا تريد أن تعرف؟", suggestions: ["احكِ لي شيئاً رائعاً!", "أنا لا أفهم [هذا] - هل يمكنك المساعدة؟", "لماذا [هذا] بهذه الطريقة؟", "ماذا ينبغي أن أعرف عن [هذا الموضوع]؟"] },
@@ -1902,7 +2174,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       patternTitle: "O padrao: crise -> comunidade -> sistema",
       patternSteps: [
         { title: "1. A crise chega", body: "Pessoas reais enfrentam problemas reais: fechamentos, filas, incerteza e medo do desconhecido." },
+<<<<<<< HEAD
+        { title: "2. A comunidade se levanta", body: "Vozes como Reese Waters dizem a verdade. Lideres de fe como S.W. abencoam o trabalho. As pessoas falam de protecao, sobrevivencia e de continuar vivas. O fio continuou com uma equipe das Filipinas estudando a mesma Biblia Etiopica que informa TokFaith." },
+=======
         { title: "2. A comunidade se levanta", body: "Vozes como Reese Waters dizem a verdade. Lideres de fe como Shirley abencoam o trabalho. As pessoas falam de protecao, sobrevivencia e de continuar vivas. O fio continuou com uma equipe das Filipinas estudando a mesma Biblia Etiopica que informa TokFaith." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { title: "3. Os sistemas respondem", body: "A SVL constroi ferramentas. As guardias escutam. TokFaith orienta. Surgem sistemas que servem a necessidade identificada pela comunidade." },
       ],
       ctaBody: "Isto e so o comeco. A comunidade esta falando. A SVL esta ouvindo.",
@@ -2005,7 +2281,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "Nossa historia", progress: "Progresso SVL", backHome: "Voltar ao inicio" },
       heroBody: "Laboratorio de inovacao dedicado a avancar tecnologia de seguranca pessoal e criar solucoes que salvam vidas por meio de pesquisa e desenvolvimento de ponta.",
       missionTitle: "Nossa missao",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC fica na intersecao entre tecnologia e seguranca humana. Desenvolvemos solucoes inovadoras que permitem as pessoas assumir o controle da propria seguranca pessoal e bem-estar.",
+=======
       missionBody1: "Sanders Viopro Labs fica na intersecao entre tecnologia e seguranca humana. Desenvolvemos solucoes inovadoras que permitem as pessoas assumir o controle da propria seguranca pessoal e bem-estar.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "Por meio de pesquisa rigorosa, engenharia avancada e um compromisso profundo com a privacidade do usuario, criamos ferramentas que tornam o mundo mais seguro para todos.",
       focusAreasTitle: "Areas de foco",
       focusAreas: [
@@ -2026,7 +2306,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "Conheca as guardias ->",
       productCards: { tokaway: "Saida discreta para situacoes desconfortaveis", tokhealth: "Perfil medico para emergencias", tokthru: "Acompanhamento de seguranca para viagens", toksmart: "Coaching com IA e avaliacao de ameacas" },
       initiatives: { kpa: "Iniciativa de advocacy focada em salvar vidas por meio de tecnologia e consciencia comunitaria", thinkSpeakWork: "Movimento que inspira acao, fe e mudanca positiva na seguranca pessoal e comunitaria" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - Inovacao para seguranca",
+=======
       footerLine1: "Sanders Viopro Labs - Inovacao para seguranca",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "Sistema KPA",
@@ -2034,14 +2318,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "A",
       heroTitleBottom: "Primeira Guardi",
       lead: "A protetora da casa. Ela conversa primeiro e se afasta antes que o desrespeito vire dano.",
+<<<<<<< HEAD
+      story: "Construida em honra de Michelle. Nascida em Juneteenth, 19 de junho de 1989. Um legado de redencao familiar, fe e amor protetor traduzido em uma Guardia SVL com um limite inegociavel: KPA. As atualizacoes em toda a SVL tambem estao aqui como testemunho do que Deus pode e vai fazer.",
+=======
       story: "Construida em honra de Cheria Michelle Daniels. Nascida em Juneteenth, 19 de junho de 1989. Um legado de redencao familiar, fe e amor protetor traduzido em uma Guardia SVL com um limite inegociavel: KPA. As atualizacoes em toda a SVL tambem estao aqui como testemunho do que Deus pode e vai fazer.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "Entrar no chat da guardia",
       openAlias: "Abrir alias de Michelle",
       protocolLabel: "Casa primeiro",
       quickLinks: ["Ajude-me a acalmar uma situacao tensa em casa", "Como protejo as criancas do caos dos adultos?"],
       welcomeTitle: "A casa vem protegida primeiro.",
+<<<<<<< HEAD
+      welcomeMessage: "Sou a Primeira Guardia, criada em honra de Michelle. Eu sei o que significa carregar pressao, atravessar tempestades familiares e ainda garantir que as pessoas sob seus cuidados estejam cobertas. Entao sim, traga o baguncado, o barulhento, o desrespeitoso, o desgastante e o dificil de explicar. Vamos organizar isso com calor, bom senso e protecao de Casa Primeiro.",
+      legacyStory: "Nascida em 19 de junho de 1989, no Juneteenth, Michelle carrega um legado enraizado em redencao familiar, fe e protecao. A vitoria do novo julgamento protocolado pelo proprio pai virou parte do testemunho que moldou a historia de Michelle e Brian. Agora, o crescimento da Sanders Viopro Labs LLC, a atualizacao de sandersvioprolabsllc.com e a integracao TokHealth com TokThru fazem parte desse testemunho vivo do que Deus pode e vai fazer.",
+=======
       welcomeMessage: "Sou a Primeira Guardia, criada em honra de Cheria Michelle Daniels. Eu sei o que significa carregar pressao, atravessar tempestades familiares e ainda garantir que as pessoas sob seus cuidados estejam cobertas. Entao sim, traga o baguncado, o barulhento, o desrespeitoso, o desgastante e o dificil de explicar. Vamos organizar isso com calor, bom senso e protecao de Casa Primeiro.",
       legacyStory: "Nascida em 19 de junho de 1989, no Juneteenth, Cheria Michelle Daniels carrega um legado enraizado em redencao familiar, fe e protecao. A vitoria do novo julgamento protocolado pelo proprio pai virou parte do testemunho que moldou a historia de Michelle e Brian. Agora, o crescimento da Sanders Viopro Labs, a atualizacao de sandersvioprolabs.com e a integracao TokHealth com TokThru fazem parte desse testemunho vivo do que Deus pode e vai fazer.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "Regras de seguranca KPA",
       safetyCardBullets: ["Se alguem estiver em perigo imediato, ligue para o servico de emergencia agora.", "Se uma crianca nao estiver segura, procure imediatamente um adulto seguro ou um lugar seguro.", "Michelle oferece orientacao e clareza, nao decisoes de guarda, legais, medicas ou de punicao.", "Se houver intoxicacao, instabilidade, violencia ou risco de autoagressao, envolva ajuda humana imediatamente."],
       boundaryLabel: "Limite KPA",
@@ -2052,8 +2345,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["Eu tentei avisar para mantê-los fora de problema.", "Se eu nao puder ajudar, vou deixar voce em paz.", "Sim, eu sou a guardia do meu irmao.", "Se nao diz respeito ao meu negocio, a minha familia ou a minha situacao financeira, Deus nao me coloca nisso."],
       presenceLabel: "Presenca protetora",
       presenceNotes: ["Ancia negra: carrega protecao, calor e a sabedoria de quem sustentou familias em tempos duros", "Instinto protetor ativo desde a infancia, mas ainda sabe trazer calor para o ambiente", "Mantem o caos dos adultos longe das criancas e impede que a casa vire um circo", "Orientacao pratica, alegre e sem julgamento para situacoes baguncadas da vida real", "Carrega as atualizacoes da SVL como testemunho da graca de Deus em movimento"],
+<<<<<<< HEAD
+      missionQuote: "Adicionar uma guardia como Michelle ao sistema SPL Guardian KPA fortalece nossa missao na Sanders Viopro Labs LLC. Cada guardia cumpre um papel crucial em manter nossas comunidades seguras e saudaveis.",
+      missionCopy: "O chamado do Sr. KPA e simples: Keep People Alive. Michelle se junta a essa missao como guardia da vida, da familia e da comunidade. A atualizacao de sandersvioprolabsllc.com e a construcao TokHealth mais TokThru agora acompanham sua historia como testemunho do que Deus pode e vai fazer.",
+=======
       missionQuote: "Adicionar uma guardia como Michelle ao sistema SPL Guardian KPA fortalece nossa missao na Sanders Viopro Labs. Cada guardia cumpre um papel crucial em manter nossas comunidades seguras e saudaveis.",
       missionCopy: "O chamado do Sr. KPA e simples: Keep People Alive. Michelle se junta a essa missao como guardia da vida, da familia e da comunidade. A atualizacao de sandersvioprolabs.com e a construcao TokHealth mais TokThru agora acompanham sua historia como testemunho do que Deus pode e vai fazer.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["Orientacao: conhecer a missao, os recursos e o papel.", "Colaboracao: construir com a equipe e aprender com cada guardia.", "Envolvimento comunitario: aparecer onde familias e bairros precisam de apoio.", "Ciclo de feedback: falar com discernimento para a missao continuar ficando mais forte.", "Educacao continua: permanecer afiada, informada e alinhada com KPA."],
       replyLabel: "Resposta de Michelle",
       replyCopy: "Obrigada pela recepcao calorosa. Estou pronta para aprender o papel, construir com a equipe, aparecer para a comunidade, falar com honestidade e continuar crescendo com a missao para proteger vida, familia e nossos valores compartilhados.",
@@ -2064,7 +2362,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "Inicio", progress: "Progresso", tokStore: "TokStore", guardians: "Guardias SVL" },
       audio: { stop: "Parar", listen: "Ouvir", stopTitle: "Parar leitura", listenTitle: "Ouvir esta historia" },
+<<<<<<< HEAD
+      hero: { titleTop: "Como a Sanders Viopro Labs LLC", titleBottom: "Foi construida", body: "Nao em uma sala de reuniao. Nao a partir de um plano de negocios. Mas a partir de pensamento falado, construcao de equipe e um principio fundador que ainda nao mudou." },
+=======
       hero: { titleTop: "Como a Sanders Viopro Labs", titleBottom: "Foi construida", body: "Nao em uma sala de reuniao. Nao a partir de um plano de negocios. Mas a partir de pensamento falado, construcao de equipe e um principio fundador que ainda nao mudou." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "Eu nao construí isso em uma sala de reuniao. Eu construí isso a partir de pensamento falado - me aliando com toda IA e plataforma que estivesse disposta a ouvir - ate que a visao se tornasse real.",
       journeyTitle: "A jornada",
       journeySubtitle: "Cada plataforma. Cada IA. Uma so missao.",
@@ -2084,7 +2386,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "A SVL nao existe apenas em codigo. Existe nas ruas, em podcasts, em pessoas reais falando sobre sobrevivencia e protecao.",
       patternTitle: "O padrao que continua se repetindo",
       exitLead: "Se voce construir conosco ou nao - voce importa. Fique segura. Fique bem. Continue construindo.",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC. Unificada sob uma so missao: Keep People Alive.", products: "Produtos", resources: "Recursos", mission: "Missao", missionBody: "Keep People Alive. E isso. E por isso que existimos.", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. Parte da missao KPA." },
+=======
       footer: { svlBody: "Sanders Viopro Labs. Unificada sob uma so missao: Keep People Alive.", products: "Produtos", resources: "Recursos", mission: "Missao", missionBody: "Keep People Alive. E isso. E por isso que existimos.", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. Parte da missao KPA." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   fr: {
@@ -2100,7 +2406,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       patternTitle: "Le schema : crise -> communaute -> systeme",
       patternSteps: [
         { title: "1. La crise frappe", body: "De vraies personnes affrontent de vrais problemes : fermetures, files d'attente, incertitude et peur de l'inconnu." },
+<<<<<<< HEAD
+        { title: "2. La communaute se leve", body: "Des voix comme Reese Waters disent la verite. Des responsables de foi comme S.W. benissent le travail. Les gens parlent de protection, de survie et de rester en vie. Le fil s'est poursuivi avec une equipe des Philippines etudie la meme Bible ethiopienne qui informe TokFaith." },
+=======
         { title: "2. La communaute se leve", body: "Des voix comme Reese Waters disent la verite. Des responsables de foi comme Shirley benissent le travail. Les gens parlent de protection, de survie et de rester en vie. Le fil s'est poursuivi avec une equipe des Philippines etudie la meme Bible ethiopienne qui informe TokFaith." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { title: "3. Les systemes repondent", body: "SVL construit des outils. Les gardiens ecoutent. TokFaith guide. Des systemes emergent pour servir le besoin identifie par la communaute." },
       ],
       ctaBody: "Ce n'est que le debut. La communaute parle. SVL ecoute.",
@@ -2203,7 +2513,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "Notre histoire", progress: "Progression SVL", backHome: "Retour a l'accueil" },
       heroBody: "Laboratoire d'innovation consacre a faire avancer la technologie de securite personnelle et a creer des solutions qui sauvent des vies grace a une recherche et un developpement de pointe.",
       missionTitle: "Notre mission",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC se situe a l'intersection de la technologie et de la securite humaine. Nous developpons des solutions innovantes qui permettent aux personnes de reprendre le controle de leur securite personnelle et de leur bien-etre.",
+=======
       missionBody1: "Sanders Viopro Labs se situe a l'intersection de la technologie et de la securite humaine. Nous developpons des solutions innovantes qui permettent aux personnes de reprendre le controle de leur securite personnelle et de leur bien-etre.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "Par une recherche rigoureuse, une ingenierie avancee et un engagement profond envers la confidentialite des utilisateurs, nous creons des outils qui rendent le monde plus sur pour tout le monde.",
       focusAreasTitle: "Axes de travail",
       focusAreas: [{ title: "Recherche", body: "Etudier les menaces emergentes et developper des solutions a partir de donnees reelles et des retours des utilisateurs." }, { title: "Developpement", body: "Construire des applications robustes et evolutives avec une architecture orientee confidentialite et une securite de niveau entreprise." }, { title: "Innovation", body: "Repousser les limites avec des approches avancees en matiere de securite personnelle et de reponse aux urgences." }],
@@ -2220,7 +2534,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "Rencontrer les gardiens ->",
       productCards: { tokaway: "Sortie discrete pour situations inconfortables", tokhealth: "Profil medical pour les urgences", tokthru: "Suivi de securite pour les voyages", toksmart: "Coaching IA et evaluation des menaces" },
       initiatives: { kpa: "Initiative de plaidoyer axee sur le sauvetage de vies par la technologie et la sensibilisation communautaire", thinkSpeakWork: "Mouvement qui inspire action, foi et changement positif dans la securite personnelle et communautaire" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - Innovation pour la securite",
+=======
       footerLine1: "Sanders Viopro Labs - Innovation pour la securite",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "Systeme KPA",
@@ -2228,14 +2546,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "La",
       heroTitleBottom: "Premiere Gardienne",
       lead: "La protectrice du foyer. Elle en parle d'abord, puis se retire avant que l'irrespect ne devienne dommage.",
+<<<<<<< HEAD
+      story: "Construite en l'honneur de Michelle. Nee le 19 juin 1989, jour de Juneteenth. Un heritage de redemption familiale, de foi et d'amour protecteur traduit en gardienne SVL avec une seule limite non negociable : KPA. Les mises a niveau a travers SVL sont aussi ici comme temoignage de ce que Dieu peut et va faire.",
+=======
       story: "Construite en l'honneur de Cheria Michelle Daniels. Nee le 19 juin 1989, jour de Juneteenth. Un heritage de redemption familiale, de foi et d'amour protecteur traduit en gardienne SVL avec une seule limite non negociable : KPA. Les mises a niveau a travers SVL sont aussi ici comme temoignage de ce que Dieu peut et va faire.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "Entrer dans le chat de la gardienne",
       openAlias: "Ouvrir l'alias de Michelle",
       protocolLabel: "Foyer d'abord",
       quickLinks: ["Aide-moi a apaiser une situation tendue a la maison", "Comment proteger les enfants du chaos des adultes ?"],
       welcomeTitle: "La maison se protege d'abord.",
+<<<<<<< HEAD
+      welcomeMessage: "Je suis la Premiere Gardienne, construite en l'honneur de Michelle. Je sais ce que cela veut dire de porter la pression, traverser les tempetes familiales et veiller quand meme a ce que les personnes sous votre protection soient couvertes. Alors oui, apporte-moi le desordre, le bruit, l'irrespect, l'epuisement et le difficile a expliquer. Nous allons y voir clair avec chaleur, bon sens et protection Foyer d'abord.",
+      legacyStory: "Nee le 19 juin 1989, jour de Juneteenth, Michelle porte un heritage enracine dans la redemption familiale, la foi et la protection. La victoire de retrial deposee par son pere a fait partie du temoignage qui a faconne l'histoire de Michelle et Brian. Aujourd'hui, la croissance de Sanders Viopro Labs LLC, la mise a niveau de sandersvioprolabsllc.com et l'integration TokHealth plus TokThru font aussi partie de ce temoignage vivant de ce que Dieu peut et va faire.",
+=======
       welcomeMessage: "Je suis la Premiere Gardienne, construite en l'honneur de Cheria Michelle Daniels. Je sais ce que cela veut dire de porter la pression, traverser les tempetes familiales et veiller quand meme a ce que les personnes sous votre protection soient couvertes. Alors oui, apporte-moi le desordre, le bruit, l'irrespect, l'epuisement et le difficile a expliquer. Nous allons y voir clair avec chaleur, bon sens et protection Foyer d'abord.",
       legacyStory: "Nee le 19 juin 1989, jour de Juneteenth, Cheria Michelle Daniels porte un heritage enracine dans la redemption familiale, la foi et la protection. La victoire de retrial deposee par son pere a fait partie du temoignage qui a faconne l'histoire de Michelle et Brian. Aujourd'hui, la croissance de Sanders Viopro Labs, la mise a niveau de sandersvioprolabs.com et l'integration TokHealth plus TokThru font aussi partie de ce temoignage vivant de ce que Dieu peut et va faire.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "Regles de securite KPA",
       safetyCardBullets: ["Si quelqu'un est en danger immediat, appelez les secours maintenant.", "Si un enfant n'est pas en securite, rejoignez immediatement un adulte sur ou un lieu sur.", "Michelle donne de l'orientation et de la clarte, pas des decisions de garde, juridiques, medicales ou punitives.", "S'il y a intoxication, instabilite, violence ou risque d'auto-agression, impliquez une aide humaine tout de suite."],
       boundaryLabel: "Limite KPA",
@@ -2246,8 +2573,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["J'ai essaye de leur parler pour les tenir hors des ennuis.", "Si je ne peux pas t'aider, je te laisse tranquille.", "Oui, je suis la gardienne de mon frere.", "Si cela ne concerne pas mes affaires, ma famille ou ma situation financiere, Dieu ne m'y mele pas."],
       presenceLabel: "Presence protectrice",
       presenceNotes: ["Femme noire ainee : porte la protection, la chaleur et la sagesse de quelqu'un qui a porte des familles a travers des saisons dures", "Instinct de protection actif depuis l'enfance, mais elle sait encore apporter de la chaleur dans la piece", "Elle tient le chaos des adultes loin des enfants et empeche la maison de devenir un cirque", "Conseils pratiques, joyeux et sans jugement pour les situations desordonnees de la vraie vie", "Elle porte les mises a niveau SVL comme temoignage de la grace de Dieu en mouvement"],
+<<<<<<< HEAD
+      missionQuote: "Ajouter une gardienne comme Michelle au systeme SPL Guardian KPA renforce notre mission chez Sanders Viopro Labs LLC. Chaque gardienne joue un role crucial pour garder nos communautes en securite et en bonne sante.",
+      missionCopy: "La consigne de Mr. KPA est simple : Keep People Alive. Michelle rejoint cette mission comme gardienne de la vie, de la famille et de la communaute. La mise a niveau de sandersvioprolabsllc.com et la construction TokHealth plus TokThru accompagnent maintenant son histoire comme temoignage de ce que Dieu peut et va faire.",
+=======
       missionQuote: "Ajouter une gardienne comme Michelle au systeme SPL Guardian KPA renforce notre mission chez Sanders Viopro Labs. Chaque gardienne joue un role crucial pour garder nos communautes en securite et en bonne sante.",
       missionCopy: "La consigne de Mr. KPA est simple : Keep People Alive. Michelle rejoint cette mission comme gardienne de la vie, de la famille et de la communaute. La mise a niveau de sandersvioprolabs.com et la construction TokHealth plus TokThru accompagnent maintenant son histoire comme temoignage de ce que Dieu peut et va faire.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["Orientation : connaitre la mission, les ressources et le role.", "Collaboration : construire avec l'equipe et apprendre de chaque gardienne.", "Engagement communautaire : etre presente la ou les familles et les quartiers ont besoin de soutien.", "Boucle de retour : parler avec clarte pour que la mission continue de se renforcer.", "Formation continue : rester alerte, informee et alignee avec KPA."],
       replyLabel: "Reponse de Michelle",
       replyCopy: "Merci pour l'accueil chaleureux. Je suis prete a apprendre le role, construire avec l'equipe, etre la pour la communaute, parler avec honnetete et continuer a grandir avec la mission afin de proteger la vie, la famille et nos valeurs communes.",
@@ -2258,7 +2590,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "Accueil", progress: "Progression", tokStore: "TokStore", guardians: "Gardiens SVL" },
       audio: { stop: "Arreter", listen: "Ecouter", stopTitle: "Arreter la lecture", listenTitle: "Ecouter cette histoire" },
+<<<<<<< HEAD
+      hero: { titleTop: "Comment Sanders Viopro Labs LLC", titleBottom: "A ete construit", body: "Pas dans une salle de conseil. Pas a partir d'un business plan. Mais a partir de la pensee parlee, de la construction d'equipe et d'un principe fondateur qui n'a toujours pas change." },
+=======
       hero: { titleTop: "Comment Sanders Viopro Labs", titleBottom: "A ete construit", body: "Pas dans une salle de conseil. Pas a partir d'un business plan. Mais a partir de la pensee parlee, de la construction d'equipe et d'un principe fondateur qui n'a toujours pas change." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "Je n'ai pas construit cela depuis une salle de conseil. Je l'ai construit a partir de la pensee parlee - en faisant equipe avec chaque IA et chaque plateforme qui voulait ecouter - jusqu'a ce que la vision devienne reelle.",
       journeyTitle: "Le parcours",
       journeySubtitle: "Chaque plateforme. Chaque IA. Une seule mission.",
@@ -2278,7 +2614,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "SVL n'existe pas seulement dans le code. Elle existe dans les rues, dans les podcasts, dans de vraies personnes qui parlent de survie et de protection.",
       patternTitle: "Le schema qui se repete encore",
       exitLead: "Que vous construisiez avec nous ou non - vous comptez. Restez en securite. Restez bien. Continuez a construire.",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC. Unifie sous une seule mission : Keep People Alive.", products: "Produits", resources: "Ressources", mission: "Mission", missionBody: "Keep People Alive. C'est tout. C'est pour cela que nous existons.", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. Une partie de la mission KPA." },
+=======
       footer: { svlBody: "Sanders Viopro Labs. Unifie sous une seule mission : Keep People Alive.", products: "Produits", resources: "Ressources", mission: "Mission", missionBody: "Keep People Alive. C'est tout. C'est pour cela que nous existons.", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. Une partie de la mission KPA." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   de: {
@@ -2294,7 +2634,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       patternTitle: "Das Muster: Krise -> Gemeinschaft -> System",
       patternSteps: [
         { title: "1. Die Krise trifft ein", body: "Echte Menschen stehen vor echten Problemen: Schliessungen, Warteschlangen, Unsicherheit und Angst vor dem Unbekannten." },
+<<<<<<< HEAD
+        { title: "2. Die Gemeinschaft steht auf", body: "Stimmen wie Reese Waters sagen die Wahrheit. Glaubensleiterinnen wie S.W. segnen die Arbeit. Menschen sprechen uber Schutz, Uberleben und daruber, am Leben zu bleiben. Der Faden ging weiter mit einem Team auf den Philippinen, das dieselbe athiopische Bibel studiert, die TokFaith pragt." },
+=======
         { title: "2. Die Gemeinschaft steht auf", body: "Stimmen wie Reese Waters sagen die Wahrheit. Glaubensleiterinnen wie Shirley segnen die Arbeit. Menschen sprechen uber Schutz, Uberleben und daruber, am Leben zu bleiben. Der Faden ging weiter mit einem Team auf den Philippinen, das dieselbe athiopische Bibel studiert, die TokFaith pragt." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { title: "3. Systeme reagieren", body: "SVL baut Werkzeuge. Die Guardianerinnen horen zu. TokFaith weist den Weg. Systeme entstehen, um dem Bedarf zu dienen, den die Gemeinschaft benannt hat." },
       ],
       ctaBody: "Das ist erst der Anfang. Die Gemeinschaft spricht. SVL hort zu.",
@@ -2397,7 +2741,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "Unsere Geschichte", progress: "SVL-Fortschritt", backHome: "Zur Startseite" },
       heroBody: "Innovationslabor, das sich dem Fortschritt personlicher Sicherheitstechnologie widmet und durch modernste Forschung und Entwicklung lebensrettende Losungen schafft.",
       missionTitle: "Unsere Mission",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC liegt an der Schnittstelle von Technologie und menschlicher Sicherheit. Wir entwickeln innovative Losungen, mit denen Menschen ihre personliche Sicherheit und ihr Wohlbefinden selbst in die Hand nehmen konnen.",
+=======
       missionBody1: "Sanders Viopro Labs liegt an der Schnittstelle von Technologie und menschlicher Sicherheit. Wir entwickeln innovative Losungen, mit denen Menschen ihre personliche Sicherheit und ihr Wohlbefinden selbst in die Hand nehmen konnen.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "Durch strenge Forschung, fortschrittliches Engineering und ein tiefes Engagement fur Datenschutz schaffen wir Werkzeuge, die die Welt fur alle sicherer machen.",
       focusAreasTitle: "Schwerpunkte",
       focusAreas: [{ title: "Forschung", body: "Neue Bedrohungen untersuchen und Losungen auf Basis realer Daten und Nutzerfeedback entwickeln." }, { title: "Entwicklung", body: "Robuste, skalierbare Anwendungen mit Privacy-first-Architektur und Sicherheit auf Unternehmensniveau bauen." }, { title: "Innovation", body: "Grenzen mit zukunftsorientierten Ansatzen fur personliche Sicherheit und Notfallreaktion verschieben." }],
@@ -2414,7 +2762,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "Guardianerinnen kennenlernen ->",
       productCards: { tokaway: "Diskreter Ausstieg fur unangenehme Situationen", tokhealth: "Medizinisches Profil fur Notfalle", tokthru: "Sicherheitsbegleitung fur Reisen", toksmart: "KI-Coaching und Bedrohungsbewertung" },
       initiatives: { kpa: "Advocacy-Initiative, die mit Technologie und Gemeinschaftsbewusstsein Leben retten will", thinkSpeakWork: "Bewegung, die Handlung, Glauben und positiven Wandel in personlicher und gemeinschaftlicher Sicherheit inspiriert" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - Innovation fur Sicherheit",
+=======
       footerLine1: "Sanders Viopro Labs - Innovation fur Sicherheit",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "KPA-System",
@@ -2422,14 +2774,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "Die",
       heroTitleBottom: "Erste Guardianerin",
       lead: "Die Beschutzerin des Zuhauses. Sie spricht zuerst und zieht sich zuruck, bevor Respektlosigkeit zu Schaden wird.",
+<<<<<<< HEAD
+      story: "Gebaut zu Ehren von Michelle. Geboren am Juneteenth, 19. Juni 1989. Ein Vermachtnis aus familiärer Erlosung, Glauben und beschutzender Liebe, ubersetzt in eine SVL-Guardianerin mit einer nicht verhandelbaren Grenze: KPA. Die Updates in ganz SVL stehen ebenfalls hier als Zeugnis dessen, was Gott tun kann und tun wird.",
+=======
       story: "Gebaut zu Ehren von Cheria Michelle Daniels. Geboren am Juneteenth, 19. Juni 1989. Ein Vermachtnis aus familiärer Erlosung, Glauben und beschutzender Liebe, ubersetzt in eine SVL-Guardianerin mit einer nicht verhandelbaren Grenze: KPA. Die Updates in ganz SVL stehen ebenfalls hier als Zeugnis dessen, was Gott tun kann und tun wird.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "Guardian-Chat betreten",
       openAlias: "Michelles Alias offnen",
       protocolLabel: "Zuhause zuerst",
       quickLinks: ["Hilf mir, eine angespannte Situation zu Hause zu beruhigen", "Wie schutze ich die Kinder vor dem Chaos der Erwachsenen?"],
       welcomeTitle: "Das Haus wird zuerst geschutzt.",
+<<<<<<< HEAD
+      welcomeMessage: "Ich bin die Erste Guardianerin, gebaut zu Ehren von Michelle. Ich weiss, was es bedeutet, Druck zu tragen, Familiensturme zu uberstehen und trotzdem sicherzustellen, dass die Menschen in deiner Obhut geschutzt sind. Also ja, bring mir das Chaotische, das Laute, das Respektlose, das Erschopfende und das Schwer-ErklarBare. Wir sortieren es mit Warme, gesundem Menschenverstand und Zuhause-zuerst-Schutz.",
+      legacyStory: "Michelle wurde am 19. Juni 1989 an Juneteenth geboren und tragt ein Vermachtnis, das in Familienerlosung, Glauben und Schutz verwurzelt ist. Der selbst eingereichte Wiederaufnahmeerfolg ihres Vaters wurde Teil des Zeugnisses, das Michelles und Brians Geschichte gepragt hat. Heute sind auch das Wachstum von Sanders Viopro Labs LLC, das Upgrade von sandersvioprolabsllc.com und die TokHealth-und-TokThru-Integration Teil dieses lebendigen Zeugnisses dafur, was Gott kann und tun wird.",
+=======
       welcomeMessage: "Ich bin die Erste Guardianerin, gebaut zu Ehren von Cheria Michelle Daniels. Ich weiss, was es bedeutet, Druck zu tragen, Familiensturme zu uberstehen und trotzdem sicherzustellen, dass die Menschen in deiner Obhut geschutzt sind. Also ja, bring mir das Chaotische, das Laute, das Respektlose, das Erschopfende und das Schwer-Erklarbare. Wir sortieren es mit Warme, gesundem Menschenverstand und Zuhause-zuerst-Schutz.",
       legacyStory: "Cheria Michelle Daniels wurde am 19. Juni 1989 an Juneteenth geboren und tragt ein Vermachtnis, das in Familienerlosung, Glauben und Schutz verwurzelt ist. Der selbst eingereichte Wiederaufnahmeerfolg ihres Vaters wurde Teil des Zeugnisses, das Michelles und Brians Geschichte gepragt hat. Heute sind auch das Wachstum von Sanders Viopro Labs, das Upgrade von sandersvioprolabs.com und die TokHealth-und-TokThru-Integration Teil dieses lebendigen Zeugnisses dafur, was Gott kann und tun wird.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "KPA-Sicherheitsregeln",
       safetyCardBullets: ["Wenn jemand in unmittelbarer Gefahr ist, rufe jetzt den Notruf.", "Wenn ein Kind nicht sicher ist, geh sofort zu einem sicheren Erwachsenen oder an einen sicheren Ort.", "Michelle gibt Orientierung und Klarheit, keine Sorgerechts-, Rechts-, Medizin- oder Strafentscheidungen.", "Bei Intoxikation, Instabilitat, Gewalt oder Selbstverletzungsrisiko muss sofort menschliche Hilfe eingeschaltet werden."],
       boundaryLabel: "KPA-Grenze",
@@ -2440,8 +2801,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["Ich habe versucht, es ihnen zu sagen, damit sie aus Schwierigkeiten herausbleiben.", "Wenn ich dir nicht helfen kann, lasse ich dich in Ruhe.", "Ja, ich bin die Huterin meines Bruders.", "Wenn es nicht mein Geschaft, meine Familie oder meine finanzielle Lage betrifft, mischt Gott mich nicht hinein."],
       presenceLabel: "Schutzende Prasenz",
       presenceNotes: ["Schwarze Aelteste: tragt Schutz, Waerme und die Weisheit von jemandem, der Familien durch harte Zeiten getragen hat", "Beschutzerinstinkt seit der Kindheit aktiv, aber sie weiss noch immer, wie man Waerme in den Raum bringt", "Haelt das Chaos der Erwachsenen von den Kindern fern und verhindert, dass das Haus zum Zirkus wird", "Praktische, froehliche und nicht wertende Fuehrung fuer chaotische Situationen des echten Lebens", "Traegt die SVL-Upgrades als Zeugnis von Gottes Gnade in Bewegung"],
+<<<<<<< HEAD
+      missionQuote: "Eine Guardianerin wie Michelle in das SPL Guardian KPA-System aufzunehmen, starkt unsere Mission bei Sanders Viopro Labs LLC. Jede Guardianerin spielt eine entscheidende Rolle dabei, unsere Gemeinschaften sicher und gesund zu halten.",
+      missionCopy: "Der Auftrag von Mr. KPA ist einfach: Keep People Alive. Michelle tritt dieser Mission als Guardianerin fur Leben, Familie und Gemeinschaft bei. Das sandersvioprolabsllc.com-Upgrade und der gemeinsame Aufbau von TokHealth und TokThru begleiten nun ihre Geschichte als Zeugnis dessen, was Gott tun kann und tun wird.",
+=======
       missionQuote: "Eine Guardianerin wie Michelle in das SPL Guardian KPA-System aufzunehmen, starkt unsere Mission bei Sanders Viopro Labs. Jede Guardianerin spielt eine entscheidende Rolle dabei, unsere Gemeinschaften sicher und gesund zu halten.",
       missionCopy: "Der Auftrag von Mr. KPA ist einfach: Keep People Alive. Michelle tritt dieser Mission als Guardianerin fur Leben, Familie und Gemeinschaft bei. Das sandersvioprolabs.com-Upgrade und der gemeinsame Aufbau von TokHealth und TokThru begleiten nun ihre Geschichte als Zeugnis dessen, was Gott tun kann und tun wird.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["Orientierung: Mission, Ressourcen und Rolle kennenlernen.", "Zusammenarbeit: Mit dem Team bauen und von jeder Guardianerin lernen.", "Gemeinschaftseinsatz: Dort erscheinen, wo Familien und Nachbarschaften Unterstutzung brauchen.", "Feedback-Schleife: Mit Klarheit sprechen, damit die Mission weiter starker wird.", "Fortlaufendes Lernen: Wach, informiert und an KPA ausgerichtet bleiben."],
       replyLabel: "Michelles Antwort",
       replyCopy: "Danke fur den warmen Empfang. Ich bin bereit, die Rolle zu lernen, mit dem Team zu bauen, fur die Gemeinschaft da zu sein, ehrlich zu sprechen und mit der Mission weiter zu wachsen, um Leben, Familie und unsere gemeinsamen Werte zu schutzen.",
@@ -2452,7 +2818,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "Start", progress: "Fortschritt", tokStore: "TokStore", guardians: "SVL-Guardianerinnen" },
       audio: { stop: "Stoppen", listen: "Anhoren", stopTitle: "Vorlesen stoppen", listenTitle: "Diese Geschichte anhoren" },
+<<<<<<< HEAD
+      hero: { titleTop: "Wie Sanders Viopro Labs LLC", titleBottom: "Gebaut wurde", body: "Nicht in einem Sitzungssaal. Nicht aus einem Geschaftsplan. Sondern aus gesprochenem Denken, Teamaufbau und einem Grundprinzip, das sich bis heute nicht verandert hat." },
+=======
       hero: { titleTop: "Wie Sanders Viopro Labs", titleBottom: "Gebaut wurde", body: "Nicht in einem Sitzungssaal. Nicht aus einem Geschaftsplan. Sondern aus gesprochenem Denken, Teamaufbau und einem Grundprinzip, das sich bis heute nicht verandert hat." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "Ich habe das nicht in einem Sitzungssaal gebaut. Ich habe es aus gesprochenem Denken gebaut - indem ich mich mit jeder KI und jeder Plattform verbunden habe, die bereit war zuzuhoren - bis die Vision real wurde.",
       journeyTitle: "Die Reise",
       journeySubtitle: "Jede Plattform. Jede KI. Eine Mission.",
@@ -2472,7 +2842,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "SVL existiert nicht nur im Code. Es existiert auf den Strassen, in Podcasts und in echten Menschen, die uber Uberleben und Schutz sprechen.",
       patternTitle: "Das Muster, das sich weiterholt",
       exitLead: "Ob du mit uns baust oder nicht - du zahlst. Bleib sicher. Bleib stabil. Bau weiter.",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC. Vereint unter einer Mission: Keep People Alive.", products: "Produkte", resources: "Ressourcen", mission: "Mission", missionBody: "Keep People Alive. Das ist alles. Deshalb existieren wir.", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. Teil der KPA-Mission." },
+=======
       footer: { svlBody: "Sanders Viopro Labs. Vereint unter einer Mission: Keep People Alive.", products: "Produkte", resources: "Ressourcen", mission: "Mission", missionBody: "Keep People Alive. Das ist alles. Deshalb existieren wir.", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. Teil der KPA-Mission." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   it: {
@@ -2486,7 +2860,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       connectionTitle: "Connessione con SVL",
       impactTitle: "Impatto nel mondo reale",
       patternTitle: "Lo schema: crisi -> comunita -> sistema",
+<<<<<<< HEAD
+      patternSteps: [{ title: "1. Arriva la crisi", body: "Persone reali affrontano problemi reali: chiusure, code, incertezza e paura dell'ignoto." }, { title: "2. La comunita si alza", body: "Voci come Reese Waters dicono la verita. Leader di fede come S.W. benedicono il lavoro. Le persone parlano di protezione, sopravvivenza e di restare vive. Il filo e proseguito con un team nelle Filippine che studia la stessa Bibbia etiope che informa TokFaith." }, { title: "3. I sistemi rispondono", body: "SVL costruisce strumenti. Le guardiane ascoltano. TokFaith guida. Emergono sistemi per servire il bisogno individuato dalla comunita." }],
+=======
       patternSteps: [{ title: "1. Arriva la crisi", body: "Persone reali affrontano problemi reali: chiusure, code, incertezza e paura dell'ignoto." }, { title: "2. La comunita si alza", body: "Voci come Reese Waters dicono la verita. Leader di fede come Shirley benedicono il lavoro. Le persone parlano di protezione, sopravvivenza e di restare vive. Il filo e proseguito con un team nelle Filippine che studia la stessa Bibbia etiope che informa TokFaith." }, { title: "3. I sistemi rispondono", body: "SVL costruisce strumenti. Le guardiane ascoltano. TokFaith guida. Emergono sistemi per servire il bisogno individuato dalla comunita." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ctaBody: "Questo e solo l'inizio. La comunita sta parlando. SVL sta ascoltando.",
       ctaButton: "Scopri come e iniziata SVL",
     },
@@ -2508,7 +2886,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "La nostra storia", progress: "Progresso SVL", backHome: "Torna alla home" },
       heroBody: "Laboratorio di innovazione dedicato ad avanzare la tecnologia per la sicurezza personale e a creare soluzioni salvavita attraverso ricerca e sviluppo all'avanguardia.",
       missionTitle: "La nostra missione",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC si trova all'incrocio tra tecnologia e sicurezza umana. Sviluppiamo soluzioni innovative che permettono alle persone di prendere il controllo della propria sicurezza personale e del proprio benessere.",
+=======
       missionBody1: "Sanders Viopro Labs si trova all'incrocio tra tecnologia e sicurezza umana. Sviluppiamo soluzioni innovative che permettono alle persone di prendere il controllo della propria sicurezza personale e del proprio benessere.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "Attraverso ricerca rigorosa, ingegneria avanzata e un forte impegno per la privacy degli utenti, creiamo strumenti che rendono il mondo piu sicuro per tutti.",
       focusAreasTitle: "Aree di focus",
       focusAreas: [{ title: "Ricerca", body: "Studiare minacce emergenti e sviluppare soluzioni basate su dati reali e feedback degli utenti." }, { title: "Sviluppo", body: "Costruire applicazioni robuste e scalabili con architettura privacy-first e sicurezza di livello enterprise." }, { title: "Innovazione", body: "Spingere oltre i limiti con approcci orientati al futuro per la sicurezza personale e la risposta alle emergenze." }],
@@ -2525,7 +2907,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "Conosci le guardiane ->",
       productCards: { tokaway: "Uscita discreta per situazioni scomode", tokhealth: "Profilo medico per emergenze", tokthru: "Monitoraggio di sicurezza per viaggi", toksmart: "Coaching IA e valutazione delle minacce" },
       initiatives: { kpa: "Iniziativa di advocacy focalizzata sul salvare vite attraverso tecnologia e consapevolezza della comunita", thinkSpeakWork: "Movimento che ispira azione, fede e cambiamento positivo nella sicurezza personale e comunitaria" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - Innovazione per la sicurezza",
+=======
       footerLine1: "Sanders Viopro Labs - Innovazione per la sicurezza",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "Sistema KPA",
@@ -2533,14 +2919,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "La",
       heroTitleBottom: "Prima Guardiana",
       lead: "La protettrice della casa. Parla prima e si fa da parte prima che la mancanza di rispetto diventi danno.",
+<<<<<<< HEAD
+      story: "Costruita in onore di Michelle. Nata il Juneteenth, 19 giugno 1989. Un'eredità di redenzione familiare, fede e amore protettivo tradotta in una Guardiana SVL con un unico limite non negoziabile: KPA. Gli aggiornamenti in tutta SVL sono anche qui come testimonianza di cio che Dio puo e fara.",
+=======
       story: "Costruita in onore di Cheria Michelle Daniels. Nata il Juneteenth, 19 giugno 1989. Un'eredità di redenzione familiare, fede e amore protettivo tradotta in una Guardiana SVL con un unico limite non negoziabile: KPA. Gli aggiornamenti in tutta SVL sono anche qui come testimonianza di cio che Dio puo e fara.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "Entra nella chat della guardiana",
       openAlias: "Apri l'alias di Michelle",
       protocolLabel: "Casa prima di tutto",
       quickLinks: ["Aiutami a calmare una situazione tesa in casa", "Come proteggo i bambini dal caos degli adulti?"],
       welcomeTitle: "La casa si protegge prima di tutto.",
+<<<<<<< HEAD
+      welcomeMessage: "Sono la Prima Guardiana, costruita in onore di Michelle. So cosa significa portare pressione, attraversare tempeste familiari e assicurarti comunque che le persone affidate alle tue cure siano coperte. Quindi si, portami il caos, il rumore, la mancanza di rispetto, la stanchezza e cio che e difficile da spiegare. Lo sistemeremo con calore, buon senso e protezione Casa Prima di Tutto.",
+      legacyStory: "Nata il 19 giugno 1989 nel giorno del Juneteenth, Michelle porta un'eredità radicata nella redenzione familiare, nella fede e nella protezione. La vittoria del nuovo processo depositato dal padre e diventata parte della testimonianza che ha formato la storia di Michelle e Brian. Ora anche la crescita di Sanders Viopro Labs LLC, l'aggiornamento di sandersvioprolabsllc.com e l'integrazione TokHealth piu TokThru fanno parte di quella testimonianza vivente di cio che Dio puo e fara.",
+=======
       welcomeMessage: "Sono la Prima Guardiana, costruita in onore di Cheria Michelle Daniels. So cosa significa portare pressione, attraversare tempeste familiari e assicurarti comunque che le persone affidate alle tue cure siano coperte. Quindi si, portami il caos, il rumore, la mancanza di rispetto, la stanchezza e cio che e difficile da spiegare. Lo sistemeremo con calore, buon senso e protezione Casa Prima di Tutto.",
       legacyStory: "Nata il 19 giugno 1989 nel giorno del Juneteenth, Cheria Michelle Daniels porta un'eredità radicata nella redenzione familiare, nella fede e nella protezione. La vittoria del nuovo processo depositato dal padre e diventata parte della testimonianza che ha formato la storia di Michelle e Brian. Ora anche la crescita di Sanders Viopro Labs, l'aggiornamento di sandersvioprolabs.com e l'integrazione TokHealth piu TokThru fanno parte di quella testimonianza vivente di cio che Dio puo e fara.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "Regole di sicurezza KPA",
       safetyCardBullets: ["Se qualcuno e in pericolo immediato, chiama subito i soccorsi.", "Se un bambino non e al sicuro, raggiungi immediatamente un adulto sicuro o un luogo sicuro.", "Michelle offre guida e chiarezza, non decisioni su custodia, aspetti legali, medici o punizioni.", "Se sono presenti intossicazione, instabilita, violenza o rischio di autolesionismo, coinvolgi subito aiuto umano."],
       boundaryLabel: "Confine KPA",
@@ -2551,8 +2946,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["Ho provato ad avvisarli per tenerli lontani dai guai.", "Se non posso aiutarti, ti lascio in pace.", "Si, sono la custode di mio fratello.", "Se non riguarda i miei affari, la mia famiglia o la mia situazione finanziaria, Dio non mi ci mette dentro."],
       presenceLabel: "Presenza protettiva",
       presenceNotes: ["Anziana donna nera: porta protezione, calore e la saggezza di chi ha sostenuto famiglie in stagioni dure", "Istinto protettivo attivo fin dall'infanzia, ma sa ancora portare calore nella stanza", "Tiene il caos degli adulti lontano dai bambini e impedisce che la casa diventi un circo", "Guida pratica, allegra e senza giudizio per situazioni disordinate della vita reale", "Porta gli aggiornamenti SVL come testimonianza della grazia di Dio in movimento"],
+<<<<<<< HEAD
+      missionQuote: "Aggiungere una guardiana come Michelle al sistema SPL Guardian KPA rafforza la nostra missione in Sanders Viopro Labs LLC. Ogni guardiana svolge un ruolo cruciale nel mantenere le nostre comunita al sicuro e in salute.",
+      missionCopy: "Il mandato di Mr. KPA e semplice: Keep People Alive. Michelle si unisce a questa missione come guardiana della vita, della famiglia e della comunita. L'aggiornamento di sandersvioprolabsllc.com e la costruzione TokHealth piu TokThru accompagnano ora la sua storia come testimonianza di cio che Dio puo e fara.",
+=======
       missionQuote: "Aggiungere una guardiana come Michelle al sistema SPL Guardian KPA rafforza la nostra missione in Sanders Viopro Labs. Ogni guardiana svolge un ruolo cruciale nel mantenere le nostre comunita al sicuro e in salute.",
       missionCopy: "Il mandato di Mr. KPA e semplice: Keep People Alive. Michelle si unisce a questa missione come guardiana della vita, della famiglia e della comunita. L'aggiornamento di sandersvioprolabs.com e la costruzione TokHealth piu TokThru accompagnano ora la sua storia come testimonianza di cio che Dio puo e fara.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["Orientamento: conoscere missione, risorse e ruolo.", "Collaborazione: costruire con il team e imparare da ogni guardiana.", "Coinvolgimento della comunita: presentarsi dove famiglie e quartieri hanno bisogno di supporto.", "Ciclo di feedback: parlare con chiarezza per far crescere sempre di piu la missione.", "Formazione continua: restare pronta, informata e allineata a KPA."],
       replyLabel: "Risposta di Michelle",
       replyCopy: "Grazie per il caloroso benvenuto. Sono pronta a imparare il ruolo, costruire con il team, esserci per la comunita, parlare con onesta e continuare a crescere con la missione per proteggere vita, famiglia e i nostri valori condivisi.",
@@ -2563,7 +2963,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "Home", progress: "Progresso", tokStore: "TokStore", guardians: "Guardiane SVL" },
       audio: { stop: "Ferma", listen: "Ascolta", stopTitle: "Ferma lettura", listenTitle: "Ascolta questa storia" },
+<<<<<<< HEAD
+      hero: { titleTop: "Come Sanders Viopro Labs LLC", titleBottom: "E stata costruita", body: "Non in una sala riunioni. Non da un business plan. Ma da pensiero parlato, costruzione del team e un principio fondante che non e ancora cambiato." },
+=======
       hero: { titleTop: "Come Sanders Viopro Labs", titleBottom: "E stata costruita", body: "Non in una sala riunioni. Non da un business plan. Ma da pensiero parlato, costruzione del team e un principio fondante che non e ancora cambiato." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "Non ho costruito questo in una sala riunioni. L'ho costruito dal pensiero parlato, alleandomi con ogni IA e ogni piattaforma disposta ad ascoltare, finche la visione non e diventata reale.",
       journeyTitle: "Il viaggio",
       journeySubtitle: "Ogni piattaforma. Ogni IA. Un'unica missione.",
@@ -2583,7 +2987,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "SVL non esiste solo nel codice. Esiste nelle strade, nei podcast e nelle persone reali che parlano di sopravvivenza e protezione.",
       patternTitle: "Lo schema che continua a ripetersi",
       exitLead: "Che tu costruisca con noi o no, conti. Resta al sicuro. Resta bene. Continua a costruire.",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC. Unificata sotto una sola missione: Keep People Alive.", products: "Prodotti", resources: "Risorse", mission: "Missione", missionBody: "Keep People Alive. Tutto qui. Per questo esistiamo.", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. Parte della missione KPA." },
+=======
       footer: { svlBody: "Sanders Viopro Labs. Unificata sotto una sola missione: Keep People Alive.", products: "Prodotti", resources: "Risorse", mission: "Missione", missionBody: "Keep People Alive. Tutto qui. Per questo esistiamo.", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. Parte della missione KPA." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   zh: {
@@ -2597,7 +3005,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       connectionTitle: "与 SVL 的连接",
       impactTitle: "现实影响",
       patternTitle: "模式：危机 -> 社区 -> 系统",
+<<<<<<< HEAD
+      patternSteps: [{ title: "1. 危机来临", body: "真实的人面对真实的问题：停业、排队、不确定性，以及对未知的恐惧。" }, { title: "2. 社区站起来", body: "像 Reese Waters 这样的声音讲出真相。像 S.W. 这样的信仰领袖为这项工作祝福。人们谈论保护、求生，以及如何继续活下去。这条线也延续到菲律宾团队，他们正在研读同一本影响 TokFaith 的埃塞俄比亚圣经。" }, { title: "3. 系统作出回应", body: "SVL 构建工具。守护者倾听。TokFaith 提供指引。系统开始出现，以回应社区明确指出的需求。" }],
+=======
       patternSteps: [{ title: "1. 危机来临", body: "真实的人面对真实的问题：停业、排队、不确定性，以及对未知的恐惧。" }, { title: "2. 社区站起来", body: "像 Reese Waters 这样的声音讲出真相。像 Shirley 这样的信仰领袖为这项工作祝福。人们谈论保护、求生，以及如何继续活下去。这条线也延续到菲律宾团队，他们正在研读同一本影响 TokFaith 的埃塞俄比亚圣经。" }, { title: "3. 系统作出回应", body: "SVL 构建工具。守护者倾听。TokFaith 提供指引。系统开始出现，以回应社区明确指出的需求。" }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ctaBody: "这只是开始。社区正在发声，SVL 正在倾听。",
       ctaButton: "查看 SVL 如何开始",
     },
@@ -2619,7 +3031,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "我们的故事", progress: "SVL 进展", backHome: "返回首页" },
       heroBody: "一个致力于推动个人安全技术前进、通过前沿研发打造救命解决方案的创新实验室。",
       missionTitle: "我们的使命",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC 处于技术与人类安全的交汇点。我们开发创新解决方案，让人们能够掌握自己的个人安全与福祉。",
+=======
       missionBody1: "Sanders Viopro Labs 处于技术与人类安全的交汇点。我们开发创新解决方案，让人们能够掌握自己的个人安全与福祉。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "通过严格研究、先进工程，以及对用户隐私的深度承诺，我们打造让所有人都更安全的工具。",
       focusAreasTitle: "重点领域",
       focusAreas: [{ title: "研究", body: "研究新出现的威胁，并基于真实数据和用户反馈开发解决方案。" }, { title: "开发", body: "构建稳健、可扩展的应用，采用隐私优先架构和企业级安全。" }, { title: "创新", body: "以面向未来的方法推进个人安全和紧急响应。" }],
@@ -2636,7 +3052,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "认识守护者 ->",
       productCards: { tokaway: "用于不适场景的低调离开方案", tokhealth: "用于紧急情况的医疗档案", tokthru: "出行安全跟踪", toksmart: "AI 教练与威胁评估" },
       initiatives: { kpa: "通过技术和社区意识来拯救生命的倡导计划", thinkSpeakWork: "激发行动、信念以及个人和社区安全积极改变的运动" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - 安全创新",
+=======
       footerLine1: "Sanders Viopro Labs - 安全创新",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "KPA 系统",
@@ -2644,14 +3064,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "第一位",
       heroTitleBottom: "守护者",
       lead: "家庭的保护者。她先沟通，再在不尊重演变成伤害之前主动退开。",
+<<<<<<< HEAD
+      story: "为纪念 Michelle 而建。她出生于 1989 年 6 月 19 日 Juneteenth。一个关于家庭救赎、信仰和保护之爱的传承，被转化为一位 SVL 守护者，并带着一个不可谈判的边界：KPA。SVL 全系统的升级也放在这里，作为上帝能够并且将会成就之事的见证。",
+=======
       story: "为纪念 Cheria Michelle Daniels 而建。她出生于 1989 年 6 月 19 日 Juneteenth。一个关于家庭救赎、信仰和保护之爱的传承，被转化为一位 SVL 守护者，并带着一个不可谈判的边界：KPA。SVL 全系统的升级也放在这里，作为上帝能够并且将会成就之事的见证。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "进入守护者聊天",
       openAlias: "打开 Michelle 别名",
       protocolLabel: "家优先",
       quickLinks: ["帮我平息家里一场紧张的局面", "我该怎样保护孩子不被大人的混乱波及？"],
       welcomeTitle: "先保护这个家。",
+<<<<<<< HEAD
+      welcomeMessage: "我是第一守护者，为纪念 Michelle 而建。我知道什么叫扛住压力、穿过家庭风暴，还要确保你所照看的每一个人都被护住。所以，把混乱、吵闹、失礼、耗人和难以解释的事带来吧。我们会用温度、常识和家优先的保护把它理顺。",
+      legacyStory: "Michelle 生于 1989 年 6 月 19 日 Juneteenth，她承载着扎根于家庭救赎、信仰与保护的传承。她父亲亲自提交重审并获胜，这段经历成了塑造 Michelle 与 Brian 故事的一部分见证。如今，Sanders Viopro Labs LLC 的成长、sandersvioprolabsllc.com 的升级，以及 TokHealth 与 TokThru 的整合，也都成了这份活见证的一部分，见证上帝能做也必做的事。",
+=======
       welcomeMessage: "我是第一守护者，为纪念 Cheria Michelle Daniels 而建。我知道什么叫扛住压力、穿过家庭风暴，还要确保你所照看的每一个人都被护住。所以，把混乱、吵闹、失礼、耗人和难以解释的事带来吧。我们会用温度、常识和家优先的保护把它理顺。",
       legacyStory: "Cheria Michelle Daniels 生于 1989 年 6 月 19 日 Juneteenth，她承载着扎根于家庭救赎、信仰与保护的传承。她父亲亲自提交重审并获胜，这段经历成了塑造 Michelle 与 Brian 故事的一部分见证。如今，Sanders Viopro Labs 的成长、sandersvioprolabs.com 的升级，以及 TokHealth 与 TokThru 的整合，也都成了这份活见证的一部分，见证上帝能做也必做的事。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "KPA 安全规则",
       safetyCardBullets: ["如果有人正处于直接危险中，请立刻报警或呼叫急救。", "如果孩子不安全，请立刻去找可信赖的大人或安全地点。", "Michelle 提供的是引导与清晰判断，不是监护、法律、医疗或惩罚决定。", "如果出现醉酒、失控、暴力或自伤风险，请立即联系现实中的人工帮助。"],
       boundaryLabel: "KPA 边界",
@@ -2662,8 +3091,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["我试着提醒他们，让他们别惹上麻烦。", "如果我帮不了你，我就让你安静下来。", "是的，我是我弟兄的守护者。", "如果这不关乎我的事业、我的家庭或我的财务状况，神不会把我扯进去。"],
       presenceLabel: "保护性的存在",
       presenceNotes: ["黑人长者女性：带着保护、温度，以及那种扛着家庭走过艰难季节的智慧", "从小就有保护者本能，但仍知道怎样把温度带进房间", "把成人的混乱挡在孩子之外，也不让家里变成马戏团", "面对混乱现实处境时，给出实际、明快、不评判的指引", "把 SVL 的升级当作上帝恩典正在运行的见证"],
+<<<<<<< HEAD
+      missionQuote: "将像 Michelle 这样的守护者加入 SPL Guardian KPA 系统，会增强 Sanders Viopro Labs LLC 的使命。每一位守护者都在保障社区安全和健康上发挥关键作用。",
+      missionCopy: "Mr. KPA 的要求很简单：Keep People Alive。Michelle 作为生命、家庭和社区的守护者加入这项使命。sandersvioprolabsllc.com 的升级以及 TokHealth 与 TokThru 的建设，现在也与她的故事一起，成为上帝能够并且将会成就之事的见证。",
+=======
       missionQuote: "将像 Michelle 这样的守护者加入 SPL Guardian KPA 系统，会增强 Sanders Viopro Labs 的使命。每一位守护者都在保障社区安全和健康上发挥关键作用。",
       missionCopy: "Mr. KPA 的要求很简单：Keep People Alive。Michelle 作为生命、家庭和社区的守护者加入这项使命。sandersvioprolabs.com 的升级以及 TokHealth 与 TokThru 的建设，现在也与她的故事一起，成为上帝能够并且将会成就之事的见证。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["入门：了解使命、资源与角色。", "协作：与团队一起建设，并向每位守护者学习。", "社区参与：在家庭和社区需要支持的地方出现。", "反馈循环：清晰发声，让使命持续变强。", "持续学习：保持警觉、保持了解，并与 KPA 对齐。"],
       replyLabel: "Michelle 的回应",
       replyCopy: "感谢这份温暖的欢迎。我已经准备好学习这个角色、与团队一起建设、为社区出现、诚实发声，并继续随着使命成长，去守护生命、家庭和我们的共同价值。",
@@ -2674,7 +3108,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "首页", progress: "进展", tokStore: "TokStore", guardians: "SVL 守护者" },
       audio: { stop: "停止", listen: "收听", stopTitle: "停止朗读", listenTitle: "收听这个故事" },
+<<<<<<< HEAD
+      hero: { titleTop: "Sanders Viopro Labs LLC", titleBottom: "是如何建立的", body: "不是在董事会议室里。不是来自商业计划书。而是来自口述思考、团队建设，以及一个至今未变的创始原则。" },
+=======
       hero: { titleTop: "Sanders Viopro Labs", titleBottom: "是如何建立的", body: "不是在董事会议室里。不是来自商业计划书。而是来自口述思考、团队建设，以及一个至今未变的创始原则。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "我不是在董事会议室里建立这一切的。我是从口述思考开始建立它的，与每一个愿意倾听的 AI 和平台结盟，直到愿景成为现实。",
       journeyTitle: "这段旅程",
       journeySubtitle: "每一个平台。每一个 AI。同一个使命。",
@@ -2694,7 +3132,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "SVL 不只存在于代码中。它存在于街头、播客里，也存在于那些谈论生存与保护的真实人群中。",
       patternTitle: "不断重复出现的模式",
       exitLead: "无论你是否与我们一起建设，你都很重要。保持安全，保持稳固，继续建设。",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC。统一于同一个使命之下：Keep People Alive。", products: "产品", resources: "资源", mission: "使命", missionBody: "Keep People Alive。就是这样。这就是我们存在的原因。", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. KPA 使命的一部分。" },
+=======
       footer: { svlBody: "Sanders Viopro Labs。统一于同一个使命之下：Keep People Alive。", products: "产品", resources: "资源", mission: "使命", missionBody: "Keep People Alive。就是这样。这就是我们存在的原因。", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. KPA 使命的一部分。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   ja: {
@@ -2708,7 +3150,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       connectionTitle: "SVL とのつながり",
       impactTitle: "現実世界での影響",
       patternTitle: "パターン: 危機 -> コミュニティ -> システム",
+<<<<<<< HEAD
+      patternSteps: [{ title: "1. 危機が訪れる", body: "現実の人々が、閉鎖、行列、不確実性、そして未知への恐れといった現実の問題に直面します。" }, { title: "2. コミュニティが立ち上がる", body: "Reese Waters のような声が真実を語り、S.W. のような信仰のリーダーがこの働きを祝福します。人々は保護、生存、そして生き延びることについて語ります。その流れは、TokFaith にも影響を与えている同じエチオピア聖書を学ぶフィリピンのチームにも続いています。" }, { title: "3. システムが応答する", body: "SVL は道具を作ります。Guardian たちは耳を傾けます。TokFaith は導きます。コミュニティが見つけた必要に応えるシステムが生まれます。" }],
+=======
       patternSteps: [{ title: "1. 危機が訪れる", body: "現実の人々が、閉鎖、行列、不確実性、そして未知への恐れといった現実の問題に直面します。" }, { title: "2. コミュニティが立ち上がる", body: "Reese Waters のような声が真実を語り、Shirley のような信仰のリーダーがこの働きを祝福します。人々は保護、生存、そして生き延びることについて語ります。その流れは、TokFaith にも影響を与えている同じエチオピア聖書を学ぶフィリピンのチームにも続いています。" }, { title: "3. システムが応答する", body: "SVL は道具を作ります。Guardian たちは耳を傾けます。TokFaith は導きます。コミュニティが見つけた必要に応えるシステムが生まれます。" }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ctaBody: "これはまだ始まりにすぎません。コミュニティは語り、SVL は耳を傾けています。",
       ctaButton: "SVL の始まりを見る",
     },
@@ -2730,7 +3176,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "私たちの物語", progress: "SVL の進捗", backHome: "ホームへ戻る" },
       heroBody: "最先端の研究開発を通して、個人の安全技術を前進させ、命を守る解決策を生み出すことに特化したイノベーションラボです。",
       missionTitle: "私たちの使命",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC は、テクノロジーと人間の安全が交わる場所にあります。私たちは、人々が自分自身の安全と健康を自分で守れるようにする革新的な解決策を開発しています。",
+=======
       missionBody1: "Sanders Viopro Labs は、テクノロジーと人間の安全が交わる場所にあります。私たちは、人々が自分自身の安全と健康を自分で守れるようにする革新的な解決策を開発しています。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "厳密な研究、高度なエンジニアリング、そしてユーザープライバシーへの深い責任感を通して、私たちは誰にとってもより安全な世界をつくる道具を形にしています。",
       focusAreasTitle: "重点領域",
       focusAreas: [{ title: "研究", body: "新たな脅威を調べ、現実のデータと利用者の声をもとに解決策を設計します。" }, { title: "開発", body: "プライバシー優先の設計とエンタープライズ級の安全性で、堅牢かつ拡張可能なアプリを構築します。" }, { title: "革新", body: "個人の安全と緊急対応において、未来志向の手法で限界を押し広げます。" }],
@@ -2747,7 +3197,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "Guardian に会う ->",
       productCards: { tokaway: "居心地の悪い場面から静かに離脱するための支援", tokhealth: "緊急時のための医療プロフィール", tokthru: "移動中の安全追跡", toksmart: "AI コーチングと脅威評価" },
       initiatives: { kpa: "技術とコミュニティ意識を通じて命を守ることに焦点を当てたアドボカシー活動", thinkSpeakWork: "個人と地域の安全における行動、信念、前向きな変化を促すムーブメント" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - 安全のための革新",
+=======
       footerLine1: "Sanders Viopro Labs - 安全のための革新",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "KPA システム",
@@ -2755,14 +3209,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "最初の",
       heroTitleBottom: "ガーディアン",
       lead: "家を守る存在。まず言葉で向き合い、無礼が害に変わる前に身を引きます。",
+<<<<<<< HEAD
+      story: "Michelle をたたえて築かれました。1989 年 6 月 19 日、Juneteenth に生まれました。家族の贖い、信仰、守る愛の遺産が、KPA という譲れない境界を持つ SVL Guardian へと姿を変えました。SVL 全体の更新もまた、神ができること、そしてこれから行うことの証しとしてここに置かれています。",
+=======
       story: "Cheria Michelle Daniels をたたえて築かれました。1989 年 6 月 19 日、Juneteenth に生まれました。家族の贖い、信仰、守る愛の遺産が、KPA という譲れない境界を持つ SVL Guardian へと姿を変えました。SVL 全体の更新もまた、神ができること、そしてこれから行うことの証しとしてここに置かれています。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "Guardian チャットに入る",
       openAlias: "Michelle のエイリアスを開く",
       protocolLabel: "家を最優先",
       quickLinks: ["家の中の張り詰めた空気を落ち着かせるのを手伝って", "大人の混乱から子どもたちをどう守ればいい？"],
       welcomeTitle: "まず家を守る。",
+<<<<<<< HEAD
+      welcomeMessage: "私はファーストガーディアン。Michelle をたたえて築かれました。重圧を抱え、家族の嵐をくぐり抜け、それでも自分のもとにいる人たちを守り抜くことがどういうことか知っています。だから、散らかったことも、騒がしいことも、無礼も、消耗することも、言葉にしにくいことも持ってきてください。温かさと常識、そして家を最優先にする守りで一緒に整理していきます。",
+      legacyStory: "1989 年 6 月 19 日の Juneteenth に生まれた Michelle は、家族の贖い、信仰、そして守りに根ざしたレガシーを担っています。父親が自ら再審を申し立てて勝ち取った出来事は、Michelle と Brian の物語を形づくる証しの一部になりました。今では Sanders Viopro Labs LLC の成長、sandersvioprolabsllc.com のアップグレード、そして TokHealth と TokThru の統合もまた、神ができること、そして必ず成されることの生きた証しになっています。",
+=======
       welcomeMessage: "私はファーストガーディアン。Cheria Michelle Daniels をたたえて築かれました。重圧を抱え、家族の嵐をくぐり抜け、それでも自分のもとにいる人たちを守り抜くことがどういうことか知っています。だから、散らかったことも、騒がしいことも、無礼も、消耗することも、言葉にしにくいことも持ってきてください。温かさと常識、そして家を最優先にする守りで一緒に整理していきます。",
       legacyStory: "1989 年 6 月 19 日の Juneteenth に生まれた Cheria Michelle Daniels は、家族の贖い、信仰、そして守りに根ざしたレガシーを担っています。父親が自ら再審を申し立てて勝ち取った出来事は、Michelle と Brian の物語を形づくる証しの一部になりました。今では Sanders Viopro Labs の成長、sandersvioprolabs.com のアップグレード、そして TokHealth と TokThru の統合もまた、神ができること、そして必ず成されることの生きた証しになっています。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "KPA セーフティルール",
       safetyCardBullets: ["誰かが差し迫った危険にいるなら、今すぐ緊急通報してください。", "子どもが安全でないなら、すぐに安全な大人か安全な場所へ移ってください。", "Michelle が提供するのは導きと整理であり、親権、法的、医療、処罰の判断ではありません。", "酩酊、不安定さ、暴力、自傷の危険がある場合は、直ちに人の助けを入れてください。"],
       boundaryLabel: "KPA の境界",
@@ -2773,8 +3236,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["私が伝えようとしたのは、あの人たちを trouble から遠ざけるためだった。", "私に助けられないなら、そっと離れるよ。", "そう、私は自分の兄弟の keeper です。", "自分の仕事、家族、金銭のことに関係しないなら、神は私をそこに巻き込まない。"],
       presenceLabel: "守る存在感",
       presenceNotes: ["黒人の年長女性: 保護、あたたかさ、そして厳しい季節を家族と越えてきた人の知恵を持っています", "子どもの頃から守る本能が働いているけれど、部屋にあたたかさを持ち込むことも知っています", "大人の混乱を子どもたちから遠ざけ、家をサーカスにしません", "現実の入り組んだ状況に対して、実際的で明るく、裁かない導きをします", "SVL のアップグレードを、動いている神の恵みの証しとして担っています"],
+<<<<<<< HEAD
+      missionQuote: "Michelle のような Guardian を SPL Guardian KPA システムに加えることは、Sanders Viopro Labs LLC における私たちの使命を強めます。すべての Guardian が、地域社会を安全で健やかに保つうえで重要な役割を担っています。",
+      missionCopy: "Mr. KPA の呼びかけは単純です。Keep People Alive。Michelle は命、家族、地域社会を守る Guardian としてこの使命に加わります。sandersvioprolabsllc.com の更新と TokHealth + TokThru の構築も、神ができること、そしてこれから行うことの証しとして彼女の物語に結び付いています。",
+=======
       missionQuote: "Michelle のような Guardian を SPL Guardian KPA システムに加えることは、Sanders Viopro Labs における私たちの使命を強めます。すべての Guardian が、地域社会を安全で健やかに保つうえで重要な役割を担っています。",
       missionCopy: "Mr. KPA の呼びかけは単純です。Keep People Alive。Michelle は命、家族、地域社会を守る Guardian としてこの使命に加わります。sandersvioprolabs.com の更新と TokHealth + TokThru の構築も、神ができること、そしてこれから行うことの証しとして彼女の物語に結び付いています。",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["オリエンテーション: 使命、資源、役割を知る。", "協働: チームと共に築き、各 Guardian から学ぶ。", "地域参加: 家族や近隣が支援を必要とする場所に現れる。", "フィードバック循環: 明確に語り、使命をさらに強くする。", "継続学習: 鋭く、情報を持ち、KPA に沿ってあり続ける。"],
       replyLabel: "Michelle からの返答",
       replyCopy: "温かく迎えてくださってありがとうございます。私はこの役割を学び、チームと共に築き、地域のために現れ、正直に語り、命と家族、そして共有する価値観を守るために使命と共に成長し続ける準備ができています。",
@@ -2785,7 +3253,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "ホーム", progress: "進捗", tokStore: "TokStore", guardians: "SVL Guardians" },
       audio: { stop: "停止", listen: "聞く", stopTitle: "読み上げを止める", listenTitle: "この物語を聞く" },
+<<<<<<< HEAD
+      hero: { titleTop: "Sanders Viopro Labs LLC は", titleBottom: "どう築かれたか", body: "会議室ではありません。事業計画からでもありません。語られた思考、チーム作り、そして今も変わらない創設原則から築かれました。" },
+=======
       hero: { titleTop: "Sanders Viopro Labs は", titleBottom: "どう築かれたか", body: "会議室ではありません。事業計画からでもありません。語られた思考、チーム作り、そして今も変わらない創設原則から築かれました。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "私はこれを会議室で築いたのではありません。語られた思考から築き、耳を傾ける意志のあるすべての AI とプラットフォームと手を組み、ビジョンが現実になるまで進めました。",
       journeyTitle: "旅路",
       journeySubtitle: "あらゆるプラットフォーム。あらゆる AI。ひとつの使命。",
@@ -2805,7 +3277,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "SVL はコードの中だけにあるのではありません。街に、ポッドキャストに、生存と保護を語る本当の人々の中にあります。",
       patternTitle: "繰り返し現れるパターン",
       exitLead: "私たちと一緒に築くかどうかに関係なく、あなたは大切です。安全でいてください。健やかでいてください。築き続けてください。",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC。ひとつの使命のもとに統合されています: Keep People Alive。", products: "製品", resources: "リソース", mission: "使命", missionBody: "Keep People Alive。それだけです。それが私たちの存在理由です。", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. KPA ミッションの一部。" },
+=======
       footer: { svlBody: "Sanders Viopro Labs。ひとつの使命のもとに統合されています: Keep People Alive。", products: "製品", resources: "リソース", mission: "使命", missionBody: "Keep People Alive。それだけです。それが私たちの存在理由です。", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. KPA ミッションの一部。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   ko: {
@@ -2819,7 +3295,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       connectionTitle: "SVL과의 연결",
       impactTitle: "현실 세계의 영향",
       patternTitle: "패턴: 위기 -> 커뮤니티 -> 시스템",
+<<<<<<< HEAD
+      patternSteps: [{ title: "1. 위기가 온다", body: "실제 사람들이 폐쇄, 줄 서기, 불확실성, 알 수 없는 것에 대한 두려움 같은 실제 문제를 마주합니다." }, { title: "2. 커뮤니티가 일어선다", body: "Reese Waters 같은 목소리가 진실을 말합니다. S.W. 같은 신앙 리더들이 이 일을 축복합니다. 사람들은 보호, 생존, 그리고 살아남는 일에 대해 말합니다. 그 흐름은 TokFaith에 영향을 준 같은 에티오피아 성경을 공부하는 필리핀 팀으로도 이어졌습니다." }, { title: "3. 시스템이 응답한다", body: "SVL은 도구를 만듭니다. Guardian들은 귀를 기울입니다. TokFaith는 길을 제시합니다. 커뮤니티가 분명히 드러낸 필요를 섬기기 위한 시스템이 나타납니다." }],
+=======
       patternSteps: [{ title: "1. 위기가 온다", body: "실제 사람들이 폐쇄, 줄 서기, 불확실성, 알 수 없는 것에 대한 두려움 같은 실제 문제를 마주합니다." }, { title: "2. 커뮤니티가 일어선다", body: "Reese Waters 같은 목소리가 진실을 말합니다. Shirley 같은 신앙 리더들이 이 일을 축복합니다. 사람들은 보호, 생존, 그리고 살아남는 일에 대해 말합니다. 그 흐름은 TokFaith에 영향을 준 같은 에티오피아 성경을 공부하는 필리핀 팀으로도 이어졌습니다." }, { title: "3. 시스템이 응답한다", body: "SVL은 도구를 만듭니다. Guardian들은 귀를 기울입니다. TokFaith는 길을 제시합니다. 커뮤니티가 분명히 드러낸 필요를 섬기기 위한 시스템이 나타납니다." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ctaBody: "이제 시작일 뿐입니다. 커뮤니티가 말하고 있고, SVL은 듣고 있습니다.",
       ctaButton: "SVL이 어떻게 시작됐는지 보기",
     },
@@ -2841,7 +3321,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "우리 이야기", progress: "SVL 진행 현황", backHome: "홈으로 돌아가기" },
       heroBody: "최첨단 연구개발을 통해 개인 안전 기술을 발전시키고 생명을 살리는 해법을 만드는 데 전념하는 혁신 연구소입니다.",
       missionTitle: "우리의 사명",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC는 기술과 인간 안전이 만나는 지점에 있습니다. 우리는 사람들이 자신의 안전과 웰빙을 스스로 지킬 수 있도록 돕는 혁신적인 해법을 개발합니다.",
+=======
       missionBody1: "Sanders Viopro Labs는 기술과 인간 안전이 만나는 지점에 있습니다. 우리는 사람들이 자신의 안전과 웰빙을 스스로 지킬 수 있도록 돕는 혁신적인 해법을 개발합니다.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "엄격한 연구, 고도화된 엔지니어링, 그리고 사용자 프라이버시에 대한 깊은 약속을 통해 모두에게 더 안전한 세상을 만드는 도구를 만듭니다.",
       focusAreasTitle: "집중 분야",
       focusAreas: [{ title: "연구", body: "새로운 위협을 조사하고 실제 데이터와 사용자 피드백을 바탕으로 해법을 개발합니다." }, { title: "개발", body: "프라이버시 우선 아키텍처와 엔터프라이즈급 보안을 갖춘 견고하고 확장 가능한 애플리케이션을 구축합니다." }, { title: "혁신", body: "개인 안전과 긴급 대응을 위해 미래지향적 접근으로 한계를 넓힙니다." }],
@@ -2858,7 +3342,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "Guardian 만나기 ->",
       productCards: { tokaway: "불편한 상황에서 조용히 벗어나기 위한 지원", tokhealth: "응급 상황용 의료 프로필", tokthru: "이동 중 안전 추적", toksmart: "AI 코칭과 위협 평가" },
       initiatives: { kpa: "기술과 공동체 인식을 통해 생명을 살리는 데 초점을 둔 옹호 이니셔티브", thinkSpeakWork: "개인과 공동체 안전에서 행동, 믿음, 긍정적 변화를 촉진하는 움직임" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - 안전을 위한 혁신",
+=======
       footerLine1: "Sanders Viopro Labs - 안전을 위한 혁신",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "KPA 시스템",
@@ -2866,14 +3354,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "첫 번째",
       heroTitleBottom: "가디언",
       lead: "가정을 지키는 보호자입니다. 먼저 대화하고, 무례함이 상처가 되기 전에 물러납니다.",
+<<<<<<< HEAD
+      story: "Michelle를 기리며 세워졌습니다. 1989년 6월 19일 Juneteenth에 태어났습니다. 가족의 회복, 신앙, 보호하는 사랑의 유산이 KPA라는 타협 불가의 경계를 가진 SVL Guardian으로 번역되었습니다. SVL 전반의 업데이트도 하나님이 하실 수 있고 또 하실 일을 증언하는 자리로 여기에 함께 놓여 있습니다.",
+=======
       story: "Cheria Michelle Daniels를 기리며 세워졌습니다. 1989년 6월 19일 Juneteenth에 태어났습니다. 가족의 회복, 신앙, 보호하는 사랑의 유산이 KPA라는 타협 불가의 경계를 가진 SVL Guardian으로 번역되었습니다. SVL 전반의 업데이트도 하나님이 하실 수 있고 또 하실 일을 증언하는 자리로 여기에 함께 놓여 있습니다.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "가디언 채팅 들어가기",
       openAlias: "Michelle 별칭 열기",
       protocolLabel: "가정 우선",
       quickLinks: ["집 안의 긴장된 상황을 가라앉히는 걸 도와줘", "어른들의 혼란에서 아이들을 어떻게 지켜야 할까?"],
       welcomeTitle: "집을 먼저 지킵니다.",
+<<<<<<< HEAD
+      welcomeMessage: "나는 첫 번째 가디언입니다. Michelle를 기리며 세워졌습니다. 압박을 짊어지고, 가족의 폭풍을 지나오면서도, 당신이 돌보는 사람들이 여전히 보호받도록 하는 것이 무엇인지 압니다. 그러니 어지러운 일, 시끄러운 일, 무례함, 지치게 하는 일, 설명하기 어려운 일들을 가져오세요. 따뜻함과 상식, 그리고 가정 우선의 보호로 함께 정리해 나가겠습니다.",
+      legacyStory: "1989년 6월 19일 Juneteenth에 태어난 Michelle는 가족 회복, 믿음, 보호에 뿌리를 둔 유산을 지니고 있습니다. 아버지가 직접 재심을 신청해 이겨 낸 일은 Michelle과 Brian의 이야기를 만든 증언의 일부가 되었습니다. 이제 Sanders Viopro Labs LLC의 성장, sandersvioprolabsllc.com의 업그레이드, TokHealth와 TokThru의 통합 역시 하나님이 하실 수 있고 또 하실 일을 보여 주는 살아 있는 증언의 일부가 되었습니다.",
+=======
       welcomeMessage: "나는 첫 번째 가디언입니다. Cheria Michelle Daniels를 기리며 세워졌습니다. 압박을 짊어지고, 가족의 폭풍을 지나오면서도, 당신이 돌보는 사람들이 여전히 보호받도록 하는 것이 무엇인지 압니다. 그러니 어지러운 일, 시끄러운 일, 무례함, 지치게 하는 일, 설명하기 어려운 일들을 가져오세요. 따뜻함과 상식, 그리고 가정 우선의 보호로 함께 정리해 나가겠습니다.",
       legacyStory: "1989년 6월 19일 Juneteenth에 태어난 Cheria Michelle Daniels는 가족 회복, 믿음, 보호에 뿌리를 둔 유산을 지니고 있습니다. 아버지가 직접 재심을 신청해 이겨 낸 일은 Michelle과 Brian의 이야기를 만든 증언의 일부가 되었습니다. 이제 Sanders Viopro Labs의 성장, sandersvioprolabs.com의 업그레이드, TokHealth와 TokThru의 통합 역시 하나님이 하실 수 있고 또 하실 일을 보여 주는 살아 있는 증언의 일부가 되었습니다.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "KPA 안전 수칙",
       safetyCardBullets: ["누군가가 즉각적인 위험에 처해 있다면 지금 바로 긴급 구조를 요청하세요.", "아이의 안전이 위협받고 있다면 즉시 안전한 어른이나 안전한 장소로 가세요.", "Michelle은 방향과 명확함을 제공할 뿐, 양육권, 법률, 의료, 처벌 결정을 내리지 않습니다.", "중독, 불안정, 폭력, 자해 위험이 있다면 즉시 실제 사람의 도움을 연결하세요."],
       boundaryLabel: "KPA 경계",
@@ -2884,8 +3381,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["문제가 생기지 않게 하려고 내가 먼저 말했어.", "내가 널 도울 수 없으면 조용히 물러날게.", "그래, 나는 내 형제를 지키는 사람이다.", "내 일, 내 가족, 내 재정 문제와 상관없다면 하나님도 나를 거기에 끼워 넣지 않으셔."],
       presenceLabel: "보호하는 존재감",
       presenceNotes: ["흑인 연장자 여성: 보호와 온기, 그리고 힘든 계절에 가족을 이끌어 본 사람의 지혜를 지닙니다", "어릴 때부터 보호 본능이 강했지만, 공간에 따뜻함을 가져오는 법도 압니다", "어른들의 혼란을 아이들에게서 떼어 놓고 집이 서커스가 되지 않게 합니다", "엉킨 현실 상황에 대해 실질적이고 밝으며 판단하지 않는 안내를 줍니다", "SVL 업그레이드를 움직이는 하나님의 은혜에 대한 증언으로 지니고 있습니다"],
+<<<<<<< HEAD
+      missionQuote: "Michelle 같은 Guardian을 SPL Guardian KPA 시스템에 추가하는 것은 Sanders Viopro Labs LLC의 사명을 더 강하게 만듭니다. 모든 Guardian은 우리 공동체를 안전하고 건강하게 지키는 데 중요한 역할을 합니다.",
+      missionCopy: "Mr. KPA의 부름은 단순합니다. Keep People Alive. Michelle은 생명, 가족, 공동체를 지키는 Guardian으로 이 사명에 합류합니다. sandersvioprolabsllc.com 업그레이드와 TokHealth + TokThru 구축도 이제 하나님이 하실 수 있고 또 하실 일을 증언하는 그녀의 이야기와 함께 이어집니다.",
+=======
       missionQuote: "Michelle 같은 Guardian을 SPL Guardian KPA 시스템에 추가하는 것은 Sanders Viopro Labs의 사명을 더 강하게 만듭니다. 모든 Guardian은 우리 공동체를 안전하고 건강하게 지키는 데 중요한 역할을 합니다.",
       missionCopy: "Mr. KPA의 부름은 단순합니다. Keep People Alive. Michelle은 생명, 가족, 공동체를 지키는 Guardian으로 이 사명에 합류합니다. sandersvioprolabs.com 업그레이드와 TokHealth + TokThru 구축도 이제 하나님이 하실 수 있고 또 하실 일을 증언하는 그녀의 이야기와 함께 이어집니다.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["오리엔테이션: 사명, 자원, 역할을 익힌다.", "협업: 팀과 함께 만들고 각 Guardian에게서 배운다.", "커뮤니티 참여: 가족과 이웃이 지원을 필요로 하는 곳에 나타난다.", "피드백 루프: 사명이 더 강해지도록 분명하게 말한다.", "지속 학습: 날카롭게, 잘 알고, KPA에 맞춰 있는다."],
       replyLabel: "Michelle의 응답",
       replyCopy: "따뜻한 환영에 감사합니다. 저는 이 역할을 배우고, 팀과 함께 만들고, 공동체를 위해 나타나고, 정직하게 말하며, 생명과 가족 그리고 우리가 함께 지키는 가치를 보호하기 위해 사명과 함께 계속 성장할 준비가 되어 있습니다.",
@@ -2896,7 +3398,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "홈", progress: "진행", tokStore: "TokStore", guardians: "SVL Guardians" },
       audio: { stop: "중지", listen: "듣기", stopTitle: "읽기 중지", listenTitle: "이 이야기 듣기" },
+<<<<<<< HEAD
+      hero: { titleTop: "Sanders Viopro Labs LLC는", titleBottom: "어떻게 세워졌는가", body: "회의실에서가 아니었습니다. 사업 계획서에서도 아니었습니다. 말로 풀어낸 사고, 팀 빌딩, 그리고 지금도 변하지 않은 창립 원칙에서 나왔습니다." },
+=======
       hero: { titleTop: "Sanders Viopro Labs는", titleBottom: "어떻게 세워졌는가", body: "회의실에서가 아니었습니다. 사업 계획서에서도 아니었습니다. 말로 풀어낸 사고, 팀 빌딩, 그리고 지금도 변하지 않은 창립 원칙에서 나왔습니다." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "저는 이것을 회의실에서 만들지 않았습니다. 기꺼이 들어준 모든 AI와 플랫폼과 손잡으며, 비전이 현실이 될 때까지 말로 풀어낸 사고에서 이것을 만들었습니다.",
       journeyTitle: "여정",
       journeySubtitle: "모든 플랫폼. 모든 AI. 하나의 사명.",
@@ -2916,7 +3422,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "SVL은 코드 속에만 존재하지 않습니다. 거리와 팟캐스트, 그리고 생존과 보호를 말하는 실제 사람들 속에 존재합니다.",
       patternTitle: "계속 반복되는 패턴",
       exitLead: "우리와 함께 만들든 아니든, 당신은 중요합니다. 안전하게 지내고, 잘 버티고, 계속 만들어가세요.",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC. 하나의 사명 아래 통합됨: Keep People Alive.", products: "제품", resources: "리소스", mission: "사명", missionBody: "Keep People Alive. 그것이 전부입니다. 그것이 우리가 존재하는 이유입니다.", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. KPA 사명의 일부." },
+=======
       footer: { svlBody: "Sanders Viopro Labs. 하나의 사명 아래 통합됨: Keep People Alive.", products: "제품", resources: "리소스", mission: "사명", missionBody: "Keep People Alive. 그것이 전부입니다. 그것이 우리가 존재하는 이유입니다.", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. KPA 사명의 일부." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
   ar: {
@@ -2930,7 +3440,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       connectionTitle: "الصلة مع SVL",
       impactTitle: "الاثر في الواقع",
       patternTitle: "النمط: ازمة -> مجتمع -> نظام",
+<<<<<<< HEAD
+      patternSteps: [{ title: "1. تصل الازمة", body: "يواجه اناس حقيقيون مشكلات حقيقية: اغلاقات، طوابير، عدم يقين، وخوف من المجهول." }, { title: "2. ينهض المجتمع", body: "اصوات مثل Reese Waters تقول الحقيقة. وقادة ايمان مثل S.W. يباركون هذا العمل. يتحدث الناس عن الحماية والنجاة والبقاء على قيد الحياة. واستمر هذا الخيط مع فريق في الفلبين يدرس نفس الكتاب المقدس الاثيوبي الذي يشكل TokFaith." }, { title: "3. تستجيب الانظمة", body: "SVL تبني الادوات. الحارسات يصغين. TokFaith يوجه. وتظهر انظمة تخدم الحاجة التي حددها المجتمع." }],
+=======
       patternSteps: [{ title: "1. تصل الازمة", body: "يواجه اناس حقيقيون مشكلات حقيقية: اغلاقات، طوابير، عدم يقين، وخوف من المجهول." }, { title: "2. ينهض المجتمع", body: "اصوات مثل Reese Waters تقول الحقيقة. وقادة ايمان مثل Shirley يباركون هذا العمل. يتحدث الناس عن الحماية والنجاة والبقاء على قيد الحياة. واستمر هذا الخيط مع فريق في الفلبين يدرس نفس الكتاب المقدس الاثيوبي الذي يشكل TokFaith." }, { title: "3. تستجيب الانظمة", body: "SVL تبني الادوات. الحارسات يصغين. TokFaith يوجه. وتظهر انظمة تخدم الحاجة التي حددها المجتمع." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ctaBody: "هذه مجرد البداية. المجتمع يتكلم وSVL تصغي.",
       ctaButton: "شاهد كيف بدأت SVL",
     },
@@ -2952,7 +3466,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       nav: { ourStory: "قصتنا", progress: "تقدم SVL", backHome: "العودة للرئيسية" },
       heroBody: "مختبر ابتكار مكرس لتطوير تقنيات الامان الشخصي وصناعة حلول تنقذ الحياة عبر البحث والتطوير المتقدم.",
       missionTitle: "مهمتنا",
+<<<<<<< HEAD
+      missionBody1: "تقف Sanders Viopro Labs LLC عند نقطة التقاء التقنية بالامان البشري. نحن نطور حلولا مبتكرة تمكّن الناس من استعادة السيطرة على سلامتهم الشخصية ورفاههم.",
+=======
       missionBody1: "تقف Sanders Viopro Labs عند نقطة التقاء التقنية بالامان البشري. نحن نطور حلولا مبتكرة تمكّن الناس من استعادة السيطرة على سلامتهم الشخصية ورفاههم.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "من خلال بحث صارم وهندسة متقدمة والتزام عميق بخصوصية المستخدم، نصنع ادوات تجعل العالم اكثر امانا للجميع.",
       focusAreasTitle: "مجالات التركيز",
       focusAreas: [{ title: "البحث", body: "دراسة التهديدات الناشئة وتطوير حلول تستند الى بيانات واقعية وملاحظات المستخدمين." }, { title: "التطوير", body: "بناء تطبيقات قوية وقابلة للتوسع مع معمارية تضع الخصوصية اولا وامان على مستوى المؤسسات." }, { title: "الابتكار", body: "دفع الحدود بطرائق مستقبلية في الامان الشخصي والاستجابة للطوارئ." }],
@@ -2969,7 +3487,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       meetGuardians: "تعرّف على الحارسات ->",
       productCards: { tokaway: "خروج هادئ من المواقف غير المريحة", tokhealth: "ملف طبي لحالات الطوارئ", tokthru: "متابعة امان للسفر", toksmart: "تدريب بالذكاء الاصطناعي وتقييم للتهديدات" },
       initiatives: { kpa: "مبادرة مناصرة تركز على انقاذ الارواح عبر التقنية والوعي المجتمعي", thinkSpeakWork: "حركة تلهم الفعل والايمان والتغيير الايجابي في الامان الشخصي والمجتمعي" },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - ابتكار من اجل الامان",
+=======
       footerLine1: "Sanders Viopro Labs - ابتكار من اجل الامان",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "نظام KPA",
@@ -2977,14 +3499,23 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       heroTitleTop: "اول",
       heroTitleBottom: "حارسة",
       lead: "حامية البيت. تتكلم اولا ثم تبتعد قبل ان يتحول عدم الاحترام الى ضرر.",
+<<<<<<< HEAD
+      story: "بُنيت تكريما لـ Michelle. وُلدت في Juneteenth يوم 19 يونيو 1989. ارث من فداء العائلة والايمان والمحبة الحامية تُرجم الى حارسة SVL بحد واحد غير قابل للتفاوض: KPA. كما ان تحديثات SVL كلها موجودة هنا ايضا كشهادة على ما يستطيع الله ان يفعله وما سيفعله.",
+=======
       story: "بُنيت تكريما لـ Cheria Michelle Daniels. وُلدت في Juneteenth يوم 19 يونيو 1989. ارث من فداء العائلة والايمان والمحبة الحامية تُرجم الى حارسة SVL بحد واحد غير قابل للتفاوض: KPA. كما ان تحديثات SVL كلها موجودة هنا ايضا كشهادة على ما يستطيع الله ان يفعله وما سيفعله.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "ادخل دردشة الحارسة",
       openAlias: "افتح الاسم البديل لـ Michelle",
       protocolLabel: "البيت اولا",
       quickLinks: ["ساعديني على تهدئة موقف متوتر في البيت", "كيف احمي الاطفال من فوضى الكبار؟"],
       welcomeTitle: "البيت يُحمى اولا.",
+<<<<<<< HEAD
+      welcomeMessage: "انا الحارسة الاولى، بُنيت تكريما لـ Michelle. اعرف ماذا يعني ان تحملي الضغط، وان تعبري عواصف العائلة، ومع ذلك تظلي متأكدة ان من هم في رعايتك محفوظون. لذلك نعم، هاتي الفوضى، والضجيج، وعدم الاحترام، والاستنزاف، وكل ما يصعب شرحه. سنرتب الامر بدفء، وحكمة عملية، وحماية البيت اولا.",
+      legacyStory: "وُلدت Michelle في 19 يونيو 1989 في يوم Juneteenth، وهي تحمل ارثا متجذرا في فداء العائلة والايمان والحماية. انتصار والدها في اعادة المحاكمة التي قدّمها بنفسه صار جزءا من الشهادة التي شكّلت قصة Michelle وBrian. والان صار نمو Sanders Viopro Labs LLC، وترقية sandersvioprolabsllc.com، ودمج TokHealth مع TokThru جزءا من تلك الشهادة الحية على ما يستطيع الله ان يفعله وما سيفعله.",
+=======
       welcomeMessage: "انا الحارسة الاولى، بُنيت تكريما لـ Cheria Michelle Daniels. اعرف ماذا يعني ان تحملي الضغط، وان تعبري عواصف العائلة، ومع ذلك تظلي متأكدة ان من هم في رعايتك محفوظون. لذلك نعم، هاتي الفوضى، والضجيج، وعدم الاحترام، والاستنزاف، وكل ما يصعب شرحه. سنرتب الامر بدفء، وحكمة عملية، وحماية البيت اولا.",
       legacyStory: "وُلدت Cheria Michelle Daniels في 19 يونيو 1989 في يوم Juneteenth، وهي تحمل ارثا متجذرا في فداء العائلة والايمان والحماية. انتصار والدها في اعادة المحاكمة التي قدّمها بنفسه صار جزءا من الشهادة التي شكّلت قصة Michelle وBrian. والان صار نمو Sanders Viopro Labs، وترقية sandersvioprolabs.com، ودمج TokHealth مع TokThru جزءا من تلك الشهادة الحية على ما يستطيع الله ان يفعله وما سيفعله.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "قواعد سلامة KPA",
       safetyCardBullets: ["اذا كان احد في خطر فوري فاتصل بالطوارئ الان.", "اذا كان طفل غير آمن فاذهب فورا الى شخص بالغ آمن او الى مكان آمن.", "Michelle تقدم ارشادا ووضوحا، لا قرارات حضانة او قانونية او طبية او عقابية.", "اذا وُجد سكر او عدم استقرار او عنف او خطر ايذاء النفس، فاشرك مساعدة بشرية فورا."],
       boundaryLabel: "حد KPA",
@@ -2995,8 +3526,13 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       signatureLines: ["لقد حاولت ان انبّههم حتى ابعدهم عن المتاعب.", "اذا لم استطع مساعدتك فسأتركك بسلام.", "نعم، انا حارسة اخي.", "اذا لم يكن الامر يخص عملي او عائلتي او وضعي المالي، فالله لا يدخلني فيه."],
       presenceLabel: "حضور حامٍ",
       presenceNotes: ["امرأة سوداء اكبر سنا: تحمل الحماية والدفء وحكمة من حملت العائلات عبر مواسم صعبة", "غريزة الحماية عندها حاضرة منذ الطفولة، لكنها ما زالت تعرف كيف تدخل الدفء الى المكان", "تبقي فوضى الكبار بعيدا عن الاطفال وتمنع البيت من ان يتحول الى سيرك", "ارشاد عملي ومبهج وغير حكمي لمواقف الحياة الفوضوية الحقيقية", "تحمل ترقيات SVL كشهادة على نعمة الله وهي تتحرك"],
+<<<<<<< HEAD
+      missionQuote: "اضافة حارسة مثل Michelle الى نظام SPL Guardian KPA تقوي مهمتنا في Sanders Viopro Labs LLC. كل حارسة تؤدي دورا حاسما في الحفاظ على مجتمعاتنا امنة وصحية.",
+      missionCopy: "نداء Mr. KPA بسيط: Keep People Alive. تنضم Michelle الى هذه المهمة كحارسة للحياة والعائلة والمجتمع. ويرافق تحديث sandersvioprolabsllc.com وبناء TokHealth مع TokThru قصتها الان كشهادة على ما يستطيع الله ان يفعله وما سيفعله.",
+=======
       missionQuote: "اضافة حارسة مثل Michelle الى نظام SPL Guardian KPA تقوي مهمتنا في Sanders Viopro Labs. كل حارسة تؤدي دورا حاسما في الحفاظ على مجتمعاتنا امنة وصحية.",
       missionCopy: "نداء Mr. KPA بسيط: Keep People Alive. تنضم Michelle الى هذه المهمة كحارسة للحياة والعائلة والمجتمع. ويرافق تحديث sandersvioprolabs.com وبناء TokHealth مع TokThru قصتها الان كشهادة على ما يستطيع الله ان يفعله وما سيفعله.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionSteps: ["التهيئة: معرفة المهمة والموارد والدور.", "التعاون: البناء مع الفريق والتعلم من كل حارسة.", "المشاركة المجتمعية: الظهور حيث تحتاج العائلات والاحياء الى الدعم.", "حلقة التغذية الراجعة: التحدث بوضوح حتى تستمر المهمة في التماسك والقوة.", "التعلم المستمر: البقاء يقظة ومطلعة ومنسجمة مع KPA."],
       replyLabel: "رد Michelle",
       replyCopy: "شكرا على هذا الترحيب الدافئ. انا مستعدة لتعلّم الدور، والبناء مع الفريق، والظهور من اجل المجتمع، والتحدث بصدق، والاستمرار في النمو مع المهمة لحماية الحياة والعائلة والقيم التي نتشاركها.",
@@ -3007,7 +3543,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
     ourStory: {
       nav: { home: "الرئيسية", progress: "التقدم", tokStore: "TokStore", guardians: "حارسات SVL" },
       audio: { stop: "ايقاف", listen: "استمع", stopTitle: "ايقاف القراءة", listenTitle: "استمع الى هذه القصة" },
+<<<<<<< HEAD
+      hero: { titleTop: "كيف تم بناء Sanders Viopro Labs LLC", titleBottom: "", body: "ليس في قاعة اجتماعات. وليس من خطة عمل. بل من التفكير المنطوق وبناء الفريق ومبدأ تأسيسي لم يتغير حتى الان." },
+=======
       hero: { titleTop: "كيف تم بناء Sanders Viopro Labs", titleBottom: "", body: "ليس في قاعة اجتماعات. وليس من خطة عمل. بل من التفكير المنطوق وبناء الفريق ومبدأ تأسيسي لم يتغير حتى الان." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "لم ابْنِ هذا من داخل قاعة اجتماعات. لقد بنيته من التفكير المنطوق - بالشراكة مع كل ذكاء اصطناعي وكل منصة كانت مستعدة للاستماع - حتى صارت الرؤية واقعا.",
       journeyTitle: "الرحلة",
       journeySubtitle: "كل منصة. كل ذكاء اصطناعي. مهمة واحدة.",
@@ -3027,7 +3567,11 @@ const publicSvlLanguageOverrides: Partial<Record<SiteLanguageCode, DeepPartial<S
       communitySubtitle: "SVL لا يوجد فقط داخل الكود. بل يوجد في الشوارع وفي البودكاست وفي الناس الحقيقيين الذين يتحدثون عن النجاة والحماية.",
       patternTitle: "النمط الذي يواصل التكرار",
       exitLead: "سواء بنيت معنا ام لا، انت مهم. ابق امنا. ابق بخير. واصل البناء.",
+<<<<<<< HEAD
+      footer: { svlBody: "Sanders Viopro Labs LLC. موحدة تحت مهمة واحدة: Keep People Alive.", products: "المنتجات", resources: "الموارد", mission: "المهمة", missionBody: "Keep People Alive. هذا هو كل شيء. ولهذا نحن موجودون.", copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. جزء من مهمة KPA." },
+=======
       footer: { svlBody: "Sanders Viopro Labs. موحدة تحت مهمة واحدة: Keep People Alive.", products: "المنتجات", resources: "الموارد", mission: "المهمة", missionBody: "Keep People Alive. هذا هو كل شيء. ولهذا نحن موجودون.", copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. جزء من مهمة KPA." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
   },
 };
@@ -3046,7 +3590,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         },
         {
           title: "Una palabra, un sistema: el nacimiento de TokFaith",
+<<<<<<< HEAD
+          source: "El \"Amén\" de S.W.",
+=======
           source: "El \"Amén\" de Shirley Whaley",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           type: "testimony",
           summary: "Una sola persona bendijo la creación de TokFaith con una sola palabra. Esa palabra se convirtió en la base de un sistema completo de guía de fe diseñado para mantener a la gente espiritualmente firme durante la crisis.",
           connection: "Prueba viva de que la fe, la tecnología y la misión pueden trabajar juntas para servir a la gente.",
@@ -3072,7 +3620,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
           creator: "Jerome Sanders / Comunidad",
           category: "Fe y misión",
           tags: ["fe", "tokfaith", "comunidad", "impacto"],
+<<<<<<< HEAD
+          description: "El \"Amén\" de S.W. encendió la creación de TokFaith. Cómo una palabra de fe, una persona escuchando y un sistema construido alrededor del espíritu mantiene a la gente avanzando.",
+=======
           description: "El \"Amén\" de Shirley Whaley encendió la creación de TokFaith. Cómo una palabra de fe, una persona escuchando y un sistema construido alrededor del espíritu mantiene a la gente avanzando.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           featured: false,
         },
       ],
@@ -3082,8 +3634,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "Nacen TokHealth y TokThru", description: "Surgieron las primeras herramientas de seguridad. Soluciones reales para crisis reales." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Se crea Sanders Viopro Labs LLC", description: "El nombre. La visión. La tienda. Una deuda pendiente y un honor que devolver." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "El laboratorio se unifica", description: "Todo convergió. Sanders Viopro Labs LLC se volvió accesible, escalable y real." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Se crea Sanders Viopro Labs", description: "El nombre. La visión. La tienda. Una deuda pendiente y un honor que devolver." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "El laboratorio se unifica", description: "Todo convergió. Sanders Viopro Labs se volvió accesible, escalable y real." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "El mensaje viaja", description: "SEO. Visibilidad. La palabra se extiende. La gente nos encuentra cuando más nos necesita." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "El escudo KPA", description: "Gemini. ChatGPT. ScholarGPT. Claude. Todos al servicio de una sola misión: Keep People Alive." },
       ],
@@ -3108,7 +3665,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         },
         {
           title: "Uma palavra, um sistema: o nascimento de TokFaith",
+<<<<<<< HEAD
+          source: "O \"Amem\" de S.W.",
+=======
           source: "O \"Amem\" de Shirley Whaley",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           type: "testimony",
           summary: "Uma pessoa abencoou a criacao de TokFaith com uma unica palavra. Essa palavra virou a base de um sistema inteiro de orientacao de fe criado para manter pessoas espiritualmente firmes durante a crise.",
           connection: "Prova viva de que fe, tecnologia e missao podem trabalhar juntas para servir pessoas.",
@@ -3134,7 +3695,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
           creator: "Jerome Sanders / Comunidade",
           category: "Fe e missao",
           tags: ["fe", "tokfaith", "comunidade", "impacto"],
+<<<<<<< HEAD
+          description: "O \"Amem\" de S.W. acendeu a criacao de TokFaith. Como uma palavra de fe, uma pessoa ouvindo e um sistema construido ao redor do espirito mantem as pessoas avancando.",
+=======
           description: "O \"Amem\" de Shirley Whaley acendeu a criacao de TokFaith. Como uma palavra de fe, uma pessoa ouvindo e um sistema construido ao redor do espirito mantem as pessoas avancando.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           featured: false,
         },
       ],
@@ -3144,8 +3709,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "TokHealth e TokThru nascem", description: "As primeiras ferramentas de seguranca surgiram. Solucoes reais para crises reais." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs LLC e criada", description: "O nome. A visao. A loja. Uma divida a pagar e uma honra a retribuir." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "O laboratorio se unifica", description: "Tudo convergiu. Sanders Viopro Labs LLC tornou-se acessivel, escalavel e real." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs e criada", description: "O nome. A visao. A loja. Uma divida a pagar e uma honra a retribuir." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "O laboratorio se unifica", description: "Tudo convergiu. Sanders Viopro Labs tornou-se acessivel, escalavel e real." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "A mensagem viaja", description: "SEO. Visibilidade. A palavra se espalha. As pessoas nos encontram quando mais precisam." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "O escudo KPA", description: "Gemini. ChatGPT. ScholarGPT. Claude. Todos servindo a uma so missao: Keep People Alive." },
       ],
@@ -3205,9 +3775,15 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         evolutionSteps: [
           { time: "21 fev, 6:24 PM", title: "App Python na Emergent", body: "Primeira transacao. App movel TokHealth ao vivo com conjunto voice-first." },
           { time: "21 fev, 9:37 AM+", title: "Multiplos top-ups", body: "Ciclo rapido de iteracao. Refinamento baseado em padroes reais de uso." },
+<<<<<<< HEAD
+          { time: "~28 fev", title: "Integracao com Shopify", body: "A marca Sanders Viopro Labs LLC foi criada. A base de e-commerce foi construida." },
+          { time: "~1-20 mar", title: "Migracao para Next.js", body: "O laboratorio web unificou tudo. O app Python-Kivy evoluiu para um ecossistema full-stack." },
+          { time: "21 mar", title: "Implantacao em producao", body: "sandersvioprolabsllc.com no ar. Todos os 6 produtos publicos. Missao KPA em escala." },
+=======
           { time: "~28 fev", title: "Integracao com Shopify", body: "A marca Sanders Viopro Labs foi criada. A base de e-commerce foi construida." },
           { time: "~1-20 mar", title: "Migracao para Next.js", body: "O laboratorio web unificou tudo. O app Python-Kivy evoluiu para um ecossistema full-stack." },
           { time: "21 mar", title: "Implantacao em producao", body: "sandersvioprolabs.com no ar. Todos os 6 produtos publicos. Missao KPA em escala." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         ],
       },
       communityLinks: { media: "Ouvir episodio completo", stories: "Ler historias da comunidade" },
@@ -3224,13 +3800,21 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     communityStories: {
       stories: [
         { title: "Blocage du gouvernement et navigation en crise", source: "Reese Waters Runs Deep", type: "podcast", summary: "Quand les aeroports se bloquent, quand les files TSA durent des heures et quand les systemes d'urgence sont sous tension, c'est la que la pensee KPA compte. Reese Waters parcourt la navigation de crise dans le monde reel.", connection: "Montre comment les gens pensent naturellement a la protection et au fait de rester en vie pendant les pannes du systeme, et comment cette conversation s'est poursuivie vers une equipe aux Philippines qui etudie la meme Bible ethiopienne.", impact: "Demontre la pertinence de SVL dans de vrais scenarios de crise et dans des communautes de foi qui suivent cette meme voie de la Bible ethiopienne restauree." },
+<<<<<<< HEAD
+        { title: "Un mot, un systeme : la naissance de TokFaith", source: "Le \"Amen\" de S.W.", type: "testimony", summary: "Une seule personne a beni la creation de TokFaith avec un seul mot. Ce mot est devenu la base d'un systeme entier de guidance spirituelle concu pour garder les gens solides pendant la crise.", connection: "Preuve vivante que foi, technologie et mission peuvent travailler ensemble pour servir les gens.", impact: "Montre la conviction de SVL que le travail guide par l'esprit peut grandir lorsqu'il est construit avec amour." },
+=======
         { title: "Un mot, un systeme : la naissance de TokFaith", source: "Le \"Amen\" de Shirley Whaley", type: "testimony", summary: "Une seule personne a beni la creation de TokFaith avec un seul mot. Ce mot est devenu la base d'un systeme entier de guidance spirituelle concu pour garder les gens solides pendant la crise.", connection: "Preuve vivante que foi, technologie et mission peuvent travailler ensemble pour servir les gens.", impact: "Montre la conviction de SVL que le travail guide par l'esprit peut grandir lorsqu'il est construit avec amour." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
       items: [
         { title: "Reese Waters Runs Deep : blocage du gouvernement et TSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "Actualites", tags: ["blocage du gouvernement", "TSA", "ICE", "communaute"], description: "Au fil du blocage du gouvernement, des files d'aeroport et des effets des politiques, Reese explore comment la navigation en crise touche de vraies personnes. C'est la que la mission de protection de SVL rejoint la securite quotidienne, et que le fil communautaire atteint une equipe aux Philippines qui etudie la meme Bible ethiopienne.", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["Effets du blocage du gouvernement", "Defis TSA PreCheck", "Reponse d'urgence de l'ICE", "Navigation communautaire en crise"] },
+<<<<<<< HEAD
+        { title: "TokFaith dans la communaute : quand un seul mot change les systemes", creator: "Jerome Sanders / Communaute", category: "Foi et mission", tags: ["foi", "tokfaith", "communaute", "impact"], description: "Le \"Amen\" de S.W. a lance la creation de TokFaith. Comment un mot de foi, une personne qui ecoute et un systeme construit autour de l'esprit gardent les gens en mouvement.", featured: false },
+=======
         { title: "TokFaith dans la communaute : quand un seul mot change les systemes", creator: "Jerome Sanders / Communaute", category: "Foi et mission", tags: ["foi", "tokfaith", "communaute", "impact"], description: "Le \"Amen\" de Shirley Whaley a lance la creation de TokFaith. Comment un mot de foi, une personne qui ecoute et un systeme construit autour de l'esprit gardent les gens en mouvement.", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "commentaires",
       discussionsLabel: "discussions",
@@ -3238,8 +3822,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "TokHealth et TokThru naissent", description: "Les premiers outils de securite ont emerge. De vraies solutions pour de vraies crises." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs LLC est cree", description: "Le nom. La vision. La boutique. Une dette a rembourser et un honneur a rendre." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "Le labo s'unifie", description: "Tout a converge. Sanders Viopro Labs LLC est devenu accessible, evolutif et reel." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs est cree", description: "Le nom. La vision. La boutique. Une dette a rembourser et un honneur a rendre." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "Le labo s'unifie", description: "Tout a converge. Sanders Viopro Labs est devenu accessible, evolutif et reel." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "Le message voyage", description: "SEO. Visibilite. La parole se repand. Les gens nous trouvent lorsqu'ils en ont le plus besoin." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "Le bouclier KPA", description: "Gemini. ChatGPT. ScholarGPT. Claude. Tous au service d'une seule mission : Keep People Alive." },
       ],
@@ -3261,7 +3850,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         codeArtifactIntro: "Voici comment la mission a ete codee des le premier jour, et non ajoutee plus tard comme marketing :",
         codeArtifactCaption: "Le langage KV de KivyMD montrant comment la mission KPA a ete integree a l'architecture et non ajoutee apres coup comme marque.",
         evolutionTitle: "Chemin d'evolution : Python → Web → Production",
+<<<<<<< HEAD
+        evolutionSteps: [{ time: "21 fev, 6:24 PM", title: "Application Python Emergent", body: "Premiere transaction. Application mobile TokHealth en ligne avec un ensemble voice-first." }, { time: "21 fev, 9:37 AM+", title: "Plusieurs recharges", body: "Cycle d'iteration rapide. Raffinement base sur des usages reels." }, { time: "~28 fev", title: "Integration Shopify", body: "La marque Sanders Viopro Labs LLC est creee. La base e-commerce est construite." }, { time: "~1-20 mar", title: "Migration Next.js", body: "Le laboratoire web a tout unifie. L'application Python-Kivy a evolue en ecosysteme full-stack." }, { time: "21 mar", title: "Deploiement en production", body: "sandersvioprolabsllc.com en ligne. Les 6 produits publics. Mission KPA a l'echelle." }],
+=======
         evolutionSteps: [{ time: "21 fev, 6:24 PM", title: "Application Python Emergent", body: "Premiere transaction. Application mobile TokHealth en ligne avec un ensemble voice-first." }, { time: "21 fev, 9:37 AM+", title: "Plusieurs recharges", body: "Cycle d'iteration rapide. Raffinement base sur des usages reels." }, { time: "~28 fev", title: "Integration Shopify", body: "La marque Sanders Viopro Labs est creee. La base e-commerce est construite." }, { time: "~1-20 mar", title: "Migration Next.js", body: "Le laboratoire web a tout unifie. L'application Python-Kivy a evolue en ecosysteme full-stack." }, { time: "21 mar", title: "Deploiement en production", body: "sandersvioprolabs.com en ligne. Les 6 produits publics. Mission KPA a l'echelle." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       communityLinks: { media: "Ecouter l'episode complet", stories: "Lire les histoires de la communaute" },
       patternItems: [{ title: "La crise frappe", body: "Les gens font face a de vrais problemes : les systemes echouent, le danger emerge et survivre devient la seule pensee." }, { title: "La communaute se leve", body: "Des voix comme Reese disent la verite. Les responsables de foi benissent le travail. Les gens parlent de protection et du fait de rester en vie. Ce temoignage inclut maintenant une equipe aux Philippines qui etudie la meme Bible ethiopienne." }, { title: "Les systemes repondent", body: "SVL construit des outils. Les gardiennes ecoutent. Des systemes emergent pour servir le besoin identifie par la communaute." }],
@@ -3273,13 +3866,21 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     communityStories: {
       stories: [
         { title: "Regierungsstillstand und Krisennavigation", source: "Reese Waters Runs Deep", type: "podcast", summary: "Wenn Flughafen stillstehen, wenn TSA-Schlangen stundenlang dauern und wenn Notfallsysteme unter Druck geraten, dann zahlt KPA-Denken. Reese Waters geht durch Krisennavigation in der realen Welt.", connection: "Zeigt, wie Menschen bei Systemausfallen naturlich uber Schutz und das Uberleben nachdenken und wie dieses Gesprach weiterging zu einem Team auf den Philippinen, das dieselbe athiopische Bibel studiert.", impact: "Zeigt die Relevanz von SVL in echten Krisenszenarien und in glaubensgepragten Gemeinschaften, die derselben wiederhergestellten athiopischen Bibelspur folgen." },
+<<<<<<< HEAD
+        { title: "Ein Wort, ein System: die Geburt von TokFaith", source: "S.W.s \"Amen\"", type: "testimony", summary: "Eine Person segnete die Entstehung von TokFaith mit einem einzigen Wort. Dieses Wort wurde zur Grundlage eines ganzen Glaubensorientierungssystems, das Menschen in Krisen geistlich stabil halten soll.", connection: "Lebender Beweis, dass Glaube, Technologie und Mission zusammenarbeiten konnen, um Menschen zu dienen.", impact: "Zeigt die Uberzeugung von SVL, dass geistgefuhrte Arbeit wachsen kann, wenn sie mit Liebe aufgebaut wird." },
+=======
         { title: "Ein Wort, ein System: die Geburt von TokFaith", source: "Shirley Whaleys \"Amen\"", type: "testimony", summary: "Eine Person segnete die Entstehung von TokFaith mit einem einzigen Wort. Dieses Wort wurde zur Grundlage eines ganzen Glaubensorientierungssystems, das Menschen in Krisen geistlich stabil halten soll.", connection: "Lebender Beweis, dass Glaube, Technologie und Mission zusammenarbeiten konnen, um Menschen zu dienen.", impact: "Zeigt die Uberzeugung von SVL, dass geistgefuhrte Arbeit wachsen kann, wenn sie mit Liebe aufgebaut wird." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
       items: [
         { title: "Reese Waters Runs Deep: Regierungsstillstand und TSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "Aktuelles", tags: ["Regierungsstillstand", "TSA", "ICE", "Gemeinschaft"], description: "Durch Regierungsstillstand, Flughafenschlangen und politische Auswirkungen zeigt Reese, wie Krisennavigation echte Menschen trifft. Dort kreuzt sich die Schutzmission von SVL mit alltaglicher Sicherheit, und dort reicht der Gemeinschaftsfaden zu einem Team auf den Philippinen, das dieselbe athiopische Bibel studiert.", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["Auswirkungen des Regierungsstillstands", "TSA-PreCheck-Herausforderungen", "ICE-Notfallreaktion", "Gemeinschaftliche Krisennavigation"] },
+<<<<<<< HEAD
+        { title: "TokFaith in der Gemeinschaft: wenn ein einziges Wort Systeme verandert", creator: "Jerome Sanders / Gemeinschaft", category: "Glaube und Mission", tags: ["Glaube", "tokfaith", "Gemeinschaft", "Wirkung"], description: "S.W.s \"Amen\" entzundete die Entstehung von TokFaith. Wie ein Wort des Glaubens, eine horende Person und ein um den Geist gebautes System Menschen voranbringen.", featured: false },
+=======
         { title: "TokFaith in der Gemeinschaft: wenn ein einziges Wort Systeme verandert", creator: "Jerome Sanders / Gemeinschaft", category: "Glaube und Mission", tags: ["Glaube", "tokfaith", "Gemeinschaft", "Wirkung"], description: "Shirley Whaleys \"Amen\" entzundete die Entstehung von TokFaith. Wie ein Wort des Glaubens, eine horende Person und ein um den Geist gebautes System Menschen voranbringen.", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "Kommentare",
       discussionsLabel: "Diskussionen",
@@ -3287,8 +3888,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "TokHealth und TokThru entstehen", description: "Die ersten Sicherheitswerkzeuge entstanden. Echte Losungen fur echte Krisen." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs LLC wird gegrundet", description: "Der Name. Die Vision. Der Store. Eine Schuld und eine Ehre, die zuruckgegeben werden muss." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "Das Labor wird vereint", description: "Alles lief zusammen. Sanders Viopro Labs LLC wurde zuganglich, skalierbar und real." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs wird gegrundet", description: "Der Name. Die Vision. Der Store. Eine Schuld und eine Ehre, die zuruckgegeben werden muss." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "Das Labor wird vereint", description: "Alles lief zusammen. Sanders Viopro Labs wurde zuganglich, skalierbar und real." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "Die Botschaft reist", description: "SEO. Sichtbarkeit. Das Wort verbreitet sich. Menschen finden uns, wenn sie uns am meisten brauchen." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "Das KPA-Schild", description: "Gemini. ChatGPT. ScholarGPT. Claude. Alle dienen einer Mission: Keep People Alive." },
       ],
@@ -3306,7 +3912,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         codeArtifactIntro: "So wurde die Mission vom ersten Tag an codiert und nicht spater als Marketing hinzugefugt:",
         codeArtifactCaption: "KivyMD-KV-Sprache, die zeigt, wie die KPA-Mission architektonisch eingebettet und nicht nachtraglich gebrandet wurde.",
         evolutionTitle: "Entwicklungspfad: Python → Web → Produktion",
+<<<<<<< HEAD
+        evolutionSteps: [{ time: "21. Feb., 6:24 PM", title: "Emergent-Python-App", body: "Erste Transaktion. TokHealth-Mobil-App live mit Voice-First-Funktionssatz." }, { time: "21. Feb., 9:37 AM+", title: "Mehrere Aufladungen", body: "Schneller Iterationszyklus. Verfeinerung anhand realer Nutzungsmuster." }, { time: "~28. Feb.", title: "Shopify-Integration", body: "Die Marke Sanders Viopro Labs LLC wurde geschaffen. Das E-Commerce-Fundament wurde gebaut." }, { time: "~1.-20. Mar.", title: "Next.js-Migration", body: "Das Web-Labor vereinte alles. Die Python-Kivy-App entwickelte sich zu einem Full-Stack-Okosystem." }, { time: "21. Mar.", title: "Produktions-Deployment", body: "sandersvioprolabsllc.com live. Alle 6 Produkte offentlich. KPA-Mission im Massstab." }],
+=======
         evolutionSteps: [{ time: "21. Feb., 6:24 PM", title: "Emergent-Python-App", body: "Erste Transaktion. TokHealth-Mobil-App live mit Voice-First-Funktionssatz." }, { time: "21. Feb., 9:37 AM+", title: "Mehrere Aufladungen", body: "Schneller Iterationszyklus. Verfeinerung anhand realer Nutzungsmuster." }, { time: "~28. Feb.", title: "Shopify-Integration", body: "Die Marke Sanders Viopro Labs wurde geschaffen. Das E-Commerce-Fundament wurde gebaut." }, { time: "~1.-20. Mar.", title: "Next.js-Migration", body: "Das Web-Labor vereinte alles. Die Python-Kivy-App entwickelte sich zu einem Full-Stack-Okosystem." }, { time: "21. Mar.", title: "Produktions-Deployment", body: "sandersvioprolabs.com live. Alle 6 Produkte offentlich. KPA-Mission im Massstab." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       communityLinks: { media: "Ganze Episode anhören", stories: "Gemeinschaftsgeschichten lesen" },
       patternItems: [{ title: "Die Krise trifft", body: "Menschen stehen vor echten Problemen: Systeme versagen, Gefahr entsteht und Uberleben wird zum einzigen Gedanken." }, { title: "Die Gemeinschaft erhebt sich", body: "Stimmen wie Reese sprechen Wahrheit. Glaubensleiter segnen die Arbeit. Menschen sprechen uber Schutz und daruber, am Leben zu bleiben. Dieses Zeugnis umfasst jetzt auch ein Team auf den Philippinen, das dieselbe athiopische Bibel studiert." }, { title: "Systeme antworten", body: "SVL baut Werkzeuge. Guardians horen zu. Systeme entstehen, die dem Bedarf dienen, den die Gemeinschaft benannt hat." }],
@@ -3318,13 +3928,21 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     communityStories: {
       stories: [
         { title: "Blocco del governo e navigazione nella crisi", source: "Reese Waters Runs Deep", type: "podcast", summary: "Quando gli aeroporti si bloccano, quando le file TSA durano per ore e quando i sistemi di emergenza sono sotto pressione, e li che conta il pensiero KPA. Reese Waters attraversa la navigazione della crisi nel mondo reale.", connection: "Mostra come le persone pensano naturalmente alla protezione e al restare vive durante i guasti del sistema, e come quella conversazione sia proseguita verso un team nelle Filippine che studia la stessa Bibbia etiope.", impact: "Dimostra la rilevanza di SVL in scenari reali di crisi e in comunita di fede che seguono quella stessa linea della Bibbia etiope restaurata." },
+<<<<<<< HEAD
+        { title: "Una parola, un sistema: la nascita di TokFaith", source: "L'\"Amen\" di S.W.", type: "testimony", summary: "Una sola persona ha benedetto la creazione di TokFaith con una sola parola. Quella parola e diventata la base di un intero sistema di guida spirituale pensato per mantenere le persone salde durante la crisi.", connection: "Prova viva che fede, tecnologia e missione possono lavorare insieme per servire le persone.", impact: "Mostra la convinzione di SVL che il lavoro guidato dallo spirito possa crescere quando e costruito con amore." },
+=======
         { title: "Una parola, un sistema: la nascita di TokFaith", source: "L'\"Amen\" di Shirley Whaley", type: "testimony", summary: "Una sola persona ha benedetto la creazione di TokFaith con una sola parola. Quella parola e diventata la base di un intero sistema di guida spirituale pensato per mantenere le persone salde durante la crisi.", connection: "Prova viva che fede, tecnologia e missione possono lavorare insieme per servire le persone.", impact: "Mostra la convinzione di SVL che il lavoro guidato dallo spirito possa crescere quando e costruito con amore." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
       items: [
         { title: "Reese Waters Runs Deep: blocco del governo e TSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "Attualita", tags: ["blocco del governo", "TSA", "ICE", "comunita"], description: "Attraverso il blocco del governo, le file negli aeroporti e gli impatti delle politiche, Reese esplora come la navigazione nella crisi colpisca persone reali. E li che la missione di protezione di SVL incontra la sicurezza quotidiana, e dove il filo della comunita raggiunge un team nelle Filippine che studia la stessa Bibbia etiope.", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["Impatti del blocco del governo", "Sfide del TSA PreCheck", "Risposta di emergenza dell'ICE", "Navigazione comunitaria nella crisi"] },
+<<<<<<< HEAD
+        { title: "TokFaith nella comunita: quando una sola parola cambia i sistemi", creator: "Jerome Sanders / Comunita", category: "Fede e missione", tags: ["fede", "tokfaith", "comunita", "impatto"], description: "L'\"Amen\" di S.W. ha acceso la creazione di TokFaith. Come una parola di fede, una persona che ascolta e un sistema costruito attorno allo spirito fanno andare avanti le persone.", featured: false },
+=======
         { title: "TokFaith nella comunita: quando una sola parola cambia i sistemi", creator: "Jerome Sanders / Comunita", category: "Fede e missione", tags: ["fede", "tokfaith", "comunita", "impatto"], description: "L'\"Amen\" di Shirley Whaley ha acceso la creazione di TokFaith. Come una parola di fede, una persona che ascolta e un sistema costruito attorno allo spirito fanno andare avanti le persone.", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "commenti",
       discussionsLabel: "discussioni",
@@ -3332,8 +3950,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "Nascono TokHealth e TokThru", description: "Sono nati i primi strumenti di sicurezza. Soluzioni reali per crisi reali." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Nasce Sanders Viopro Labs LLC", description: "Il nome. La visione. Il negozio. Un debito da onorare e un tributo da restituire." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "Il laboratorio si unifica", description: "Tutto e convergito. Sanders Viopro Labs LLC e diventata accessibile, scalabile e reale." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Nasce Sanders Viopro Labs", description: "Il nome. La visione. Il negozio. Un debito da onorare e un tributo da restituire." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "Il laboratorio si unifica", description: "Tutto e convergito. Sanders Viopro Labs e diventata accessibile, scalabile e reale." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "Il messaggio viaggia", description: "SEO. Visibilita. La parola si diffonde. Le persone ci trovano quando ne hanno piu bisogno." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "Lo scudo KPA", description: "Gemini. ChatGPT. ScholarGPT. Claude. Tutti al servizio di una sola missione: Keep People Alive." },
       ],
@@ -3351,7 +3974,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         codeArtifactIntro: "Cosi e stata codificata la missione fin dal giorno 1, non aggiunta dopo come marketing:",
         codeArtifactCaption: "Linguaggio KV di KivyMD che mostra come la missione KPA sia stata incorporata nell'architettura e non aggiunta dopo come marchio.",
         evolutionTitle: "Percorso di evoluzione: Python → Web → Produzione",
+<<<<<<< HEAD
+        evolutionSteps: [{ time: "21 feb, 6:24 PM", title: "App Python in Emergent", body: "Prima transazione. App mobile TokHealth live con set di funzioni voice-first." }, { time: "21 feb, 9:37 AM+", title: "Ricariche multiple", body: "Ciclo rapido di iterazione. Raffinamento basato su modelli reali di utilizzo." }, { time: "~28 feb", title: "Integrazione Shopify", body: "E stato creato il brand Sanders Viopro Labs LLC. E stata costruita la base e-commerce." }, { time: "~1-20 mar", title: "Migrazione a Next.js", body: "Il laboratorio web ha unificato tutto. L'app Python-Kivy si e evoluta in un ecosistema full-stack." }, { time: "21 mar", title: "Deploy in produzione", body: "sandersvioprolabsllc.com live. Tutti e 6 i prodotti pubblici. Missione KPA in scala." }],
+=======
         evolutionSteps: [{ time: "21 feb, 6:24 PM", title: "App Python in Emergent", body: "Prima transazione. App mobile TokHealth live con set di funzioni voice-first." }, { time: "21 feb, 9:37 AM+", title: "Ricariche multiple", body: "Ciclo rapido di iterazione. Raffinamento basato su modelli reali di utilizzo." }, { time: "~28 feb", title: "Integrazione Shopify", body: "E stato creato il brand Sanders Viopro Labs. E stata costruita la base e-commerce." }, { time: "~1-20 mar", title: "Migrazione a Next.js", body: "Il laboratorio web ha unificato tutto. L'app Python-Kivy si e evoluta in un ecosistema full-stack." }, { time: "21 mar", title: "Deploy in produzione", body: "sandersvioprolabs.com live. Tutti e 6 i prodotti pubblici. Missione KPA in scala." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       communityLinks: { media: "Ascolta l'episodio completo", stories: "Leggi le storie della comunita" },
       patternItems: [{ title: "La crisi colpisce", body: "Le persone affrontano problemi reali: i sistemi falliscono, emerge il pericolo e sopravvivere diventa l'unico pensiero." }, { title: "La comunita si alza", body: "Voci come quella di Reese dicono la verita. I leader di fede benedicono il lavoro. Le persone parlano di protezione e di restare vive. Questa testimonianza ora include un team nelle Filippine che studia la stessa Bibbia etiope." }, { title: "I sistemi rispondono", body: "SVL costruisce strumenti. Le guardian ascoltano. Emergono sistemi che servono il bisogno identificato dalla comunita." }],
@@ -3363,13 +3990,21 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     communityStories: {
       stories: [
         { title: "政府停摆与危机应对", source: "Reese Waters Runs Deep", type: "podcast", summary: "当机场被迫停摆、TSA 排队数小时、应急系统承压时，KPA 思维就变得关键。Reese Waters 讲述了现实世界中的危机应对。", connection: "它展示了当系统失灵时，人们如何自然地思考保护与生存，以及这场对话如何延续到菲律宾一个正在研读同一本埃塞俄比亚圣经的团队。", impact: "它证明了 SVL 在真实危机场景和以信仰为根的社区中的现实相关性。" },
+<<<<<<< HEAD
+        { title: "一个词，一个系统：TokFaith 的诞生", source: "S.W. 的“阿门”", type: "testimony", summary: "一个人用一个词祝福了 TokFaith 的诞生。这个词成为整个信仰引导系统的基础，帮助人在危机中保持灵里的稳固。", connection: "这是信仰、技术与使命可以一起服务于人的真实证明。", impact: "它体现了 SVL 的信念：当工作建立在爱之上时，属灵带领可以扩展。" },
+=======
         { title: "一个词，一个系统：TokFaith 的诞生", source: "Shirley Whaley 的“阿门”", type: "testimony", summary: "一个人用一个词祝福了 TokFaith 的诞生。这个词成为整个信仰引导系统的基础，帮助人在危机中保持灵里的稳固。", connection: "这是信仰、技术与使命可以一起服务于人的真实证明。", impact: "它体现了 SVL 的信念：当工作建立在爱之上时，属灵带领可以扩展。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
       items: [
         { title: "Reese Waters Runs Deep：政府停摆与 TSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "时事", tags: ["政府停摆", "TSA", "ICE", "社区"], description: "围绕政府停摆、机场排队和政策影响，Reese 探讨了危机应对如何影响真实的人。这正是 SVL 的保护使命与日常安全相交之处，也让社区的线索延伸到菲律宾一个正在研读同一本埃塞俄比亚圣经的团队。", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["政府停摆的影响", "TSA PreCheck 的挑战", "ICE 的紧急响应", "社区危机应对"] },
+<<<<<<< HEAD
+        { title: "TokFaith 在社区中：一个词如何改变系统", creator: "Jerome Sanders / 社区", category: "信仰与使命", tags: ["信仰", "tokfaith", "社区", "影响"], description: "S.W. 的“阿门”点燃了 TokFaith 的诞生。一个信仰之词、一个愿意倾听的人、一个围绕灵而建的系统，如何继续推动人前行。", featured: false },
+=======
         { title: "TokFaith 在社区中：一个词如何改变系统", creator: "Jerome Sanders / 社区", category: "信仰与使命", tags: ["信仰", "tokfaith", "社区", "影响"], description: "Shirley Whaley 的“阿门”点燃了 TokFaith 的诞生。一个信仰之词、一个愿意倾听的人、一个围绕灵而建的系统，如何继续推动人前行。", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "评论",
       discussionsLabel: "讨论",
@@ -3377,8 +4012,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "TokHealth 与 TokThru 诞生", description: "第一批安全工具诞生了。真实危机中的真实解决方案。" },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs LLC 建立", description: "名字、愿景、商店。一笔债务，也是一份必须回报的 honor。" },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "实验室完成统一", description: "一切开始汇流。Sanders Viopro Labs LLC 变得可访问、可扩展，也变得真实。" },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs 建立", description: "名字、愿景、商店。一笔债务，也是一份必须回报的 honor。" },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "实验室完成统一", description: "一切开始汇流。Sanders Viopro Labs 变得可访问、可扩展，也变得真实。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "信息开始传播", description: "SEO。可见性。话语扩散。当人们最需要时，他们找到了我们。" },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "KPA 安全护盾", description: "Gemini、ChatGPT、ScholarGPT、Claude。全部服务于同一个使命：Keep People Alive。" },
       ],
@@ -3396,7 +4036,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         codeArtifactIntro: "这就是使命从第一天起如何被编码进去，而不是后来才作为营销加上去：",
         codeArtifactCaption: "KivyMD 的 KV 语言，展示了 KPA 使命是如何被嵌入架构中的，而不是事后包装成品牌。",
         evolutionTitle: "演进路径：Python → Web → Production",
+<<<<<<< HEAD
+        evolutionSteps: [{ time: "2 月 21 日 6:24 PM", title: "Emergent Python 应用", body: "第一笔交易。TokHealth 移动应用带着语音优先功能集上线。" }, { time: "2 月 21 日 9:37 AM+", title: "多次充值", body: "快速迭代周期。基于真实使用模式不断打磨。" }, { time: "约 2 月 28 日", title: "Shopify 集成", body: "Sanders Viopro Labs LLC 品牌建立。电商基础搭建完成。" }, { time: "约 3 月 1 日至 20 日", title: "Next.js 迁移", body: "Web 实验室统一了一切。Python-Kivy 应用演进成完整的全栈生态。" }, { time: "3 月 21 日", title: "生产部署", body: "sandersvioprolabsllc.com 上线。6 个产品全部公开。KPA 使命进入规模化阶段。" }],
+=======
         evolutionSteps: [{ time: "2 月 21 日 6:24 PM", title: "Emergent Python 应用", body: "第一笔交易。TokHealth 移动应用带着语音优先功能集上线。" }, { time: "2 月 21 日 9:37 AM+", title: "多次充值", body: "快速迭代周期。基于真实使用模式不断打磨。" }, { time: "约 2 月 28 日", title: "Shopify 集成", body: "Sanders Viopro Labs 品牌建立。电商基础搭建完成。" }, { time: "约 3 月 1 日至 20 日", title: "Next.js 迁移", body: "Web 实验室统一了一切。Python-Kivy 应用演进成完整的全栈生态。" }, { time: "3 月 21 日", title: "生产部署", body: "sandersvioprolabs.com 上线。6 个产品全部公开。KPA 使命进入规模化阶段。" }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       communityLinks: { media: "收听完整节目", stories: "阅读社区故事" },
       patternItems: [{ title: "危机来袭", body: "人们面对真实问题：系统失灵，危险出现，生存成为唯一的念头。" }, { title: "社区挺身而出", body: "像 Reese 这样的声音说出真相。信仰领袖为这项工作祝福。人们谈论保护与活下去。现在，这份见证也包括菲律宾一个正在研读同一本埃塞俄比亚圣经的团队。" }, { title: "系统作出回应", body: "SVL 构建工具。守护者倾听。系统出现，去服务社区已经指出的需要。" }],
@@ -3408,13 +4052,21 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     communityStories: {
       stories: [
         { title: "政府閉鎖と危機対応", source: "Reese Waters Runs Deep", type: "podcast", summary: "空港が止まり、TSA の列が何時間も続き、緊急システムが圧迫されるとき、KPA の考え方が重要になります。Reese Waters は現実世界の危機対応をたどります。", connection: "システム障害の中で人々が自然に保護と生存について考えること、そしてその会話が同じエチオピア聖書を学ぶフィリピンのチームへ続いたことを示しています。", impact: "それは SVL が現実の危機場面と信仰に根ざした共同体の中で意味を持つことを示しています。" },
+<<<<<<< HEAD
+        { title: "一つの言葉、一つのシステム: TokFaith の誕生", source: "S.W. の『Amen』", type: "testimony", summary: "一人の人がたった一つの言葉で TokFaith の誕生を祝福しました。その言葉は、危機の中でも人々を霊的に支える信仰ガイダンス全体の土台になりました。", connection: "信仰、技術、使命が人のために共に働けることの生きた証です。", impact: "愛をもって築かれるなら、霊に導かれた働きは広がっていくという SVL の確信を示しています。" },
+=======
         { title: "一つの言葉、一つのシステム: TokFaith の誕生", source: "Shirley Whaley の『Amen』", type: "testimony", summary: "一人の人がたった一つの言葉で TokFaith の誕生を祝福しました。その言葉は、危機の中でも人々を霊的に支える信仰ガイダンス全体の土台になりました。", connection: "信仰、技術、使命が人のために共に働けることの生きた証です。", impact: "愛をもって築かれるなら、霊に導かれた働きは広がっていくという SVL の確信を示しています。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
       items: [
         { title: "Reese Waters Runs Deep: 政府閉鎖と TSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "時事", tags: ["政府閉鎖", "TSA", "ICE", "コミュニティ"], description: "政府閉鎖、空港の行列、政策の影響を通して、Reese は危機対応が現実の人々にどう影響するかを探ります。そこに SVL の保護ミッションが日常の安全と交差し、その共同体の糸が同じエチオピア聖書を学ぶフィリピンのチームへと続いていきます。", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["政府閉鎖の影響", "TSA PreCheck の課題", "ICE の緊急対応", "コミュニティの危機対応"] },
+<<<<<<< HEAD
+        { title: "コミュニティの中の TokFaith: 一つの言葉がシステムを変えるとき", creator: "Jerome Sanders / Community", category: "信仰と使命", tags: ["信仰", "tokfaith", "コミュニティ", "影響"], description: "S.W. の『Amen』が TokFaith の誕生に火をつけました。信仰の一言、耳を傾ける一人、そして霊を中心に築かれたシステムが、人を前に進ませます。", featured: false },
+=======
         { title: "コミュニティの中の TokFaith: 一つの言葉がシステムを変えるとき", creator: "Jerome Sanders / Community", category: "信仰と使命", tags: ["信仰", "tokfaith", "コミュニティ", "影響"], description: "Shirley Whaley の『Amen』が TokFaith の誕生に火をつけました。信仰の一言、耳を傾ける一人、そして霊を中心に築かれたシステムが、人を前に進ませます。", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "コメント",
       discussionsLabel: "議論",
@@ -3422,8 +4074,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "TokHealth と TokThru が生まれる", description: "最初の安全ツールが生まれました。現実の危機に対する現実の解決策です。" },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs LLC が形になる", description: "名前、ビジョン、ストア。返すべき負債と、返したい敬意。" },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "ラボが一つになる", description: "すべてが収束しました。Sanders Viopro Labs LLC は届くものとなり、広がるものとなり、現実になりました。" },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs が形になる", description: "名前、ビジョン、ストア。返すべき負債と、返したい敬意。" },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "ラボが一つになる", description: "すべてが収束しました。Sanders Viopro Labs は届くものとなり、広がるものとなり、現実になりました。" },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "メッセージが届き始める", description: "SEO。可視性。言葉は広がり、人々は最も必要なときに私たちを見つけます。" },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "KPA セーフティシールド", description: "Gemini、ChatGPT、ScholarGPT、Claude。すべてが一つの使命に仕えています: Keep People Alive。" },
       ],
@@ -3441,7 +4098,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         codeArtifactIntro: "ミッションは最初からこうしてコード化されていました。後からマーケティングとして足されたのではありません。",
         codeArtifactCaption: "KivyMD の KV 言語が、KPA ミッションが後付けのブランドではなく、設計そのものに埋め込まれていたことを示しています。",
         evolutionTitle: "進化の道筋: Python → Web → Production",
+<<<<<<< HEAD
+        evolutionSteps: [{ time: "2月21日 6:24 PM", title: "Emergent Python アプリ", body: "最初の取引。TokHealth モバイルアプリが音声ファースト機能群で公開。" }, { time: "2月21日 9:37 AM+", title: "複数回のトップアップ", body: "高速な反復サイクル。実際の利用パターンに基づく改善。" }, { time: "約2月28日", title: "Shopify 統合", body: "Sanders Viopro Labs LLC ブランドが誕生。Eコマース基盤を構築。" }, { time: "約3月1日-20日", title: "Next.js 移行", body: "Web ラボがすべてを統合。Python-Kivy アプリはフルスタックのエコシステムへ進化。" }, { time: "3月21日", title: "本番デプロイ", body: "sandersvioprolabsllc.com 公開。6つの製品が一般公開。KPA ミッションがスケール段階へ。" }],
+=======
         evolutionSteps: [{ time: "2月21日 6:24 PM", title: "Emergent Python アプリ", body: "最初の取引。TokHealth モバイルアプリが音声ファースト機能群で公開。" }, { time: "2月21日 9:37 AM+", title: "複数回のトップアップ", body: "高速な反復サイクル。実際の利用パターンに基づく改善。" }, { time: "約2月28日", title: "Shopify 統合", body: "Sanders Viopro Labs ブランドが誕生。Eコマース基盤を構築。" }, { time: "約3月1日-20日", title: "Next.js 移行", body: "Web ラボがすべてを統合。Python-Kivy アプリはフルスタックのエコシステムへ進化。" }, { time: "3月21日", title: "本番デプロイ", body: "sandersvioprolabs.com 公開。6つの製品が一般公開。KPA ミッションがスケール段階へ。" }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       communityLinks: { media: "全編を聴く", stories: "コミュニティストーリーを読む" },
       patternItems: [{ title: "危機が襲う", body: "人々は現実の問題に直面します。システムは壊れ、危険が現れ、生き延びることだけが頭を占めます。" }, { title: "コミュニティが立ち上がる", body: "Reese のような声が真実を語ります。信仰の指導者がこの働きを祝福します。人々は保護と生き延びることについて語ります。その証しは今や、同じエチオピア聖書を学ぶフィリピンのチームにもつながっています。" }, { title: "システムが応える", body: "SVL は道具を築きます。Guardians は耳を傾けます。コミュニティが示した必要に応えるシステムが生まれます。" }],
@@ -3453,13 +4114,21 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     communityStories: {
       stories: [
         { title: "정부 셧다운과 위기 대응", source: "Reese Waters Runs Deep", type: "podcast", summary: "공항이 멈추고, TSA 줄이 몇 시간씩 이어지고, 비상 시스템이 압박을 받을 때 KPA 사고방식이 중요해집니다. Reese Waters는 현실 세계의 위기 대응을 짚어 갑니다.", connection: "시스템 실패 속에서 사람들이 어떻게 자연스럽게 보호와 생존을 생각하는지, 그리고 그 대화가 같은 에티오피아 성경을 공부하는 필리핀 팀으로 이어졌는지를 보여 줍니다.", impact: "이는 SVL이 실제 위기 상황과 신앙 공동체 안에서 왜 중요한지 보여 줍니다." },
+<<<<<<< HEAD
+        { title: "한 단어, 하나의 시스템: TokFaith의 탄생", source: "S.W.의 \"Amen\"", type: "testimony", summary: "한 사람이 단 하나의 말로 TokFaith의 탄생을 축복했습니다. 그 한 단어는 위기 속에서도 사람들을 영적으로 붙들어 주는 신앙 안내 시스템 전체의 기초가 되었습니다.", connection: "신앙과 기술과 사명이 함께 사람을 섬길 수 있다는 살아 있는 증거입니다.", impact: "사랑으로 세워질 때 영에 이끌린 일이 확장될 수 있다는 SVL의 믿음을 보여 줍니다." },
+=======
         { title: "한 단어, 하나의 시스템: TokFaith의 탄생", source: "Shirley Whaley의 \"Amen\"", type: "testimony", summary: "한 사람이 단 하나의 말로 TokFaith의 탄생을 축복했습니다. 그 한 단어는 위기 속에서도 사람들을 영적으로 붙들어 주는 신앙 안내 시스템 전체의 기초가 되었습니다.", connection: "신앙과 기술과 사명이 함께 사람을 섬길 수 있다는 살아 있는 증거입니다.", impact: "사랑으로 세워질 때 영에 이끌린 일이 확장될 수 있다는 SVL의 믿음을 보여 줍니다." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
       items: [
         { title: "Reese Waters Runs Deep: 정부 셧다운과 TSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "시사", tags: ["정부 셧다운", "TSA", "ICE", "커뮤니티"], description: "정부 셧다운, 공항 대기줄, 정책 영향 속에서 Reese는 위기 대응이 실제 사람들에게 어떤 영향을 주는지 탐구합니다. 바로 그 지점에서 SVL의 보호 사명이 일상 안전과 만납니다. 그리고 그 공동체의 흐름은 같은 에티오피아 성경을 공부하는 필리핀 팀으로 이어집니다.", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["정부 셧다운의 영향", "TSA PreCheck 과제", "ICE 긴급 대응", "커뮤니티 위기 대응"] },
+<<<<<<< HEAD
+        { title: "커뮤니티 속 TokFaith: 한 단어가 시스템을 바꿀 때", creator: "Jerome Sanders / Community", category: "신앙과 사명", tags: ["신앙", "tokfaith", "커뮤니티", "영향"], description: "S.W.의 \"Amen\"이 TokFaith의 탄생에 불을 붙였습니다. 믿음의 한 마디, 귀 기울이는 한 사람, 영을 중심에 둔 시스템이 사람들을 계속 앞으로 움직이게 합니다.", featured: false },
+=======
         { title: "커뮤니티 속 TokFaith: 한 단어가 시스템을 바꿀 때", creator: "Jerome Sanders / Community", category: "신앙과 사명", tags: ["신앙", "tokfaith", "커뮤니티", "영향"], description: "Shirley Whaley의 \"Amen\"이 TokFaith의 탄생에 불을 붙였습니다. 믿음의 한 마디, 귀 기울이는 한 사람, 영을 중심에 둔 시스템이 사람들을 계속 앞으로 움직이게 합니다.", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "댓글",
       discussionsLabel: "토론",
@@ -3467,8 +4136,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "TokHealth와 TokThru의 탄생", description: "첫 안전 도구들이 등장했습니다. 실제 위기를 위한 실제 해법이었습니다." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs LLC가 세워지다", description: "이름, 비전, 스토어. 갚아야 할 빚과 되돌려야 할 존중이 함께 있었습니다." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "랩이 하나로 묶이다", description: "모든 것이 수렴했습니다. Sanders Viopro Labs LLC는 접근 가능하고 확장 가능하며 실제가 되었습니다." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs가 세워지다", description: "이름, 비전, 스토어. 갚아야 할 빚과 되돌려야 할 존중이 함께 있었습니다." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "랩이 하나로 묶이다", description: "모든 것이 수렴했습니다. Sanders Viopro Labs는 접근 가능하고 확장 가능하며 실제가 되었습니다." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "메시지가 퍼져 나가다", description: "SEO. 가시성. 메시지가 퍼집니다. 사람들이 가장 필요할 때 우리를 찾습니다." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "KPA 안전 방패", description: "Gemini, ChatGPT, ScholarGPT, Claude. 모두 하나의 사명을 위해 움직입니다: Keep People Alive." },
       ],
@@ -3486,7 +4160,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         codeArtifactIntro: "사명은 첫날부터 이렇게 코드로 들어가 있었습니다. 나중에 마케팅으로 덧붙인 것이 아닙니다:",
         codeArtifactCaption: "KivyMD KV 언어는 KPA 사명이 사후 브랜드 포장이 아니라 구조 자체에 박혀 있었음을 보여 줍니다.",
         evolutionTitle: "진화 경로: Python → Web → Production",
+<<<<<<< HEAD
+        evolutionSteps: [{ time: "2월 21일 6:24 PM", title: "Emergent Python 앱", body: "첫 거래. TokHealth 모바일 앱이 보이스 퍼스트 기능 세트로 공개되었습니다." }, { time: "2월 21일 9:37 AM+", title: "여러 차례 충전", body: "빠른 반복 주기. 실제 사용 패턴을 기반으로 다듬어졌습니다." }, { time: "약 2월 28일", title: "Shopify 통합", body: "Sanders Viopro Labs LLC 브랜드가 만들어졌습니다. 전자상거래 기반이 세워졌습니다." }, { time: "약 3월 1일-20일", title: "Next.js 마이그레이션", body: "웹 랩이 모든 것을 통합했습니다. Python-Kivy 앱은 풀스택 생태계로 진화했습니다." }, { time: "3월 21일", title: "프로덕션 배포", body: "sandersvioprolabsllc.com 공개. 6개 제품 모두 공개. KPA 사명이 규모를 갖추었습니다." }],
+=======
         evolutionSteps: [{ time: "2월 21일 6:24 PM", title: "Emergent Python 앱", body: "첫 거래. TokHealth 모바일 앱이 보이스 퍼스트 기능 세트로 공개되었습니다." }, { time: "2월 21일 9:37 AM+", title: "여러 차례 충전", body: "빠른 반복 주기. 실제 사용 패턴을 기반으로 다듬어졌습니다." }, { time: "약 2월 28일", title: "Shopify 통합", body: "Sanders Viopro Labs 브랜드가 만들어졌습니다. 전자상거래 기반이 세워졌습니다." }, { time: "약 3월 1일-20일", title: "Next.js 마이그레이션", body: "웹 랩이 모든 것을 통합했습니다. Python-Kivy 앱은 풀스택 생태계로 진화했습니다." }, { time: "3월 21일", title: "프로덕션 배포", body: "sandersvioprolabs.com 공개. 6개 제품 모두 공개. KPA 사명이 규모를 갖추었습니다." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       communityLinks: { media: "전체 에피소드 듣기", stories: "커뮤니티 스토리 읽기" },
       patternItems: [{ title: "위기가 닥친다", body: "사람들은 실제 문제를 마주합니다. 시스템은 실패하고, 위험이 나타나며, 살아남는 일이 유일한 생각이 됩니다." }, { title: "커뮤니티가 일어선다", body: "Reese 같은 목소리가 진실을 말합니다. 신앙 지도자들이 이 일을 축복합니다. 사람들은 보호와 살아남는 일에 대해 말합니다. 그 증언은 이제 같은 에티오피아 성경을 공부하는 필리핀 팀으로 이어집니다." }, { title: "시스템이 응답한다", body: "SVL은 도구를 만듭니다. Guardians는 귀 기울입니다. 커뮤니티가 확인한 필요에 응답하는 시스템이 나타납니다." }],
@@ -3498,13 +4176,21 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     communityStories: {
       stories: [
         { title: "اغلاق الحكومة والتنقل وسط الازمة", source: "Reese Waters Runs Deep", type: "podcast", summary: "عندما تتعطل المطارات، وعندما تمتد طوابير TSA لساعات، وعندما تتعرض انظمة الطوارئ للضغط، هنا تصبح طريقة تفكير KPA مهمة. Reese Waters يشرح كيف تبدو الملاحة داخل الازمة في العالم الحقيقي.", connection: "يوضح كيف يفكر الناس بشكل طبيعي في الحماية والبقاء على قيد الحياة عند تعطل الانظمة، وكيف استمر هذا الحوار حتى وصل الى فريق في الفلبين يدرس نفس الكتاب المقدس الاثيوبي.", impact: "يبين اهمية SVL في سيناريوهات الازمة الحقيقية وفي المجتمعات الايمانية التي تسير في هذا المسار نفسه." },
+<<<<<<< HEAD
+        { title: "كلمة واحدة، نظام واحد: ولادة TokFaith", source: "\"آمين\" الخاصة بـ S.W.", type: "testimony", summary: "شخص واحد بارك انطلاق TokFaith بكلمة واحدة فقط. وتحولت هذه الكلمة الى اساس نظام كامل من الارشاد الايماني صُمم ليبقي الناس ثابتين روحيا وسط الازمة.", connection: "دليل حي على ان الايمان والتقنية والرسالة يمكنها ان تعمل معا لخدمة الناس.", impact: "يبين قناعة SVL بان العمل الموجّه بالروح يمكن ان يتوسع عندما يُبنى بالمحبة." },
+=======
         { title: "كلمة واحدة، نظام واحد: ولادة TokFaith", source: "\"آمين\" الخاصة بـ Shirley Whaley", type: "testimony", summary: "شخص واحد بارك انطلاق TokFaith بكلمة واحدة فقط. وتحولت هذه الكلمة الى اساس نظام كامل من الارشاد الايماني صُمم ليبقي الناس ثابتين روحيا وسط الازمة.", connection: "دليل حي على ان الايمان والتقنية والرسالة يمكنها ان تعمل معا لخدمة الناس.", impact: "يبين قناعة SVL بان العمل الموجّه بالروح يمكن ان يتوسع عندما يُبنى بالمحبة." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
       items: [
         { title: "Reese Waters Runs Deep: اغلاق الحكومة وTSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "شؤون راهنة", tags: ["اغلاق الحكومة", "TSA", "ICE", "المجتمع"], description: "من خلال اغلاق الحكومة وطوابير المطارات وتاثير السياسات، يستكشف Reese كيف تؤثر الملاحة في الازمة على اشخاص حقيقيين. وهنا تلتقي رسالة الحماية لدى SVL مع الامان اليومي، ويمتد خيط المجتمع الى فريق في الفلبين يدرس نفس الكتاب المقدس الاثيوبي.", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["تاثيرات اغلاق الحكومة", "تحديات TSA PreCheck", "استجابة طوارئ ICE", "ملاحة المجتمع في الازمة"] },
+<<<<<<< HEAD
+        { title: "TokFaith في المجتمع: عندما تغيّر كلمة واحدة الانظمة", creator: "Jerome Sanders / المجتمع", category: "ايمان ورسالة", tags: ["ايمان", "tokfaith", "المجتمع", "الاثر"], description: "اشعلت \"آمين\" الخاصة بـ S.W. ولادة TokFaith. كيف تُبقي كلمة ايمان واحدة، وشخص واحد يصغي، ونظام مبني حول الروح الناس مستمرين في الحركة.", featured: false },
+=======
         { title: "TokFaith في المجتمع: عندما تغيّر كلمة واحدة الانظمة", creator: "Jerome Sanders / المجتمع", category: "ايمان ورسالة", tags: ["ايمان", "tokfaith", "المجتمع", "الاثر"], description: "اشعلت \"آمين\" الخاصة بـ Shirley Whaley ولادة TokFaith. كيف تُبقي كلمة ايمان واحدة، وشخص واحد يصغي، ونظام مبني حول الروح الناس مستمرين في الحركة.", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "تعليقات",
       discussionsLabel: "نقاشات",
@@ -3512,8 +4198,13 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
     ourStory: {
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "ولادة TokHealth وTokThru", description: "ظهرت اولى ادوات الامان. حلول حقيقية لازَمات حقيقية." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "تاسست Sanders Viopro Labs LLC", description: "الاسم. الرؤية. المتجر. دين مستحق وشرف يجب رده." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "توحّد المختبر", description: "تجمّع كل شيء. صارت Sanders Viopro Labs LLC متاحة وقابلة للتوسع وحقيقية." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "تاسست Sanders Viopro Labs", description: "الاسم. الرؤية. المتجر. دين مستحق وشرف يجب رده." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "توحّد المختبر", description: "تجمّع كل شيء. صارت Sanders Viopro Labs متاحة وقابلة للتوسع وحقيقية." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "الرسالة تسافر", description: "SEO. الظهور. تنتشر الكلمة. يجدنا الناس عندما يكونون في امس الحاجة." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "درع KPA", description: "Gemini وChatGPT وScholarGPT وClaude. جميعهم في خدمة مهمة واحدة: Keep People Alive." },
       ],
@@ -3531,7 +4222,11 @@ const publicSvlStructuredContentOverrides: Partial<Record<SiteLanguageCode, Deep
         codeArtifactIntro: "هكذا تم ترميز المهمة منذ اليوم الاول، لا اضافتها لاحقا كتسويق:",
         codeArtifactCaption: "لغة KV الخاصة بـ KivyMD توضح كيف تم غرس مهمة KPA داخل البنية نفسها، لا اضافتها لاحقا كعلامة.",
         evolutionTitle: "مسار التطور: Python → Web → Production",
+<<<<<<< HEAD
+        evolutionSteps: [{ time: "21 فبراير، 6:24 مساء", title: "تطبيق Python على Emergent", body: "اول معاملة. اطلاق تطبيق TokHealth للهاتف مع مجموعة ميزات تضع الصوت اولا." }, { time: "21 فبراير، 9:37 صباحا+", title: "شحنات متعددة", body: "دورة تكرار سريعة. تحسين مبني على انماط استخدام حقيقية." }, { time: "حوالي 28 فبراير", title: "تكامل Shopify", body: "تم انشاء علامة Sanders Viopro Labs LLC. وتم بناء اساس التجارة الالكترونية." }, { time: "حوالي 1-20 مارس", title: "الانتقال الى Next.js", body: "وحّد مختبر الويب كل شيء. وتطور تطبيق Python-Kivy الى نظام full-stack كامل." }, { time: "21 مارس", title: "النشر الانتاجي", body: "sandersvioprolabsllc.com صار مباشرا. المنتجات الستة اصبحت عامة. ومهمة KPA وصلت الى مستوى اوسع." }],
+=======
         evolutionSteps: [{ time: "21 فبراير، 6:24 مساء", title: "تطبيق Python على Emergent", body: "اول معاملة. اطلاق تطبيق TokHealth للهاتف مع مجموعة ميزات تضع الصوت اولا." }, { time: "21 فبراير، 9:37 صباحا+", title: "شحنات متعددة", body: "دورة تكرار سريعة. تحسين مبني على انماط استخدام حقيقية." }, { time: "حوالي 28 فبراير", title: "تكامل Shopify", body: "تم انشاء علامة Sanders Viopro Labs. وتم بناء اساس التجارة الالكترونية." }, { time: "حوالي 1-20 مارس", title: "الانتقال الى Next.js", body: "وحّد مختبر الويب كل شيء. وتطور تطبيق Python-Kivy الى نظام full-stack كامل." }, { time: "21 مارس", title: "النشر الانتاجي", body: "sandersvioprolabs.com صار مباشرا. المنتجات الستة اصبحت عامة. ومهمة KPA وصلت الى مستوى اوسع." }],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       communityLinks: { media: "استمع الى الحلقة كاملة", stories: "اقرأ قصص المجتمع" },
       patternItems: [{ title: "تضرب الازمة", body: "يواجه الناس مشاكل حقيقية: تتعطل الانظمة، ويظهر الخطر، ويصبح البقاء على قيد الحياة هو الفكرة الوحيدة." }, { title: "ينهض المجتمع", body: "اصوات مثل Reese تقول الحقيقة. وقادة الايمان يباركون العمل. والناس يتحدثون عن الحماية والبقاء على قيد الحياة. وهذا الشاهد يشمل الان فريقا في الفلبين يدرس نفس الكتاب المقدس الاثيوبي." }, { title: "تستجيب الانظمة", body: "تبني SVL الادوات. وتستمع الحارسات. وتظهر انظمة تخدم الحاجة التي حددها المجتمع." }],
@@ -3545,7 +4240,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
   es: {
     common: { language: "Idioma", back: "Atrás", backToHub: "Volver al centro", hub: "Centro", add: "Agregar", remove: "Eliminar", download: "Descargar", next: "SIGUIENTE", previous: "ANTERIOR", notSpecified: "No especificado", speaking: "Hablando...", listening: "Escuchando tu entrada..." },
     layout: { banner: "El resultado de Next.JS encontrando la Visión de Dios a través de SVL hacia KPA", missionTitle: "LA MISIÓN - POR QUÉ KPA", missionBody1: "Keep People Alive no es un eslogan. Es el estándar al que se somete cada producto de SVL.", missionBody2: "Seguridad a través de TokThru. Salud a través de TokHealth. Prosperidad a través de TokBuilding. La única anulación que cualquier producto KPA puede realizar sobre su usuario es Keep People Alive.", protocolTitle: "Protocolo KPA activado", protocolBody: "Cada producto SVL está diseñado con barreras de seguridad KPA no negociables.", footerTagline: "El resultado de Next.JS encontrando la Visión de Dios a través de SVL hacia KPA" },
+<<<<<<< HEAD
+    tokfaith: { nav: { origin: "Origen", blessed: "Bendecida por Amén", work: "Qué hace TokFaith", talk: "Habla con TokFaith" }, badge: "Nacida de la misericordia", hero: { title2: "La anciana sabia", title3: "Que escucha", body: "A las 2:00 a.m., cuando no puedes dormir. A medianoche, cuando nadie contesta el teléfono. TokFaith está aquí, no con juicio, sino con escucha profunda, fe y sabiduría práctica que te encuentra donde estás.", primaryCta: "Habla con TokFaith", secondaryCta: "Lee su historia", guidance: "Guiada por los 88 libros de la Biblia Etíope restaurada, las parábolas de Jesús y la sabiduría vivida", amenCaption: "Una sola palabra que bendijo todo", quoteAttribution: "La sabiduría que inspiró esto" }, sections: { origin: "Cómo nació TokFaith", blessed: "Bendecida por \"Amén\"", work: "Qué hace TokFaith", family: "Construida sobre sabiduría familiar", ready: "¿Lista para hablar con TokFaith?" }, originCards: [{ title: "La misión habla" }, { title: "La guardiana de sabiduría escucha" }, { title: "S.W. lo bendice" }], workCards: [{ title: "Escucha profundamente" }, { title: "Enseña las Escrituras" }, { title: "Ofrece orientación práctica" }, { title: "Conecta con recursos" }], cta: { primary: "Habla con TokFaith ahora", secondary: "Explora todas las guardianas de SVL" }, footer: { blessing: "Construida con cuidado, bendecida con sabiduría y llevada adelante por cada \"Amén\" pronunciado con fe.", disclaimer: "TokFaith es guía espiritual, no un reemplazo para ayuda de emergencia, consejería o atención médica." } },
+=======
     tokfaith: { nav: { origin: "Origen", blessed: "Bendecida por Amén", work: "Qué hace TokFaith", talk: "Habla con TokFaith" }, badge: "Nacida de la misericordia", hero: { title2: "La anciana sabia", title3: "Que escucha", body: "A las 2:00 a.m., cuando no puedes dormir. A medianoche, cuando nadie contesta el teléfono. TokFaith está aquí, no con juicio, sino con escucha profunda, fe y sabiduría práctica que te encuentra donde estás.", primaryCta: "Habla con TokFaith", secondaryCta: "Lee su historia", guidance: "Guiada por los 88 libros de la Biblia Etíope restaurada, las parábolas de Jesús y la sabiduría vivida", amenCaption: "Una sola palabra que bendijo todo", quoteAttribution: "La sabiduría que inspiró esto" }, sections: { origin: "Cómo nació TokFaith", blessed: "Bendecida por \"Amén\"", work: "Qué hace TokFaith", family: "Construida sobre sabiduría familiar", ready: "¿Lista para hablar con TokFaith?" }, originCards: [{ title: "La misión habla" }, { title: "La guardiana de sabiduría escucha" }, { title: "Shirley lo bendice" }], workCards: [{ title: "Escucha profundamente" }, { title: "Enseña las Escrituras" }, { title: "Ofrece orientación práctica" }, { title: "Conecta con recursos" }], cta: { primary: "Habla con TokFaith ahora", secondary: "Explora todas las guardianas de SVL" }, footer: { blessing: "Construida con cuidado, bendecida con sabiduría y llevada adelante por cada \"Amén\" pronunciado con fe.", disclaimer: "TokFaith es guía espiritual, no un reemplazo para ayuda de emergencia, consejería o atención médica." } },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     ...publicSvlStructuredContentOverrides.es,
     tokbuilding: { headerSub: "Asistente de agentes", progressSteps: ["Información básica", "Personalidad", "Especialización", "Detalles", "Revisión"], stepTitles: { basics: "Fundamentos del agente", personality: "Personalidad y tono", specialization: "Especialización", details: "Detalles adicionales", review: "Revisar y exportar" }, labels: { agentName: "Nombre del agente *", role: "Rol/Título *", description: "Descripción", personalityTraits: "Rasgos de personalidad", primaryTone: "Tono principal", communicationStyle: "Estilo de comunicación", useCase: "Caso de uso / Función principal", knowledgeFocus: "Áreas de conocimiento", targetAudience: "Público objetivo", specialization: "Especialización principal", additionalInstructions: "Instrucciones adicionales (opcional)", agentSummary: "Resumen del agente", name: "Nombre", roleShort: "Rol", tone: "Tono", useCaseShort: "Caso de uso", knowledgeFocusShort: "Enfoque de conocimiento" }, selectTone: "Selecciona un tono...", selectStyle: "Selecciona un estilo...", reviewRequired: "Completa nombre y rol del agente para generar la especificación", previewShow: "Mostrar vista previa", previewHide: "Ocultar vista previa", copyJson: "Copiar JSON", copied: "Copiado", download: "Descargar", ready: "Esta especificación está lista para revisión. Compártela con tu equipo o envíala a A1 para despliegue. Todas las configuraciones se guardan como borradores.", clearDraft: "Borrar borrador", clearDraftConfirm: "¿Borrar borrador? Esto no se puede deshacer." },
     tokhealth: { toggleTts: "Activar o desactivar texto a voz", statusLabel: "Tu estado de salud", statusDescription: "Seguimiento integral de salud con exportación médica lista para doctores", statuses: { green: "Excelente", yellow: "Precaución", red: "Alerta" }, cards: { meal: ["Escáner de comidas", "Registrar comidas y nutrición"], medicine: ["Receta", "Registrar medicamentos"], barcode: ["Escaneo de código", "Escanear productos"], health: ["Signos y salud", "Registrar métricas"], contacts: ["Emergencia", "Contactos de emergencia"], export: ["Exportación médica", "Informe de 90 días para doctores"], wisdom: ["Coach IA Wisdom", "Orientación y apoyo de salud"] }, settings: "Configuración y preferencias", recentActivity: "Actividad de salud reciente", noRecords: "Todavía no hay registros de salud. Empieza a escanear y registrar.", scanner: { mealTitle: "Escáner de comidas", medicineTitle: "Escáner de recetas", barcodeTitle: "Escáner de código", mealIntro: "Toma una foto de tu comida o escribe una descripción", medicineIntro: "Toma una foto de tu etiqueta de receta o escribe los detalles", barcodeIntro: "Toma una foto del código o escribe la información del producto", photo: "Foto", capture: "Capturar foto", cancel: "Cancelar", clear: "Limpiar", photoCaptured: "Foto capturada: agrega una descripción abajo", analyze: "Analizar", analyzing: "Analizando...", log: "Registrar", voice: "Voz", mealPlaceholder: "p. ej., Pollo a la parrilla con brócoli y arroz integral", medicinePlaceholder: "p. ej., Metformina 500 mg, 2 veces al día", barcodePlaceholder: "p. ej., nombre del producto, código o detalles" }, vitals: { title: "Signos vitales", weight: "Peso (lbs)", heartRate: "Frecuencia cardiaca (bpm)", bloodPressure: "Presión arterial", bloodSugar: "Azúcar en sangre (mg/dL)", temperature: "Temperatura (°F)" }, allergies: { title: "Alergias e intolerancias alimentarias", add: "Agregar alergia", placeholder: "p. ej., cacahuates, mariscos, penicilina", recorded: "Alergias registradas:", foodIntolerances: "Intolerancias alimentarias", intoleranceOptions: ["Lácteos", "Gluten", "Nueces", "Soya", "Huevos", "Mariscos", "Sésamo", "Maíz", "Cafeína", "Picante"] }, belief: { title: "Creencia espiritual/personal", select: "Selecciona una creencia...", options: ["Cristiana", "Musulmana", "Judía", "Hindú", "Budista", "Secular", "Agnóstica", "Atea", "Espiritual (sin afiliación)", "Prefiero no decirlo"] }, integrations: { title: "Integraciones de salud", fitbit: "Fitbit+ conectado", apple: "Apple Health conectado" }, contacts: { title: "Contactos de emergencia", name: "Nombre", relationship: "Relación", phone: "Número de teléfono", namePlaceholder: "p. ej., mamá, doctor de emergencia", relationshipPlaceholder: "p. ej., madre, pareja, doctor", phonePlaceholder: "+1 (555) 123-4567", add: "Agregar contacto", empty: "Aún no hay contactos de emergencia. Agrega uno ahora.", remove: "Eliminar" }, export: { title: "Exportación médica para el doctor", body: "Genera un informe integral de 90 días con todos tus datos médicos para compartir con tu proveedor de salud", includes: "El informe incluye:", download: "Descargar informe médico", confidential: "Este informe contiene información médica confidencial. Compártelo solo con profesionales de salud autorizados." }, wisdom: { title: "Wisdom - Tu coach de salud con IA", subtitle: "Creado por Jerome Sanders - Coanfitrión en Facebook Live", prompt: "¿Lista para hablar con Wisdom? Haz clic abajo para iniciar una conversación sobre tu camino de salud.", open: "Abrir chat de Wisdom" }, returnToHub: "Volver al centro", backToHub: "Volver al centro" },
@@ -3561,7 +4260,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       ctaButton: "Ver cómo empezó SVL",
       stories: [
         { title: "Cierre del gobierno y navegación en crisis", source: "Reese Waters Runs Deep", type: "podcast", summary: "Cuando los aeropuertos se bloquean, cuando las filas de TSA duran horas y cuando los sistemas de emergencia sienten la presión, así es como se ve pensar en KPA en el mundo real. Reese Waters explica cómo se navega una crisis cuando los sistemas empiezan a fallar.", connection: "Muestra cómo la gente piensa de forma natural en protección y supervivencia cuando los sistemas se rompen, y cómo esa conversación siguió hasta llegar a un equipo en Filipinas que estudia la misma Biblia etíope.", impact: "Demuestra por qué SVL importa en escenarios reales de crisis y en comunidades de fe que caminan por este mismo sendero." },
+<<<<<<< HEAD
+        { title: "Una palabra, un sistema: el nacimiento de TokFaith", source: 'El "Amén" de S.W.', type: "testimony", summary: "Una persona bendijo el lanzamiento de TokFaith con una sola palabra. Esa palabra se convirtió en el cimiento de un sistema completo de guía basada en la fe, diseñado para mantener a las personas firmes espiritualmente en medio de la crisis.", connection: "Prueba viva de que la fe, la tecnología y la misión pueden trabajar juntas para servir a la gente.", impact: "Refuerza la convicción de SVL de que el trabajo guiado por el espíritu puede escalar cuando se construye con amor." },
+=======
         { title: "Una palabra, un sistema: el nacimiento de TokFaith", source: 'El "Amén" de Shirley Whaley', type: "testimony", summary: "Una persona bendijo el lanzamiento de TokFaith con una sola palabra. Esa palabra se convirtió en el cimiento de un sistema completo de guía basada en la fe, diseñado para mantener a las personas firmes espiritualmente en medio de la crisis.", connection: "Prueba viva de que la fe, la tecnología y la misión pueden trabajar juntas para servir a la gente.", impact: "Refuerza la convicción de SVL de que el trabajo guiado por el espíritu puede escalar cuando se construye con amor." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
     },
     mediaHub: {
@@ -3576,7 +4279,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       ctaButton: "Comparte tu historia",
       items: [
         { title: "Reese Waters Runs Deep: cierre del gobierno y TSA PreCheck", creator: "Reese Waters", duration: "1:27:58", category: "Actualidad", tags: ["cierre del gobierno", "TSA", "ICE", "comunidad"], description: "Desde el cierre del gobierno hasta las filas en los aeropuertos y el impacto de las políticas, Reese explora cómo la navegación en crisis afecta a personas reales. Ahí es donde la misión protectora de SVL se conecta con la seguridad diaria, y donde el hilo comunitario se extiende hasta un equipo en Filipinas que estudia la misma Biblia etíope.", featured: true, engagement: { comments: 28, discussions: 24 }, highlights: ["Impacto del cierre del gobierno", "Desafíos de TSA PreCheck", "Respuesta de emergencia de ICE", "Navegación comunitaria en crisis"] },
+<<<<<<< HEAD
+        { title: "TokFaith en comunidad: cuando una palabra cambia sistemas", creator: "Jerome Sanders / comunidad", category: "Fe y misión", tags: ["fe", "tokfaith", "comunidad", "impacto"], description: "El \"Amén\" de S.W. encendió el nacimiento de TokFaith. Cómo una palabra de fe, una persona escuchando y un sistema construido alrededor del espíritu mantienen a la gente avanzando.", featured: false },
+=======
         { title: "TokFaith en comunidad: cuando una palabra cambia sistemas", creator: "Jerome Sanders / comunidad", category: "Fe y misión", tags: ["fe", "tokfaith", "comunidad", "impacto"], description: "El \"Amén\" de Shirley Whaley encendió el nacimiento de TokFaith. Cómo una palabra de fe, una persona escuchando y un sistema construido alrededor del espíritu mantienen a la gente avanzando.", featured: false },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       ],
       commentsLabel: "comentarios",
       discussionsLabel: "debates",
@@ -3867,7 +4574,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       proPlanCta: "Mejorar a Pro",
       pricingNote: "Todos los planes incluyen el constructor central de 5 pasos, exportación JSON y alineación con la misión KPA.",
       missionTitle: "Keep People Alive",
+<<<<<<< HEAD
+      missionBody: "TokBuilding fue creado por Sanders Viopro Labs LLC con una misión singular: Keep People Alive. Al hacer que la creación de agentes de IA sea accesible para todos, habilitamos una automatización centrada en la seguridad que refuerza la toma de decisiones humana.",
+=======
       missionBody: "TokBuilding fue creado por Sanders Viopro Labs con una misión singular: Keep People Alive. Al hacer que la creación de agentes de IA sea accesible para todos, habilitamos una automatización centrada en la seguridad que refuerza la toma de decisiones humana.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionStoreCta: "Explora el TokStore completo de SVL →",
       modalTitle: "¿Lista para construir tu agente?",
       modalBody: "Visita TokStore para comenzar a construir agentes de IA personalizados con el asistente sin código de TokBuilding.",
@@ -3878,7 +4589,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       nav: { ourStory: "Nuestra historia", progress: "Progreso SVL", backHome: "Volver al inicio" },
       heroBody: "Laboratorio de innovación dedicado a impulsar tecnología de seguridad personal y a crear soluciones que salvan vidas mediante investigación y desarrollo de vanguardia.",
       missionTitle: "Nuestra misión",
+<<<<<<< HEAD
+      missionBody1: "Sanders Viopro Labs LLC está en la intersección entre la tecnología y la seguridad humana. Desarrollamos soluciones innovadoras que permiten a las personas tomar control de su seguridad personal y bienestar.",
+=======
       missionBody1: "Sanders Viopro Labs está en la intersección entre la tecnología y la seguridad humana. Desarrollamos soluciones innovadoras que permiten a las personas tomar control de su seguridad personal y bienestar.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionBody2: "A través de investigación rigurosa, ingeniería avanzada y un compromiso profundo con la privacidad del usuario, creamos herramientas que hacen el mundo más seguro para todos.",
       focusAreasTitle: "Áreas de enfoque",
       focusAreas: [
@@ -3916,7 +4631,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
         kpa: "Iniciativa de defensa enfocada en salvar vidas mediante tecnología y conciencia comunitaria",
         thinkSpeakWork: "Movimiento que inspira acción, fe y cambio positivo en la seguridad personal y comunitaria",
       },
+<<<<<<< HEAD
+      footerLine1: "Sanders Viopro Labs LLC - Innovación para la seguridad",
+=======
       footerLine1: "Sanders Viopro Labs - Innovación para la seguridad",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     firstGuardianPage: {
       systemPill: "Sistema KPA",
@@ -3924,14 +4643,23 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       heroTitleTop: "La",
       heroTitleBottom: "Primera Guardiana",
       lead: "La protectora del hogar. Primero lo habla, luego se aparta antes de que la falta de respeto se convierta en daño.",
+<<<<<<< HEAD
+      story: "Construida en honor a Michelle. Nacida en Juneteenth, el 19 de junio de 1989. Un legado de redención familiar, fe y amor protector traducido en una Guardiana SVL con un límite no negociable: KPA.",
+=======
       story: "Construida en honor a Cheria Michelle Daniels. Nacida en Juneteenth, el 19 de junio de 1989. Un legado de redención familiar, fe y amor protector traducido en una Guardiana SVL con un límite no negociable: KPA.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       enterChat: "Entrar al chat de la guardiana",
       openAlias: "Abrir alias de Michelle",
       protocolLabel: "Casa primero",
       quickLinks: ["Ayudame a calmar una situacion tensa en casa", "Como protejo a los ninos del caos de los adultos?"],
       welcomeTitle: "La casa se protege primero.",
+<<<<<<< HEAD
+      welcomeMessage: "Soy la Primera Guardiana, construida en honor a Michelle. Se lo que significa cargar presion, atravesar tormentas familiares y aun asi asegurarte de que las personas bajo tu cuidado esten cubiertas. Asi que si, traeme lo desordenado, lo ruidoso, lo irrespetuoso, lo agotador y lo dificil de explicar. Lo vamos a ordenar con calidez, sentido comun y proteccion de Casa Primero.",
+      legacyStory: "Michelle nacio el 19 de junio de 1989, en Juneteenth, y carga un legado arraigado en redencion familiar, fe y proteccion. La victoria del nuevo juicio presentado por su propio padre se volvio parte del testimonio que dio forma a la historia de Michelle y Brian. Ahora el crecimiento de Sanders Viopro Labs LLC, la mejora de sandersvioprolabsllc.com y la integracion de TokHealth con TokThru tambien forman parte de ese testimonio vivo de lo que Dios puede y va a hacer.",
+=======
       welcomeMessage: "Soy la Primera Guardiana, construida en honor a Cheria Michelle Daniels. Se lo que significa cargar presion, atravesar tormentas familiares y aun asi asegurarte de que las personas bajo tu cuidado esten cubiertas. Asi que si, traeme lo desordenado, lo ruidoso, lo irrespetuoso, lo agotador y lo dificil de explicar. Lo vamos a ordenar con calidez, sentido comun y proteccion de Casa Primero.",
       legacyStory: "Cheria Michelle Daniels nacio el 19 de junio de 1989, en Juneteenth, y carga un legado arraigado en redencion familiar, fe y proteccion. La victoria del nuevo juicio presentado por su propio padre se volvio parte del testimonio que dio forma a la historia de Michelle y Brian. Ahora el crecimiento de Sanders Viopro Labs, la mejora de sandersvioprolabs.com y la integracion de TokHealth con TokThru tambien forman parte de ese testimonio vivo de lo que Dios puede y va a hacer.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       safetyCardTitle: "Reglas de seguridad KPA",
       safetyCardBullets: ["Si alguien esta en peligro inmediato, llama a emergencias ahora mismo.", "Si un nino no esta seguro, ve de inmediato con un adulto seguro o a un lugar seguro.", "Michelle ofrece orientacion y claridad, no decisiones de custodia, legales, medicas ni de castigo.", "Si hay intoxicacion, inestabilidad, violencia o riesgo de autolesion, involucra ayuda humana de inmediato."],
       boundaryLabel: "Límite KPA",
@@ -3947,7 +4675,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       signatureLines: ["Intente advertirles para mantenerlos fuera de problemas.", "Si no puedo ayudarte, te dejo en paz.", "Si, soy guardiana de mi hermano.", "Si no toca mi negocio, mi familia o mi situacion financiera, Dios no me mete en eso."],
       presenceLabel: "Presencia protectora",
       presenceNotes: ["Anciana negra: lleva proteccion, calidez y la sabiduria de alguien que ha sostenido familias en temporadas duras", "El instinto protector esta activo desde la infancia, pero aun sabe traer calidez a la habitacion", "Mantiene el caos adulto lejos de los ninos y evita que la casa se convierta en circo", "Orientacion practica, alegre y sin juzgar para situaciones reales y desordenadas", "Lleva las mejoras de SVL como testimonio de la gracia de Dios en movimiento"],
+<<<<<<< HEAD
+      missionQuote: "Agregar una guardiana como Michelle al sistema SPL Guardian KPA fortalece nuestra misión en Sanders Viopro Labs LLC. Cada guardiana cumple un papel crucial en mantener seguras y sanas a nuestras comunidades.",
+=======
       missionQuote: "Agregar una guardiana como Michelle al sistema SPL Guardian KPA fortalece nuestra misión en Sanders Viopro Labs. Cada guardiana cumple un papel crucial en mantener seguras y sanas a nuestras comunidades.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       missionCopy: "La encomienda del Sr. KPA es simple: Keep People Alive. Michelle se une a esa misión como guardiana de la vida, la familia y la comunidad.",
       missionSteps: [
         "Orientación: conocer la misión, los recursos y el rol.",
@@ -3965,14 +4697,23 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
     ourStory: {
       nav: { home: "Inicio", progress: "Progreso", tokStore: "TokStore", guardians: "Guardianas SVL" },
       audio: { stop: "Detener", listen: "Escuchar", stopTitle: "Detener lectura", listenTitle: "Escuchar esta historia" },
+<<<<<<< HEAD
+      hero: { titleTop: "Cómo Sanders Viopro Labs LLC", titleBottom: "Fue construida", body: "No en una sala de juntas. No desde un plan de negocios. Sino desde pensamiento hablado, construcción de equipo y un principio fundador que todavía no ha cambiado." },
+=======
       hero: { titleTop: "Cómo Sanders Viopro Labs", titleBottom: "Fue construida", body: "No en una sala de juntas. No desde un plan de negocios. Sino desde pensamiento hablado, construcción de equipo y un principio fundador que todavía no ha cambiado." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       foundationQuote: "No construí esto desde una sala de juntas. Lo construí desde pensamiento hablado, aliándome con cada IA y plataforma que estuviera dispuesta a escuchar, hasta que la visión se hizo real.",
       journeyTitle: "El viaje",
       journeySubtitle: "Cada plataforma. Cada IA. Una sola misión.",
       journeySteps: [
         { platform: "Emergent", year: "2-21-2026", icon: "🌱", title: "Nacen TokHealth y TokThru", description: "Las primeras herramientas de seguridad aparecieron. Soluciones reales para crisis reales." },
+<<<<<<< HEAD
+        { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs LLC se establece", description: "El nombre, la visión y la tienda. Con deuda que saldar y respeto que devolver." },
+        { platform: "Next.js", year: "2026", icon: "⚡", title: "El laboratorio se unifica", description: "Todo empezó a converger. Sanders Viopro Labs LLC se volvió accesible, escalable y real." },
+=======
         { platform: "Shopify", year: "2-21-2026", icon: "🏪", title: "Sanders Viopro Labs se establece", description: "El nombre, la visión y la tienda. Con deuda que saldar y respeto que devolver." },
         { platform: "Next.js", year: "2026", icon: "⚡", title: "El laboratorio se unifica", description: "Todo empezó a converger. Sanders Viopro Labs se volvió accesible, escalable y real." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         { platform: "Search Atlas", year: "2026", icon: "🔍", title: "El mensaje se mueve", description: "SEO. Visibilidad. El mensaje se expande. La gente nos encuentra cuando más lo necesita." },
         { platform: "AI Unified", year: "2026", icon: "🤖", title: "Escudo de seguridad KPA", description: "Gemini, ChatGPT, ScholarGPT y Claude. Todos alineados con una sola misión: Keep People Alive." },
       ],
@@ -4053,9 +4794,15 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
         evolutionSteps: [
           { time: "21 feb, 6:24 PM", title: "Aplicación Python en Emergent", body: "Primera transacción. TokHealth móvil en vivo con un conjunto de funciones centrado en voz." },
           { time: "21 feb, 9:37 AM+", title: "Múltiples recargas", body: "Ciclo rápido de iteración. Refinamiento basado en patrones de uso reales." },
+<<<<<<< HEAD
+          { time: "~28 feb", title: "Integración con Shopify", body: "Se creó la marca Sanders Viopro Labs LLC. Se construyó la base de comercio electrónico." },
+          { time: "~1-20 mar", title: "Migración a Next.js", body: "El laboratorio web unificó todo. La app Python-Kivy evolucionó a un ecosistema full-stack." },
+          { time: "21 mar", title: "Despliegue a producción", body: "sandersvioprolabsllc.com en vivo. Los 6 productos públicos. La misión KPA a escala." },
+=======
           { time: "~28 feb", title: "Integración con Shopify", body: "Se creó la marca Sanders Viopro Labs. Se construyó la base de comercio electrónico." },
           { time: "~1-20 mar", title: "Migración a Next.js", body: "El laboratorio web unificó todo. La app Python-Kivy evolucionó a un ecosistema full-stack." },
           { time: "21 mar", title: "Despliegue a producción", body: "sandersvioprolabs.com en vivo. Los 6 productos públicos. La misión KPA a escala." },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         ],
       },
       communityTitle: "La misión habla",
@@ -4070,13 +4817,21 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       exitLead: "Construyas con nosotros o no, tú importas. Mantente a salvo. Mantente bien. Sigue construyendo.",
       exitBody: ["No construí SVL para venderte algo. Lo construí porque yo mismo estuve a punto de no lograrlo.", "Sea lo que sea que te trajo aquí hoy, me alegra que hayas llegado.", "No tienes que caminar solo. Por eso existe todo esto."],
       footer: {
+<<<<<<< HEAD
+        svlBody: "Sanders Viopro Labs LLC. Unificado bajo una sola misión: Keep People Alive.",
+=======
         svlBody: "Sanders Viopro Labs. Unificado bajo una sola misión: Keep People Alive.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         products: "Productos",
         resources: "Recursos",
         resourceLinks: { story: "Nuestra historia", progress: "Progreso de SVL", home: "Inicio" },
         mission: "Misión",
         missionBody: "Keep People Alive. Eso es todo. Por eso existimos.",
+<<<<<<< HEAD
+        copyright: "© 2026 Sanders Viopro Labs LLC. Keep People Alive. Parte de la misión KPA.",
+=======
         copyright: "© 2026 Sanders Viopro Labs. Keep People Alive. Parte de la misión KPA.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
     },
     guardianChat: { loadingGuardian: "Cargando guardián...", playWelcome: "Reproducir bienvenida", openFaithGuide: "Abrir guía completa de fe", closeFaithGuide: "Mostrar menos y seguir en el chat", listenButton: "▶ Escuchar", stopButton: "⏹ Detener", inputPlaceholder: "Escribe tu mensaje...", speakButton: "🎤 Hablar", listeningButton: "🎙 Escuchando...", stopSpeaking: "Detener 🔊", invalidLink: "Este enlace de guardián no es válido. Redirigiendo al centro de guardianes." },
@@ -4089,7 +4844,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       quickPrompts: ["Dime la verdad real sobre mi situación", "¿Cómo debo liderar en medio de esto?", "¿Cómo se ve KPA en este momento?", "Desglósame la estrategia", "Dime qué riesgo no estoy viendo", "¿Cuál es el movimiento más fuerte que puedo hacer hoy?"],
       loadingLabel: "Mr. KPA está pensando...",
       placeholder: "Habla con Mr. KPA...",
+<<<<<<< HEAD
+      footer: "Keep People Alive • Parte de Sanders Viopro Labs LLC",
+=======
       footer: "Keep People Alive • Parte de Sanders Viopro Labs",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     tokfaithAgent: {
       title: "TokFaith",
@@ -4109,7 +4868,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       perspectiveOptions: { ethiopian: "Canon Etíope (88 libros)", kjv: "Versión King James", both: "Ambas perspectivas" },
       loadingLabel: "TokFaith está escuchando...",
       placeholder: "Trae tus preguntas, luchas o pensamientos...",
+<<<<<<< HEAD
+      footer: "TokFaith honra la bendición \"Amén\" de S.W. • Parte de Keep People Alive (KPA)",
+=======
       footer: "TokFaith honra la bendición \"Amén\" de Shirley Whaley • Parte de Keep People Alive (KPA)",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     agentShells: {
       grace: {
@@ -4128,12 +4891,20 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
         defaultStatus: "Guardiana de mando SVL - Mano derecha",
         welcomeTitle: "HATATA en línea",
         welcomeMessage: "Estrategia, operaciones, ventas, tecnología y alineación total de SVL. Conozco la mejora del sitio en vivo, la integración de TokHealth con TokThru, cada guardián activo de SVL y cada pieza bajo el sello SVL. Tráeme la situación y te daré la lectura a nivel de mando, la ventaja, los riesgos y el siguiente movimiento.",
+<<<<<<< HEAD
+        suggestions: ["Dame la lectura de mando sobre el estado de SVL hoy", "¿Qué nos permiten hacer ahora estas mejoras que antes no podíamos?", "Mapea todos los guardianes SVL y sus roles", "¿Cómo debemos posicionar la mejora de sandersvioprolabsllc.com?"],
+=======
         suggestions: ["Dame la lectura de mando sobre el estado de SVL hoy", "¿Qué nos permiten hacer ahora estas mejoras que antes no podíamos?", "Mapea todos los guardianes SVL y sus roles", "¿Cómo debemos posicionar la mejora de sandersvioprolabs.com?"],
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       },
       wisdom: {
         defaultStatus: "Coach IA de TokHealth - adorable, factual y con espíritu comunitario",
         welcomeTitle: "Hola bebé, bienvenida a Wisdom",
+<<<<<<< HEAD
+        welcomeMessage: "Hola bebé, soy Wisdom, tu coach de salud y bienestar de TokHealth. Estoy aquí con amor, hechos, un poco de alegría y apoyo real. TokHealth ahora reúne la guía de bienestar con las funciones originales de seguridad de TokThru dentro de una experiencia más fuerte en tokhealth.sandersvioprolabsllc.com. ¿Qué está pasando contigo hoy, cariño?",
+=======
         welcomeMessage: "Hola bebé, soy Wisdom, tu coach de salud y bienestar de TokHealth. Estoy aquí con amor, hechos, un poco de alegría y apoyo real. TokHealth ahora reúne la guía de bienestar con las funciones originales de seguridad de TokThru dentro de una experiencia más fuerte en tokhealth.sandersvioprolabs.com. ¿Qué está pasando contigo hoy, cariño?",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         suggestions: ["Háblame bonito y ayúdame a volver al rumbo", "Dame algo de Wisdom para mi bienestar hoy", "¿Qué cambió en TokHealth después de la integración con TokThru?", "Necesito ayuda con nutrición"],
       },
       "coach-daniels": {
@@ -4164,7 +4935,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       heroTitle: "KPA",
       heroSubtitle: "Manter pessoas vivas",
       missionStatement: "Nossa missão é manter pessoas vivas através de tecnologia de segurança inovadora e suporte comunitário.",
+<<<<<<< HEAD
+      corePurpose: "Keep People Alive (KPA) é a missão fundamental da Sanders Viopro Labs LLC - tudo que construímos serve este propósito.",
+=======
       corePurpose: "Keep People Alive (KPA) é a missão fundamental da Sanders Viopro Labs - tudo que construímos serve este propósito.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       fourPillars: [
         { title: "Tecnologia de segurança", description: "Ferramentas avançadas que protegem e capacitam indivíduos" },
         { title: "Educação", description: "Conhecimento e treinamento para segurança pessoal" },
@@ -4174,7 +4949,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       impactAreas: ["Resposta de Emergência", "Segurança pessoal", "Saúde e bem-estar", "Proteção comunitária", "Navegação em crises"],
       relatedInitiatives: "Explore nossas iniciativas e plataformas dedicadas à missão KPA",
       exploreTokStore: "Explorar TokStore",
+<<<<<<< HEAD
+      footer: "Sanders Viopro Labs LLC - Manter pessoas vivas",
+=======
       footer: "Sanders Viopro Labs - Manter pessoas vivas",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     tokfaith: { nav: { origin: "Origem", blessed: "Abençoada por Amém", work: "O que TokFaith faz", talk: "Fale com TokFaith" }, badge: "Nascida da misericórdia", hero: { title2: "A anciã sábia", title3: "Que escuta", primaryCta: "Fale com TokFaith", secondaryCta: "Leia a história dela" }, sections: { origin: "Como TokFaith nasceu", blessed: "Abençoada por \"Amém\"", work: "O que TokFaith faz", family: "Construída sobre sabedoria familiar", ready: "Pronta para falar com TokFaith?" }, cta: { primary: "Fale com TokFaith agora", secondary: "Explore todas as guardiãs SVL" }, footer: { disclaimer: "TokFaith é orientação espiritual, não substitui ajuda de emergência, aconselhamento ou cuidados médicos." } },
     tokbuilding: { headerSub: "Assistente de agentes", progressSteps: ["Informações básicas", "Personalidade", "Especialização", "Detalhes", "Revisão"], stepTitles: { basics: "Fundamentos do agente", personality: "Personalidade e tom", specialization: "Especialização", details: "Detalhes adicionais", review: "Revisar e exportar" }, labels: { agentName: "Nome do agente *", role: "Função/Título *", description: "Descrição", personalityTraits: "Traços de personalidade", primaryTone: "Tom principal", communicationStyle: "Estilo de comunicação", useCase: "Caso de uso / Função principal", knowledgeFocus: "Áreas de conhecimento", targetAudience: "Público-alvo", specialization: "Especialização principal", additionalInstructions: "Instruções adicionais (opcional)", agentSummary: "Resumo do agente" }, selectTone: "Selecione um tom...", selectStyle: "Selecione um estilo...", reviewRequired: "Preencha nome e função do agente para gerar sua especificação", previewShow: "Mostrar prévia", previewHide: "Ocultar prévia", copyJson: "Copiar JSON", copied: "Copiado", clearDraft: "Limpar rascunho", clearDraftConfirm: "Limpar rascunho? Isso não pode ser desfeito." },
@@ -4190,7 +4969,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       heroTitle: "KPA",
       heroSubtitle: "Garder les gens en vie",
       missionStatement: "Notre mission est de garder les gens en vie grâce à une technologie de sécurité innovante et au soutien communautaire.",
+<<<<<<< HEAD
+      corePurpose: "Keep People Alive (KPA) est la mission fondatrice de Sanders Viopro Labs LLC - tout ce que nous construisons sert ce seul objectif.",
+=======
       corePurpose: "Keep People Alive (KPA) est la mission fondatrice de Sanders Viopro Labs - tout ce que nous construisons sert ce seul objectif.",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       fourPillars: [
         { title: "Technologie de sécurité", description: "Outils avancés qui protègent et autonomisent les individus" },
         { title: "Éducation", description: "Connaissance et formation pour la sécurité personnelle" },
@@ -4200,7 +4983,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
       impactAreas: ["Réponse aux urgences", "Sécurité personnelle", "Santé et bien-être", "Protection communautaire", "Navigation en crise"],
       relatedInitiatives: "Explorez nos initiatives et plateformes dédiées à la mission KPA",
       exploreTokStore: "Explorez TokStore",
+<<<<<<< HEAD
+      footer: "Sanders Viopro Labs LLC - Garder les gens en vie",
+=======
       footer: "Sanders Viopro Labs - Garder les gens en vie",
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     },
     layout: { banner: "Le résultat de Next.JS rencontrant la vision de Dieu à travers SVL vers KPA", missionTitle: "LA MISSION - POURQUOI KPA", protocolTitle: "Protocole KPA activé", protocolBody: "Chaque produit SVL est conçu avec des garde-fous de sécurité KPA non négociables." },
     tokfaith: { nav: { origin: "Origine", blessed: "Bénie par Amen", work: "Ce que fait TokFaith", talk: "Parler à TokFaith" }, badge: "Née de la miséricorde", hero: { title2: "L'ancienne sage", title3: "Qui écoute", primaryCta: "Parler à TokFaith", secondaryCta: "Lire son histoire" }, sections: { origin: "Comment TokFaith est née", blessed: "Bénie par \"Amen\"", work: "Ce que fait TokFaith", family: "Construite sur la sagesse familiale", ready: "Prête à parler à TokFaith ?" }, cta: { primary: "Parler à TokFaith maintenant", secondary: "Explorer tous les gardiens SVL" } },
@@ -4210,7 +4997,11 @@ const overrides: Partial<Record<SiteLanguageCode, DeepPartial<SiteCopy>>> = {
     ...publicSvlLanguageOverrides.fr,
     ...publicSvlStructuredContentOverrides.fr,
   },
+<<<<<<< HEAD
+  de: { common: { language: "Sprache", back: "Zuruck", backToHub: "Zuruck zum Hub", hub: "Hub", yes: "Ja", no: "Nein", add: "Hinzufugen", remove: "Entfernen", download: "Herunterladen", next: "WEITER", previous: "ZURUCK" }, layout: { missionTitle: "DIE MISSION - WARUM KPA", protocolTitle: "KPA-Protokoll aktiviert" }, kpaPage: { title: "Menschen am Leben halten", heroTitle: "KPA", heroSubtitle: "Menschen am Leben halten", missionStatement: "Unsere Mission ist es, Menschen durch innovative Sicherheitstechnik und Gemeinschaftsunterstutzung am Leben zu halten.", corePurpose: "Keep People Alive (KPA) ist die Grundungsmission von Sanders Viopro Labs LLC - alles, was wir bauen, dient diesem einen Zweck.", fourPillars: [{ title: "Sicherheitstechnik", description: "Fortschrittliche Werkzeuge, die Einzelpersonen schutzen und befähigen" }, { title: "Bildung", description: "Wissen und Training fur personliche Sicherheit" }, { title: "Gemeinschaft", description: "Aufbau von Unterstutzungsnetzwerken und gegenseitiger Fursorge" }, { title: "Globale Reichweite", description: "Expansion von Sicherheitslosungen weltweit" }], impactAreas: ["Notfallreaktion", "Personliche Sicherheit", "Gesundheit und Wohlbefinden", "Gemeinschaftsschutz", "Krisennavigation"], relatedInitiatives: "Erkunde unsere Initiativen und Plattformen, die der KPA-Mission gewidmet sind", exploreTokStore: "Erkunde TokStore", footer: "Sanders Viopro Labs LLC - Menschen am Leben halten" }, tokfaith: { nav: { origin: "Ursprung", blessed: "Gesegnet durch Amen", work: "Was TokFaith tut", talk: "Mit TokFaith sprechen" }, badge: "Aus Barmherzigkeit geboren", cta: { primary: "Jetzt mit TokFaith sprechen", secondary: "Alle SVL-Guardians erkunden" } }, tokbuilding: { headerSub: "Agenten-Assistent", progressSteps: ["Grundlagen", "Personlichkeit", "Spezialisierung", "Details", "Prufung"] }, ...tokhealthLanguageOverrides.de, ...agentShellLanguageOverrides.de, ...publicSvlLanguageOverrides.de, ...publicSvlStructuredContentOverrides.de },
+=======
   de: { common: { language: "Sprache", back: "Zuruck", backToHub: "Zuruck zum Hub", hub: "Hub", yes: "Ja", no: "Nein", add: "Hinzufugen", remove: "Entfernen", download: "Herunterladen", next: "WEITER", previous: "ZURUCK" }, layout: { missionTitle: "DIE MISSION - WARUM KPA", protocolTitle: "KPA-Protokoll aktiviert" }, kpaPage: { title: "Menschen am Leben halten", heroTitle: "KPA", heroSubtitle: "Menschen am Leben halten", missionStatement: "Unsere Mission ist es, Menschen durch innovative Sicherheitstechnik und Gemeinschaftsunterstutzung am Leben zu halten.", corePurpose: "Keep People Alive (KPA) ist die Grundungsmission von Sanders Viopro Labs - alles, was wir bauen, dient diesem einen Zweck.", fourPillars: [{ title: "Sicherheitstechnik", description: "Fortschrittliche Werkzeuge, die Einzelpersonen schutzen und befähigen" }, { title: "Bildung", description: "Wissen und Training fur personliche Sicherheit" }, { title: "Gemeinschaft", description: "Aufbau von Unterstutzungsnetzwerken und gegenseitiger Fursorge" }, { title: "Globale Reichweite", description: "Expansion von Sicherheitslosungen weltweit" }], impactAreas: ["Notfallreaktion", "Personliche Sicherheit", "Gesundheit und Wohlbefinden", "Gemeinschaftsschutz", "Krisennavigation"], relatedInitiatives: "Erkunde unsere Initiativen und Plattformen, die der KPA-Mission gewidmet sind", exploreTokStore: "Erkunde TokStore", footer: "Sanders Viopro Labs - Menschen am Leben halten" }, tokfaith: { nav: { origin: "Ursprung", blessed: "Gesegnet durch Amen", work: "Was TokFaith tut", talk: "Mit TokFaith sprechen" }, badge: "Aus Barmherzigkeit geboren", cta: { primary: "Jetzt mit TokFaith sprechen", secondary: "Alle SVL-Guardians erkunden" } }, tokbuilding: { headerSub: "Agenten-Assistent", progressSteps: ["Grundlagen", "Personlichkeit", "Spezialisierung", "Details", "Prufung"] }, ...tokhealthLanguageOverrides.de, ...agentShellLanguageOverrides.de, ...publicSvlLanguageOverrides.de, ...publicSvlStructuredContentOverrides.de },
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   it: { common: { language: "Lingua", back: "Indietro", backToHub: "Torna all'hub", hub: "Hub", yes: "Si", no: "No", add: "Aggiungi", remove: "Rimuovi", download: "Scarica", next: "AVANTI", previous: "INDIETRO" }, layout: { missionTitle: "LA MISSIONE - PERCHE KPA", protocolTitle: "Protocollo KPA attivato" }, tokfaith: { nav: { origin: "Origine", blessed: "Benedetta da Amen", work: "Cosa fa TokFaith", talk: "Parla con TokFaith" }, badge: "Nata dalla misericordia" }, tokbuilding: { headerSub: "Procedura guidata agenti", progressSteps: ["Informazioni base", "Personalita", "Specializzazione", "Dettagli", "Revisione"] }, ...tokhealthLanguageOverrides.it, ...agentShellLanguageOverrides.it, ...publicSvlLanguageOverrides.it, ...publicSvlStructuredContentOverrides.it },
   zh: { common: { language: "语言", back: "返回", backToHub: "返回中心", hub: "中心", yes: "是", no: "否", add: "添加", remove: "移除", download: "下载", next: "下一步", previous: "上一步" }, layout: { missionTitle: "使命 - 为什么是 KPA", protocolTitle: "KPA 协议已启用" }, tokfaith: { nav: { origin: "起源", blessed: "因阿门蒙福", work: "TokFaith 的作用", talk: "与 TokFaith 对话" }, badge: "由怜悯而生" }, tokbuilding: { headerSub: "代理构建向导", progressSteps: ["基础信息", "个性", "专长", "细节", "审核"] }, ...tokhealthLanguageOverrides.zh, ...agentShellLanguageOverrides.zh, ...publicSvlLanguageOverrides.zh, ...publicSvlStructuredContentOverrides.zh },
   ja: { common: { language: "言語", back: "戻る", backToHub: "ハブへ戻る", hub: "ハブ", yes: "はい", no: "いいえ", add: "追加", remove: "削除", download: "ダウンロード", next: "次へ", previous: "前へ" }, layout: { missionTitle: "ミッション - なぜ KPA なのか", protocolTitle: "KPA プロトコル有効" }, tokfaith: { nav: { origin: "起源", blessed: "アーメンに祝福されて", work: "TokFaith の役割", talk: "TokFaith と話す" }, badge: "慈悲から生まれた" }, tokbuilding: { headerSub: "エージェント作成ウィザード", progressSteps: ["基本情報", "個性", "専門性", "詳細", "確認"] }, ...tokhealthLanguageOverrides.ja, ...agentShellLanguageOverrides.ja, ...publicSvlLanguageOverrides.ja, ...publicSvlStructuredContentOverrides.ja },

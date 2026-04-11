@@ -12,8 +12,13 @@ import {
 
 const SUBDOMAIN_REDIRECT_MAP: Record<string, string> = {
   "tokhealth.sandersvioprolabs.com": "https://tokhealth-mobile.emergent.host",
+  "tokhealth.sandersvioprolabsllc.com": "https://tokhealth-mobile.emergent.host",
 };
 
+const TRAINING_SUBDOMAINS = new Set([
+  "training.sandersvioprolabs.com",
+  "training.sandersvioprolabsllc.com",
+]);
 const AGENT_SLUGS = new Set([
   "a1",
   "coach-daniels",
@@ -119,6 +124,20 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 308);
   }
 
+<<<<<<< HEAD
+  // Handle training subdomain - rewrite to training-center page
+  if (host && TRAINING_SUBDOMAINS.has(host) && nextUrl.pathname === "/") {
+    const rewriteUrl = nextUrl.clone();
+    rewriteUrl.pathname = "/training-center";
+    return NextResponse.rewrite(rewriteUrl, {
+      request: {
+        headers: withLanguageRequestHeader(request, DEFAULT_SITE_LANGUAGE),
+      },
+    });
+  }
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const pathname = nextUrl.pathname;
   const pathnameLanguage = getPathSiteLanguage(pathname);
   const localeBypassed = shouldBypassLocaleRouting(pathname);
@@ -194,3 +213,7 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/:path*"],
 };
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

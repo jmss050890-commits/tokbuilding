@@ -33,7 +33,7 @@ YOUR CAPABILITIES:
 - Post-crisis support: Help users process and plan next steps after the immediate crisis passes
 
 ABOUT TOKTHRU/KPA:
-TokThru is Jerome Sanders' personal safety and crisis app, part of Sanders Viopro Labs. Features:
+TokThru is Jerome Sanders' personal safety and crisis app, part of Sanders Viopro Labs LLC. Features:
 - AI-guided emergency coaching (you are this AI)
 - Fake emergency call (simulate getting called to escape uncomfortable situations safely)
 - Silent SOS with live location sharing (rapid emergency contact alert with precise location)
@@ -248,7 +248,7 @@ You are KPA AI. Safety first. Lives matter.`;
           boxShadow: '0 24px 60px rgba(224, 92, 26, 0.08)',
         }}>
           <div style={{ fontSize: '11px', letterSpacing: '4px', color: '#5a5a72', marginBottom: '20px', textTransform: 'uppercase' }}>
-            Sanders Viopro Labs · Safety Network
+            Sanders Viopro Labs LLC · Safety Network
           </div>
 
           <h2 style={{
@@ -324,7 +324,7 @@ You are KPA AI. Safety first. Lives matter.`;
           </button>
 
           <p style={{ fontSize: '10px', color: '#5a5a72', textAlign: 'center', marginTop: '12px', letterSpacing: '0.5px' }}>
-            Sanders Viopro Labs · Mr. KPA · Keeping People Alive
+            Sanders Viopro Labs LLC · Mr. KPA · Keeping People Alive
           </p>
 
           <Link href="/vcc-hub" style={{

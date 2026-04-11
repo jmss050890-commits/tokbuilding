@@ -176,7 +176,6 @@ Content: Landing page + blog posts
 ---
 
 ### Part 5: Local SEO (if applicable)
-
 - [ ] Add target cities/regions
 - [ ] Verify location-specific keyword demand
 - [ ] Add local competitor tracking
@@ -330,6 +329,7 @@ SEARCH_ATLAS_BRAND_VAULT_ID=[vault id]
 ```
 
 ---
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 ## 📞 Support Resources
 
@@ -337,6 +337,8 @@ SEARCH_ATLAS_BRAND_VAULT_ID=[vault id]
 - Search Atlas Help: https://www.searchatlas.com/help
 - Keywords Guide: Look for "Keyword Research" in Dashboard
 - Competitor Tools: Use "Competitive Analysis" section
+<<<<<<< HEAD
+=======
 - Community: Search Atlas community forum
 
 ---
@@ -360,3 +362,4 @@ Once Brand Vault is ready:
 - Archive old data quarterly to keep focus sharp
 
 **You've got this! 💪**
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

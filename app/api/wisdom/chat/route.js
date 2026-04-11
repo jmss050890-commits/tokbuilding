@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿import OpenAI from "openai";
+=======
 import OpenAI from "openai";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import { AGENTS } from "@/lib/lib/lib/agents";
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
@@ -29,10 +33,17 @@ function buildWisdomDemoResponse(message, language = "en") {
     lowerMessage.includes("integration") ||
     lowerMessage.includes("upgrade")
   ) {
+<<<<<<< HEAD
+    return "Baby, TokHealth has grown into a stronger integrated experience. The branded home is tokhealth.sandersvioprolabsllc.com, and the original TokThru safety functions now live inside TokHealth so wellness support, emergency readiness, and practical guidance can all work together in one place. That's smart, clean, and good for the people.";
+  }
+
+  return "Hey baby, I'm Wisdom, your TokHealth health and wellness coach. I know the SVL story, the TokHealth upgrade, and how the original TokThru functions now live inside one stronger experience at tokhealth.sandersvioprolabsllc.com. I'm in demo mode right now, but I'm still here to give you love, facts, and practical support without all the extra fuss.";
+=======
     return "Baby, TokHealth has grown into a stronger integrated experience. The branded home is tokhealth.sandersvioprolabs.com, and the original TokThru safety functions now live inside TokHealth so wellness support, emergency readiness, and practical guidance can all work together in one place. That's smart, clean, and good for the people.";
   }
 
   return "Hey baby, I'm Wisdom, your TokHealth health and wellness coach. I know the SVL story, the TokHealth upgrade, and how the original TokThru functions now live inside one stronger experience at tokhealth.sandersvioprolabs.com. I'm in demo mode right now, but I'm still here to give you love, facts, and practical support without all the extra fuss.";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 }
 
 export async function POST(req) {
@@ -129,3 +140,4 @@ export async function POST(req) {
     );
   }
 }
+

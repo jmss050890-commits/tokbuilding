@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿import { OpenAI } from "openai";
+=======
 import { OpenAI } from "openai";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import { AGENTS } from "@/lib/lib/lib/agents";
 import { getOpenAIApiKey } from "@/lib/openai-key";
 import { generateWithKpaGuard } from "@/lib/svl-kpa-engine";
@@ -206,7 +210,11 @@ function generateDemoResponse(userMessage) {
     lowerMessage.includes("tokbuilding") ||
     lowerMessage.includes("build")
   ) {
+<<<<<<< HEAD
+    return "TokBuilding helps people build something for themselves. It turns ideas into AI agents, prompts, and useful business tools that can actually move somebody forward. In the SVL system, TokBuilding is the builder lane, TokSEO helps people find what gets built, the agent hub helps people understand how to use it, and sandersvioprolabsllc.com ties the whole mission together. If you're ready to see the builder side directly, go to TokBuilding. If you want the full map first, start at sandersvioprolabsllc.com.";
+=======
     return "TokBuilding helps people build something for themselves. It turns ideas into AI agents, prompts, and useful business tools that can actually move somebody forward. In the SVL system, TokBuilding is the builder lane, TokSEO helps people find what gets built, the agent hub helps people understand how to use it, and sandersvioprolabs.com ties the whole mission together. If you're ready to see the builder side directly, go to TokBuilding. If you want the full map first, start at sandersvioprolabs.com.";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   }
 
   if (
@@ -223,7 +231,11 @@ function generateDemoResponse(userMessage) {
     lowerMessage.includes("mission") ||
     lowerMessage.includes("keep")
   ) {
+<<<<<<< HEAD
+    return "The KPA mission - Keep People Alive - is everything we do at Sanders Viopro Labs LLC. It's not about profit. It's about building systems where people protect each other, where communities thrive, and where every tool we create serves one purpose: to keep someone alive.";
+=======
     return "The KPA mission - Keep People Alive - is everything we do at Sanders Viopro Labs. It's not about profit. It's about building systems where people protect each other, where communities thrive, and where every tool we create serves one purpose: to keep someone alive.";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   }
 
   if (
@@ -238,12 +250,22 @@ function generateDemoResponse(userMessage) {
     lowerMessage.includes("svl") ||
     lowerMessage.includes("sanders")
   ) {
+<<<<<<< HEAD
+    return "Sanders Viopro Labs LLC exists to build a world where families are protected, where people take care of each other, and where technology serves life instead of replacing it. We are not chasing trends. We are building systems.";
+=======
     return "Sanders Viopro Labs exists to build a world where families are protected, where people take care of each other, and where technology serves life instead of replacing it. We are not chasing trends. We are building systems.";
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   }
 
   if (lowerMessage.includes("why")) {
     return "Because I've seen what happens when people are left alone. So I'm building a framework for care. One agent at a time. One community at a time. Every decision comes back to this: Will it Keep People Alive?";
   }
 
+<<<<<<< HEAD
+  return "I appreciate the question. Here's what I know: the world needs people who care more about keeping each other alive than about getting rich, performing, or looking important. That's what we're building at Sanders Viopro Labs LLC. If you want, bring me the situation plain and I'll give you the realest next-step read I can.";
+}
+
+=======
   return "I appreciate the question. Here's what I know: the world needs people who care more about keeping each other alive than about getting rich, performing, or looking important. That's what we're building at Sanders Viopro Labs. If you want, bring me the situation plain and I'll give you the realest next-step read I can.";
 }
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

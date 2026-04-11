@@ -157,6 +157,21 @@ export interface FirstGuardianThreadMemory {
   messageCount: number;
 }
 
+<<<<<<< HEAD
+export interface MiiaOutreachLog {
+  _id?: string;
+  to: string;
+  subject: string;
+  source: string;
+  status: 'validation_failed' | 'dry_run' | 'send_failed' | 'sent';
+  mode: 'human_loop' | 'direct_api';
+  reason?: string;
+  messageId?: string;
+  createdAt: Date;
+}
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 /**
  * Memorial Storage (uses TokStore Subscription for membership tracking)
  * Free tier: appId 'memorial-free'
@@ -238,6 +253,45 @@ export interface GuardianConversation {
 }
 
 /**
+<<<<<<< HEAD
+ * Mr. KPA Guardian - Personal guidance Guardian for each user
+ * Distinct from Memorial Guardians - advisor, counselor, strategic partner
+ */
+export interface MrKpaGuardian {
+  _id?: string;
+  userId: string; // Owner
+  name: string; // "Mr. KPA" or customizable
+  role: string; // "Your Strategic Advisor", "Keep People Alive Partner"
+  conversationCount: number;
+  lastInteraction: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Mr. KPA Conversation Receipts
+ * Captures decisions, guidance, and counsel for the user's records
+ */
+export interface MrKpaReceipt {
+  _id?: string;
+  userId: string;
+  guardianId: string; // Links to MrKpaGuardian
+  topic: string; // User's input topic/request
+  userMessage: string; // The question/request
+  kpaResponse: string; // The guidance given
+  keyTakeaways?: string[]; // Extracted main points
+  actionItems?: Array<{
+    item: string;
+    priority: 'high' | 'medium' | 'low';
+  }>;
+  conversationId?: string; // Optional link to broader conversation
+  timestamp: Date;
+  archived: boolean;
+}
+
+/**
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
  * MongoDB Connection Helper
  */
 import { MongoClient } from 'mongodb';
@@ -358,3 +412,18 @@ export async function getFirstGuardianThreadMemoriesCollection() {
 
   return collection;
 }
+<<<<<<< HEAD
+
+export async function getMiiaOutreachLogsCollection() {
+  const db = await getDatabase();
+  const collection = db.collection<MiiaOutreachLog>('miiaOutreachLogs');
+
+  await collection.createIndex({ createdAt: -1 });
+  await collection.createIndex({ source: 1, createdAt: -1 });
+  await collection.createIndex({ status: 1, createdAt: -1 });
+  await collection.createIndex({ to: 1, createdAt: -1 });
+
+  return collection;
+}
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

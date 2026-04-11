@@ -3,12 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AGENTS, type AgentConfig } from "../../lib/lib/lib/agents";
+import VoiceStyleSpeaker from "@/app/components/VoiceStyleSpeaker";
 
 // Always serve fresh content, never use cache
 export const dynamic = "force-dynamic";
 
 export default function GuardiansHub() {
   const agents: AgentConfig[] = Object.values(AGENTS);
+  const guardiansSpeechText = [
+    "The SVL Guardians.",
+    "Jerome's Vision. Cheria's Protection. Your Strength.",
+    ...agents.map((agent) => {
+      const bits = [agent.name, agent.defaultStatus, agent.tagline, agent.welcomeMessage].filter(Boolean);
+      return bits.join(". ");
+    }),
+    "SVL Legacy Vault. Sacred space for those who shaped our hearts.",
+    "Keep People Alive. Sanders Viopro Labs LLC. Part of the SVL ecosystem.",
+  ].join(" ");
 
   const getGuardianColor = (slug: string) => {
     const colors: Record<string, string> = {
@@ -16,12 +27,20 @@ export default function GuardiansHub() {
       a1: "#60a5fa",
       hatata: "#f87171",
       wisdom: "#10b981",
+<<<<<<< HEAD
+      "portable-hydroponic-plant": "#34d399",
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       "coach-daniels": "#ec4899",
       tokseo: "#f59e0b",
       tok2myia: "#3b82f6",
       tokfaith: "#fed7aa",
       "first-guardian": "#d97706",
+<<<<<<< HEAD
+      "mr-kpa": "#3b82f6",
+=======
       "mr-kpa": "#3b82f6", // Keep that lovely blue
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     };
     return colors[slug] || "#888";
   };
@@ -68,6 +87,39 @@ export default function GuardiansHub() {
   };
 
   return (
+<<<<<<< HEAD
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #1e3a8a 100%)",
+        padding: "40px 20px",
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ marginBottom: 40, textAlign: "center" }}>
+          <h1
+            style={{
+              fontSize: 48,
+              marginBottom: 8,
+              background: "linear-gradient(135deg, #3b82f6 0%, #fbbf24 50%, #10b981 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            The SVL Guardians
+          </h1>
+          <p style={{ color: "#ccc", fontSize: 16 }}>Jerome's Vision • Cheria's Protection • Your Strength</p>
+          <div style={{ marginTop: 16, display: "flex", justifyContent: "center" }}>
+            <VoiceStyleSpeaker
+              text={guardiansSpeechText}
+              speakLabel="Speak Guardians Page"
+              stopLabel="Stop Guardians Page"
+              speakTitle="Listen to full Guardians page"
+              stopTitle="Stop Guardians page"
+            />
+          </div>
+=======
     <div style={{ 
       minHeight: "100vh",
       background: "linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #1e3a8a 100%)",
@@ -86,6 +138,7 @@ export default function GuardiansHub() {
             The SVL Guardians
           </h1>
           <p style={{ color: "#ccc", fontSize: 16 }}>Jerome's Vision • Cheria's Protection • Your Strength</p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
@@ -175,6 +228,18 @@ export default function GuardiansHub() {
           </Link>
         </div>
 
+<<<<<<< HEAD
+        <div
+          style={{
+            marginTop: 60,
+            padding: 24,
+            textAlign: "center",
+            borderTop: "1px solid #3b82f6",
+            color: "#ccc",
+          }}
+        >
+          <p style={{ fontSize: 14 }}>🙏 Keep People Alive • Sanders Viopro Labs LLC • Part of the SVL Ecosystem</p>
+=======
         <div style={{ 
           marginTop: 60, 
           padding: 24,
@@ -185,6 +250,7 @@ export default function GuardiansHub() {
           <p style={{ fontSize: 14 }}>
             🙏 Keep People Alive • Sanders Viopro Labs • Part of the SVL Ecosystem
           </p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
       </div>
     </div>

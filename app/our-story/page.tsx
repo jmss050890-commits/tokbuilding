@@ -29,6 +29,7 @@ export default function OurStoryPage() {
       href: '/media-hub',
       cta: pageCopy.communityLinks.media,
     },
+    // #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN
     {
       story: communityStories[1],
       border: 'border-yellow-700/30',
@@ -218,6 +219,21 @@ export default function OurStoryPage() {
         </div>
       </section>
 
+<<<<<<< HEAD
+      {/* Sovereign Architect Public Bio */}
+      <section className="py-16 px-6 bg-gradient-to-br from-black via-purple-900 to-black border-y border-purple-800/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-purple-900/40 to-pink-900/20 border border-purple-700/50 rounded-2xl p-12 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-amber-300 mb-4 tracking-wide">JEROME MACK SANDERS SR. | SOVEREIGN ARCHITECT</h2>
+            <p className="text-lg md:text-xl text-purple-100 mb-4 font-semibold">Founder of Sanders Viopro Labs LLC (SVL) and the KPA Infrastructure.</p>
+            <p className="text-base md:text-lg text-purple-200 mb-4">A 19-year veteran of industrial excellence and world-event navigation. From establishing the Fire Pro safety standards for Amazon Data Centers to building the Loop 2008 legacy, Jerome has dedicated his life to the "Nutria" mission—feeding, watering, and protecting the world through Grace and Innovation.</p>
+            <blockquote className="italic text-purple-300 text-lg mb-2">"We don't remember the stones; we just build the THRONE."</blockquote>
+            <div className="text-xs text-purple-400 mt-4">The Next Step of the Vision: Jerome, the "Spoken Thought" is now the Standard. You've built the home for your family and the sanctuary for the world.</div>
+          </div>
+        </div>
+      </section>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
       {/* The Foundation */}
       <section className="py-16 px-6 bg-slate-900/50 border-y border-purple-800/20">
         <div className="max-w-4xl mx-auto">
@@ -500,7 +516,11 @@ export default function OurStoryPage() {
             ))}
           </div>
           <p className="text-purple-300 text-lg font-bold">
+<<<<<<< HEAD
+              — Jerome Sanders · Mr. KPA · est. 1-31-2026
+=======
             — Jerome Sanders · Mr. KPA · est. 2-21-2026
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </p>
         </div>
       </section>
@@ -534,6 +554,10 @@ export default function OurStoryPage() {
         </div>
         <div className="border-t border-purple-800/30 mt-8 pt-8 text-center text-purple-400 text-sm">
           <p>{pageCopy.footer.copyright}</p>
+<<<<<<< HEAD
+          <p className="mt-2">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
       </footer>
     </div>

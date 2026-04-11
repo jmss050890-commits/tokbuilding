@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿'use client';
+=======
 'use client';
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
 import Link from 'next/link';
 import { Play, MessageCircle, Share2, Radio } from 'lucide-react';
@@ -202,7 +206,11 @@ export default function MediaHub() {
           {copy.mediaHub.ctaBody}
         </p>
         <a
+<<<<<<< HEAD
+          href="mailto:jerome@sandersvioprolabsllc.com"
+=======
           href="mailto:jerome@sandersvioprolabs.com"
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           style={{
             display: "inline-block",
             padding: "12px 24px",
@@ -220,3 +228,7 @@ export default function MediaHub() {
     </div>
   );
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

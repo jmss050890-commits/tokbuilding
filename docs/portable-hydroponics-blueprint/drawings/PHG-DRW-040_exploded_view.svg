@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#0b1020"/>
+  <text x="40" y="52" fill="#e2e8f0" font-size="28" font-family="Arial">PHG-DRW-040 Exploded View (Rev A)</text>
+
+  <rect x="180" y="560" width="840" height="120" rx="18" fill="#1f2937" stroke="#38bdf8" stroke-width="2"/>
+  <text x="520" y="625" fill="#bae6fd" font-size="18" font-family="Arial">Reservoir Body</text>
+
+  <rect x="220" y="430" width="760" height="90" rx="16" fill="#334155" stroke="#22d3ee" stroke-width="2"/>
+  <text x="525" y="483" fill="#a5f3fc" font-size="18" font-family="Arial">Grow Deck Lid</text>
+
+  <g fill="#0f172a" stroke="#22d3ee" stroke-width="2">
+    <circle cx="320" cy="350" r="28"/><circle cx="450" cy="350" r="28"/><circle cx="580" cy="350" r="28"/>
+    <circle cx="710" cy="350" r="28"/><circle cx="840" cy="350" r="28"/><circle cx="970" cy="350" r="28"/>
+  </g>
+  <text x="510" y="320" fill="#67e8f9" font-size="16" font-family="Arial">Net Pot Set (x6)</text>
+
+  <rect x="220" y="220" width="160" height="70" rx="8" fill="#111827" stroke="#fbbf24" stroke-width="2"/>
+  <text x="246" y="262" fill="#fde68a" font-size="14" font-family="Arial">Air Pump</text>
+  <rect x="440" y="220" width="160" height="70" rx="8" fill="#111827" stroke="#fbbf24" stroke-width="2"/>
+  <text x="468" y="262" fill="#fde68a" font-size="14" font-family="Arial">Tubing + Valve</text>
+  <rect x="660" y="220" width="160" height="70" rx="8" fill="#111827" stroke="#fbbf24" stroke-width="2"/>
+  <text x="700" y="262" fill="#fde68a" font-size="14" font-family="Arial">Airstone</text>
+
+  <line x1="300" y1="290" x2="300" y2="430" stroke="#64748b" stroke-dasharray="7 7"/>
+  <line x1="520" y1="290" x2="520" y2="430" stroke="#64748b" stroke-dasharray="7 7"/>
+  <line x1="740" y1="290" x2="740" y2="430" stroke="#64748b" stroke-dasharray="7 7"/>
+
+  <text x="180" y="740" fill="#cbd5e1" font-size="14" font-family="Arial">Service order: pump components -> lid -> net pots -> reservoir fill and startup test.</text>
+</svg>

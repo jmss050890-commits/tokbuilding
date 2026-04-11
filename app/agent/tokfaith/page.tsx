@@ -1,7 +1,11 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+<<<<<<< HEAD
+import { Heart, Send, Loader2, Mic, Play, Pause } from 'lucide-react';
+=======
 import { Heart, Send, Loader2, Mic } from 'lucide-react';
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import Link from 'next/link';
 import {
   getSpeechRecognitionAPI,
@@ -11,6 +15,11 @@ import {
 import { useWelcomeAudio } from '@/lib/useWelcomeAudio';
 import { useSiteCopy, useSiteLanguage } from '@/app/components/SiteLanguageControl';
 
+<<<<<<< HEAD
+import SpeakerBox from '@/app/components/SpeakerBox';
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 interface Message {
   id: string;
   type: 'user' | 'assistant' | 'assistant-error' | 'intro';
@@ -48,6 +57,89 @@ function getPerspectiveLabel(
 }
 
 export default function TokFaithAgent() {
+<<<<<<< HEAD
+    const [currentSpeakingMessageId, setCurrentSpeakingMessageId] = useState<string | null>(null);
+    const [isSpeakingMap, setIsSpeakingMap] = useState<Record<string, boolean>>({});
+    const [currentSpeakingIndex, setCurrentSpeakingIndex] = useState<number | null>(null);
+    const [showSpeakerBox, setShowSpeakerBox] = useState(false);
+    const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
+    // Speech synthesis for assistant messages
+    const speakMessage = async (messageId: string, text: string) => {
+      if (!("speechSynthesis" in window)) {
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      if (currentSpeakingMessageId === messageId && isSpeakingMap[messageId]) {
+        setCurrentSpeakingMessageId(null);
+        setShowSpeakerBox(false);
+        setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+        return;
+      }
+
+      setCurrentSpeakingMessageId(messageId);
+      setShowSpeakerBox(true);
+      setIsSpeakingMap((prev) => ({ ...prev, [messageId]: true }));
+      const index = messages.findIndex((m) => m.id === messageId);
+      setCurrentSpeakingIndex(index);
+
+      try {
+        let voices = window.speechSynthesis.getVoices();
+        if (voices.length === 0) {
+          await new Promise((resolve) => {
+            const handleVoicesChanged = () => {
+              voices = window.speechSynthesis.getVoices();
+              window.speechSynthesis.removeEventListener('voiceschanged', handleVoicesChanged);
+              resolve(null);
+            };
+            window.speechSynthesis.addEventListener('voiceschanged', handleVoicesChanged);
+            setTimeout(resolve, 1000);
+          });
+        }
+        // Prefer female, warm, spiritual voice for TokFaith
+        const femalePatterns = ['zira', 'jessa', 'susan', 'eva', 'samantha', 'victoria', 'karen', 'joanna', 'lisa', 'mary', 'julie', 'emma', 'olivia'];
+        let selectedVoice = voices.find((voice) => {
+          const voiceName = voice.name.toLowerCase();
+          return femalePatterns.some((pattern) => voiceName.includes(pattern)) && voice.lang?.toLowerCase().startsWith('en');
+        });
+        if (!selectedVoice) {
+          selectedVoice = voices.find((voice) => voice.lang?.toLowerCase().startsWith('en'));
+        }
+        const utterance = new window.SpeechSynthesisUtterance(text);
+        if (selectedVoice) utterance.voice = selectedVoice;
+        utterance.pitch = 1.1;
+        utterance.rate = 0.92;
+        utterance.volume = 0.9;
+        utterance.onstart = () => {
+          setIsSpeakingMap((prev) => ({ ...prev, [messageId]: true }));
+        };
+        utterance.onend = () => {
+          setCurrentSpeakingMessageId(null);
+          setShowSpeakerBox(false);
+          setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+        };
+        utterance.onerror = (event) => {
+          setCurrentSpeakingMessageId(null);
+          setShowSpeakerBox(false);
+          setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+        };
+        speechSynthesisRef.current = utterance;
+        window.speechSynthesis.speak(utterance);
+      } catch (error) {
+        setCurrentSpeakingMessageId(null);
+        setShowSpeakerBox(false);
+        setIsSpeakingMap((prev) => ({ ...prev, [messageId]: false }));
+      }
+    };
+
+    const playMessageByIndex = async (index: number) => {
+      const messageToPlay = messages[index];
+      if (messageToPlay.type === 'assistant' || messageToPlay.type === 'intro') {
+        speakMessage(messageToPlay.id, messageToPlay.content);
+      }
+    };
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   const copy = useSiteCopy();
   const { language } = useSiteLanguage();
   const routeCopy = copy.tokfaithAgent;
@@ -149,6 +241,63 @@ export default function TokFaithAgent() {
         }),
       });
 
+<<<<<<< HEAD
+      // Streaming response handling
+      if (response.body && response.headers.get('content-type')?.includes('text/plain')) {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let done = false;
+        let assistantMessageId = Date.now().toString();
+        let assistantContent = '';
+        // Add a placeholder assistant message
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: assistantMessageId,
+            type: 'assistant',
+            content: '',
+          } as Message,
+        ]);
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          const chunk = value ? decoder.decode(value) : '';
+          if (chunk) {
+            assistantContent += chunk;
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantMessageId
+                  ? { ...msg, content: assistantContent }
+                  : msg
+              )
+            );
+          }
+        }
+        // Optionally, parse for perspective/description if you want to support that in the future
+      } else {
+        // Fallback to JSON (error or demo mode)
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to get response from TokFaith');
+        }
+        setPerspectiveHistory((prev) => ({
+          ...prev,
+          [userMessageId]: data.perspectives,
+        }));
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString(),
+            type: 'assistant',
+            content: data.response,
+            perspective: data.perspective,
+            description: data.description,
+            perspectives: data.perspectives,
+          } as Message,
+        ]);
+        setCurrentPerspective(data.perspectives.current);
+      }
+=======
       const data = await response.json();
 
       if (!response.ok) {
@@ -175,6 +324,7 @@ export default function TokFaithAgent() {
       ]);
 
       setCurrentPerspective(data.perspectives.current);
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
     } catch (error) {
       console.error('Error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -303,7 +453,11 @@ export default function TokFaithAgent() {
 
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 max-w-4xl mx-auto w-full">
+<<<<<<< HEAD
+        {messages.map((message, idx) => (
+=======
         {messages.map((message) => (
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           <div
             key={message.id}
             className={`flex ${
@@ -332,6 +486,36 @@ export default function TokFaithAgent() {
 
               <p className="leading-relaxed whitespace-pre-wrap">{message.content}</p>
 
+<<<<<<< HEAD
+              {/* Speaker Button for Assistant Messages */}
+              {message.type === 'assistant' && (
+                <div className="mt-2 flex gap-2 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
+                  <button
+                    onClick={() => speakMessage(message.id, message.content)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition ${
+                      isSpeakingMap[message.id]
+                        ? 'bg-amber-600/70 text-amber-50 border border-amber-500'
+                        : 'bg-slate-700/50 text-amber-200 border border-amber-700/30 hover:bg-slate-600/60 hover:border-amber-600/50'
+                    }`}
+                    title={isSpeakingMap[message.id] ? 'Stop' : 'Listen to this message (click to resume)'}
+                  >
+                    {isSpeakingMap[message.id] ? (
+                      <>
+                        <Pause className="w-3.5 h-3.5" />
+                        <span>Stop</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3.5 h-3.5" />
+                        <span>Listen</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               {message.type === 'assistant' && message.perspectives && (
                 <div className="mt-4 pt-4 border-t border-amber-700/30">
                   <p className="text-xs text-amber-200/70 mb-2">{routeCopy.perspectiveHelp}</p>
@@ -357,6 +541,29 @@ export default function TokFaithAgent() {
             </div>
           </div>
         ))}
+<<<<<<< HEAD
+      {/* Speaker Box for Audio Control */}
+      {showSpeakerBox && currentSpeakingIndex !== null && (
+        <SpeakerBox
+          messages={messages}
+          currentMessageIndex={currentSpeakingIndex}
+          isPlaying={currentSpeakingMessageId !== null && Object.values(isSpeakingMap).some((v) => v)}
+          onPlayMessage={playMessageByIndex}
+          onStop={() => {
+            window.speechSynthesis.cancel();
+            setCurrentSpeakingMessageId(null);
+            setIsSpeakingMap({});
+          }}
+          onDismiss={() => {
+            window.speechSynthesis.cancel();
+            setCurrentSpeakingMessageId(null);
+            setShowSpeakerBox(false);
+            setIsSpeakingMap({});
+          }}
+        />
+      )}
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 
         {loading && (
           <div className="flex justify-start">

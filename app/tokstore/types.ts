@@ -124,6 +124,10 @@ export const FEATURED_APPS: TokApp[] = [
     ],
     requirements: ['Microphone access', 'Camera access', 'Health data permissions'],
     permissions: ['Camera', 'Microphone', 'Storage', 'Health data'],
+    privacy: 'https://tokhealth.sandersvioprolabsllc.com',
+    support: {
+      email: 'support@tok.health',
+      website: 'https://tokhealth.sandersvioprolabsllc.com',
     privacy: 'https://tokhealth.sandersvioprolabs.com',
     support: {
       email: 'support@tok.health',
@@ -183,10 +187,10 @@ export const FEATURED_APPS: TokApp[] = [
     previousVersions: [],
     requirements: ['GPS access', 'Emergency contacts'],
     permissions: ['Location', 'Phone calls', 'Messages', 'Contacts'],
-    privacy: 'https://tok.thru/privacy',
+    privacy: 'https://sandersvioprolabsllc.com/legal-disclaimer.md',
     support: {
-      email: 'help@tokthru.app',
-      website: 'https://tokthru.app',
+      email: 'support@sandersvioprolabsllc.com',
+      website: 'https://tokthru.sandersvioprolabsllc.com',
     },
     status: 'available',
     releaseDate: new Date('2025-08-20'),
@@ -243,6 +247,10 @@ export const FEATURED_APPS: TokApp[] = [
     ],
     requirements: ['Internet connection', 'AI API access'],
     permissions: ['Internet', 'Storage', 'Microphone for voice input'],
+    privacy: 'https://sandersvioprolabsllc.com/legal-disclaimer.md',
+    support: {
+      email: 'support@sandersvioprolabsllc.com',
+      website: 'https://toksmart.sandersvioprolabsllc.com',
     privacy: 'https://toksmart.app/privacy',
     support: {
       email: 'support@toksmart.app',
@@ -313,6 +321,8 @@ export const FEATURED_APPS: TokApp[] = [
     permissions: ['Device display', 'Storage for contact data'],
     privacy: '/tokaway-landing#privacy',
     support: {
+      email: 'support@sandersvioprolabsllc.com',
+      website: 'https://tokaway.sandersvioprolabsllc.com',
       email: 'support@tokaway.app',
       website: '/tokaway-landing',
     },

@@ -72,7 +72,11 @@ export default function KPA() {
         {/* Related Initiatives */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <Link href="/sanders-viopro-labs" className="bg-gradient-to-br from-purple-900/30 to-slate-800/30 rounded-lg p-8 border border-purple-700/30 hover:border-purple-500/60 transition">
+<<<<<<< HEAD
+            <h3 className="text-2xl font-bold mb-2">Sanders Viopro Labs LLC</h3>
+=======
             <h3 className="text-2xl font-bold mb-2">Sanders Viopro Labs</h3>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             <p className="text-slate-400">{pageCopy.relatedInitiatives}</p>
           </Link>
 
@@ -94,6 +98,10 @@ export default function KPA() {
       <div className="bg-slate-900 border-t border-slate-800 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12 text-center">
           <p className="text-slate-400 mb-4">{pageCopy.footer}</p>
+<<<<<<< HEAD
+          <p className="text-slate-300">Sanders Viopro Labs LLC</p>
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
         </div>
       </div>
     </div>

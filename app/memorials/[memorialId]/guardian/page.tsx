@@ -1,6 +1,76 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+<<<<<<< HEAD
+import { Play, Pause } from 'lucide-react';
+import SpeakerBox from '@/app/components/SpeakerBox';
+import Link from 'next/link';
+import { Heart, Send, Loader } from 'lucide-react';
+
+
+interface Message {
+  id: string;
+  type: 'user' | 'assistant' | 'assistant-error';
+  content: string;
+}
+
+
+
+const GuardianPage = () => {
+  const [messages] = useState<Message[]>([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isLoading] = useState(false);
+  const [error] = useState<string | null>(null);
+  const [showSpeakerBox, setShowSpeakerBox] = useState(false);
+  const [currentSpeakingIndex, setCurrentSpeakingIndex] = useState<number | null>(null);
+  const [currentSpeakingMessageId, setCurrentSpeakingMessageId] = useState<string | null>(null);
+  const [isSpeakingMap, setIsSpeakingMap] = useState<{ [id: string]: boolean }>({});
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const guardianName = 'Guardian';
+  const memorialName = 'Your Loved One';
+
+  // Handler stubs
+  const handleSendMessage = () => {
+    // Demo: do nothing
+  };
+
+  // Speech synthesis for a message
+  const speakMessage = (msgId: string, content: string) => {
+    // If already speaking this message, stop
+    if (isSpeakingMap[msgId]) {
+      window.speechSynthesis.cancel();
+      setIsSpeakingMap((prev) => ({ ...prev, [msgId]: false }));
+      setCurrentSpeakingMessageId(null);
+      return;
+    }
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+    // Set speaking state
+    setIsSpeakingMap((prev) => ({ ...prev, [msgId]: true }));
+    setCurrentSpeakingMessageId(msgId);
+    // Create utterance
+    const utterance = new window.SpeechSynthesisUtterance(content);
+    utterance.onend = () => {
+      setIsSpeakingMap((prev) => ({ ...prev, [msgId]: false }));
+      setCurrentSpeakingMessageId(null);
+    };
+    utterance.onerror = () => {
+      setIsSpeakingMap((prev) => ({ ...prev, [msgId]: false }));
+      setCurrentSpeakingMessageId(null);
+    };
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Play message by index (for SpeakerBox)
+  const playMessageByIndex = (idx: number) => {
+    const msg = messages[idx];
+    if (msg && msg.type === 'assistant') {
+      speakMessage(msg.id, msg.content);
+      setCurrentSpeakingIndex(idx);
+    }
+  };
+
+=======
 import Link from 'next/link';
 import { Heart, Send, Loader, MicIcon } from 'lucide-react';
 
@@ -64,10 +134,13 @@ export default function MemorialGuardianChat({ params }: PageProps) {
   }, [memorialId]);
 
   // Scroll to latest message
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+<<<<<<< HEAD
+=======
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
@@ -124,6 +197,7 @@ export default function MemorialGuardianChat({ params }: PageProps) {
     }
   };
 
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col">
       {/* Navigation */}
@@ -131,9 +205,13 @@ export default function MemorialGuardianChat({ params }: PageProps) {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Heart className="w-6 h-6 text-amber-600" />
+<<<<<<< HEAD
+            <h1 className="text-lg font-bold text-amber-100">{guardianName}</h1>
+=======
             <h1 className="text-lg font-bold text-amber-100">
               {guardianName || 'Legacy Guardian'}
             </h1>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </div>
           <Link href={`/memorials/dashboard`} className="text-amber-200 hover:text-amber-100 text-sm">
             Back to Dashboard
@@ -147,18 +225,67 @@ export default function MemorialGuardianChat({ params }: PageProps) {
           {messages.length === 0 ? (
             <div className="text-center py-16">
               <Heart className="w-16 h-16 text-amber-600/30 mx-auto mb-4" />
+<<<<<<< HEAD
+              <h2 className="text-2xl font-bold text-amber-100 mb-2">Welcome</h2>
+              <p className="text-amber-50/60">
+                This is a sacred space to remember {memorialName} and have meaningful conversations about their life, lessons, and legacy.
+=======
               <h2 className="text-2xl font-bold text-amber-100 mb-2">
                 Welcome
               </h2>
               <p className="text-amber-50/60">
                 This is a sacred space to remember {memorialName} and have meaningful conversations
                 about their life, lessons, and legacy.
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
               </p>
               <p className="text-amber-200/60 text-sm mt-4 italic">
                 The more you share, the more their Guardian learns to reflect their spirit.
               </p>
             </div>
           ) : (
+<<<<<<< HEAD
+            messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-xl rounded-lg p-4 ${
+                    msg.type === 'user'
+                      ? 'bg-amber-600 text-white'
+                      : msg.type === 'assistant-error'
+                        ? 'bg-red-900/30 border border-red-600/60 text-red-100'
+                        : 'bg-slate-800 border border-amber-700/30 text-amber-50'
+                  }`}
+                >
+                  {msg.type === 'assistant' && (
+                    <>
+                      <p className="text-xs text-amber-400 mb-2 font-semibold">{guardianName}</p>
+                      <div className="flex gap-2 mb-2">
+                        <button
+                          onClick={() => speakMessage(msg.id, msg.content)}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition ${
+                            isSpeakingMap[msg.id]
+                              ? 'bg-amber-600/70 text-amber-50 border border-amber-500'
+                              : 'bg-slate-700/50 text-amber-200 border border-amber-700/30 hover:bg-slate-600/60 hover:border-amber-600/50'
+                          }`}
+                          title={isSpeakingMap[msg.id] ? 'Stop' : 'Listen to this message (click to resume)'}
+                        >
+                          {isSpeakingMap[msg.id] ? (
+                            <>
+                              <Pause className="w-3.5 h-3.5" />
+                              <span>Stop</span>
+                            </>
+                          ) : (
+                            <>
+                              <Play className="w-3.5 h-3.5" />
+                              <span>Listen</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </>
+=======
             messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -175,13 +302,17 @@ export default function MemorialGuardianChat({ params }: PageProps) {
                     <p className="text-xs text-amber-400 mb-2 font-semibold">
                       {guardianName}
                     </p>
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
                   )}
                   <p className="leading-relaxed">{msg.content}</p>
                 </div>
               </div>
             ))
           )}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           {isLoading && (
             <div className="flex justify-start">
               <div className="bg-slate-800 border border-amber-700/30 text-amber-50 rounded-lg p-4">
@@ -193,6 +324,11 @@ export default function MemorialGuardianChat({ params }: PageProps) {
               </div>
             </div>
           )}
+<<<<<<< HEAD
+          {error && (
+            <div className="bg-red-900/20 border border-red-600/30 text-red-200 rounded-lg p-4">{error}</div>
+          )}
+=======
 
           {error && (
             <div className="bg-red-900/20 border border-red-600/30 text-red-200 rounded-lg p-4">
@@ -200,6 +336,7 @@ export default function MemorialGuardianChat({ params }: PageProps) {
             </div>
           )}
 
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           <div ref={messagesEndRef} />
         </div>
       </div>
@@ -221,6 +358,11 @@ export default function MemorialGuardianChat({ params }: PageProps) {
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || isLoading}
               className="p-3 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white rounded-lg font-semibold transition flex items-center gap-2"
+<<<<<<< HEAD
+              aria-label="Send message"
+              title="Send message"
+=======
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             >
               <Send className="w-5 h-5" />
             </button>
@@ -230,6 +372,35 @@ export default function MemorialGuardianChat({ params }: PageProps) {
           </p>
         </div>
       </div>
+<<<<<<< HEAD
+
+      {/* Speaker Box for Audio Control */}
+      {showSpeakerBox && currentSpeakingIndex !== null && (
+        <SpeakerBox
+          messages={messages}
+          currentMessageIndex={currentSpeakingIndex ?? 0}
+          isPlaying={currentSpeakingMessageId !== null && Object.values(isSpeakingMap).some((v) => v)}
+          onPlayMessage={playMessageByIndex}
+          onStop={() => {
+            window.speechSynthesis.cancel();
+            setCurrentSpeakingMessageId(null);
+            setIsSpeakingMap({});
+          }}
+          onDismiss={() => {
+            window.speechSynthesis.cancel();
+            setCurrentSpeakingMessageId(null);
+            setShowSpeakerBox(false);
+            setIsSpeakingMap({});
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default GuardianPage;
+=======
     </div>
   );
 }
+>>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b

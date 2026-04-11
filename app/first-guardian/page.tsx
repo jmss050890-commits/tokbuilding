@@ -38,6 +38,7 @@ export default function FirstGuardianPage() {
 
             <div className="quick-grid">
               {pageCopy.quickLinks.map((suggestion) => (
+                // #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN
                 <Link key={suggestion} href="/agent/first-guardian" className="quick-link">
                   {suggestion}
                 </Link>
