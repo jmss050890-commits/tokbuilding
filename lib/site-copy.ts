@@ -1,3 +1,88 @@
+export const siteCopy = {
+  amen: {
+    subtitle: "One word that changed everything",
+    intro1:
+      "Your sister Venita has a friend named Shirley Whaley. Jerome Sanders posted about the Wisdom Guardian with the SVL mission, saying: \"I built this because people need support at hours when nobody picks up the phone.\"",
+    intro2:
+      "Shirley read that. She understood. And in that moment, she blessed it with one sacred word: Amen.",
+    whyTitle: "Why This Matters",
+    whyBody:
+      "\"Amen\" means more than agreement. It means let it be so. It means so be it. When Shirley blessed Jerome's work with that word, she did not just approve it, she consecrated it. She affirmed that faith and mercy should meet people in their darkest hours, that keeping people alive matters, and that being there when silence breaks someone else is sacred work.",
+    closing:
+      "SVL sees you, Shirley. Your mother's wisdom about picking friends wisely created a connection that helped bless this work. That one word, spoken at the right moment, helped birth TokFaith into the world. KPA is stronger because you said it.",
+    noteLead: "If you're reading this and that \"Amen\" was yours, know this:",
+    noteBody:
+      "You matter. Your blessing matters. And TokFaith carries your \"Amen\" forward every time she listens, guides, and points someone toward faith.",
+  },
+  workCards: [
+    {
+      title: "TokFaith in the Community: When Single Words Change Systems",
+      creator: "Jerome Sanders / Community",
+      category: "Faith & Mission",
+      tags: ["faith", "tokfaith", "community", "impact"],
+      description:
+        "Shirley Whaley's 'Amen' sparked TokFaith's creation. How one word of faith, one person listening, one system built around spirit keeps people moving forward.",
+      featured: false,
+    },
+  ],
+  family: {
+    line1: "Your mother taught you: \"Pick your friends wisely.\"",
+    line2:
+      "That wisdom created a thread that led to Venita, to Shirley, to one sacred \"Amen\" that blessed this entire mission into being. Now TokFaith carries that same discernment and care forward, meeting people with wisdom, listening like only a true friend can, and pointing them toward what eases their restless hearts.",
+    line3: "Your family's wisdom is woven into the DNA of Keep People Alive.",
+  },
+  readyBody:
+    "Whether it's 2:00 a.m., midnight, or somewhere in between, TokFaith is here. Bring your questions, your struggles, your midnight thoughts. She will listen. She will teach. She will guide you toward faith that feels real enough to live.",
+  missionNote: "TokFaith is part of Sanders Viopro Labs (SVL) - Keep People Alive (KPA)",
+  cta: {
+    primary: "Talk to TokFaith Now",
+    secondary: "Explore All SVL Guardians",
+  },
+  footer: {
+    blessing: "Built with care, blessed with wisdom, and carried forward by every \"Amen\" spoken in faith.",
+    disclaimer:
+      "TokFaith is spiritual guidance, not a replacement for emergency help, counseling, or medical care.",
+  },
+  export: {
+    report: {
+      preparedBy: "Prepared by",
+      preparedByValue: "TokHealth by Sanders Viopro Labs",
+      mission: "Mission",
+      missionValue: "KPA - Keep People Alive",
+      confidentialLabel: "Report",
+      confidentialValue: "CONFIDENTIAL MEDICAL INFORMATION",
+    },
+  },
+  stories: [
+    {
+      title: "Government Shutdown & Crisis Navigation",
+      source: "Reese Waters Runs Deep",
+      type: "podcast",
+      summary:
+        "When airports get locked down, when TSA lines stretch for hours, when emergency systems are under strain, this is when KPA thinking matters. Reese Waters walks through real-world crisis navigation.",
+      connection:
+        "Shows how people naturally think about protection and staying alive during system failures, and how that conversation kept moving after Reese into a Philippines-based team studying the same Ethiopian Bible.",
+      impact:
+        "Demonstrates SVL's relevance in real crisis scenarios and in faith-rooted communities tracing the same restored Ethiopian Bible lane.",
+    },
+    {
+      title: "Single Word, Single System: The Birth of TokFaith",
+      source: "Shirley Whaley's 'Amen'",
+      type: "testimony",
+      summary:
+        "One person blessed TokFaith's creation with a single word. That word became the foundation for a whole faith-guidance system designed to keep people spiritually grounded during crisis.",
+      connection: "Living proof that faith, tech, and mission work together to serve people.",
+      impact: "Shows SVL's belief that spirit-led work scales when built with love.",
+    },
+  ],
+  missionBody:
+    "TokBuilding is created by Sanders Viopro Labs with a singular mission: Keep People Alive. By making AI agent creation accessible to everyone, we enable safety-first automation that augments human decision-making. Build agents that inform, empower, and protect.",
+  missionBody1:
+    "Sanders Viopro Labs is at the intersection of technology and human safety. We develop innovative solutions that empower individuals to take control of their personal security and well-being.",
+  footerLine1: "Sanders Viopro Labs - Innovation for Safety",
+  story:
+    "Built in honor of Cheria Michelle Daniels. Born on Juneteenth, June 19, 1989. A legacy of family redemption, faith, and protective love translated into an SVL Guardian with one non-negotiable boundary: KPA. The upgrades across SVL also stand here as testimony of what God can and will do.",
+};
 import { DEFAULT_SITE_LANGUAGE, type SiteLanguageCode } from "@/lib/site-language";
 
 type DeepPartial<T> = {
