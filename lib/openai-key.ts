@@ -7,7 +7,6 @@ export function getOpenAIApiKey() {
 
   if (!rawKey) return "";
 
-<<<<<<< HEAD
   let trimmed = rawKey.trim();
 
   if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
@@ -35,12 +34,6 @@ export function getOpenAIApiKey() {
   // OpenAI API keys use the "sk-" prefix (project keys included).
   if (!trimmed.startsWith("sk-")) {
     return "";
-=======
-  const trimmed = rawKey.trim();
-
-  if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
-    return trimmed.slice(1, -1).trim();
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   }
 
   return trimmed;
