@@ -3,8 +3,9 @@
 <<<<<<< HEAD
 
 import Link from 'next/link';
-import { Heart, BookOpen, Lightbulb, MessageCircle, Play } from 'lucide-react';
+import { Heart, BookOpen, Lightbulb, MessageCircle } from 'lucide-react';
 import { useSiteCopy } from '@/app/components/SiteLanguageControl';
+import VoiceStyleSpeaker from '@/app/components/VoiceStyleSpeaker';
 import { useRef, useState } from 'react';
 
 // Soft/female voice for TokFaith
@@ -167,18 +168,19 @@ export default function TokFaithPage() {
               </h2>
 
 <<<<<<< HEAD
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <p className="text-amber-50 text-lg leading-relaxed max-w-xl">
                   {copy.tokfaith.hero.body}
                 </p>
-                <button
-                  onClick={() => speakText(copy.tokfaith.hero.body)}
-                  className="ml-2 flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition bg-amber-700/70 text-amber-50 border border-amber-500 hover:bg-amber-600/80 hover:border-amber-400"
-                  title="Listen to this message"
-                  aria-label="Listen"
-                >
-                  <Play className="w-4 h-4" /> Listen
-                </button>
+                <div className="ml-2">
+                  <VoiceStyleSpeaker
+                    text={copy.tokfaith.hero.body}
+                    speakLabel="Speak TokFaith Message"
+                    stopLabel="Stop TokFaith Message"
+                    speakTitle="Listen to TokFaith message"
+                    stopTitle="Stop TokFaith message"
+                  />
+                </div>
               </div>
 =======
               <p className="text-amber-50 text-lg leading-relaxed max-w-xl">

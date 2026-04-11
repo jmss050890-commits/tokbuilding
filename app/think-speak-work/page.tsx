@@ -16,6 +16,7 @@ export default function ThinkSpeakWork() {
             ← Back Home
           </Link>
         </div>
+        <div className="mt-8 text-center text-lg font-bold text-blue-400">#I #LOVE #BEING #A #CHILD #OF #GOD #AMEN</div>
       </nav>
 
       <div className="max-w-6xl mx-auto px-6 py-16">

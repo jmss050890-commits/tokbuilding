@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿import type { NextRequest } from "next/server";
-=======
 import type { NextRequest } from "next/server";
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 import { NextResponse } from "next/server";
 import {
   addSiteLanguagePrefix,
@@ -15,7 +11,7 @@ import {
 } from "@/lib/site-language";
 
 const SUBDOMAIN_REDIRECT_MAP: Record<string, string> = {
-<<<<<<< HEAD
+  "tokhealth.sandersvioprolabs.com": "https://tokhealth-mobile.emergent.host",
   "tokhealth.sandersvioprolabsllc.com": "https://tokhealth-mobile.emergent.host",
 };
 
@@ -23,12 +19,6 @@ const TRAINING_SUBDOMAINS = new Set([
   "training.sandersvioprolabs.com",
   "training.sandersvioprolabsllc.com",
 ]);
-
-=======
-  "tokhealth.sandersvioprolabs.com": "https://tokhealth-mobile.emergent.host",
-};
-
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 const AGENT_SLUGS = new Set([
   "a1",
   "coach-daniels",

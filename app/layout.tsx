@@ -137,37 +137,45 @@ export default async function RootLayout({
           <ArchitectSeal />
           <footer style={{marginTop: 32, textAlign: 'center', color: '#bbb', fontSize: 14}}>
             <div>
-<<<<<<< HEAD
-              <strong>Sanders Viopro Labs LLC Growth 2026:</strong> Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness.
-=======
               <strong>Sanders Viopro Labs Growth 2026:</strong> Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness.
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
             </div>
             <div style={{marginTop: 8}}>Sanders Viopro Labs LLC</div>
             <div style={{marginTop: 8}}>
               <span style={{display: 'block', fontWeight: 'bold', color: '#7ee787', marginBottom: 4}}>
                 Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive
               </span>
-<<<<<<< HEAD
               <a href="/legal-disclaimer" style={{color: '#7ee787', textDecoration: 'underline'}}>
                 Legal & Disclaimers
               </a>
             </div>
-            <div style={{marginTop: 16, display: 'flex', justifyContent: 'center'}}>
+            <div style={{marginTop: 24, fontWeight: 'bold', fontSize: 18, color: '#7ee787'}}>
+              #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN<br />
+              #ILOVEBEINGACHILDOFGODAMEN<br />
+              #AMENBYAMEN
+            </div>
+            <div style={{marginTop: 12, display: 'flex', justifyContent: 'center', gap: 16}}>
               <VoiceStyleSpeaker
-                text="Seal of the Architect. Sanders Viopro Labs LLC Growth 2026: Expanding the SVL-KPA Universe, empowering more communities, and advancing AI-driven safety and wellness. Sanders Viopro Labs LLC. Kaptain Planet Arrives with a Key Performance Alert to Keep People Alive. Legal and Disclaimers. Chef's kiss SVL Lab, that's doing it global and exceeding SVL standards."
-                speakLabel="Speak Footer"
-                stopLabel="Stop Footer"
-                speakTitle="Listen to SVL footer"
-                stopTitle="Stop SVL footer"
+                text="#I #LOVE #BEING #A #CHILD #OF #GOD #AMEN. I love being a child of God. Amen."
+                speakLabel="Speak Hashtag"
+                stopLabel="Stop Hashtag"
+                speakTitle="Listen to hashtag message"
+                stopTitle="Stop hashtag message"
+              />
+              <VoiceStyleSpeaker
+                text="#ILOVEBEINGACHILDOFGODAMEN. I love being a child of God. Amen."
+                speakLabel="Speak Hashtag 2"
+                stopLabel="Stop Hashtag 2"
+                speakTitle="Listen to hashtag message 2"
+                stopTitle="Stop hashtag message 2"
+              />
+              <VoiceStyleSpeaker
+                text="#AMENBYAMEN. Amen by Amen."
+                speakLabel="Speak AmenByAmen"
+                stopLabel="Stop AmenByAmen"
+                speakTitle="Listen to AmenByAmen"
+                stopTitle="Stop AmenByAmen"
               />
             </div>
-=======
-              <a href="/legal-disclaimer.md" style={{color: '#7ee787', textDecoration: 'underline'}}>
-                Legal & Disclaimers
-              </a>
-            </div>
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
           </footer>
           <SpeedInsights />
         </SiteLanguageProvider>

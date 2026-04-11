@@ -129,6 +129,13 @@ const hubCopy = {
 
 const games = [
   {
+    title: 'Pioneer: The GOAT Edition',
+    subtitle: 'Founders Simulator',
+    body: 'Experience strategic leadership, grit, and legacy-building in a survival game inspired by KPA principles and real-world pioneers. Special character: Jasmine Crockett!',
+    href: '/sanders-viopro-labs/games/play',
+    accent: 'from-emerald-500/30 to-green-500/10',
+  },
+  {
     title: 'Kenzie Detective',
     subtitle: 'SVL-KPA Detective Files',
     body: 'Investigate the missing blueprint, gather clues, and close the case with precision.',

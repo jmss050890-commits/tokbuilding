@@ -26,16 +26,6 @@ interface OrderConfirmationData {
   downloadLink?: string;
 }
 
-<<<<<<< HEAD
-interface OutreachEmailData {
-  brand?: string;
-  to: string;
-  subject: string;
-  body: string;
-}
-
-=======
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 function getErrorMessage(error: unknown) {
   return error instanceof Error ? error.message : 'Unknown error';
 }

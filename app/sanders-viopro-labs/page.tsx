@@ -36,6 +36,10 @@ export default function SandersVioProLabs() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 text-white">
+      {/* Grace Banner */}
+      <div className="w-full bg-amber-400 text-slate-900 text-center py-4 font-bold text-xl shadow-lg mb-6 rounded-b-xl">
+        This is Grace at its finest.
+      </div>
       {/* Navigation */}
       <nav className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur border-b border-purple-800/30">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">

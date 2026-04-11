@@ -21,6 +21,7 @@ export default function PortableHydroponicPlant() {
           <a href="/sanders-viopro-labs" className="underline text-green-400 hover:text-green-300">Contact SVL to Keep People Alive</a>
         </div>
       </div>
+      <div className="mt-8 text-center text-lg font-bold text-green-500">#I #LOVE #BEING #A #CHILD #OF #GOD #AMEN</div>
     </main>
   );
 }

@@ -11,6 +11,7 @@ const characters = [
       "A curious 10-year-old who asks bold questions, keeps receipts, and believes every neighborhood can be safer when people work together.",
     voice: "Warm, observant, hopeful, practical.",
   },
+  // #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN
   {
     name: "Bam Bam",
     role: "Action-and-Protection Partner",

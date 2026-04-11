@@ -19,6 +19,7 @@ export default function TokAway() {
   const [callState, setCallState] = useState<CallState>(() => {
     if (typeof window === 'undefined') {
       return {
+        // #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN
         selectedContact: null,
         isCallActive: false,
         callDuration: 0,

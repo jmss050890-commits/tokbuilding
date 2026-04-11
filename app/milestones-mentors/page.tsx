@@ -34,6 +34,7 @@ export default function MilestonesMentors() {
         <p className="text-base text-slate-800 mb-2">Every milestone and mentor is a step toward the SVL-KPA-SPL vision: Keep People Alive, empower communities, and set new standards for resilience and leadership.</p>
         <div className="text-center font-bold text-lg text-emerald-700">Amen.</div>
       </section>
+      <div className="mt-8 text-center text-lg font-bold text-emerald-700">#I #LOVE #BEING #A #CHILD #OF #GOD #AMEN</div>
     </main>
   );
 }

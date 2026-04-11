@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: projectRoot,
   },
-<<<<<<< HEAD
   async redirects() {
     return [
       {
@@ -41,8 +40,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-=======
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
   headers: async () => {
     return [
       {

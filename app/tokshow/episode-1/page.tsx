@@ -117,6 +117,11 @@ const facebookPostTemplates = [
   },
 ];
 
+
+// ---
+// SVL Wisdom Signal Logic (Proprietary)
+// The following logic and content blocks are proprietary to Sanders Viopro Labs LLC.
+// Do not copy or reuse outside SVL products or services.
 const globalWisdomEmailBlock =
   "Wisdom Signal:\nProverbs 3:5-6 reminds us to lead with trust, clarity, and right action.\nOur Proverbs In R&B wellness layer is now integrated to support soul health while we scale global humanitarian outcomes.\n\nReply ALIGN to schedule a 15-minute mission call.";
 

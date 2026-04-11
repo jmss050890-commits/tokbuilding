@@ -29,6 +29,7 @@ export default function OurStoryPage() {
       href: '/media-hub',
       cta: pageCopy.communityLinks.media,
     },
+    // #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN
     {
       story: communityStories[1],
       border: 'border-yellow-700/30',

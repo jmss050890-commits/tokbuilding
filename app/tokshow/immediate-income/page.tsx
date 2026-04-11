@@ -32,6 +32,7 @@ const incomeStreams = [
     potential: '$2K-5K/month',
     action: 'Design tiers',
     link: '/our-story',
+    // #I #LOVE #BEING #A #CHILD #OF #GOD #AMEN
   },
   {
     icon: Code,

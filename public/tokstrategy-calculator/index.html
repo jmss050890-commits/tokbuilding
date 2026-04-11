@@ -1,0 +1,258 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>TokStrategy Market Value Calculator</title>
+	<style>
+		:root {
+			--bg: #0b1220;
+			--panel: #111a2e;
+			--panel-2: #16223d;
+			--text: #e8eefc;
+			--muted: #9bb0dc;
+			--accent: #2dd4bf;
+			--accent-2: #f59e0b;
+			--line: #27406f;
+		}
+		* { box-sizing: border-box; }
+		body {
+			margin: 0;
+			font-family: "Segoe UI", Tahoma, sans-serif;
+			background: radial-gradient(circle at 20% 0%, #182846 0%, var(--bg) 50%);
+			color: var(--text);
+		}
+		.wrap {
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 24px;
+		}
+		.hero {
+			border: 1px solid var(--line);
+			background: linear-gradient(135deg, #15213b 0%, #0f1930 100%);
+			border-radius: 16px;
+			padding: 24px;
+			margin-bottom: 20px;
+		}
+		h1 { margin: 0 0 8px 0; font-size: 30px; }
+		.sub { margin: 0; color: var(--muted); }
+		.grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 18px;
+		}
+		@media (min-width: 900px) {
+			.grid { grid-template-columns: 1.1fr 1fr; }
+		}
+		.card {
+			border: 1px solid var(--line);
+			background: var(--panel);
+			border-radius: 14px;
+			padding: 18px;
+		}
+		.row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+			margin-bottom: 12px;
+		}
+		label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+		input {
+			width: 100%;
+			border: 1px solid #35507f;
+			background: var(--panel-2);
+			color: var(--text);
+			border-radius: 10px;
+			padding: 10px 12px;
+			font-size: 14px;
+		}
+		.btns {
+			display: flex;
+			gap: 10px;
+			margin-top: 8px;
+			flex-wrap: wrap;
+		}
+		button {
+			border: 1px solid #2f4f86;
+			background: #163158;
+			color: var(--text);
+			padding: 10px 14px;
+			border-radius: 10px;
+			cursor: pointer;
+			font-weight: 600;
+		}
+		button.primary {
+			background: linear-gradient(135deg, #0f766e, #115e59);
+			border-color: #14b8a6;
+		}
+		.results {
+			display: grid;
+			gap: 10px;
+		}
+		.exec-split {
+			border: 1px solid #36598f;
+			border-radius: 12px;
+			padding: 14px;
+			background: #0f1f38;
+			margin-bottom: 12px;
+		}
+		.exec-split h3 {
+			margin: 0 0 6px 0;
+			font-size: 18px;
+		}
+		.exec-grid {
+			display: grid;
+			gap: 10px;
+			grid-template-columns: 1fr;
+			margin-top: 10px;
+		}
+		@media (min-width: 700px) {
+			.exec-grid {
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+		.exec-cell {
+			border: 1px solid #314d7d;
+			border-radius: 12px;
+			padding: 14px;
+			background: #12213d;
+		}
+		.exec-label {
+			margin: 0;
+			font-size: 12px;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: #9bd7ff;
+			font-weight: 700;
+		}
+		.exec-number {
+			margin: 8px 0 0 0;
+			font-size: 28px;
+			font-weight: 800;
+			color: #f8fbff;
+		}
+		.exec-note {
+			margin: 8px 0 0 0;
+			color: #c5d6fa;
+			font-size: 13px;
+			line-height: 1.5;
+		}
+		.exec-total {
+			margin-top: 12px;
+			display: grid;
+			gap: 10px;
+			grid-template-columns: 1fr;
+		}
+		@media (min-width: 700px) {
+			.exec-total {
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+		.exec-total-card {
+			border: 1px solid #3b628f;
+			border-radius: 12px;
+			padding: 14px;
+			background: #10203a;
+		}
+		.scenario {
+			border: 1px solid #314d7d;
+			border-radius: 12px;
+			padding: 14px;
+			background: #12213d;
+		}
+		.scenario h3 { margin: 0 0 6px 0; font-size: 18px; }
+		.kpi { margin: 2px 0; color: #c5d6fa; font-size: 14px; }
+		.value { color: var(--accent); font-size: 22px; font-weight: 700; margin-top: 8px; }
+		.math {
+			margin-top: 10px;
+			border-top: 1px dashed #355681;
+			padding-top: 10px;
+		}
+		.math h4 {
+			margin: 0 0 6px 0;
+			font-size: 14px;
+			color: #dce8ff;
+		}
+		.math p {
+			margin: 3px 0;
+			color: #bfd2f5;
+			font-size: 13px;
+			line-height: 1.45;
+		}
+		.priority-strip {
+			margin-top: 10px;
+			border-radius: 10px;
+			padding: 8px 10px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #0e2a48;
+			border: 1px solid #3b628f;
+			color: #d8e7ff;
+		}
+		.smart {
+			border: 1px solid #36598f;
+			border-radius: 12px;
+			padding: 12px;
+			background: #101d35;
+			margin-bottom: 12px;
+		}
+		.hint { margin: 4px 0 0 0; color: #b7c9ee; font-size: 13px; }
+		.check {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin-bottom: 10px;
+			color: #d4e2ff;
+			font-size: 14px;
+			font-weight: 600;
+		}
+		.check input {
+			width: 16px;
+			height: 16px;
+			accent-color: #2dd4bf;
+		}
+		.insight {
+			border: 1px solid #355681;
+			border-radius: 12px;
+			padding: 14px;
+			background: #10203a;
+			margin-top: 10px;
+		}
+		.insight h3 { margin: 0 0 6px 0; font-size: 18px; }
+		.insight p { margin: 4px 0; color: #cfdefb; font-size: 14px; line-height: 1.5; }
+		.sr {
+			margin-top: 10px;
+			padding: 12px;
+			border-radius: 12px;
+			border: 1px solid #355681;
+			background: #10203a;
+		}
+		.sr-title { margin: 0 0 8px 0; font-size: 14px; color: #dce8ff; font-weight: 700; }
+		.sr-status { margin: 8px 0 0 0; font-size: 13px; color: #bcd0f8; }
+		.copy-status { margin: 8px 0 0 0; font-size: 13px; color: #bcd0f8; }
+		.sr-row {
+			display: flex;
+			gap: 8px;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+		select {
+			border: 1px solid #35507f;
+			background: var(--panel-2);
+			color: var(--text);
+			border-radius: 10px;
+			padding: 10px 12px;
+			font-size: 14px;
+		}
+		.foot {
+			margin-top: 20px;
+			color: var(--muted);
+			font-size: 13px;
+		}
+	</style>
+</head>
+<body>
+	<!-- ...rest of the calculator HTML and JS copied from main index.html... -->
+</body>
+</html>

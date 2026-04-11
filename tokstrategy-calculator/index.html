@@ -262,7 +262,59 @@
     <div class="grid">
       <section class="card">
         <h2>Inputs</h2>
+        <h3>Sum-of-the-Parts (SOTP) Revenue Streams</h3>
         <div class="row">
+          <div>
+            <label for="arrTokHealth">TokHealth ARR (USD)</label>
+            <input id="arrTokHealth" type="number" value="1200000" min="0" step="10000" />
+            <span class="hint">Annual recurring revenue for TokHealth.</span>
+          </div>
+          <div>
+            <label for="arrTokThru">TokThru ARR (USD)</label>
+            <input id="arrTokThru" type="number" value="800000" min="0" step="10000" />
+            <span class="hint">Annual recurring revenue for TokThru.</span>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="arrTokBuilding">TokBuilding ARR (USD)</label>
+            <input id="arrTokBuilding" type="number" value="500000" min="0" step="10000" />
+            <span class="hint">Annual recurring revenue for TokBuilding.</span>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="hardwareTokHealth">TokHealth Hardware Revenue (USD)</label>
+            <input id="hardwareTokHealth" type="number" value="600000" min="0" step="10000" />
+            <span class="hint">Hardware revenue for TokHealth.</span>
+          </div>
+          <div>
+            <label for="hardwareTokThru">TokThru Hardware Revenue (USD)</label>
+            <input id="hardwareTokThru" type="number" value="500000" min="0" step="10000" />
+            <span class="hint">Hardware revenue for TokThru.</span>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="hardwareTokBuilding">TokBuilding Hardware Revenue (USD)</label>
+            <input id="hardwareTokBuilding" type="number" value="400000" min="0" step="10000" />
+            <span class="hint">Hardware revenue for TokBuilding.</span>
+          </div>
+        </div>
+        <div class="row">
+                  <h3>Governance & Strategic Value</h3>
+                  <div class="row">
+                    <div>
+                      <label for="trustMultiplier">Trust Multiplier (Governance Premium)</label>
+                      <input id="trustMultiplier" type="number" value="1.7" min="1" max="2.2" step="0.01" />
+                      <span class="hint">Reflects ISO 27001, GDPR, and Security by Design. (1.5x–2.2x typical in 2026)</span>
+                    </div>
+                    <div>
+                      <label for="strategicMoat">Strategic Moat Value (USD)</label>
+                      <input id="strategicMoat" type="number" value="1200000" min="0" step="10000" />
+                      <span class="hint">Estimated cost for a competitor to replicate SVL's SPL/Guardian IP.</span>
+                    </div>
+                  </div>
           <div>
             <label for="arr">ARR (USD)</label>
             <input id="arr" type="number" value="2500000" min="0" step="10000" />
@@ -432,6 +484,11 @@
     <p class="foot">Formula: Core Value = ((ARR x Software Multiple) + (Hardware Revenue x Hardware Multiple)) x (1 + Strategic Premium)</p>
     <p class="foot">Upgrade Value = (Growth Lift + Risk/Cost Reduction) x Upgrade Value Multiple x Scenario Weight</p>
     <p class="foot">Total Value = Core Value + Upgrade Value</p>
+
+    <footer style="margin-top:32px; padding:18px 0 0 0; border-top:1px solid #27406f; text-align:center; color:#9bb0dc; font-size:13px;">
+      <span>© 2026 Sanders Viopro Labs LLC &nbsp;|&nbsp; </span>
+      <a href="/legal-disclaimer.md" target="_blank" style="color:#2dd4bf; text-decoration:underline;">Legal & Disclaimers</a>
+    </footer>
   </div>
 
   <script>
@@ -472,6 +529,7 @@
     }
 
     function val(id) {
+        // Helper for SOTP: fallback to 0 if not found
       return Number(document.getElementById(id).value || 0);
     }
 
@@ -492,8 +550,13 @@
       const premiumAmt = subtotal * sp;
       const coreTotal = subtotal + premiumAmt;
       const upgradeValue = upgradeBase * weight;
-      const total = coreTotal + upgradeValue;
-      return { recurring, hardware, subtotal, premiumAmt, coreTotal, upgradeValue, total };
+      // Governance Premium
+      const trustMultiplier = val("trustMultiplier");
+      const withGovernance = coreTotal * trustMultiplier;
+      // Strategic Moat
+      const moat = val("strategicMoat");
+      const total = withGovernance + upgradeValue + moat;
+      return { recurring, hardware, subtotal, premiumAmt, coreTotal, trustMultiplier, withGovernance, upgradeValue, moat, total };
     }
 
     function renderScenario(title, r) {
@@ -505,15 +568,20 @@
           <p class="kpi">Subtotal: ${usd(r.subtotal)}</p>
           <p class="kpi">Strategic premium: ${usd(r.premiumAmt)}</p>
           <p class="kpi">Core value: ${usd(r.coreTotal)}</p>
+          <p class="kpi">Governance premium (Trust Multiplier): ×${r.trustMultiplier.toFixed(2)}</p>
+          <p class="kpi">With Governance Premium: ${usd(r.withGovernance)}</p>
           <p class="kpi">SVL-KPA upgrade value: ${usd(r.upgradeValue)}</p>
+          <p class="kpi">Strategic Moat Value: ${usd(r.moat)}</p>
           <p class="value">Estimated market value: ${usd(r.total)}</p>
           <div class="math">
-            <h4>Easy Math Breakdown</h4>
-            <p>1) Core operating value = recurring (${usd(r.recurring)}) + hardware (${usd(r.hardware)}) = ${usd(r.subtotal)}</p>
-            <p>2) Strategic premium added = ${usd(r.premiumAmt)}</p>
+            <h4>2026 Value Math</h4>
+            <p>1) Core = recurring (${usd(r.recurring)}) + hardware (${usd(r.hardware)}) = ${usd(r.subtotal)}</p>
+            <p>2) Strategic premium = ${usd(r.premiumAmt)}</p>
             <p>3) Core total = ${usd(r.coreTotal)}</p>
-            <p>4) SVL-KPA upgrade value added = ${usd(r.upgradeValue)}</p>
-            <p><strong>Final = Core total + Upgrade value = ${usd(r.total)}</strong></p>
+            <p>4) Governance premium = ×${r.trustMultiplier.toFixed(2)} = ${usd(r.withGovernance)}</p>
+            <p>5) SVL-KPA upgrade value = ${usd(r.upgradeValue)}</p>
+            <p>6) Strategic moat value = ${usd(r.moat)}</p>
+            <p><strong>Final = With Governance + Upgrade + Moat = ${usd(r.total)}</strong></p>
           </div>
         </article>
       `;
@@ -522,29 +590,44 @@
     function renderExecutiveSplit(base) {
       return `
         <h3>Executive Value Split</h3>
-        <p class="hint">Base scenario shown as two clear value columns for live explanation.</p>
+        <p class="hint">Base scenario shown as clear value columns for live explanation.</p>
         <div class="exec-grid">
           <div class="exec-cell">
             <p class="exec-label">Software Value</p>
             <p class="exec-number">${usd(base.recurring)}</p>
-            <p class="exec-note">ARR multiplied by the base software multiple.</p>
+            <p class="exec-note">ARR × base software multiple.</p>
           </div>
           <div class="exec-cell">
             <p class="exec-label">Hardware Value</p>
             <p class="exec-number">${usd(base.hardware)}</p>
-            <p class="exec-note">Hardware revenue multiplied by the base hardware multiple.</p>
+            <p class="exec-note">Hardware revenue × base hardware multiple.</p>
           </div>
         </div>
         <div class="exec-total">
           <div class="exec-total-card">
-            <p class="exec-label">Strategic Premium Added</p>
+            <p class="exec-label">Strategic Premium</p>
             <p class="exec-number">${usd(base.premiumAmt)}</p>
-            <p class="exec-note">Premium reflects strategic positioning on top of the core subtotal.</p>
+            <p class="exec-note">Premium for strategic positioning.</p>
           </div>
           <div class="exec-total-card">
-            <p class="exec-label">Base Total Value</p>
+            <p class="exec-label">Governance Premium (Trust Multiplier)</p>
+            <p class="exec-number">×${base.trustMultiplier.toFixed(2)} = ${usd(base.withGovernance)}</p>
+            <p class="exec-note">Reflects ISO 27001, GDPR, Security by Design.</p>
+          </div>
+          <div class="exec-total-card">
+            <p class="exec-label">SVL-KPA Upgrade Value</p>
+            <p class="exec-number">${usd(base.upgradeValue)}</p>
+            <p class="exec-note">Growth, risk/cost reduction, and scenario weight.</p>
+          </div>
+          <div class="exec-total-card">
+            <p class="exec-label">Strategic Moat Value</p>
+            <p class="exec-number">${usd(base.moat)}</p>
+            <p class="exec-note">Cost for a competitor to replicate SVL's IP.</p>
+          </div>
+          <div class="exec-total-card">
+            <p class="exec-label">Total Market Value</p>
             <p class="exec-number">${usd(base.total)}</p>
-            <p class="exec-note">Core value plus premium and SVL-KPA upgrade value.</p>
+            <p class="exec-note">With all 2026 value drivers included.</p>
           </div>
         </div>
       `;
@@ -628,35 +711,45 @@
     let currentUtterance = null;
 
     function calculate() {
-      const arr = val("arr");
-      const hardware = val("hardware");
+      // SOTP: Gather each Tok-service
+      const arrTokHealth = val("arrTokHealth");
+      const arrTokThru = val("arrTokThru");
+      const arrTokBuilding = val("arrTokBuilding");
+      const hardwareTokHealth = val("hardwareTokHealth");
+      const hardwareTokThru = val("hardwareTokThru");
+      const hardwareTokBuilding = val("hardwareTokBuilding");
+
+      // SOTP: Sum for total ARR/hardware
+      const arr = arrTokHealth + arrTokThru + arrTokBuilding;
+      const hardware = hardwareTokHealth + hardwareTokThru + hardwareTokBuilding;
       const smartGrowth = smartUpgradeGrowth();
       document.getElementById("smartGrowthPreview").textContent = usd(smartGrowth);
-
-      if (checked("useSmartUpgrade")) {
-        document.getElementById("upgradeGrowth").value = Math.round(smartGrowth);
-      }
-
-      const upgradeBase = (val("upgradeGrowth") + val("upgradeSavings")) * val("upgradeMult");
-
-      const cons = compute(arr, hardware, val("swCons"), val("hwCons"), val("spCons"), upgradeBase, scenarioWeight.cons);
-      const base = compute(arr, hardware, val("swBase"), val("hwBase"), val("spBase"), upgradeBase, scenarioWeight.base);
-      const agg = compute(arr, hardware, val("swAgg"), val("hwAgg"), val("spAgg"), upgradeBase, scenarioWeight.agg);
-
-      document.getElementById("executiveSplit").innerHTML = renderExecutiveSplit(base);
-
-      document.getElementById("results").innerHTML =
-        renderScenario("Conservative", cons) +
-        renderScenario("Base", base) +
-        renderScenario("Aggressive", agg);
-
-      document.getElementById("insightPanel").innerHTML = renderInsight(base, cons, agg);
-      latestReport = { base, cons, agg };
-    }
-
-    function reset() {
-      Object.entries(defaults).forEach(([k, v]) => {
-        const node = document.getElementById(k);
+      return `
+        <article class="scenario">
+          <h3>${title}</h3>
+          <p class="kpi">SOTP Recurring value: ${usd(r.recurring)}</p>
+          <p class="kpi">SOTP Hardware value: ${usd(r.hardware)}</p>
+          <p class="kpi">Subtotal: ${usd(r.subtotal)}</p>
+          <p class="kpi">Strategic premium: ${usd(r.premiumAmt)}</p>
+          <p class="kpi">Core value: ${usd(r.coreTotal)}</p>
+          <p class="kpi">Governance premium (Trust Multiplier): ×${r.trustMultiplier.toFixed(2)}</p>
+          <p class="kpi">With Governance Premium: ${usd(r.withGovernance)}</p>
+          <p class="kpi">SVL-KPA upgrade value: ${usd(r.upgradeValue)}</p>
+          <p class="kpi">Strategic Moat Value: ${usd(r.moat)}</p>
+          <p class="value">Estimated market value: ${usd(r.total)}</p>
+          <div class="math">
+            <h4>2026 Value Math</h4>
+            <p>1) SOTP = TokHealth (${usd(arrTokHealth + hardwareTokHealth)}), TokThru (${usd(arrTokThru + hardwareTokThru)}), TokBuilding (${usd(arrTokBuilding + hardwareTokBuilding)})</p>
+            <p>2) SOTP Recurring = ${usd(r.recurring)}, SOTP Hardware = ${usd(r.hardware)}</p>
+            <p>3) Strategic premium = ${usd(r.premiumAmt)}</p>
+            <p>4) Core total = ${usd(r.coreTotal)}</p>
+            <p>5) Governance premium = ×${r.trustMultiplier.toFixed(2)} = ${usd(r.withGovernance)}</p>
+            <p>6) SVL-KPA upgrade value = ${usd(r.upgradeValue)}</p>
+            <p>7) Strategic moat value = ${usd(r.moat)}</p>
+            <p><strong>Final = With Governance + Upgrade + Moat = ${usd(r.total)}</strong></p>
+          </div>
+        </article>
+      `;
         if (!node) return;
         if (node.type === "checkbox") {
           node.checked = Boolean(v);
