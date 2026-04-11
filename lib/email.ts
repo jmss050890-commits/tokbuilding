@@ -312,58 +312,6 @@ export async function sendOrderConfirmationEmail(
   }
 }
 
-<<<<<<< HEAD
-function escapeHtml(input: string): string {
-  return input
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;');
-}
-
-function generateOutreachEmailHTML(body: string): string {
-  const safeBody = escapeHtml(body).replaceAll('\n', '<br />');
-  return `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; color: #111827; background: #f3f4f6; }
-          .container { max-width: 640px; margin: 0 auto; padding: 24px; }
-          .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; }
-          .meta { color: #6b7280; font-size: 12px; margin-top: 18px; border-top: 1px solid #e5e7eb; padding-top: 12px; }
-          .body { font-size: 15px; line-height: 1.7; }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="card">
-            <div class="body">${safeBody}</div>
-            <div class="meta">Sent via Sanders Viopro Labs Outreach Command</div>
-          </div>
-        </div>
-      </body>
-    </html>
-  `;
-}
-
-export async function sendOutreachEmail(data: OutreachEmailData) {
-  const brand = data.brand || 'svl';
-  const brandConfig = getBrandEmailConfig(brand);
-  const html = generateOutreachEmailHTML(data.body);
-
-  return sendEmailViaSendGrid(
-    data.to,
-    brandConfig.senderEmail,
-    brandConfig.senderName,
-    data.subject,
-    html
-  );
-}
-
-=======
->>>>>>> 3d5804cf919a4203b6d2ef62f0e011b4b7f9862b
 function generateOrderConfirmationHTML(data: OrderConfirmationData & {
   brandColor?: string;
   supportEmail?: string;
